@@ -1,0 +1,90 @@
+import React, { useEffect, useState } from 'react';
+import FrmSilos from './FrmSilos';
+import './Silos.css'
+
+
+const Silos = () => {
+
+  const formatFecha = (fecha) => {
+    if (!fecha) return ''; // Manejar fechas nulas o indefinidas
+  
+    const dateObject = new Date(fecha);
+  
+    if (isNaN(dateObject.getTime())) {
+      // Si no se puede convertir a Date, devuelve la cadena original
+      return fecha;
+    }
+  
+    return dateObject.toLocaleDateString();
+  };
+
+  const [ data, setData] = useState([])
+
+  useEffect(()=>{
+    fetch('http://localhost:8081/silos')
+    .then(res => res.json())
+    .then(data => setData(data))
+    .catch(err => console.log(err));
+  }, [] )
+
+  return (
+    <>
+
+    <h1>Minerales Silos:</h1>
+   <center><FrmSilos/></center>
+    <div className='row mt-3'>
+    <div className='col-12 col-lg-8 offset-0 offset-lg-2'>
+    <div className="table-responsive">
+    <table class="table">
+  <thead>
+        <tr  >
+          <th>ID</th>
+          <th>Fecha</th>
+          <th>Silo 1</th>
+          <th>Silo 2</th>
+          <th>Silo 3</th>
+          <th>Silo 4</th>
+          <th>Silo 5</th>
+          <th></th>
+         
+        </tr>
+      </thead>
+      <tbody  className='table-group-divider'>
+        {data.map((d  , i) => (
+          <tr key={i}>
+          <td>{d.id_silos}</td>
+          <td>{formatFecha(d.fecha)}</td>
+          <td>{d.silo1}</td>
+          <td>{d.silo2}</td>
+          <td>{d.silo3}</td>
+          <td>{d.silo4}</td>
+          <td>{d.silo5}</td>
+          
+         
+          <td>
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            <button className='btn btn-warning'>
+            <i className='fa-solid fa-edit'></i>
+            </button>
+            &nbsp;
+            
+            <button className='btn btn-danger'>
+              <i className='fa-solid fa-trash'></i>
+            </button>
+            </div>
+           
+          </td>
+        </tr>
+        ))}
+       
+        {/* Puedes agregar más filas según sea necesario */}
+      </tbody>
+    </table>
+    </div>
+    </div>
+     </div>
+    </>
+  );
+};
+
+export default Silos;
