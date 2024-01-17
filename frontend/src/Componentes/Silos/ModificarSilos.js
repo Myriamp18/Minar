@@ -20,7 +20,8 @@ function ModificarSilos() {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        axios.post(`http://localhost:8081/update/${id}`, values)
+        axios.put(`http://localhost:8081/update/${id}`, values)
+
             .then(res => {
                 console.log(res);
                 // Optionally, you can navigate to a different page or update the UI
@@ -30,19 +31,23 @@ function ModificarSilos() {
     };
 
     useEffect(() => {
-        axios
-        .get('http://localhost:8081/getrecord/' + id)
-            .then((res) => setValues({
-                ...values,
-                fecha: res.data[0].fecha,
-                silo1: res.data[0].silo1,
-                silo2: res.data[0].silo2,
-                silo3: res.data[0].silo3,
-                silo4: res.data[0].silo4,
-                silo5: res.data[0].silo5,
-            }))
+        axios.get(`http://localhost:8081/getrecord/`+id)
+            .then((res) => {
+                
+                    setValues({
+                        ...values,
+                        fecha: res.data[0].fecha,
+                        silo1: res.data[0].silo1,
+                        silo2: res.data[0].silo2,
+                        silo3: res.data[0].silo3,
+                        silo4: res.data[0].silo4,
+                        silo5: res.data[0].silo5,
+                    });
+               
+            })
             .catch(err => console.log(err));
-    })
+    }, []);
+    
     return (
         <div className="d-flex align-items-center flex-column mt-3">
             <h1>Modificar Silos</h1>
