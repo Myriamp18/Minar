@@ -10,7 +10,8 @@ const db = mysql.createConnection({
     host: "localhost",
     user: 'root',
     password: '',
-    database: 'minar'
+    database: 'minar',
+    dateStrings: 'date'
 });
 
 app.get('/', (req, res) => {
@@ -43,7 +44,7 @@ app.post('/create', (req, res) => {
 });
 
 app.put('/update/:id', (req, res) => {
-    const sql = "UPDATE silos SET fecha = ?, silo1 = ?, silo2 = ?, silo3 = ?, silo4 = ?, silo5 = ? WHERE id = ?";
+    const sql = "UPDATE silos SET fecha = ?, silo1 = ?, silo2 = ?, silo3 = ?, silo4 = ?, silo5 = ? WHERE id_silos = ?";
     const values = [
         req.body.fecha,
         req.body.silo1,
@@ -60,7 +61,7 @@ app.put('/update/:id', (req, res) => {
 });
 
 app.delete('/silos/:id', (req, res) => {
-    const sql = "DELETE FROM silos WHERE id = ?";
+    const sql = "DELETE FROM silos WHERE id_silos = ?";
     const id = req.params.id;
     db.query(sql, [id], (err, data) => {
         if (err) return res.json(err);
@@ -70,7 +71,7 @@ app.delete('/silos/:id', (req, res) => {
 
 app.get('/getrecord/:id', (req, res) => {
     const id = req.params.id;
-    const sql = "select * from silos where id = ?"
+    const sql = "SELECT * FROM silos WHERE id_silos = ?"
     db.query(sql,[id], (err, data )=> {
         if (err) {
             return res.json({Error: "Error"})
