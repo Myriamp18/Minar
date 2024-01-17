@@ -1,77 +1,86 @@
 const express = require('express');
-const mysql = require('mysql')
-const cors = require('cors')
+const mysql = require('mysql');
+const cors = require('cors');
 
-
-const app = express()
-app.use(cors())
-
+const app = express();
+app.use(cors());
+app.use(express.json()); // Added to parse JSON in the request body
 
 const db = mysql.createConnection({
-    host:"localhost",
+    host: "localhost",
     user: 'root',
-    password:'',
+    password: '',
     database: 'minar'
-})
+});
 
-app.get('/', (re, res)=> {
-    return res.json("from backend side")
-})
+app.get('/', (req, res) => {
+    return res.json("from backend side");
+});
+
 /////////////SILOS//////////
-app.get('/silos', (resq, res)=>{
-    const sql = "Select * From silos";
-    db.query(sql, (err, data)=>{
-        if(err) return res.json(err);
+app.get('/silos', (req, res) => {
+    const sql = "SELECT * FROM silos";
+    db.query(sql, (err, data) => {
+        if (err) return res.json(err);
         return res.json(data);
-    })
-})
+    });
+});
 
-app.post('/create', (req, res)=>{
-    const sql = "INSERT INTO  silos (fecha, silo1, silo2, silo3, silo4, silo5) VALUES (?)";
-    const values =  [
+app.post('/create', (req, res) => {
+    const sql = "INSERT INTO silos (fecha, silo1, silo2, silo3, silo4, silo5) VALUES (?, ?, ?, ?, ?, ?)";
+    const values = [
         req.body.fecha,
         req.body.silo1,
         req.body.silo2,
         req.body.silo3,
         req.body.silo4,
         req.body.silo5
-    ]
-    db.query(sql ,[ values],(err, data)=>{
-        if(err) return res.json(err);
+    ];
+    db.query(sql, values, (err, data) => {
+        if (err) return res.json(err);
         return res.json(data);
-    })
-})
+    });
+});
 
-app.put('/update/id', (req, res)=>{
-    const sql = "update silos set fecha = ?, silo1 = ?, silo2 = ?, silo3 = ?, silo4 = ?, silo5 = ? where id = ?";
-    const values =  [
+app.put('/update/:id', (req, res) => {
+    const sql = "UPDATE silos SET fecha = ?, silo1 = ?, silo2 = ?, silo3 = ?, silo4 = ?, silo5 = ? WHERE id = ?";
+    const values = [
         req.body.fecha,
         req.body.silo1,
         req.body.silo2,
         req.body.silo3,
         req.body.silo4,
         req.body.silo5
-    ]
+    ];
     const id = req.params.id;
-    db.query(sql ,[...values, id],(err, data)=>{
-        if(err) return res.json(err);
+    db.query(sql, [...values, id], (err, data) => {
+        if (err) return res.json(err);
         return res.json(data);
+    });
+});
+
+app.delete('/silos/:id', (req, res) => {
+    const sql = "DELETE FROM silos WHERE id = ?";
+    const id = req.params.id;
+    db.query(sql, [id], (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+});
+
+app.get('/getrecord/:id', (req, res) => {
+    const id = req.params.id;
+    const sql = "select * from silos where id = ?"
+    db.query(sql,[id], (err, data )=> {
+        if (err) {
+            return res.json({Error: "Error"})
+        }
+
+        return res.json(data)
     })
 })
 
-app.delete('/delete/id', (req, res)=>{
-    const sql = "delete from silos where id = ?";
-    const id = req.params.id;
-    db.query(sql ,[id],(err, data)=>{
-        if(err) return res.json(err);
-        return res.json(data);
-    })
-})
-
-
-
-
-
-app.listen(8081, ()=>{
+app.listen(8081, () => {
     console.log("listening");
-})
+});
+
