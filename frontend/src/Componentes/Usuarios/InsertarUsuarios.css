@@ -1,0 +1,64 @@
+.containers{
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    margin-top: 20px;
+    width: 600px;
+    background-color: #3f3a3a6c;
+    padding-bottom: 0px;
+    box-sizing: border-box;
+ 
+    
+}
+.headerst{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin-top: 5px;
+}
+.textst{
+    color: #fd0606;
+    font-size: 48px;
+    font-weight: 700;
+}
+.underlinest{
+    width: 61px;
+    height: 6px;
+    background: #e90a0a;
+    border-radius: 9px;
+}
+.forgot-registrar{
+    padding-left: 5px;
+    color: #f90000;
+    font-size: 18px;
+   
+}
+
+.forgot-registrar span{
+    color: #e60c0c;
+    cursor: pointer;
+    
+}
+.submit-registrar{
+    display: flex;
+    margin: 50px auto;
+    justify-content: center;
+    margin-top: 5px;
+}
+
+.registrarse{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 220px;
+    height: 59px;
+    color: #fff;
+    background: #ef0707;
+    border-radius: 50px;
+    font-size: 25px;
+    font-weight: 300;
+    cursor: pointer;
+    
+   
+}

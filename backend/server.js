@@ -18,6 +18,45 @@ app.get('/', (req, res) => {
     return res.json("from backend side");
 });
 
+app.listen(8081, () => {
+    console.log("listening");
+});
+
+////////////USUARIOs////////////////////////
+app.post('/createusuarios', (req, res) => {
+    const sql = "INSERT INTO usuarios (nombrecompleto, telefono, cargo, nombreusuario, contra) VALUES (?, ?, ?, ?, ?)";
+    const values = [
+        req.body.nombrecompleto,
+        req.body.telefono,
+        req.body.cargo,
+        req.body.nombreusuario,
+        req.body.contra
+
+    ];
+    db.query(sql, values, (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+});
+
+
+app.post('/login', (req, res) => {
+    // Consulta SQL
+    const sql = "SELECT * FROM usuarios WHERE nombreusuario = ? AND contra = ?";
+    const values =[
+        req.body.nombreusuario,
+        req.body.contra
+    ]
+    db.query(sql,[values], (err, data)=>{
+        if(err) return res.json("Login Failed")
+        return res.json(data)
+    })
+  
+
+  });
+
+
+
 /////////////SILOS//////////
 app.get('/silos', (req, res) => {
     const sql = "SELECT * FROM silos";
@@ -60,7 +99,7 @@ app.put('/update/:id', (req, res) => {
     });
 });
 
-app.delete('/silos/:id', (req, res) => {
+app.delete('/delete/:id', (req, res) => {
     const sql = "DELETE FROM silos WHERE id_silos = ?";
     const id = req.params.id;
     db.query(sql, [id], (err, data) => {
@@ -72,16 +111,13 @@ app.delete('/silos/:id', (req, res) => {
 app.get('/getrecord/:id', (req, res) => {
     const id = req.params.id;
     const sql = "SELECT * FROM silos WHERE id_silos = ?"
-    db.query(sql,[id], (err, data )=> {
+    db.query(sql, [id], (err, data) => {
         if (err) {
-            return res.json({Error: "Error"})
+            return res.json({ Error: "Error" })
         }
 
         return res.json(data)
     })
 })
 
-app.listen(8081, () => {
-    console.log("listening");
-});
 

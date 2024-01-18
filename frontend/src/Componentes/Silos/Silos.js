@@ -1,25 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import FrmSilos from './FrmSilos';
 import './Silos.css'
 import { Link } from 'react-router-dom';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
+import axios from 'axios'
 
 const Silos = () => {
 
-  const formatFecha = (fecha) => {
-    if (!fecha) return ''; // Manejar fechas nulas o indefinidas
 
-    const dateObject = new Date(fecha);
-
-    if (isNaN(dateObject.getTime())) {
-      // Si no se puede convertir a Date, devuelve la cadena original
-      return fecha;
-    }
-
-    return dateObject.toLocaleDateString();
-  };
 
   const [data, setData] = useState([])
 
@@ -30,6 +18,11 @@ const Silos = () => {
       .catch(err => console.log(err));
   }, [])
 
+  const handleDelete = (id) =>{
+    axios.delete('http://localhost:8081/delete/'+id)
+    .then(res => window.location.reload())
+    .catch(err => console.log(err))
+  }
 
 
   return (
@@ -63,7 +56,7 @@ const Silos = () => {
                   {data.map((d, i) => (
                     <tr key={i}>
                       <td>{d.id_silos}</td>
-                      <td>{formatFecha(d.fecha)}</td>
+                      <td>{d.fecha}</td>
                       <td>{d.silo1.toFixed(3)}</td>
                       <td>{d.silo2.toFixed(3)}</td>
                       <td>{d.silo3.toFixed(3)}</td>
@@ -78,7 +71,7 @@ const Silos = () => {
                           </Link>
                           &nbsp;
 
-                          <button className='btn btn-danger'>
+                          <button className='btn btn-danger' onClick={() => handleDelete(d.id_silos)}>
                             <i className='fa-solid fa-trash'></i>
                           </button>
                         </div>

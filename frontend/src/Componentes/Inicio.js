@@ -1,6 +1,7 @@
 
 import React from 'react'
 import Silos from './Silos/Silos'
+import InsertarUsuario from './Usuarios/InsertarUsuario'
 
 
 function Inicio() {
@@ -9,7 +10,7 @@ function Inicio() {
         <div>
         
  
-    <Silos/>
+    <InsertarUsuario/>
 
     </div>
         
