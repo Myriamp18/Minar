@@ -1,6 +1,6 @@
 .registrar-section {
-    background-image: url('../../assest/logo.png'); 
-    background-color: rgb(14, 12, 12);
+   
+    background-color: rgb(230, 6, 6);
     background-size:center; /* Ajusta el tamaño de la imagen para cubrir todo el contenedor */
     background-position:center; /* Centra la imagen */
     height: 100vh; /* Asigna la altura del 100% del viewport */
@@ -30,19 +30,19 @@
     margin-top: 5px;
 }
 .textst{
-    color: #010101;
+    color: #020101da;
     font-size: 48px;
     font-weight: 700;
 }
 .underlinest{
     width: 61px;
     height: 6px;
-    background: #040303;
+    background: #151212;
     border-radius: 9px;
 }
 .forgot-registrar{
     padding-left: 5px;
-    color: #f90000;
+    color: #000000;
     font-size: 18px;
    
 }
@@ -66,7 +66,7 @@
     width: 220px;
     height: 59px;
     color: #fff;
-    background: #0b0a0a;
+    background: #040404;
     border-radius: 50px;
     font-size: 25px;
     font-weight: 300;
