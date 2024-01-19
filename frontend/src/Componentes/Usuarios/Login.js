@@ -13,15 +13,21 @@ const Login = () => {
 
   
   const onSubmit = (event) => {
-   event.preventDefault();
-   axios.post('http://localhost:8081/login', {nombreusuario, contra})
-   .then(res =>{ console.log(res);
-   navigate('/Inicio');
-   })
-   .catch(err => console.log(err));
- 
-   
+    event.preventDefault();
+    axios.post('http://localhost:8081/login', { nombreusuario, contra })
+      .then(res => {
+        // Assuming the server responds with a property like 'success' or 'error'
+        if (nombreusuario && contra) {
+          console.log(res);
+          navigate('/Inicio');
+        } else {
+          console.log("Login failed");
+          // Handle login failure, show an error message, etc.
+        }
+      })
+      .catch(err => console.log(err));
   }
+  
   const onRegistro = () =>{
     navigate('/createusuario')
   }
