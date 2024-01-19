@@ -2,6 +2,8 @@ import React, { useState }  from 'react'
 import './InsertarUsuarios.css';
 import {useNavigate} from 'react-router-dom';
 import axios from 'axios'
+import Usuario_M from '../../assest/minero.jpg'
+import Contra_L from '../../assest/candado.jpg'
 
 
 function InsertarUsuario() {
@@ -67,7 +69,7 @@ function InsertarUsuario() {
                             />
                         </div>
                         <div className="input">
-
+                        <img src={Usuario_M} alt='usuariologin' />
                             <input type="text" size="sm"
                                 placeholder='Nombre de Usuario '
                                 name='nombreusuario'
@@ -77,7 +79,7 @@ function InsertarUsuario() {
                         </div>
                         
                         <div className="input">
-
+                        <img src={Contra_L} alt='contraseñalogin' />
                             <input type="password"
                                 placeholder='Contraseña'
                                 name='contra'
