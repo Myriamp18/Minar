@@ -15,20 +15,28 @@ function GranoBandas() {
             .catch(err => console.log(err));
     }, [])
 
+    const handleDelete = (id) =>{
+        axios.delete('http://localhost:8081/deletegrano/'+id)
+        .then(res => window.location.reload())
+        .catch(err => console.log(err))
+      }
 
     const [totalSaldo, setTotalSaldo] = useState(0);
+
     useEffect(() => {
         calcularSaldo();
     }, []);
+    
     const calcularSaldo = () => {
         let suma = 0;
-
-        data.forEach((item) = () => {
+    
+        data.forEach((item) => {
             suma += item.saldo + item.entrada - item.salidas;
         });
-
+    
         setTotalSaldo(suma);
     };
+    
 
  
 
@@ -67,18 +75,18 @@ function GranoBandas() {
                                             <td>{d.entrada.toFixed(3)}</td>
                                             <td>{d.salidas.toFixed(3)}</td>
                                             <td>{d.pesp.toFixed(2)}</td>
-                                            <td>{d.saldo.toFixed(3).totalSaldo}</td>
+                                            <td>{d.saldo.toFixed(3)}</td>
 
 
 
                                             <td>
                                                 <div style={{ display: 'flex', alignItems: 'center' }}>
-                                                    <Link to={`/update/${d.id_silos}`} className='btn btn-warning'>
+                                                    <Link to={`/updategrano/${d.id}`} className='btn btn-warning'>
                                                         <i className='fa-solid fa-edit'></i>
                                                     </Link>
                                                     &nbsp;
 
-                                                    <button className='btn btn-danger' onClick={() => handleDelete(d.id_silos)}>
+                                                    <button className='btn btn-danger' onClick={() => handleDelete(d.id)}>
                                                         <i className='fa-solid fa-trash'></i>
                                                     </button>
                                                 </div>

@@ -8,6 +8,7 @@ import FrmSilos from './Componentes/Silos/FrmSilos';
 import ModificarSilos from './Componentes/Silos/ModificarSilos';
 import InsertarUsuario from './Componentes/Usuarios/InsertarUsuario';
 import FrmBandas from './Componentes/PrExistencia/FrmBandas';
+import ModificarGrano from './Componentes/PrExistencia/ModificarGrano';
 
 
 
@@ -24,6 +25,7 @@ function App() {
        <Route path="/update/:id" element={<ModificarSilos/>}/>
        <Route path="/createusuario" element={<InsertarUsuario/>}/>
        <Route path="/creategrano" element={<FrmBandas/>}/>
+       <Route path="/updategrano/:id" element={<ModificarGrano/>}/>
        
        
          

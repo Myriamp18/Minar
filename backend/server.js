@@ -39,7 +39,6 @@ app.post('/createusuarios', (req, res) => {
     });
 });
 
-
 app.post('/login', (req, res) => {
     // Consulta SQL
     const sql = "SELECT * FROM usuarios WHERE nombreusuario = ? AND contra = ?";
@@ -54,8 +53,6 @@ app.post('/login', (req, res) => {
   
 
   });
-
-
 
 /////////////SILOS//////////
 app.get('/silos', (req, res) => {
@@ -144,3 +141,41 @@ app.post('/creategrano', (req, res) => {
         return res.json(data);
     });
 });
+
+app.delete('/deletegrano/:id', (req, res) => {
+    const sql = "DELETE FROM granobandas WHERE id = ?";
+    const id = req.params.id;
+    db.query(sql, [id], (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+});
+
+app.put('/updategrano/:id', (req, res) => {
+    const sql = "UPDATE granobandas SET fecha = ?, entrada = ?, salidas = ?, pesp = ?, saldo = ? WHERE id = ?";
+    const values = [
+        req.body.fecha,
+        req.body.entrada,
+        req.body.salidas,
+        req.body.pesp,
+        req.body.saldo
+    
+    ];
+    const id = req.params.id;
+    db.query(sql, [...values, id], (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+});
+
+app.get('/getrecordgrano/:id', (req, res) => {
+    const id = req.params.id;
+    const sql = "SELECT * FROM granobandas WHERE id = ?"
+    db.query(sql, [id], (err, data) => {
+        if (err) {
+            return res.json({ Error: "Error" })
+        }
+
+        return res.json(data)
+    })
+})
