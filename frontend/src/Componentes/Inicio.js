@@ -1,7 +1,7 @@
 
 import React from 'react'
-import Silos from './Silos/Silos'
 import InsertarUsuario from './Usuarios/InsertarUsuario'
+import GranoBandas from './PrExistencia/GranoBandas'
 
 
 function Inicio() {
@@ -10,7 +10,7 @@ function Inicio() {
         <div>
         
  
-    <InsertarUsuario/>
+    <GranoBandas/>
 
     </div>
         

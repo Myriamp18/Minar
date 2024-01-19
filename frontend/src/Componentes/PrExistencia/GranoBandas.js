@@ -1,0 +1,103 @@
+import React, { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import axios from 'axios'
+import './Tabla.css'
+
+function GranoBandas() {
+
+    const [data, setData] = useState([])
+    useEffect(() => {
+        fetch('http://localhost:8081/granobandas')
+            .then(res => res.json())
+            .then(data => setData(data))
+            .catch(err => console.log(err));
+    }, [])
+
+
+    const [totalSaldo, setTotalSaldo] = useState(0);
+    useEffect(() => {
+        calcularSaldo();
+    }, []);
+    const calcularSaldo = () => {
+        let suma = 0;
+
+        data.forEach((item) = () => {
+            suma += item.saldo + item.entrada - item.salidas;
+        });
+
+        setTotalSaldo(suma);
+    };
+
+ 
+
+
+    return (
+        <div>
+            <h1>Grano Bandas:</h1>
+            <div className="text-center">
+                <Link to="/creategrano" className="btn btn-danger btn-lg font-weight-bold   text-lg" >
+                    <FontAwesomeIcon icon={faPlus} />Insertar</Link>
+            </div>
+            <div className='row mt-3'>
+                {data.length !== 0 ?
+                    <div className='col-12 col-lg-8 offset-0 offset-lg-2'>
+                        <div className="table-responsive">
+
+                            <table class="table">
+                                <thead>
+                                    <tr  >
+                                        <th>ID</th>
+                                        <th>Fecha</th>
+                                        <th>Entradas</th>
+                                        <th>Salidas</th>
+                                        <th>P.ESP</th>
+                                        <th>Saldo</th>
+
+                                        <th></th>
+
+                                    </tr>
+                                </thead>
+                                <tbody className='table-group-divider'>
+                                    {data.map((d, i) => (
+                                        <tr key={i}>
+                                            <td>{d.id}</td>
+                                            <td>{d.fecha}</td>
+                                            <td>{d.entrada.toFixed(3)}</td>
+                                            <td>{d.salidas.toFixed(3)}</td>
+                                            <td>{d.pesp.toFixed(2)}</td>
+                                            <td>{d.saldo.toFixed(3).totalSaldo}</td>
+
+
+
+                                            <td>
+                                                <div style={{ display: 'flex', alignItems: 'center' }}>
+                                                    <Link to={`/update/${d.id_silos}`} className='btn btn-warning'>
+                                                        <i className='fa-solid fa-edit'></i>
+                                                    </Link>
+                                                    &nbsp;
+
+                                                    <button className='btn btn-danger' onClick={() => handleDelete(d.id_silos)}>
+                                                        <i className='fa-solid fa-trash'></i>
+                                                    </button>
+                                                </div>
+
+                                            </td>
+                                        </tr>
+                                    ))}
+
+                                    {/* Puedes agregar más filas según sea necesario */}
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                    : <h2 className='aling-itemns-center'>Sin Datos</h2>
+                }
+            </div>
+        </div>
+    )
+}
+
+export default GranoBandas

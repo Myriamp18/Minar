@@ -43,13 +43,13 @@ app.post('/createusuarios', (req, res) => {
 app.post('/login', (req, res) => {
     // Consulta SQL
     const sql = "SELECT * FROM usuarios WHERE nombreusuario = ? AND contra = ?";
-    const values =[
-        req.body.nombreusuario,
-        req.body.contra
-    ]
-    db.query(sql,[values], (err, data)=>{
-        if(err) return res.json("Login Failed")
-        return res.json(data)
+    db.query(sql,[ req.body.nombreusuario, req.body.contra], (err, data)=>{
+        if(err) return res.json("Error")
+        if(data.length > 0) {
+            return res.json("Loadin Successfuly")
+        }else{
+        return res.json("No Record")
+        }
     })
   
 
@@ -120,4 +120,27 @@ app.get('/getrecord/:id', (req, res) => {
     })
 })
 
+////////////////////////GRANO BANDAS/////////
 
+app.get('/granobandas', (req, res) => {
+    const sql = "SELECT * FROM granobandas";
+    db.query(sql, (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+});
+
+app.post('/creategrano', (req, res) => {
+    const sql = "INSERT INTO granobandas (fecha, entrada, salidas, pesp, saldo) VALUES (?, ?, ?, ?, ?)";
+    const values = [
+        req.body.fecha,
+        req.body.entrada,
+        req.body.salidas,
+        req.body.pesp,
+        req.body.saldo
+    ];
+    db.query(sql, values, (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+});

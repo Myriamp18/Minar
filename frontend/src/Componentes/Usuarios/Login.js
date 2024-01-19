@@ -8,15 +8,19 @@ import axios from 'axios';
 const Login = () => {
 
   const navigate = useNavigate();
-  const [nombre, setNombre] = useState('')
+  const [nombreusuario, setNombreUsuario] = useState('')
   const [contra, setContra] = useState('')
 
   
   const onSubmit = (event) => {
    event.preventDefault();
-   axios.post('http://localhost:8081/login', {nombre, contra})
-   .then(res => console.log(res))
+   axios.post('http://localhost:8081/login', {nombreusuario, contra})
+   .then(res =>{ console.log(res);
+   navigate('/Inicio');
+   })
    .catch(err => console.log(err));
+ 
+   
   }
   const onRegistro = () =>{
     navigate('/createusuario')
@@ -33,13 +37,13 @@ const Login = () => {
           <div className="text">LOGIN</div>
           <div className="underline"></div>
         </div>
-        <form onClick={onSubmit}>
+        <form>
           <div className="pop">
             <div className="input">
               <img src={Usuario_M} alt='usuariologin' />
               <input type="usuario" size="sm"
                 placeholder='Nombre de Usuario '
-                onChange={e => setNombre(e.target.value)}
+                onChange={e => setNombreUsuario(e.target.value)}
                 name='nombreusuario'
 
               />
@@ -60,7 +64,7 @@ const Login = () => {
 
           <div className="forgot-password">
             <div className="submit-container">
-              <button className="submits"  >Iniciar Sesion</button>
+              <button className="submits" onClick={onSubmit} >Iniciar Sesion</button>
               <button className="submits"  onClick={onRegistro}>Registarse</button>
             </div>
           </div>
