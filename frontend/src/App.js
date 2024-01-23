@@ -24,12 +24,11 @@ function App() {
   return (
    
     <Router>
-    <div className="d-flex">
-      <div className="w-auto">
-        <Menu/>
+    
+   
+      
        
-      </div>
-      <div>  
+      
    
        <Routes>
        <Route path="/" element={<Login />}/>
@@ -53,8 +52,8 @@ function App() {
          
        
        </Routes>
-       </div>
-       </div>
+      
+    
     </Router>
      
   
