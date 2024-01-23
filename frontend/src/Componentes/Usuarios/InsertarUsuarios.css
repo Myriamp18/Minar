@@ -1,5 +1,5 @@
 .registrar-section {
-   
+    background-image: url('../../assest/logo.png');
     background-color: rgb(230, 6, 6);
     background-size:center; /* Ajusta el tamaño de la imagen para cubrir todo el contenedor */
     background-position:center; /* Centra la imagen */

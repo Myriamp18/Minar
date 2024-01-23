@@ -6,7 +6,7 @@ import axios from 'axios'
 function FrmBandas() {
     const [values, setValues] = useState({
         fecha: '',
-        enrada: "",
+        entrada: "",
         salidas: "",
         pesp: "",
         saldo: "",

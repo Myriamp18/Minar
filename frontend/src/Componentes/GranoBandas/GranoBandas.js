@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios'
-import './Tabla.css'
+import '../Tabla.css'
 
 function GranoBandas() {
 

@@ -11,7 +11,7 @@ const db = mysql.createConnection({
     user: 'root',
     password: '',
     database: 'minar',
-    dateStrings: 'date'
+    dateStrings: 'date',
 });
 
 app.get('/', (req, res) => {
@@ -171,6 +171,127 @@ app.put('/updategrano/:id', (req, res) => {
 app.get('/getrecordgrano/:id', (req, res) => {
     const id = req.params.id;
     const sql = "SELECT * FROM granobandas WHERE id = ?"
+    db.query(sql, [id], (err, data) => {
+        if (err) {
+            return res.json({ Error: "Error" })
+        }
+
+        return res.json(data)
+    })
+})
+
+/////////////////////////SELECCION///////////
+
+app.get('/seleccion', (req, res) => {
+    const sql = "SELECT * FROM seleccion";
+    db.query(sql, (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+});
+
+app.post('/createseleccion', (req, res) => {
+    const sql = "INSERT INTO seleccion (fecha, entrada, salida, pesp, saldo) VALUES (?, ?, ?, ?, ?)";
+    const values = [
+        req.body.fecha,
+        req.body.entrada,
+        req.body.salida,
+        req.body.pesp,
+        req.body.saldo
+    ];
+    db.query(sql, values, (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+});
+
+app.delete('/deleteseleccion/:id', (req, res) => {
+    const sql = "DELETE FROM seleccion WHERE id = ?";
+    const id = req.params.id;
+    db.query(sql, [id], (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+});
+
+app.put('/updateseleccion/:id', (req, res) => {
+    const sql = "UPDATE seleccion SET fecha = ?, entrada = ?, salida = ?, pesp = ?, saldo = ? WHERE id = ?";
+    const values = [
+        req.body.fecha,
+        req.body.entrada,
+        req.body.salida,
+        req.body.pesp,
+        req.body.saldo
+    
+    ];
+    const id = req.params.id;
+    db.query(sql, [...values, id], (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+});
+
+app.get('/getrecorseleccion/:id', (req, res) => {
+    const id = req.params.id;
+    const sql = "SELECT * FROM seleccion WHERE id = ?"
+    db.query(sql, [id], (err, data) => {
+        if (err) {
+            return res.json({ Error: "Error" })
+        }
+
+        return res.json(data)
+    })
+})
+
+//////////////CONC P/MOLER//////////////
+app.get('/concpmoler', (req, res) => {
+    const sql = "SELECT * FROM concpmoler";
+    db.query(sql, (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+});
+app.post('/createconcpmoler', (req, res) => {
+    const sql = "INSERT INTO concpmoler (fecha, entrada, salida, pesp, saldo) VALUES (?, ?, ?, ?, ?)";
+    const values = [
+        req.body.fecha,
+        req.body.entrada,
+        req.body.salida,
+        req.body.pesp,
+        req.body.saldo
+    ];
+    db.query(sql, values, (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+});
+app.delete('/deleteconcpmoler/:id', (req, res) => {
+    const sql = "DELETE FROM concpmoler WHERE id = ?";
+    const id = req.params.id;
+    db.query(sql, [id], (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+});
+app.put('/updateconcpmoler/:id', (req, res) => {
+    const sql = "UPDATE concpmoler SET fecha = ?, entrada = ?, salida = ?, pesp = ?, saldo = ? WHERE id = ?";
+    const values = [
+        req.body.fecha,
+        req.body.entrada,
+        req.body.salida,
+        req.body.pesp,
+        req.body.saldo
+    
+    ];
+    const id = req.params.id;
+    db.query(sql, [...values, id], (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+});
+app.get('/getrecorconcpmoler/:id', (req, res) => {
+    const id = req.params.id;
+    const sql = "SELECT * FROM concpmoler WHERE id = ?"
     db.query(sql, [id], (err, data) => {
         if (err) {
             return res.json({ Error: "Error" })

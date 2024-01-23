@@ -1,36 +1,31 @@
 import React, { useEffect, useState } from 'react';
-import './Silos.css'
+import '../Silos/Silos.css'
 import { Link } from 'react-router-dom';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios'
 
-const Silos = () => {
-
-
-
-  const [data, setData] = useState([]);
+function Seleccion() {
+    const [data, setData] = useState([]);
 
   useEffect(() => {
-    fetch('http://localhost:8081/silos')
+    fetch('http://localhost:8081/seleccion')
       .then(res => res.json())
       .then(data => setData(data))
       .catch(err => console.log(err));
   }, [])
 
   const handleDelete = (id) =>{
-    axios.delete('http://localhost:8081/delete/'+id)
+    axios.delete('http://localhost:8081/deleteseleccion/'+id)
     .then(res => window.location.reload())
     .catch(err => console.log(err))
   }
-
-
   return (
     <>
 
-      <h1>Minerales Silos:</h1>
+      <h1>Seleccion:</h1>
       <div className="text-center">
-        <Link to="/create" className="btn btn-danger btn-lg font-weight-bold   text-lg" >
+        <Link to="/createseleccion" className="btn btn-danger btn-lg font-weight-bold   text-lg" >
           <FontAwesomeIcon icon={faPlus} />Insertar</Link>
       </div>
       <div className='row mt-3'>
@@ -43,11 +38,10 @@ const Silos = () => {
                   <tr  >
                     <th>ID</th>
                     <th>Fecha</th>
-                    <th>Silo 1</th>
-                    <th>Silo 2</th>
-                    <th>Silo 3</th>
-                    <th>Silo 4</th>
-                    <th>Silo 5</th>
+                    <th>Entrada</th>
+                    <th>Salida</th>
+                    <th>P.ESP</th>
+                    <th>Saldo</th>
                     <th></th>
 
                   </tr>
@@ -55,23 +49,22 @@ const Silos = () => {
                 <tbody className='table-group-divider'>
                  {data.map((d, i) => (
                     <tr key={i}>
-                      <td>{d.id_silos}</td>
+                      <td>{d.id}</td>
                       <td>{d.fecha}</td>
-                      <td>{d.silo1.toFixed(3)}</td>
-                      <td>{d.silo2.toFixed(3)}</td>
-                      <td>{d.silo3.toFixed(3)}</td>
-                      <td>{d.silo4.toFixed(3)}</td>
-                      <td>{d.silo5.toFixed(3)}</td>
-
+                      <td>{d.entrada.toFixed(3)}</td>
+                      <td>{d.salida.toFixed(3)}</td>
+                      <td>{d.pesp.toFixed(2)}</td>
+                      <td>{d.saldo.toFixed(3)}</td>
+                    
 
                       <td>
                         <div style={{ display: 'flex', alignItems: 'center' }}>
-                          <Link to={`/update/${d.id_silos}`} className='btn btn-warning'>
+                          <Link to={`/updateseleccion/${d.id}`} className='btn btn-warning'>
                             <i className='fa-solid fa-edit'></i>
                           </Link>
                           &nbsp;
 
-                          <button className='btn btn-danger' onClick={() => handleDelete(d.id_silos)}>
+                          <button className='btn btn-danger' onClick={() => handleDelete(d.id)}>
                             <i className='fa-solid fa-trash'></i>
                           </button>
                         </div>
@@ -90,7 +83,7 @@ const Silos = () => {
         }
       </div>
     </>
-  );
-};
+  )
+}
 
-export default Silos;
+export default Seleccion
