@@ -7,7 +7,7 @@
     justify-content: space-between;
     padding: 0px 20px;
     color: rgb(248, 232, 232);
-   
+  
 
 }
 
@@ -38,12 +38,13 @@
 
 /*SIDEBAR*/
 .sidebar-container{
-    background-color:  rgba(24, 22, 22, 0.918);
+    background-color:  rgba(15, 14, 14, 0.955);
     color: rgb(250, 236, 236);
-    width: 210px;
+    width: 250px;
     height: calc(100vh - 50px);
     overflow-y: scroll;
     overflow-x: hidden ;
+    
 }
 
 .nav-option {
@@ -51,7 +52,7 @@
     align-items: center;
     padding: 0px 0px 0px 30px;
     gap: 10px;
-    width: 210px;
+    width: 250px;
 }
 
 .nav-option:hover, .nav-option:hover i.bi{
@@ -59,7 +60,10 @@
     color:rgb(247, 8, 8);
     cursor: pointer;
 }
-
+.nav-option label{
+    font-size: 20px;
+    
+}
 .nav-option i.bi{
     color: white;
     font-size: 20px;
@@ -72,7 +76,7 @@
         width: 80px;
     }
 
-    .navCollaps .nav-option h3 {
+    .navCollaps .nav-option label {
         display: none;
     
     }
@@ -103,7 +107,5 @@
 
    
 }
-
-
 
 

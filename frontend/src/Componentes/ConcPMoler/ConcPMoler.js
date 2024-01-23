@@ -5,6 +5,7 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios'
 
+
 function ConcPMoler() {
   const [data, setData] = useState([]);
 
@@ -22,10 +23,11 @@ function ConcPMoler() {
   }
   return (
     <>
-
+   
     <h1>Conc. P/Moler:</h1>
+
     <div className="text-center">
-      <Link to="/createseleccion" className="btn btn-danger btn-lg font-weight-bold   text-lg" >
+      <Link to="/createconcpmoler" className="btn btn-danger btn-lg font-weight-bold   text-lg" >
         <FontAwesomeIcon icon={faPlus} />Insertar</Link>
     </div>
     <div className='row mt-3'>
