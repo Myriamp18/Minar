@@ -251,20 +251,47 @@ app.get('/concpmoler', (req, res) => {
         return res.json(data);
     });
 });
-app.post('/createconcpmoler', (req, res) => {
-    const sql = "INSERT INTO concpmoler (fecha, entrada, salida, pesp, saldo) VALUES (?, ?, ?, ?, ?)";
-    const values = [
-        req.body.fecha,
-        req.body.entrada,
-        req.body.salida,
-        req.body.pesp,
-        req.body.saldo
-    ];
-    db.query(sql, values, (err, data) => {
-        if (err) return res.json(err);
-        return res.json(data);
-    });
+app.post('/createconcpmoler', async (req, res) => {
+    try {
+        // Obtener el saldo anterior
+        const saldoAnteriorData = await new Promise((resolve, reject) => {
+            db.query("SELECT saldo FROM concpmoler ORDER BY id DESC LIMIT 1", (err, data) => {
+                if (err) reject(err);
+                else resolve(data);
+            });
+        });
+
+        // Si hay registros en la tabla, obtén el saldo anterior, de lo contrario, establece el saldo anterior en 0
+        const saldoAnterior = saldoAnteriorData.length > 0 ? saldoAnteriorData[0].saldo : 0;
+
+        // Calcula el nuevo saldo sumando el saldo anterior a las entradas y restando las salidas
+        const nuevoSaldo = saldoAnterior + parseFloat(req.body.entrada) - parseFloat(req.body.salida);
+
+        // Realiza la inserción con el nuevo saldo
+        const sql = "INSERT INTO concpmoler (fecha, entrada, salida, pesp, saldo) VALUES (?, ?, ?, ?, ?)";
+        const values = [
+            req.body.fecha,
+            req.body.entrada,
+            req.body.salida,
+            req.body.pesp,
+            nuevoSaldo
+        ];
+
+        db.query(sql, values, (err, data) => {
+            if (err) {
+                console.error('Error al insertar datos:', err);
+                return res.status(500).json({ error: "Error al insertar datos" });
+            }
+
+            console.log('Datos insertados correctamente.');
+            return res.json(data);
+        });
+    } catch (error) {
+        console.error('Error al manejar la solicitud:', error);
+        return res.status(500).json({ error: "Error al manejar la solicitud" });
+    }
 });
+
 app.delete('/deleteconcpmoler/:id', (req, res) => {
     const sql = "DELETE FROM concpmoler WHERE id = ?";
     const id = req.params.id;
@@ -273,22 +300,49 @@ app.delete('/deleteconcpmoler/:id', (req, res) => {
         return res.json(data);
     });
 });
-app.put('/updateconcpmoler/:id', (req, res) => {
-    const sql = "UPDATE concpmoler SET fecha = ?, entrada = ?, salida = ?, pesp = ?, saldo = ? WHERE id = ?";
-    const values = [
-        req.body.fecha,
-        req.body.entrada,
-        req.body.salida,
-        req.body.pesp,
-        req.body.saldo
-    
-    ];
-    const id = req.params.id;
-    db.query(sql, [...values, id], (err, data) => {
-        if (err) return res.json(err);
-        return res.json(data);
-    });
+app.put('/updateconcpmoler/:id', async (req, res) => {
+    try {
+        // Obtener el saldo anterior de forma síncrona
+        const saldoAnteriorData = await new Promise((resolve, reject) => {
+            db.query("SELECT saldo FROM concpmoler WHERE id = ?", [req.params.id], (err, data) => {
+                if (err) reject(err);
+                else resolve(data);
+            });
+        });
+
+        // Si hay registros en la tabla, obtén el saldo anterior, de lo contrario, establece el saldo anterior en 0
+        const segundoSaldoAnterior = segundoSaldoAnterior.length > 0 ?segundoSaldoAnterior[0].saldo : 0;
+
+        // Calcula el nuevo saldo sumando el saldo anterior a las entradas y restando las salidas
+        const nuevoSaldo = segundoSaldoAnterior + parseFloat(req.body.entrada) - parseFloat(req.body.salida);
+
+        // Realiza la actualización con el nuevo saldo
+        const sql = "UPDATE concpmoler SET fecha = ?, entrada = ?, salida = ?, pesp = ?, saldo = ? WHERE id = ?";
+        const values = [
+            req.body.fecha,
+            req.body.entrada,
+            req.body.salida,
+            req.body.pesp,
+            nuevoSaldo
+        ];
+        const id = req.params.id;
+
+        db.query(sql, [...values, id], (err, data) => {
+            if (err) {
+                console.error('Error al actualizar datos:', err);
+                return res.status(500).json({ error: "Error al actualizar datos" });
+            }
+
+            console.log('Datos actualizados correctamente.');
+            // Enviar el nuevo saldo al cliente
+            return res.json({ nuevoSaldo });
+        });
+    } catch (error) {
+        console.error('Error al manejar la solicitud:', error);
+        return res.status(500).json({ error: "Error al manejar la solicitud" });
+    }
 });
+
 app.get('/getrecorconcpmoler/:id', (req, res) => {
     const id = req.params.id;
     const sql = "SELECT * FROM concpmoler WHERE id = ?"
@@ -300,3 +354,39 @@ app.get('/getrecorconcpmoler/:id', (req, res) => {
         return res.json(data)
     })
 })
+app.get('/obtenerSaldoAnterior', (req, res) => {
+    const sql = "SELECT saldo FROM concpmoler ORDER BY id DESC LIMIT 1"; // Obtén el último saldo registrado
+    db.query(sql, (err, data) => {
+        if (err) {
+            console.error('Error al obtener saldo anterior:', err);
+            return res.status(500).json({ error: "Error al obtener saldo anterior" });
+        }
+
+        // Verifica si hay registros en la tabla
+        if (data.length > 0) {
+            const saldoAnterior = data[0].saldo;
+            return res.json({ saldoAnterior });
+        } else {
+            // Si no hay registros, devuelve 0 como saldo anterior (o el valor que desees)
+            return res.json({ saldoAnterior: 0 });
+        }
+    });
+});
+app.get('/updateobtenerSaldoAnterior', (req, res) => {
+    const sql = "SELECT saldo FROM concpmoler ORDER BY id DESC LIMIT 2"; // Obtén los dos saldos más recientes
+    db.query(sql, (err, data) => {
+        if (err) {
+            console.error('Error al obtener saldos anteriores:', err);
+            return res.status(500).json({ error: "Error al obtener saldos anteriores" });
+        }
+
+        // Verifica si hay al menos dos registros en la tabla
+        if (data.length >= 2) {
+            const segundoSaldoAnterior = data[1].saldo;
+            return res.json({ segundoSaldoAnterior });
+        } else {
+            // Si no hay suficientes registros, devuelve 0 como segundo saldo anterior (o el valor que desees)
+            return res.json({ segundoSaldoAnterior: 0 });
+        }
+    });
+});
