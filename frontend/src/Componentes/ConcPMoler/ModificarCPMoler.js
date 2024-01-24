@@ -8,25 +8,43 @@ function ModificarCPMoler() {
     const [values, setValues] = useState({
         fecha: '',
         entrada: "",
-        salidas: "",
+        salida: "",
         pesp: "",
-        saldo: "",
+      
        
     
       })
       const navigate = useNavigate()
+      const [segundoSaldoAnterior, setSaldoAnterior] = useState(0);
+
+      const obtenersegundoSaldoAnterior = () => {
+        axios.get(`http://localhost:8081/updateobtenerSaldoAnterior/${id}`)
+          .then((res) => {
+            const segundoSaldoAnterior = res.data.segundoSaldoAnterior || 0;
+            setSaldoAnterior(segundoSaldoAnterior);
+          })
+          .catch(err => console.log(err));
+    };
+    
 
       const handleSubmit = (e) => {
-          e.preventDefault()
-          axios.put(`http://localhost:8081/updateconcpmoler/${id}`, values)
-  
-              .then(res => {
-                  console.log(res);
-                  // Optionally, you can navigate to a different page or update the UI
-                  navigate('/Inicio'); // Example: Navigate to the home page
-              })
-              .catch(err => console.log(err));
+        e.preventDefault();
+      
+        // Calcula el nuevo saldo sumando el saldo anterior a las entradas y restando las salidas
+        const nuevoSaldo =segundoSaldoAnterior + parseFloat(values.entrada) - parseFloat(values.salida);
+      
+        // Actualiza el valor del saldo en el objeto de valores
+        setValues({ ...values, saldo: nuevoSaldo });
+      
+        // Realiza la actualización con el nuevo saldo usando una solicitud PUT
+        axios.put(`http://localhost:8081/updateconcpmoler/${id}`, { ...values, saldo: nuevoSaldo })
+          .then(res => {
+            console.log(res);
+            navigate('/Inicio');
+          })
+          .catch(err => console.log(err));
       };
+      
       useEffect(() => {
         axios.get(`http://localhost:8081/getrecorconcpmoler/${id}`)
             .then((res) => {
@@ -37,7 +55,6 @@ function ModificarCPMoler() {
                         entrada: res.data[0].entrada,
                         salida: res.data[0].salida,
                         pesp: res.data[0].pesp,
-                        saldo: res.data[0].saldo
                       
                     });
                
@@ -99,17 +116,7 @@ function ModificarCPMoler() {
              onChange={(e) => setValues({...values, pesp: e.target.value})}/>
           </div>
 
-          <div class="mb-3">
-            <label form='text' class="form-label"> Saldo:</label>
-            <input
-             type="text"  
-             class="form-control"
-             id='saldo'
-             placeholder='Insertar Cantidad'  
-             name='saldo'
-             value={values.saldo}
-             onChange={(e) => setValues({...values, saldo: e.target.value})}/>
-          </div>
+        
 
           
           <div className="btn-container">
