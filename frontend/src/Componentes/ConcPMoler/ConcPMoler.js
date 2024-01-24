@@ -8,6 +8,7 @@ import axios from 'axios'
 
 function ConcPMoler() {
   const [data, setData] = useState([]);
+  
 
   useEffect(() => {
     fetch('http://localhost:8081/concpmoler')
@@ -16,11 +17,23 @@ function ConcPMoler() {
       .catch(err => console.log(err));
   }, [])
 
-  const handleDelete = (id) =>{
-    axios.delete('http://localhost:8081/deleteconcpmoler/'+id)
-    .then(res => window.location.reload())
-    .catch(err => console.log(err))
-  }
+  const handleDelete = (id) => {
+    axios.delete(`http://localhost:8081/deleteconcpmoler/${id}`)
+      .then(res => {
+        // Actualiza la lista de datos excluyendo el registro eliminado
+        const updatedData = data.filter(item => item.id !== id);
+        setData(updatedData);
+  
+        // Recalcula el saldo total con la lista actualizada
+        calcularSaldoTotal(updatedData);
+      })
+      .catch(err => console.log(err));
+  };
+  
+  
+
+ 
+
   return (
     <>
    
@@ -57,6 +70,7 @@ function ConcPMoler() {
                     <td>{d.salida.toFixed(3)}</td>
                     <td>{d.pesp.toFixed(2)}</td>
                     <td>{d.saldo.toFixed(3)}</td>
+
                   
 
                     <td>
