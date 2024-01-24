@@ -31,26 +31,45 @@ function Menu() {
             <div className='sidebar_content'>
 
                 <div className={` ${smallNavCollpase ? "smallNav" : ""} sidebar-container ${navCollpase ? "navCollaps" : ""}`}>
-                    <div className='nav-option option1'>
-                      
-                    <i class="bi bi-house-door-fill"></i>
-                            <label>Inicio</label>
-                      
-                    </div>
 
-                    <div className='nav-option option2'>
-                    <i class="bi bi-card-list"></i>
+                    <Link className='nav-option option3' style={{ textDecoration: 'none', color: 'white' }} to="/Inicio">
+                        <i class="bi bi-house-door-fill"></i>
+                        <label>Inicio</label>
+
+                    </Link>
+
+                    <Link className='nav-option option3' style={{ textDecoration: 'none', color: 'white' }} to="/diario">
+                        <i class="bi bi-card-list"></i>
                         <label>Reporte Diario</label>
 
-                    </div>
 
-                    <div className='nav-option option3'>
-                        <i className='opcion3'></i>
+                    </Link>
+
+                    <Link className='nav-option option3' style={{ textDecoration: 'none', color: 'white' }} to="/concpmoler">
+                    <i class="bi bi-card-list"></i>
                         <label>Conc. P/Moler</label>
 
 
-                    </div>
+                    </Link>
 
+                    <Link className='nav-option option3' style={{ textDecoration: 'none', color: 'white' }} to="/silos">
+                        <i class="bi bi-card-list"></i>
+                        <label>Silos</label>
+
+
+                    </Link>
+                    <Link className='nav-option option3' style={{ textDecoration: 'none', color: 'white' }} to="/seleccion">
+                        <i class="bi bi-card-list"></i>
+                        <label>Seleccion</label>
+
+
+                    </Link>
+                    <Link className='nav-option option3' style={{ textDecoration: 'none', color: 'white' }} to="/granobandas">
+                        <i class="bi bi-card-list"></i>
+                        <label>Grano Bandas</label>
+
+
+                    </Link>
                 </div>
 
             </div>
