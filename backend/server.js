@@ -390,3 +390,42 @@ app.get('/updateobtenerSaldoAnterior', (req, res) => {
         }
     });
 });
+//////////////////////REPORTEDIAIRIO//////////
+app.get('/reportediario', (req, res) => {
+    const sql = "SELECT * FROM reportediario";
+    db.query(sql, (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+});
+app.post('/createreportediario', (req, res) => {
+    const sql = "INSERT INTO reportediario (fecha,crivadasilvialavar, consmoler, trictolva, grano_moler,patiotolvageneral,patiotolva2,granomoler2,medios5y6,medioslavar,granojics1,tepetatejics1,conm5,consm6,consjics1,consjics2,granoproducido,consm3y4,consm1y2,polvocts) VALUES (?, ?, ?, ?, ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+    const values = [
+        req.body.fecha,
+        req.body.crivadasilvialavar,
+        req.body.consmoler,
+        req.body.trictolva,
+        req.body.grano_moler,
+        req.body.patiotolvageneral,
+        req.body.patiotolva2,
+        req.body.granomoler2,
+        req.body.medios5y6,
+        req.body.medioslavar,
+        req.body.granojics1,
+        req.body.tepetatejics1,
+        req.body.conm5,
+        req.body.consm6,
+        req.body.consjics1,
+        req.body.consjics2,
+        req.body.granoproducido,
+        req.body.consm3y4,
+        req.body.consm1y2,
+        req.body.polvocts,
+
+
+    ];
+    db.query(sql, values, (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+});

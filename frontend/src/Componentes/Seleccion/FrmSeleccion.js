@@ -7,7 +7,7 @@ import axios from 'axios'
 function FrmSeleccion() {
 
     const [values, setValues] = useState({
-        fecha: '',
+        fecha: "",
         entrada: "",
         salida: "",
         pesp: "",
@@ -94,7 +94,7 @@ function FrmSeleccion() {
 
           
           <div className="btn-container">
-          <button type="submit" className="BTN"  >GUARDAR</button>
+          <button type="submit" className="BTN" onSubmit={handleSubmit} >GUARDAR</button>
           </div>
 
 

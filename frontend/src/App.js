@@ -19,14 +19,14 @@ import Silos from './Componentes/Silos/Silos';
 import Seleccion from './Componentes/Seleccion/Seleccion';
 import GranoBandas from './Componentes/GranoBandas/GranoBandas';
 import ReporteDiario from './Componentes/ReporteDiario/ReporteDiario'
-
+import FrmReporte from './Componentes/ReporteDiario/FrmReporte'
 
 
 function App() {
   return (
    
     <Router>
-    
+    <div><Menu/></div>
    
        <Routes>
        <Route path="/" element={<Login />}/>
@@ -56,6 +56,9 @@ function App() {
        <Route path="/createconcpmoler" element={<FrmPMoler/>}/>
        <Route path="/updateconcpmoler/:id" element={<ModificarCPMoler/>}/>
        <Route path="/concpmoler" element={<ConcPMoler/>}/>
+
+       //////////REPORTESDIARIOS//////////7
+       <Route path="/createreportediario" element={<FrmReporte/>}/>
        
          
        
