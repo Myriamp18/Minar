@@ -9,7 +9,7 @@
     align-items: center;
 }
 
-.containers{
+.containerregistro{
     display: flex;
     flex-direction: column;
     margin-left: -30px;
@@ -22,19 +22,19 @@
  
     
 }
-.headerst{
+.headerregistro{
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 100%;
     margin-top: 5px;
 }
-.textst{
+.textregistro{
     color: #020101da;
     font-size: 48px;
     font-weight: 700;
 }
-.underlinest{
+.underlineregistro{
     width: 61px;
     height: 6px;
     background: #151212;
@@ -45,6 +45,30 @@
     color: #000000;
     font-size: 18px;
    
+}
+
+.inputregistro{
+    display: flex;
+    align-items: center;
+    margin: auto;
+    width: 450px;
+    height: 70px;
+    background: #fffcfc;
+    border-radius: 6px;
+    
+}
+
+.inputregistro input{
+    height: 40px;
+    width: 400px;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #020202;
+    font-size: 19px;
+}
+.input img{
+    margin: 0px 30px;
 }
 
 .forgot-registrar span{

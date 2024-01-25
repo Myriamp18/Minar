@@ -32,14 +32,14 @@ function InsertarUsuario() {
 
         <div className="registrar-section">
           
-            <div className='containers'>
-                <div className="headerst">
-                    <div className="textst">REGISTRARSE</div>
-                    <div className="underlinest"></div>
+            <div className='containerregistro'>
+                <div className="headerregistro">
+                    <div className="textregistro">REGISTRARSE</div>
+                    <div className="underlineregistro"></div>
                 </div>
                 <form >
                     <div className="pop">
-                        <div className="input">
+                        <div className="inputregistro">
 
                             <input type="text" size="sm"
                                 placeholder='Nombre de Completo '
@@ -48,8 +48,7 @@ function InsertarUsuario() {
 
                             />
                         </div>
-                       
-                        <div className="input">
+                        <div className="inputregistro">
 
                             <input type="text" size="sm"
                                 placeholder='Numero Telefonico '
@@ -59,7 +58,7 @@ function InsertarUsuario() {
                             />
                         </div>
                         
-                        <div className="input">
+                        <div className="inputregistro">
 
                             <input type="text" size="sm"
                                 placeholder='Cargo '
@@ -68,7 +67,7 @@ function InsertarUsuario() {
 
                             />
                         </div>
-                        <div className="input">
+                        <div className="inputregistro">
                         <img src={Usuario_M} alt='usuariologin' />
                             <input type="text" size="sm"
                                 placeholder='Nombre de Usuario '
@@ -77,8 +76,7 @@ function InsertarUsuario() {
 
                             />
                         </div>
-                        
-                        <div className="input">
+                        <div className="inputregistro">
                         <img src={Contra_L} alt='contraseñalogin' />
                             <input type="password"
                                 placeholder='Contraseña'

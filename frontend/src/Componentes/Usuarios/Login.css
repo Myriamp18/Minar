@@ -9,19 +9,19 @@
 }
 
 
-.container{
+.containerlogin{
     display: flex;
     flex-direction: column;
     margin: auto;
     margin-top: 100px;
     width: 600px;
-    background-color: #3f3a3a6c;
+    background-color: #1a19196c;
     padding-bottom: 0px;
     box-sizing: border-box;
  
     
 }
-.header{
+.headerlogin{
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -29,29 +29,29 @@
     width: 100%;
     margin-top: 30px;
 }
-.text{
+.textlogin{
     color: #000000;
     font-size: 48px;
     font-weight: 700;
 }
-.underline{
+.underlinelogin{
     width: 61px;
     height: 6px;
     background: #050505;
     border-radius: 9px;
 }
 
-.input{
+.inputlogin{
     display: flex;
     align-items: center;
     margin: auto;
-    width: 480px;
+    width: 450px;
     height: 70px;
     background: #fffcfc;
     border-radius: 6px;
     
 }
-.input input{
+.inputlogin input{
     height: 40px;
     width: 400px;
     background: transparent;

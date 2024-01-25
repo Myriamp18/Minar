@@ -1,6 +1,6 @@
 import React from 'react';
 import FrmReporte from './FrmReporte';
-import './ReporteDiario.css'
+
 
 const ReporteDiario = () => {
   return (

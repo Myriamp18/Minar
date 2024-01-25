@@ -38,14 +38,14 @@ const Login = () => {
   return (
     
     <div className="login-section">
-      <div className='container'>
-        <div className="header">
-          <div className="text">LOGIN</div>
-          <div className="underline"></div>
+      <div className='containerlogin'>
+        <div className="headerlogin">
+          <div className="textlogin">LOGIN</div>
+          <div className="underlinelogin"></div>
         </div>
         <form>
           <div className="pop">
-            <div className="input">
+            <div className="inputlogin">
               <img src={Usuario_M} alt='usuariologin' />
               <input type="usuario" size="sm"
                 placeholder='Nombre de Usuario '
@@ -55,7 +55,7 @@ const Login = () => {
               />
             </div>
             <br />
-            <div className="input">
+            <div className="inputlogin">
               <img src={Contra_L} alt='contraseñalogin' />
               <input type="password"
                 placeholder='Contraseña'
