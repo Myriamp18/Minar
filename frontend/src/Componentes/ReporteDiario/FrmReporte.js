@@ -21,7 +21,7 @@ function FrmReporte() {
        <FontAwesomeIcon icon={faPlus}/> <strong >Insertar Reporte </strong>
       </Button>
 
-      <Modal className='modal' show={show}   {...props}
+      <Modal className='modal' show={show}   
       size="lg"
       aria-labelledby="contained-modal-title-vcenter"
       centered
