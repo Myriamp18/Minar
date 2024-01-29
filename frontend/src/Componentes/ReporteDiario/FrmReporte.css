@@ -56,9 +56,9 @@ label {
     color: #f80505;
   }
 
-.input{
+.columna input{
   width: 100%;
-  padding: 8px;
+  padding: 2px;
   box-sizing: border-box;
   border: 1px solid #ccc;
   border-radius: 4px;
@@ -73,8 +73,8 @@ label {
 
 .columns {
     display: flex;
-    justify-content: center;
-    margin-top: 20px;
+    
+    margin-top: 5px;
     
     
   }
