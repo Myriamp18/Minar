@@ -11,12 +11,6 @@
  
   }
 
-.linea{
-    width: 61px;
-    height: 6px;
-    background: #f80101;
-    border-radius: 9px;
-}
 .headert{
     display: flex;
     flex-direction: column;
@@ -42,18 +36,24 @@
     gap: 5px;
 }
 
-.lavar{
+.JIGS1{
    
     margin-bottom: 5px;
    
     
 }
+.fecha{
+  display: flex;
+  
+  align-items: center;
+}
 
 label {
     display: block;
-    font-size: 12px;
+    font-size: 15px;
     margin-bottom: 2px;
     font-weight: bold;
+    color: #f80505;
   }
 
 .input{

@@ -94,7 +94,7 @@ function FrmSeleccion() {
 
           
           <div className="btn-container">
-          <button type="submit" className="BTN" onSubmit={handleSubmit} >GUARDAR</button>
+          <button type="submit" className="BTN"  >GUARDAR</button>
           </div>
 
 

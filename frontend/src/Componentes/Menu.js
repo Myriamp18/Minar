@@ -38,7 +38,7 @@ function Menu() {
 
                     </Link>
 
-                    <Link className='nav-option option3' style={{ textDecoration: 'none', color: 'white' }} to="/diario">
+                    <Link className='nav-option option3' style={{ textDecoration: 'none', color: 'white' }} to="/createreportediario">
                         <i class="bi bi-card-list"></i>
                         <label>Reporte Diario</label>
 

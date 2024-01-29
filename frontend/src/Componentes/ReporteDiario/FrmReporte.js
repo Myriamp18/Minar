@@ -10,26 +10,84 @@ import axios from 'axios'
 
 function FrmReporte() {
   const [values, setValues] = useState({
+    ///jigs//
     fecha: "",
-    crivadasilvialavar: "",
-    consmoler: "",
-    trictolva: "",
-    grano_moler: "",
-    patiotolvageneral: "",
-    patiotolva2: "",
-    granomoler2: "",
-    medios5y6: "",
-    medioslavar: "",
-    granojics1: "",
-    tepetatejics1: "",
-    conm5: "",
-    consm6: "",
-    consjics1: "",
-    consjics2: "",
-    granoproducido: "",
-    consm3y4: "",
-    consm1y2: "",
-    polvocts: "",
+    turno: "",
+    alimj1:"",
+    peaj1:"",
+    granoj1:"",
+    pegj1:"",
+    colasj1:"",
+    pecj1:"",
+    desenj1:"",
+    pedj1:"",
+    alimj2:"",
+    peaj2:"",
+    granoj2:"",
+    pegj2:"",
+    colasj2:"",
+    pecj2:"",
+    desenj2:"",
+    pedj2:"",
+    ///chini y sec///
+    alimjch:"",
+    peajch:"",
+    granojch:"",
+    pegjch:"",
+    desenjch:"",
+    pedjch:"",
+    colasjch:"",
+    pecjch:"",
+    alimjsec:"",
+    peajsec:"",
+    concjsec:"",
+    pecojsec:"",
+    colasjsec:"",
+    pecjsec:"",
+    //////Mesas///
+    alimm12:"",
+    peam12:"",
+    conm12:"",
+    pecnm12:"",
+    mediom12:"",
+    pemm12:"",
+    colasm12:"",
+    pecm12:"",
+    alimm34:"",
+    peam34:"",
+    conm34:"",
+    pecnm34:"",
+    mediosm34:"",
+    pemm34:"",
+    colasm34:"",
+    pecm34:"",
+    alimm5:"",
+    peam5:"",
+    conm5:"",
+    pecnm5:"",
+    mediosm5:"",
+    pemm5:"",
+    colasm5:"",
+    pecm5:"",
+    alimm6:"",
+    peam6:"",
+    conm6:"",
+    pecnm6:"",
+    mediom6:"",
+    pemm6:"",
+    colasm6:"",
+    pecm6:"",
+    ////seleccion////
+    alimgrano:"",
+    peag:"",
+    concgrano:"",
+    pecng:"",
+    colasgrano:"",
+    pecg:"",
+    tonpiedra:"",
+    petp:"",
+    tolvageneral	:"",
+    medio3y4:"",
 
   })
 
@@ -49,7 +107,7 @@ function FrmReporte() {
 
   return (
 
-    <div className="d-flex align-items-center flex-column mt-3" >
+    <div className="d-flex  flex-column mt-3" >
       <h1>Insertar Reporte Diario</h1>
       <form className="w-50" onSubmit={handleSubmit} >
         <div className='fecha'>
@@ -61,64 +119,100 @@ function FrmReporte() {
           onChange={(e) => setValues({...values, fecha: e.target.value})}  />
         </div>
 
+        <div className='turno'>
+        <label for="seleccion">Turno:</label>
+        <select 
+        id="seleccion" 
+        name="seleccion"
+        value={values.turno}
+        onChange={(e) => setValues({...values, turno: e.target.value})} >
+            <option value="opcion1">Primera</option>
+            <option value="opcion2">Segunda</option>
+            <option value="opcion3">Tercera</option>
+            
+        </select>
+         
+        </div>
+
         <div className="columns">
           {/* Primera columna */}
 
           <div className="columna">
 
-            <div className="lavar">
-              <label> Crivada Silvia a Lavar:</label>
+            <div className="JIGS1">
               <input 
               type="numers" 
-              placeholder="cantidad"
-              name='crivadasilvialavar'
-              onChange={(e) => setValues({...values, crivadasilvialavar: e.target.value})}/>
+              placeholder="Patio LS"
+              name='tolvageneral	'
+              onChange={(e) => setValues({...values, tolvageneral	: e.target.value})}/>
             </div>
 
-            <div className="lavar">
-              <label> Consentrado a Moler 123y4:</label>
+            <div className="JIGS1">
               <input 
               type="moler" 
-              placeholder="cantidad" 
-              name='consmoler'
-              onChange={(e) => setValues({...values, consmoler: e.target.value})}/>
+              placeholder="Medios 3 y 4" 
+              name='medio3y4'
+              onChange={(e) => setValues({...values, medio3y4: e.target.value})}/>
             </div>
 
-            <div className="lavar">
-              <label> Tric. Tolva General:</label>
+            
+             <label>info. JIGS#1</label>
+            <div className="JIGS1">
               <input
               type="tolvagen"
-              placeholder="cantidad"
-              name='trictolva'
-              onChange={(e) => setValues({...values, trictolva: e.target.value})}/>
+              placeholder="Alimentacion JIGS1"
+              name='alimj1'
+              onChange={(e) => setValues({...values, alimj1: e.target.value})}/>
             </div>
 
-            <div className="lavar">
-              <label> Grano a Moler:</label >
+            <div className="JIGS1">
                <input
-              type="tolvagen"
-              placeholder="cantidad" 
-              name='grano_moler'
-              onChange={(e) => setValues({...values, grano_moler: e.target.value})}/>
+              placeholder="P.E" 
+              name='peaj1'
+              onChange={(e) => setValues({...values, peaj1: e.target.value})}/>
               
             </div>
 
-            <div className="lavar">
-              <label>Patio a Tolva General:</label>
+            <div className="JIGS1">
               <input
-               type="patiotg"
-               placeholder="cantidad" 
-               name=' patiotolvageneral'
-               onChange={(e) => setValues({...values, patiotolvageneral: e.target.value})} />
+               placeholder="Grano JIGS1" 
+               name=' granoj1l'
+               onChange={(e) => setValues({...values, granoj1granoj1: e.target.value})} />
             </div>
 
-            <div className="lavar">
-              <label> Patio a Tolva #2:</label>
+            <div className="JIGS1">
               <input
-               type="patiot2"
-               placeholder="cantidad"
-               name='patiotolva2'
-               onChange={(e) => setValues({...values, patiotolva2: e.target.value})}/>
+               placeholder="P.E"
+               name='pegj1'
+               onChange={(e) => setValues({...values, pegj1: e.target.value})}/>
+            </div>
+            
+            <div className="JIGS1">
+              <input
+               placeholder="Desensolve JIGS1"
+               name=' desenj1'
+               onChange={(e) => setValues({...values,  desenj1: e.target.value})}/>
+            </div>
+
+            <div className="JIGS1">
+              <input
+               placeholder="P.E"
+               name=' pedj1'
+               onChange={(e) => setValues({...values,  pedj1: e.target.value})}/>
+            </div>
+
+            <div className="JIGS1">
+              <input
+               placeholder="Colas JIGS1"
+               name='colasj1'
+               onChange={(e) => setValues({...values,  colasj1: e.target.value})}/>
+            </div>
+            
+            <div className="JIGS1">
+              <input
+               placeholder="P.E"
+               name='pecj1'
+               onChange={(e) => setValues({...values, pecj1: e.target.value})}/>
             </div>
 
           </div>
