@@ -210,6 +210,15 @@ function FrmReporte() {
             </div>
 
             <div className="lavar">
+              <label>Consentrado JIGS SE:</label>
+              <input 
+              type="concentraoJIGS2" 
+              placeholder="cantidad"
+               name=' consjics2'
+              onChange={(e) => setValues({...values, consjics2: e.target.value})}/>
+            </div>
+
+            <div className="lavar">
               <label>Grano Produccion JIGS1:</label>
               <input 
               type="graPRODJIGS1" 
