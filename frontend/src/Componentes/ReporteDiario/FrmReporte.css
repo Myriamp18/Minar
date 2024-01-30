@@ -1,113 +1,92 @@
-.contenedor{
-    max-width: 800px;
-    margin: 0 auto;
-  
- 
-}
-.frm-section {
-    background-color: #574e4e65;
-    padding: 20px;
-    align-items: center;
- 
-  }
-
-.headert{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1px;
-    width: 100%;
-    margin-top: 30px;
-}
-
-.texto{
-    color: #f80505;
-    font-size: 40px;
-    font-weight: 700;
-}
-
-
-
-
-.pops{
-    margin-top: 3px;
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-}
-
-.JIGS1{
-   
-    margin-bottom: 5px;
-   
-    
-}
-.fecha{
+.columns {
   display: flex;
-  
-  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.JIGS1 {
+  margin-bottom: 2px;
+}
+.mmm{
+  display: flex;
+  justify-content: space-between;
+}
+.mmm input{
+  width: 100%;
+  padding: 2px;
+  box-sizing: border-box;
+  border: 1px solid #bd3131;
+  border-radius: 4px;
+  margin-bottom: 5px;
+}
+.columna {
+  flex:1;
+  margin-right: 10px;
+}
+.columnas{
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+}
+
+
+.btn-container {
+  margin-top: 20px;
+}
+
+.BTN {
+  background-color: #ff0000;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+/* Additional styling for form elements */
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+input::placeholder {
+  color: #100d0d;
+  font-family: 'TuTipoDeLetra', sans-serif;
+  font-size: 14px;
 }
 
 label {
-    display: block;
-    font-size: 15px;
-    margin-bottom: 2px;
-    font-weight: bold;
-    color: #f80505;
-  }
-
+  display: block;
+  font-size: 15px;
+  margin-bottom: 2px;
+  font-weight: bold;
+  color: #f80505;
+}
 .columna input{
   width: 100%;
   padding: 2px;
   box-sizing: border-box;
-  border: 1px solid #ccc;
+  border: 1px solid #251f8c;
+  border-radius: 4px;
+    
+  margin-bottom: 5px;
+
+}
+.medios{
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+}
+
+.mmm select {
+  width: 100%;
+  padding: 2px;
+  box-sizing: border-box;
+  border: 1px solid #bd3131;
   border-radius: 4px;
     
 }
 
-.fecha{
-    display: block;
-    justify-content:center;
-    margin-top: 20px;
-}
+/* Add more specific styles for different input types if needed */
 
-.columns {
-    display: flex;
-    
-    margin-top: 5px;
-    
-    
-  }
-  
-
-  
-  .columna {
-    flex: 1;
-   
-  }
-
-  .BTN{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 190px;
-    height: 40px;
-    color: #ffefef;
-    background: #af0707;
-    border-radius: 50px;
-    font-size: 15px;
-    font-weight: 300;
-    cursor: pointer;
-    font-weight: bold;
-    gap: 10px;
-  }
-
- .btn-container{
-    display: flex;
-    margin: 20px auto;
-    justify-content: center;
- }
-.modal{
-  background-color: #574e4e65;
-
-}
+/* You may also add more specific styles for different sections, labels, and inputs as needed. */

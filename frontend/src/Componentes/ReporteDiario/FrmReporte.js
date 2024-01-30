@@ -1,8 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Modal } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import './FrmReporte.css'
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios'
@@ -91,29 +88,33 @@ function FrmReporte() {
     petp: "",
     tolvageneral: "",
     medio3y4: "",
-
+    minale:"",
+    minals:"",
+    patiols:"",
+    desensolve:"",
+    colas:"",
   })
 
 
   const navigate = useNavigate()
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    axios.post('http://localhost:8081/createreportediario', values)
-      .then(res => {
-        console.log(res);
-        // Optionally, you can navigate to a different page or update the UI
-        navigate('/reportediario'); // Example: Navigate to the home page
-      })
-      .catch(err => console.log(err));
-  };
+      const handleSubmit =(e) => {
+        e.preventDefault()
+        axios.post('http://localhost:8081/createreporte', values)
+        .then(res => {
+          console.log(res);
+          // Optionally, you can navigate to a different page or update the UI
+          navigate('/Inicio'); // Example: Navigate to the home page
+        })
+        .catch(err => console.log(err));
+    };
 
   return (
 
-    <div className="d-flex  flex-column mt-3" >
+    <div className="d-flex align-items-center flex-column mt-3" >
       <h1>Insertar Reporte Diario</h1>
       <form className="w-50" onSubmit={handleSubmit} >
-        <div className='columns'>
+        <div className='mmm'>
           <div className='JIGS1'>
             <label> Fecha:</label>
             <input
@@ -124,21 +125,47 @@ function FrmReporte() {
           </div>
 
           <div className='JIGS1'>
-            <label for="seleccion">Turno:</label>
+            <label>Turno:</label>
             <select
               id="seleccion"
               name="seleccion"
               value={values.turno}
               onChange={(e) => setValues({ ...values, turno: e.target.value })} >
-              <option value="opcion1">Primera</option>
-              <option value="opcion2">Segunda</option>
-              <option value="opcion3">Tercera</option>
+              <option value="opcion1">1</option>
+              <option value="opcion2">2</option>
+              <option value="opcion3">3</option>
 
             </select>
 
           </div>
         </div>
-        <div className='columns'>
+        <div className='columnas'>
+          <div className="JIGS1">
+            <input
+              type="numers"
+              placeholder="Mina LE"
+              name='	minale	'
+              onChange={(e) => setValues({ ...values, 	minale: e.target.value })} />
+          </div>
+
+          
+            <input
+              type="moler"
+              placeholder="Mina LS"
+              name='minals'
+              onChange={(e) => setValues({ ...values, minals: e.target.value })} />
+         
+         
+    
+          <div className="JIGS1">
+            <input
+              type="numers"
+              placeholder="Patio LE"
+              name='patiols	'
+              onChange={(e) => setValues({ ...values, patiols: e.target.value })} />
+          </div>
+          </div>
+          <div className='columnas'>
           <div className="JIGS1">
             <input
               type="numers"
@@ -146,15 +173,36 @@ function FrmReporte() {
               name='tolvageneral	'
               onChange={(e) => setValues({ ...values, tolvageneral: e.target.value })} />
           </div>
-
           <div className="JIGS1">
             <input
               type="moler"
               placeholder="Medios 3 y 4"
               name='medio3y4'
               onChange={(e) => setValues({ ...values, medio3y4: e.target.value })} />
-          </div>
+          
         </div>
+        <div className="JIGS1">
+            <input
+              type="moler"
+              placeholder="Desensolve"
+              name='desensolve'
+              onChange={(e) => setValues({ ...values, desensolve: e.target.value })} />
+          
+        </div>
+        
+        </div>
+        <div className='columnas'>
+        <div className="JIGS1">
+            <input
+              type="moler"
+              placeholder="Colas"
+              name='colas'
+              onChange={(e) => setValues({ ...values, colas: e.target.value })} />
+          
+          </div>
+          </div>
+
+        
 
 
 
@@ -167,11 +215,11 @@ function FrmReporte() {
 
 
 
-            <label>info. JIGS#1</label>
+            <label>JIGGS#1</label>
             <div className="JIGS1">
               <input
                 type="tolvagen"
-                placeholder="Alimentacion JIGS1"
+                placeholder="Alim."
                 name='alimj1'
                 onChange={(e) => setValues({ ...values, alimj1: e.target.value })} />
             </div>
@@ -186,7 +234,7 @@ function FrmReporte() {
 
             <div className="JIGS1">
               <input
-                placeholder="Grano JIGS1"
+                placeholder="Grano"
                 name=' granoj1l'
                 onChange={(e) => setValues({ ...values, granoj1granoj1: e.target.value })} />
             </div>
@@ -200,7 +248,7 @@ function FrmReporte() {
 
             <div className="JIGS1">
               <input
-                placeholder="Desensolve JIGS1"
+                placeholder="Desens"
                 name=' desenj1'
                 onChange={(e) => setValues({ ...values, desenj1: e.target.value })} />
             </div>
@@ -214,7 +262,7 @@ function FrmReporte() {
 
             <div className="JIGS1">
               <input
-                placeholder="Colas JIGS1"
+                placeholder="Colas"
                 name='colasj1'
                 onChange={(e) => setValues({ ...values, colasj1: e.target.value })} />
             </div>
@@ -233,12 +281,12 @@ function FrmReporte() {
 
           {/* Segunda columna */}
           <div className="columna">
-            <label>JIGS2</label>
+            <label>JIGGS#2</label>
             <div className="JIGS1">
 
               <input
 
-                placeholder="Alimentacion JIGS2"
+                placeholder="Alim."
                 name='alimj2'
                 onChange={(e) => setValues({ ...values, alimj2: e.target.value })} />
             </div>
@@ -253,7 +301,7 @@ function FrmReporte() {
 
             <div className="JIGS1">
               <input
-                placeholder="Grano JIGS2"
+                placeholder="Grano"
                 name='granoj2'
                 onChange={(e) => setValues({ ...values, granoj2: e.target.value })} />
             </div>
@@ -267,7 +315,7 @@ function FrmReporte() {
 
             <div className="JIGS1">
               <input
-                placeholder="Desensolve JIGS2"
+                placeholder="Desen."
                 name=' desenj2'
                 onChange={(e) => setValues({ ...values, desenj2: e.target.value })} />
             </div>
@@ -285,7 +333,7 @@ function FrmReporte() {
 
               <input
 
-                placeholder="Colas JIGS2"
+                placeholder="Colas"
                 name='colasj2'
                 onChange={(e) => setValues({ ...values, colasj2: e.target.value })} />
             </div>
@@ -304,10 +352,10 @@ function FrmReporte() {
           {/* Tercera columna */}
           <div className="columna">
 
-            <label>JIGS CHINO</label>
+            <label>J.CHINO</label>
             <div className="JIGS1">
               <input
-                placeholder="Alimentacion JIGS CHINO"
+                placeholder="Alim."
                 name=' alimjch'
                 onChange={(e) => setValues({ ...values, alimjch: e.target.value })} />
             </div>
@@ -331,7 +379,7 @@ function FrmReporte() {
             </div>
             <div className="JIGS1">
               <input
-                placeholder="Desensolve JIGS CHINO"
+                placeholder="Desens."
                 name=' desenjch'
                 onChange={(e) => setValues({ ...values, desenjch: e.target.value })} />
             </div>
@@ -343,7 +391,7 @@ function FrmReporte() {
             </div>
             <div className="JIGS1">
               <input
-                placeholder="Colas JIGS CHINO"
+                placeholder="Colas"
                 name='colasjch'
                 onChange={(e) => setValues({ ...values, colasjch: e.target.value })} />
             </div>
@@ -358,10 +406,10 @@ function FrmReporte() {
           </div>
           {/* Cuarta columna */}
           <div className="columna">
-            <label>JIGS SECU</label>
+            <label>J.SECU</label>
             <div className="JIGS1">
               <input
-                placeholder="Alimentacion JIGS SECU"
+                placeholder="Alim."
                 name='alimjsec'
                 onChange={(e) => setValues({ ...values, alimjsec: e.target.value })} />
             </div>
@@ -373,7 +421,7 @@ function FrmReporte() {
             </div>
             <div className="JIGS1">
               <input
-                placeholder="Concentrado"
+                placeholder="Conc."
                 name=' concjsec'
                 onChange={(e) => setValues({ ...values, concjsec: e.target.value })} />
             </div>
@@ -399,10 +447,10 @@ function FrmReporte() {
           {/* Quinta columna */}
           <div className='columna'>
 
-            <label>Mesa 1 y 2 </label>
+            <label>Mesa1y2 </label>
             <div className="JIGS1">
               <input
-                placeholder="Alimentacion"
+                placeholder="Alim."
                 name=' alimm12'
                 onChange={(e) => setValues({ ...values, alimm12: e.target.value })} />
             </div>
@@ -414,7 +462,7 @@ function FrmReporte() {
             </div>
             <div className="JIGS1">
               <input
-                placeholder="Concentrado"
+                placeholder="Conc."
                 name=' conm12'
                 onChange={(e) => setValues({ ...values, conm12: e.target.value })} />
             </div>
@@ -451,10 +499,10 @@ function FrmReporte() {
           </div>
           {/* SEXTA columna */}
           <div className='columna'>
-            <label>Mesa 3 y 4</label>
+            <label>Mesa3y4</label>
             <div className="JIGS1">
               <input
-                placeholder="Alimentacion"
+                placeholder="Alim."
                 name=' alimm34'
                 onChange={(e) => setValues({ ...values, alimm34: e.target.value })} />
             </div>
@@ -466,7 +514,7 @@ function FrmReporte() {
             </div>
             <div className="JIGS1">
               <input
-                placeholder="Concentrado"
+                placeholder="Conc."
                 name='conm34'
                 onChange={(e) => setValues({ ...values, conm34: e.target.value })} />
             </div>
@@ -502,12 +550,12 @@ function FrmReporte() {
             </div>
 
           </div>
-          {/* SEXTA columna */}
+          {/* SEptima columna */}
           <div className='columna'>
-            <label>Mesa 5</label>
+            <label>Mesa#5</label>
             <div className="JIGS1">
               <input
-                placeholder="Alimentacion"
+                placeholder="Alim."
                 name=' alimm5'
                 onChange={(e) => setValues({ ...values, alimm5: e.target.value })} />
             </div>
@@ -519,7 +567,7 @@ function FrmReporte() {
             </div>
             <div className="JIGS1">
               <input
-                placeholder="Concentrado"
+                placeholder="Conc."
                 name=' conm5'
                 onChange={(e) => setValues({ ...values,  conm5: e.target.value })} />
             </div>
@@ -554,6 +602,118 @@ function FrmReporte() {
                 onChange={(e) => setValues({ ...values, pecm5: e.target.value })} />
             </div>
           </div>
+
+            {/* octava columna */}
+            <div className='columna'>
+            <label>Mesa#6</label>
+            <div className="JIGS1">
+              <input
+                placeholder="Alim."
+                name=' alimm6'
+                onChange={(e) => setValues({ ...values, alimm6: e.target.value })} />
+            </div>
+            <div className="JIGS1">
+              <input
+                placeholder="P.E"
+                name='peam6'
+                onChange={(e) => setValues({ ...values, peam6: e.target.value })} />
+            </div>
+            <div className="JIGS1">
+              <input
+                placeholder="Conc."
+                name=' conm6'
+                onChange={(e) => setValues({ ...values,  conm6: e.target.value })} />
+            </div>
+            <div className="JIGS1">
+              <input
+                placeholder="P.E"
+                name='pecnm6'
+                onChange={(e) => setValues({ ...values, pecnm6: e.target.value })} />
+            </div>
+            <div className="JIGS1">
+              <input
+                placeholder="Medios"
+                name='mediosm6'
+                onChange={(e) => setValues({ ...values, mediosm6: e.target.value })} />
+            </div>
+            <div className="JIGS1">
+              <input
+                placeholder="P.E"
+                name='pemm6'
+                onChange={(e) => setValues({ ...values, pemm6: e.target.value })} />
+            </div>
+            <div className="JIGS1">
+              <input
+                placeholder="Colas"
+                name=' colasm6'
+                onChange={(e) => setValues({ ...values, colasm6: e.target.value })} />
+            </div>
+            <div className="JIGS1">
+              <input
+                placeholder="P.E"
+                name=' pecm6'
+                onChange={(e) => setValues({ ...values, pecm6: e.target.value })} />
+            </div>
+            </div>
+
+              {/* novena columna */}
+              <div className='columna'>
+            <label>Grano</label>
+            <div className="JIGS1">
+              <input
+                placeholder="Alim."
+                name=' alimgrano'
+                onChange={(e) => setValues({ ...values, alimgrano: e.target.value })} />
+            </div>
+            <div className="JIGS1">
+              <input
+                placeholder="P.E"
+                name=' peag'
+                onChange={(e) => setValues({ ...values,  peag: e.target.value })} />
+            </div>
+            <div className="JIGS1">
+              <input
+                placeholder="Conc."
+                name=' concgrano'
+                onChange={(e) => setValues({ ...values, concgrano: e.target.value })} />
+            </div>
+            <div className="JIGS1">
+              <input
+                placeholder="P.E"
+                name='pecng'
+                onChange={(e) => setValues({ ...values, pecng: e.target.value })} />
+            </div>
+            <div className="JIGS1">
+              <input
+                placeholder="Colas"
+                name=' colasgrano'
+                onChange={(e) => setValues({ ...values,  colasgrano: e.target.value })} />
+            </div>
+            <div className="JIGS1">
+              <input
+                placeholder="P.E"
+                name='pecg'
+                onChange={(e) => setValues({ ...values, pecg: e.target.value })} />
+            </div>
+           
+  
+            </div>
+             {/* 10 columna */}
+             <div className='columna'> 
+             <label>Piedra</label>
+            <div className="JIGS1">
+              <input
+                placeholder="TON"
+                name=' tonpiedra'
+                onChange={(e) => setValues({ ...values,tonpiedra: e.target.value })} />
+            </div>
+            <div className="JIGS1">
+              <input
+                placeholder="P.E"
+                name='  petp'
+                onChange={(e) => setValues({ ...values, petp: e.target.value })} />
+            </div>
+            </div>
         </div>
         <div className="btn-container">
           <button type="submit" className="BTN"  >GUARDAR</button>
