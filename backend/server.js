@@ -392,79 +392,222 @@ app.get('/updateobtenerSaldoAnterior', (req, res) => {
 });
 //////////////////////REPORTEDIAIRIO//////////
 app.get('/reportediario', (req, res) => {
-    const sql = "SELECT * FROM produccionjigs";
+    const sql = 'SELECT * FROM produccionjigs ORDER BY id DESC LIMIT 3';
     db.query(sql, (err, data) => {
         if (err) return res.json(err);
         return res.json(data);
     });
 });
 app.get('/reportediariojch', (req, res) => {
-    const sql = "SELECT * FROM jigschinos";
+    const sql = "SELECT * FROM jigschinos ORDER BY id DESC LIMIT 3";
     db.query(sql, (err, data) => {
         if (err) return res.json(err);
         return res.json(data);
     });
 });
 app.get('/reportediariomesas', (req, res) => {
-    const sql = "SELECT * FROM mesas";
+    const sql = "SELECT * FROM mesas ORDER BY id DESC LIMIT 3";
     db.query(sql, (err, data) => {
         if (err) return res.json(err);
         return res.json(data);
     });
 });
 app.get('/reportediariograno', (req, res) => {
-    const sql = "SELECT * FROM prodseleccion";
+    const sql = "SELECT * FROM prodseleccion ORDER BY id DESC LIMIT 3";
     db.query(sql, (err, data) => {
         if (err) return res.json(err);
         return res.json(data);
     });
 });
-app.post('/createreporte', (req, res) => {
-    const { fecha, turno, datos1, datos2, datos3, datos4 } = req.body;
 
-    const commonValues = [fecha, turno];
+app.post('/createrreportejigs', (req, res) => {
+     // Restar el 1.80% de los valores antes de la inserción
+     req.body.granoj1 = req.body.granoj1 - (req.body.granoj1 * 0.018);
+     req.body.granoj2 = req.body.granoj2 - (req.body.granoj2 * 0.018);
 
-    // Primera inserción en la tabla 'produccionjigs'
-    const sqlInsert1 = "INSERT INTO produccionjigs (fecha, turno, alimj1, peaj1, granoj1, pegj1, colasj1, pecj1, desenj1, pedj1, alimj2, peaj2, granoj2, pegj2, colasj2, pecj2, desenj2, pedj2) VALUES (?, ?, ?, ?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-    const values1 = [...commonValues, req.body.alimj1, req.body.peaj1, req.body.granoj1, req.body.pegj1, req.body.colasj1, req.body.pecj1, req.body.desenj1, req.body.pedj1, req.body.alimj2, req.body.peaj2, req.body.granoj2, req.body.pegj2, req.body.colasj2, req.body.pecj2, req.body.desenj2, req.body.pedj2];
-
-    db.query(sqlInsert1, values1, (err1, result1) => {
-        if (err1) {
-            return res.status(500).json({ error: err1.message });
-        }
-
-        // Segunda inserción en la tabla 'jigschinos'
-        const sqlInsert2 = "INSERT INTO jigschinos (fecha, turno, alimjch, peajch, granojch, pegjch, colasjch, pecjch, desenjch, pedjch, alimjsec, peajsec, concjsec, pecojsec, colasjsec, pecjsec) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?)";
-        const values2 = [...commonValues, req.body.alimjch, req.body.peajch, req.body.granojch, req.body.pegjch, req.body.colasjch, req.body.pecjch, req.body.desenjch, req.body.pedjch, req.body.alimjsec, req.body.peajsec, req.body.concjsec, req.body.pecojsec, req.body.colasjsec, req.body.pecjsec];
-
-        db.query(sqlInsert2, values2, (err2, result2) => {
-            if (err2) {
-                return res.status(500).json({ error: err2.message });
-            }
-
-            // Tercera inserción en la tabla 'mesas'
-            const sqlInsert3 = "INSERT INTO mesas (fecha, turno, alimm12, peam12, conm12, pecnm12, mediom12, pemm12, colasm12, pecm12, alimm34, peam34, conm34, pecnm34, mediosm34, pemm34, colasm34, pecm34, alimm5, peam5, conm5, pecnm5, mediosm5, pemm5, colasm5, pecm5, alimm6, peam6, conm6, pecnm6, mediom6, pemm6, colasm6, pecm6) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?)";
-            const values3 = [...commonValues, req.body.alimm12, req.body.peam12, req.body.conm12, req.body.pecnm12, req.body.mediom12, req.body.pemm12, req.body.colasm12, req.body.pecm12, req.body.alimm34, req.body.peam34, req.body.conm34, req.body.pecnm34, req.body.mediosm34, req.body.pemm34, req.body.colasm34, req.body.pecm34, req.body.alimm5, req.body.peam5, req.body.conm5, req.body.pecnm5, req.body.mediosm5, req.body.pemm5, req.body.colasm5, req.body.pecm5, req.body.alimm6, req.body.peam6, req.body.conm6, req.body.pecnm6, req.body.mediom6, req.body.pemm6, req.body.colasm6, req.body.pecm6];
-
-            db.query(sqlInsert3, values3, (err3, result3) => {
-                if (err3) {
-                    return res.status(500).json({ error: err3.message });
-                }
-
-                // Cuarta inserción en la tabla 'prodseleccion'
-                const sqlInsert4 = "INSERT INTO prodseleccion (fecha, turno, alimgrano, peag, concgrano, pecng, colasgrano, pecg, tonpiedra, petp, tolvageneral, medio3y4, minale, minals, patiols, desensolve, colas) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?)";
-                const values4 = [...commonValues, req.body.alimgrano, req.body.peag, req.body.concgrano, req.body.pecng, req.body.colasgrano, req.body.pecg, req.body.tonpiedra, req.body.petp, req.body.tolvageneral, req.body.medio3y4, req.body.minale, req.body.minals, req.body.patiols, req.body.desensolve, req.body.colas];
-
-                db.query(sqlInsert4, values4, (err4, result4) => {
-                    if (err4) {
-                        return res.status(500).json({ error: err4.message });
-                    }
-
-                    return res.json({ success: true, message: "Datos insertados en todas las tablas" });
-                });
-            });
-        });
+     req.body.colasj1 = req.body.colasj1 - (req.body.colasj1 * 0.109);
+     req.body.colasj2 = req.body.colasj2 - (req.body.colasj2 * 0.109);
+     
+     req.body.desenj1 = req.body.desenj1 - (req.body.desenj1 * 0.108);
+     req.body.desenj2 = req.body.desenj2 - (req.body.desenj2 * 0.108);
+    const sql = "INSERT INTO produccionjigs (fecha, turno, alimj1, peaj1, granoj1, pegj1, colasj1, pecj1, desenj1, pedj1, alimj2, peaj2, granoj2, pegj2, colasj2, pecj2, desenj2, pedj2) VALUES (?, ?, ?, ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+    const values = [
+        req.body.fecha,
+        req.body.turno,
+        req.body.alimj1,
+        req.body.peaj1,
+        req.body.granoj1,
+        req.body.pegj1,
+        req.body.colasj1,
+        req.body.pecj1,
+        req.body.desenj1,
+        req.body.pedj1,
+        req.body.alimj2,
+        req.body.peaj2,
+        req.body.granoj2,
+        req.body.pegj2,
+        req.body.colasj2,
+        req.body.pecj2,
+        req.body.desenj2,
+        req.body.pedj2
+    ];
+    db.query(sql, values, (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
     });
 });
 
+app.post('/createrreportejigsch', (req, res) => {
+    req.body.granojch = req.body.granojch - (req.body.granojch * 0.018);
+    req.body.colasjch = req.body.colasjch - (req.body.colasjch * 0.109);
+    req.body.colasjsec = req.body.colasjsec - (req.body.colasjsec *0.109);
+    req.body.desenjch = req.body.desenjch - (req.body.desenjch * 0.108);
+    req.body.concjsec = req.body.concjsec - (req.body. concjsec * 0.14);
+    const sql = "INSERT INTO jigschinos (fecha, turno, alimjch, peajch, granojch, pegjch, colasjch, pecjch, desenjch, pedjch, alimjsec, peajsec, concjsec, pecojsec, colasjsec, pecjsec) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?)";
+    const values = [
+        req.body.fecha,
+        req.body.turno,
+        req.body.alimjch,
+        req.body.peajch,
+        req.body.granojch,
+        req.body.pegjch,
+        req.body.colasjch,
+        req.body.pecjch,
+        req.body.desenjch,
+        req.body.pedjch,
+        req.body.alimjsec,
+        req.body.peajsec,
+        req.body.concjsec,
+        req.body.pecojsec,
+        req.body.colasjsec,
+        req.body.pecjsec
+    ];
+    db.query(sql, values, (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+});
 
+app.post('/createrreportemesas', (req, res) => {
+    req.body.conm12 = req.body.conm12 - (req.body.conm12 * 0.14);
+    req.body.conm34 = req.body.conm34 - (req.body.conm34 * 0.14);
+    req.body.conm5 = req.body.conm5 - (req.body.conm5 * 0.14);
+    req.body.conm6 = req.body.conm6 - (req.body.conm6 * 0.14);
+
+    req.body.mediom12 = req.body.medio3y4 - (req.body.medio3y4 * 0.089);
+    req.body.mediosm34 = req.body.mediosm34 - (req.body.mediosm34 * 0.089);
+    req.body.mediosm5 = req.body.mediosm5 - (req.body.mediosm5 * 0.089);
+    req.body.mediosm6 = req.body.mediosm6 - (req.body.mediosm6 * 0.089);
+
+    req.body.colasm12 = req.body.colasm12 - (req.body.colasm12 * 0.109);
+    req.body.colasm34 = req.body.colasm34 - (req.body.colasm34 * 0.109);
+    req.body.colasm5 = req.body.colasm5 - (req.body.colasm5 * 0.109);
+    req.body.colasm6 = req.body.colasm6 - (req.body.colasm6 * 0.109);
+
+
+    const sql = "INSERT INTO mesas (fecha, turno, alimm12, peam12, conm12, pecnm12, mediom12, pemm12, colasm12, pecm12, alimm34, peam34, conm34, pecnm34, mediosm34, pemm34, colasm34, pecm34, alimm5, peam5, conm5, pecnm5, mediosm5, pemm5, colasm5, pecm5, alimm6, peam6, conm6, pecnm6, mediom6, pemm6, colasm6, pecm6) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?,?)";
+    const values = [
+        req.body.fecha,
+        req.body.turno,
+        req.body.alimm12,
+        req.body.peam12,
+        req.body.conm12,
+        req.body.pecnm12,
+        req.body.mediom12,
+        req.body.pemm12,
+        req.body.colasm12,
+        req.body.pecm12,
+        req.body.alimm34,
+        req.body.peam34,
+        req.body.conm34,
+        req.body.pecnm34,
+        req.body.mediosm34,
+        req.body.pemm34,
+        req.body.colasm34,
+        req.body.pecm34,
+        req.body.alimm5,
+        req.body.peam5,
+        req.body.conm5,
+        req.body.pecnm5,
+        req.body.mediosm5,
+        req.body.pemm5,
+        req.body.colasm5,
+        req.body.pecm5,
+        req.body.alimm6,
+        req.body.peam6,
+        req.body.conm6,
+        req.body.pecnm6,
+        req.body.mediom6,
+        req.body.pemm6,
+        req.body.colasm6,
+        req.body.pecm6
+    ];
+    db.query(sql, values, (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+});
+
+app.post('/createrreportegrano', (req, res) => {
+    req.body.concgrano = req.body.concgrano- (req.body.concgrano * 0.14);
+    req.body.colasgrano = req.body.colasgrano - (req.body.colasgrano * 0.109);
+
+    const sql = "INSERT INTO prodseleccion (fecha, turno, alimgrano, peag, concgrano, pecng, colasgrano, pecg, tonpiedra, petp, tolvageneral, medio3y4, minale, minals, patiols, desensolve, colas) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?)";
+    const values = [
+        req.body.fecha,
+        req.body.turno,
+        req.body.alimgrano,
+        req.body.peag,
+        req.body.concgrano,
+        req.body.pecng,
+        req.body.colasgrano,
+        req.body.pecg,
+        req.body.tonpiedra,
+        req.body.petp,
+        req.body.tolvageneral,
+        req.body.medio3y4,
+        req.body.minale,
+        req.body.minals,
+        req.body.patiols,
+        req.body.desensolve,
+        req.body.colas
+    ];
+
+    db.query(sql, values, (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+});
+app.delete('/deletediariojigs/:id', (req, res) => {
+    const sql = "DELETE FROM produccionjigs WHERE id = ?";
+    const id = req.params.id;
+    db.query(sql, [id], (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+});
+app.delete('/deletediariojigsch/:id', (req, res) => {
+    const sql = "DELETE FROM jigschinos WHERE id = ?";
+    const id = req.params.id;
+    db.query(sql, [id], (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+});
+app.delete('/deletediariomesas/:id', (req, res) => {
+    const sql = "DELETE FROM mesas WHERE id = ?";
+    const id = req.params.id;
+    db.query(sql, [id], (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+});
+
+app.delete('/deletediariograno/:id', (req, res) => {
+    const sql = "DELETE FROM prodseleccion WHERE id = ?";
+    const id = req.params.id;
+    db.query(sql, [id], (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+});

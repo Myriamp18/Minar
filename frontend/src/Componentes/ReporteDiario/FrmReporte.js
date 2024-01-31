@@ -9,7 +9,7 @@ function FrmReporte() {
   const [values, setValues] = useState({
     ///jigs//
     fecha: "",
-    turno: "",
+    turno: "1",
     alimj1: "",
     peaj1: "",
     granoj1: "",
@@ -93,18 +93,52 @@ function FrmReporte() {
     patiols:"",
     desensolve:"",
     colas:"",
-  })
+    pemle:"",
+    pemls:"",
+    peple:"",
+    pepls:"",
+    psm34:"",
+    pedese:"",
+    pecolas:"",
+    })
 
 
   const navigate = useNavigate()
 
       const handleSubmit =(e) => {
         e.preventDefault()
-        axios.post('http://localhost:8081/createreporte', values)
+        axios.post('http://localhost:8081/createrreportejigs', values)
         .then(res => {
           console.log(res);
           // Optionally, you can navigate to a different page or update the UI
-          navigate('/Inicio'); // Example: Navigate to the home page
+          navigate('/diario'); // Example: Navigate to the home page
+        })
+        .catch(err => console.log(err));
+
+        e.preventDefault()
+        axios.post('http://localhost:8081/createrreportejigsch', values)
+        .then(res => {
+          console.log(res);
+          // Optionally, you can navigate to a different page or update the UI
+          navigate('/diario'); // Example: Navigate to the home page
+        })
+        .catch(err => console.log(err));
+
+        e.preventDefault()
+        axios.post('http://localhost:8081/createrreportemesas', values)
+        .then(res => {
+          console.log(res);
+          // Optionally, you can navigate to a different page or update the UI
+          navigate('/diario'); // Example: Navigate to the home page
+        })
+        .catch(err => console.log(err));
+
+        e.preventDefault()
+        axios.post('http://localhost:8081/createrreportegrano', values)
+        .then(res => {
+          console.log(res);
+          // Optionally, you can navigate to a different page or update the UI
+          navigate('/diario'); // Example: Navigate to the home page
         })
         .catch(err => console.log(err));
     };
@@ -131,49 +165,77 @@ function FrmReporte() {
               name="seleccion"
               value={values.turno}
               onChange={(e) => setValues({ ...values, turno: e.target.value })} >
-              <option value="opcion1">1</option>
-              <option value="opcion2">2</option>
-              <option value="opcion3">3</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
 
             </select>
 
           </div>
         </div>
         <div className='columnas'>
-          <div className="JIGS1">
+          <div className="JIGS">
             <input
               type="numers"
               placeholder="Mina LE"
               name='	minale	'
               onChange={(e) => setValues({ ...values, 	minale: e.target.value })} />
           </div>
+          <div className="JIGS">
+            <input
+              type="numers"
+              placeholder="P.E"
+              name='psemle	'
+              onChange={(e) => setValues({ ...values ,psemle: e.target.value })} />
+          </div>
 
-          
+          <div className="JIGS">
             <input
               type="moler"
               placeholder="Mina LS"
               name='minals'
               onChange={(e) => setValues({ ...values, minals: e.target.value })} />
-         
+          </div>
+          <div className="JIGS">
+            <input
+              type="numers"
+              placeholder="P.E"
+              name='pemls	'
+              onChange={(e) => setValues({ ...values ,pemls: e.target.value })} />
+          </div>
          
     
-          <div className="JIGS1">
+          <div className="JIGS">
             <input
               type="numers"
               placeholder="Patio LE"
               name='patiols	'
               onChange={(e) => setValues({ ...values, patiols: e.target.value })} />
           </div>
+          <div className="JIGS">
+            <input
+              type="numers"
+              placeholder="P.E"
+              name='peple	'
+              onChange={(e) => setValues({ ...values ,peple: e.target.value })} />
+          </div>
           </div>
           <div className='columnas'>
-          <div className="JIGS1">
+          <div className="JIGS">
             <input
               type="numers"
               placeholder="Patio LS"
               name='tolvageneral	'
               onChange={(e) => setValues({ ...values, tolvageneral: e.target.value })} />
           </div>
-          <div className="JIGS1">
+          <div className="JIGS">
+            <input
+              type="numers"
+              placeholder="P.E"
+              name='pepls	'
+              onChange={(e) => setValues({ ...values , pepls: e.target.value })} />
+          </div>
+          <div className="JIGS">
             <input
               type="moler"
               placeholder="Medios 3 y 4"
@@ -181,7 +243,14 @@ function FrmReporte() {
               onChange={(e) => setValues({ ...values, medio3y4: e.target.value })} />
           
         </div>
-        <div className="JIGS1">
+        <div className="JIGS">
+            <input
+              type="numers"
+              placeholder="P.E"
+              name='psm34	'
+              onChange={(e) => setValues({ ...values ,psm34: e.target.value })} />
+          </div>
+        <div className="JIGS">
             <input
               type="moler"
               placeholder="Desensolve"
@@ -189,16 +258,31 @@ function FrmReporte() {
               onChange={(e) => setValues({ ...values, desensolve: e.target.value })} />
           
         </div>
+        <div className="JIGS">
+            <input
+              type="numers"
+              placeholder="P.E"
+              name='pedese	'
+              onChange={(e) => setValues({ ...values ,pedese: e.target.value })} />
+          </div>
         
         </div>
         <div className='columnas'>
-        <div className="JIGS1">
+        <div className="JIGS">
             <input
               type="moler"
               placeholder="Colas"
               name='colas'
               onChange={(e) => setValues({ ...values, colas: e.target.value })} />
           
+          </div>
+
+          <div className="JIGS">
+            <input
+              type="numers"
+              placeholder="P.E"
+              name='pecolas'
+              onChange={(e) => setValues({ ...values ,pecolas: e.target.value })} />
           </div>
           </div>
 
@@ -236,7 +320,7 @@ function FrmReporte() {
               <input
                 placeholder="Grano"
                 name=' granoj1l'
-                onChange={(e) => setValues({ ...values, granoj1granoj1: e.target.value })} />
+                onChange={(e) => setValues({ ...values, granoj1: e.target.value })} />
             </div>
 
             <div className="JIGS1">

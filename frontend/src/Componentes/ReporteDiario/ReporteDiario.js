@@ -11,6 +11,7 @@ const ReporteDiario = () => {
   const [chino, setChino] = useState([]); 
   const [mesas, setMesas] = useState([])
   const [grano, setGrano]= useState([])
+
   useEffect(() => {
     fetch('http://localhost:8081/reportediario')
       .then(res => res.json())
@@ -39,6 +40,49 @@ const ReporteDiario = () => {
       .catch(err => console.log(err));
   }, [])
 
+  const handleDeletejigs = (id) =>{
+    axios.delete('http://localhost:8081/deletediariojigs/'+id)
+    .then(res => {
+      // Actualiza la lista de datos excluyendo el registro eliminado
+      const  updatedJigsData = data.filter(item => item.id !== id);
+      setData( updatedJigsData);
+
+      
+    })
+    .catch(err => console.log(err));
+  }
+  const handleDeletejigsch = (id) =>{
+    axios.delete('http://localhost:8081/deletediariojigsch/'+id)
+    .then(res => {
+      // Actualiza la lista de datos excluyendo el registro eliminado
+      const  updatedJigsChData = data.filter(item => item.id !== id);
+      setChino(updatedJigsChData);
+
+      
+    })
+    .catch(err => console.log(err));
+  }
+  const handleDeletemesas = (id) =>{
+    axios.delete('http://localhost:8081/deletediariomesas/'+id)
+    .then(res => {
+      // Actualiza la lista de datos excluyendo el registro eliminado
+      const updatedMesasData= data.filter(item => item.id !== id);
+      setMesas( updatedMesasData);
+
+
+    })
+    .catch(err => console.log(err))
+  }
+  const handleDeletegrano = (id) =>{
+    axios.delete('http://localhost:8081/deletediariograno/'+id)
+    .then(res => {
+      // Actualiza la lista de datos excluyendo el registro eliminado
+      const updatedGranoData = data.filter(item => item.id !== id);
+      setGrano(updatedGranoData)
+
+    })
+    .catch(err => console.log(err))
+  }
   return (
     <>
     <h1>Reporte Diario:</h1>
@@ -47,12 +91,14 @@ const ReporteDiario = () => {
           <FontAwesomeIcon icon={faPlus} />Insertar</Link>
       </div>
       <div className='row mt-3'>
-        {data.length !== 0 ?
+        
           <div className='col-12 col-lg-8 offset-0 offset-lg-2'>
             <div className="table-responsive">
+              <center><label>PRODUCCION DE JIGGS</label></center>
     <table  class="table table-bordered">
   <thead>
         <tr  >
+          <th></th>
           <th>ID</th>
           <th>Fecha</th>
           <th>Turno</th>
@@ -72,13 +118,26 @@ const ReporteDiario = () => {
           <th>P.E</th>
           <th>ColasJ2</th>
           <th>P.E</th>
-          <th></th>
+          
          
         </tr>
       </thead>
       <tbody className='table-group-divider'>
                  {data.map((d, i) => (
                     <tr key={i}>
+                      <td>
+                        <div style={{ display: 'flex', alignItems: 'center' }}>
+                          <Link to={`/updateseleccion/${d.id}`} className='btn btn-warning'>
+                            <i className='fa-solid fa-edit'></i>
+                          </Link>
+                          &nbsp;
+
+                          <button className='btn btn-danger' onClick={() => handleDeletejigs(d.id)}>
+                            <i className='fa-solid fa-trash'></i>
+                          </button>
+                        </div>
+
+                      </td>
                       <td>{d.id}</td>
                       <td>{d.fecha}</td>
                       <td>{d.turno}</td>
@@ -86,10 +145,10 @@ const ReporteDiario = () => {
                       <td>{d.peaj1.toFixed(2)}</td>
                       <td>{d.granoj1.toFixed(3)}</td>
                       <td>{d.pegj1.toFixed(3)}</td>
-                      <td>{d.	colasj1.toFixed(3)}</td>
-                      <td>{d.pecj1.toFixed(3)}</td>
                       <td>{d.desenj1.toFixed(3)}</td>
                       <td>{d.pedj1.toFixed(3)}</td>
+                      <td>{d.colasj1 .toFixed(3)}</td>
+                      <td>{d.pecj1.toFixed(3)}</td>
                       <td>{d.alimj2.toFixed(3)}</td>
                       <td>{d.peaj2.toFixed(3)}</td>
                       <td>{d.granoj2.toFixed(3)}</td>
@@ -100,19 +159,7 @@ const ReporteDiario = () => {
                       <td>{d.pedj2.toFixed(3)}</td>
                     
 
-                      <td>
-                        <div style={{ display: 'flex', alignItems: 'center' }}>
-                          <Link to={`/updateseleccion/${d.id}`} className='btn btn-warning'>
-                            <i className='fa-solid fa-edit'></i>
-                          </Link>
-                          &nbsp;
-
-                          <button className='btn btn-danger' onClick={() => handleDelete(d.id)}>
-                            <i className='fa-solid fa-trash'></i>
-                          </button>
-                        </div>
-
-                      </td>
+                      
                     </tr>
                   ))}
 
@@ -121,9 +168,11 @@ const ReporteDiario = () => {
     </table>
     </div>
     <div className="table-responsive">
+    <center><label>PRODUCCION DE JIGGS CHINOS</label></center>
     <table  class="table table-bordered">
   <thead>
         <tr  >
+          <th></th>
           <th>ID</th>
           <th>Fecha</th>
           <th>Turno</th>
@@ -142,13 +191,26 @@ const ReporteDiario = () => {
           <th>ColasJSEC</th>
           <th>P.E</th>
     
-          <th></th>
+          
          
         </tr>
       </thead>
       <tbody className='table-group-divider'>
                  {chino.map((d, i) => (
                     <tr key={i}>
+                       <td>
+                        <div style={{ display: 'flex', alignItems: 'center' }}>
+                          <Link to={`/updateseleccion/${d.id}`} className='btn btn-warning'>
+                            <i className='fa-solid fa-edit'></i>
+                          </Link>
+                          &nbsp;
+
+                          <button className='btn btn-danger' onClick={() => handleDeletejigsch(d.id)}>
+                            <i className='fa-solid fa-trash'></i>
+                          </button>
+                        </div>
+
+                      </td>
                       <td>{d.id}</td>
                       <td>{d.fecha}</td>
                       <td>{d.turno}</td>
@@ -169,19 +231,7 @@ const ReporteDiario = () => {
                       
                     
 
-                      <td>
-                        <div style={{ display: 'flex', alignItems: 'center' }}>
-                          <Link to={`/updateseleccion/${d.id}`} className='btn btn-warning'>
-                            <i className='fa-solid fa-edit'></i>
-                          </Link>
-                          &nbsp;
-
-                          <button className='btn btn-danger' onClick={() => handleDelete(d.id)}>
-                            <i className='fa-solid fa-trash'></i>
-                          </button>
-                        </div>
-
-                      </td>
+                     
                     </tr>
                   ))}
 
@@ -193,10 +243,11 @@ const ReporteDiario = () => {
     </div>
 
     <div className="table-responsive">
+    <center><label>PRODUCCION DE MESAS</label></center>
     <table  class="table table-bordered">
   <thead>
         <tr  >
-          
+          <th></th>
           <th>ID</th>
           <th>Fecha</th>
           <th>Turno</th>
@@ -244,6 +295,19 @@ const ReporteDiario = () => {
       <tbody className='table-group-divider'>
                  {mesas.map((d, i) => (
                     <tr key={i}>
+                      <td>
+                        <div style={{ display: 'flex', alignItems: 'center' }}>
+                          <Link to={`/updateseleccion/${d.id}`} className='btn btn-warning'>
+                            <i className='fa-solid fa-edit'></i>
+                          </Link>
+                          &nbsp;
+
+                          <button className='btn btn-danger' onClick={() => handleDeletemesas(d.id)}>
+                            <i className='fa-solid fa-trash'></i>
+                          </button>
+                        </div>
+
+                      </td>
                       <td>{d.id}</td>
                       <td>{d.fecha}</td>
                       <td>{d.turno}</td>
@@ -284,19 +348,7 @@ const ReporteDiario = () => {
                       
                     
 
-                      <td>
-                        <div style={{ display: 'flex', alignItems: 'center' }}>
-                          <Link to={`/updateseleccion/${d.id}`} className='btn btn-warning'>
-                            <i className='fa-solid fa-edit'></i>
-                          </Link>
-                          &nbsp;
-
-                          <button className='btn btn-danger' onClick={() => handleDelete(d.id)}>
-                            <i className='fa-solid fa-trash'></i>
-                          </button>
-                        </div>
-
-                      </td>
+                      
                     </tr>
                   ))}
 
@@ -308,9 +360,11 @@ const ReporteDiario = () => {
     </div>
 
     <div className="table-responsive">
+    <center><label >PRODUCCION SELECCION</label></center>
     <table  class="table table-bordered">
   <thead>
         <tr  >
+          <th></th>
           <th>ID</th>
           <th>Fecha</th>
           <th>Turno</th>
@@ -329,13 +383,26 @@ const ReporteDiario = () => {
           <th>Med3y4</th>
           <th>Desensolve</th>
           <th>Colas</th>
-          <th></th>
+          
          
         </tr>
       </thead>
       <tbody className='table-group-divider'>
                  {grano.map((d, i) => (
                     <tr key={i}>
+                       <td>
+                        <div style={{ display: 'flex', alignItems: 'center' }}>
+                          <Link to={`/updateseleccion/${d.id}`} className='btn btn-warning'>
+                            <i className='fa-solid fa-edit'></i>
+                          </Link>
+                          &nbsp;
+
+                          <button className='btn btn-danger' onClick={() => handleDeletegrano(d.id)}>
+                            <i className='fa-solid fa-trash'></i>
+                          </button>
+                        </div>
+
+                      </td>
                       <td>{d.id}</td>
                       <td>{d.fecha}</td>
                       <td>{d.turno}</td>
@@ -357,19 +424,7 @@ const ReporteDiario = () => {
                       
                     
 
-                      <td>
-                        <div style={{ display: 'flex', alignItems: 'center' }}>
-                          <Link to={`/updateseleccion/${d.id}`} className='btn btn-warning'>
-                            <i className='fa-solid fa-edit'></i>
-                          </Link>
-                          &nbsp;
-
-                          <button className='btn btn-danger' onClick={() => handleDelete(d.id)}>
-                            <i className='fa-solid fa-trash'></i>
-                          </button>
-                        </div>
-
-                      </td>
+                     
                     </tr>
                   ))}
 
@@ -382,8 +437,7 @@ const ReporteDiario = () => {
     
     
           </div>
-          : <h2 className='aling-itemns-center'>Sin Datos</h2>
-        }
+         
       </div>
     </>
   );
