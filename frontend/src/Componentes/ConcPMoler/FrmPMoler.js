@@ -40,8 +40,8 @@ function FrmPMoler() {
     };
   return (
 
-     <div className="d-flex align-items-center flex-column mt-3" >
-    <h1>Insertar Conc. P/Moler:</h1>
+    <div className="d-flex align-items-center flex-column mt-3" >
+    <h1 >Insertar Conc. P/Moler:</h1>
       <form className="w-50" onSubmit={handleSubmit} >
           <div class="mb-3 mt-3">
             <label form='fecha' class="form-label"> Fecha:</label>

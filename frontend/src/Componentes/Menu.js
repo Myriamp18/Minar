@@ -1,83 +1,111 @@
-import React, { useState } from 'react'
-import './Menu.css'
-import 'bootstrap-icons/font/bootstrap-icons.css'
+import React,{useState, useEffect} from 'react'
+import {
+    FaTh,
+    FaBars,
+    FaHome
+}
+from "react-icons/fa"
+import { GiNotebook } from "react-icons/gi";
+import { GiManualMeatGrinder } from "react-icons/gi";
+import { BsMinecartLoaded } from "react-icons/bs";
+import { GiMineralPearls } from "react-icons/gi";
+import { FaRoad } from "react-icons/fa";
+import { NavLink } from 'react-router-dom'
 import Logo from '../assest/logo.png'
-import Letras from '../assest/Letras.png'
-import { Link } from 'react-router-dom';
 
-function Menu() {
-
-    const [navCollpase, setNavCollapse] = useState(false)
-    const [smallNavCollpase, setSmallNavCollapse] = useState(false)
-
-
-    return (
-
-        <div className='arriba'>
-            <nav className='nav'>
-                <div className='logo'>
-                    <i className='bi bi-justify largeDeviceIcon' onClick={() => setNavCollapse(!navCollpase)}></i>
-                    <i className='bi bi-justify smallDeviceIcon' onClick={() => setSmallNavCollapse(!smallNavCollpase)}></i>
-                    <img src={Logo} alt='logomenu' />
-                    <img src={Letras} alt='logoletras' />
-
-                </div>
-                <ul>
-                    <li>Ayuda</li>
-                    <li>Cerrar Sesion</li>
-                </ul>
-            </nav>
-
-            <div className='sidebar_content'>
-
-                <div className={` ${smallNavCollpase ? "smallNav" : ""} sidebar-container ${navCollpase ? "navCollaps" : ""}`}>
-
-                    <Link className='nav-option option3' style={{ textDecoration: 'none', color: 'white' }} to="/Inicio">
-                        <i class="bi bi-house-door-fill"></i>
-                        <label>Inicio</label>
-
-                    </Link>
-
-                    <Link className='nav-option option3' style={{ textDecoration: 'none', color: 'white' }} to="/diario">
-                        <i class="bi bi-card-list"></i>
-                        <label>Reporte Diario</label>
-
-
-                    </Link>
-
-                    <Link className='nav-option option3' style={{ textDecoration: 'none', color: 'white' }} to="/concpmoler">
-                    <i class="bi bi-card-list"></i>
-                        <label>Conc. P/Moler</label>
-
-
-                    </Link>
-
-                    <Link className='nav-option option3' style={{ textDecoration: 'none', color: 'white' }} to="/silos">
-                        <i class="bi bi-card-list"></i>
-                        <label>Silos</label>
-
-
-                    </Link>
-                    <Link className='nav-option option3' style={{ textDecoration: 'none', color: 'white' }} to="/seleccion">
-                        <i class="bi bi-card-list"></i>
-                        <label>Seleccion</label>
-
-
-                    </Link>
-                    <Link className='nav-option option3' style={{ textDecoration: 'none', color: 'white' }} to="/granobandas">
-                        <i class="bi bi-card-list"></i>
-                        <label>Grano Bandas</label>
-
-
-                    </Link>
-                </div>
-
+function Menu({children}) {
+    const [isOpen, setIsOpen] = useState(true);
+    const toggle = () => setIsOpen(!isOpen);
+    const menuItem=[
+        {
+            path:"/Inicio",
+            name:"Inicio",
+            icon:<FaHome />
+        },
+        {
+            path:"/createreportediario",
+            name:"Reporte Diario",
+            icon:<GiNotebook />
+        },
+        {
+            path:"/reporteexistencia",
+            name:"Reporte de Existencia",
+            icon:<GiNotebook />
+        },
+        {
+            path:"/diario",
+            name:"Reporte Produccion",
+            icon:<GiNotebook />
+        },
+        {
+            path:"/diario",
+            name:"Molienda",
+            icon:<GiNotebook />
+        },
+        {
+            path:"/concpmoler",
+            name:"Conc. P/Moler",
+            icon:<GiManualMeatGrinder />
+        },
+        {
+            path:"/silos",
+            name:"Silos",
+            icon:<BsMinecartLoaded />
+        },
+        {
+            path:"/seleccion",
+            name:"Seleccion",
+            icon:<GiMineralPearls />
+        },
+        {
+            path:"/granobandas",
+            name:"Grano Bandas",
+            icon:<FaRoad />
+        }
+    ]
+    useEffect(() => {
+        const handleResize = () => {
+          setIsOpen(window.innerWidth >= 757);
+        };
+    
+        // Agregar un listener de evento para escuchar cambios en el tamaño de la ventana
+        window.addEventListener('resize', handleResize);
+    
+        // Inicializar el estado basándose en el tamaño de la ventana actual
+        handleResize();
+    
+        // Limpiar el listener de evento cuando el componente se desmonta
+        return () => {
+          window.removeEventListener('resize', handleResize);
+        };
+      }, []);
+  return (
+    <div className='containermenu'>
+    <div style={{width: isOpen ? "250px":"50px"}} className='menu'>
+        <div className='top_section'>
+        <img style={{display: isOpen ? "block": "none"}}  src={Logo} alt='logomenu' />
+            <h1 style={{display: isOpen ? "block": "none"}} className='logo'>MINAR</h1>
+            <div style={{marginLeft: isOpen ? "20px": "0px"}} className='bars'>
+                <FaBars onClick={toggle}/>
             </div>
-
-
-
         </div>
-    )
+        {
+            menuItem.map((item, index) => (
+                <NavLink to={item.path} key={index} className="link" activeclassName="active">
+                    <div className='icon'>{item.icon}</div>
+                    <div   style={{display: isOpen ? "block": "none"}} className='link_text'>{item.name}</div>
+                </NavLink>
+            ))
+        }
+    </div>
+
+       <main> {children}</main>
+    
+
+   
+      
+    </div>
+  )
 }
 
 export default Menu

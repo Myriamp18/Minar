@@ -84,7 +84,7 @@ const ReporteDiario = () => {
     .catch(err => console.log(err))
   }
   return (
-    <>
+    <div className=''>
     <h1>Reporte Diario:</h1>
     <div className="text-center">
         <Link to="/createreportediario" className="btn btn-danger btn-lg font-weight-bold   text-lg" >
@@ -93,8 +93,9 @@ const ReporteDiario = () => {
       <div className='row mt-3'>
         
           <div className='col-12 col-lg-8 offset-0 offset-lg-2'>
-            <div className="table-responsive">
+            
               <center><label>PRODUCCION DE JIGGS</label></center>
+              <div className="table-responsive">
     <table  class="table table-bordered">
   <thead>
         <tr  >
@@ -439,7 +440,7 @@ const ReporteDiario = () => {
           </div>
          
       </div>
-    </>
+    </div>
   );
 };
 

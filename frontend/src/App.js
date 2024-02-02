@@ -1,7 +1,7 @@
 
 import './App.css';
 import Login from './Componentes/Usuarios/Login'
-import { BrowserRouter as Router, Routes , Route} from 'react-router-dom'
+import { BrowserRouter as Router, Routes , Route, BrowserRouter} from 'react-router-dom'
 import Inicio from './Componentes/Inicio'
 import FrmSilos from './Componentes/Silos/FrmSilos';
 import 'bootstrap/dist/css/bootstrap.min.css'
@@ -20,19 +20,18 @@ import Seleccion from './Componentes/Seleccion/Seleccion';
 import GranoBandas from './Componentes/GranoBandas/GranoBandas';
 import ReporteDiario from './Componentes/ReporteDiario/ReporteDiario'
 import FrmReporte from './Componentes/ReporteDiario/FrmReporte'
-
+import ReporteExistencia from './Componentes/ReporteExistencia/ReporteExistencia ';
 
 function App() {
   return (
    
-    <Router>
-    <div><Menu/></div>
-   
-       <Routes>
-       <Route path="/" element={<Login />}/>
-       <Route path="/Inicio" element={<Inicio/>}/>
-       <Route path="/diario" element={<ReporteDiario/>}/>
-
+    <BrowserRouter>
+    <div className=''>
+      <Menu>
+      <Routes>
+        <Route path="/" element={<Login />} />
+        <Route path="/Inicio" element={<Inicio />} />
+        <Route path="/diario" element={<ReporteDiario />} />
 
        /////////SILOS///////
        <Route path="/create" element={<FrmSilos/>}/>
@@ -59,13 +58,14 @@ function App() {
 
        //////////REPORTESDIARIOS//////////7
        <Route path="/createreportediario" element={<FrmReporte/>}/>
-       
+       <Route path="/reporteexistencia" element={<ReporteExistencia/>}/>
          
        
        </Routes>
-      
+       </Menu >
+      </div>
     
-    </Router>
+    </BrowserRouter>
      
   
      

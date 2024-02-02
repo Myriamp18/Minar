@@ -3,8 +3,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './FrmSilos.css'
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios'
-
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
 function FrmSilos() {
 
@@ -26,17 +26,17 @@ function FrmSilos() {
       .then(res => {
         console.log(res);
         // Optionally, you can navigate to a different page or update the UI
-        navigate('/Inicio'); // Example: Navigate to the home page
+        navigate('/Silos'); // Example: Navigate to the home page
       })
       .catch(err => console.log(err));
   };
 
   const onClose = () => {
-    navigate('/Inicio')
+    navigate('/Silos')
   }
 
   return (
-    <div className="d-flex align-items-center flex-column mt-3">
+    <div className="d-flex align-items-center flex-column mt-2">
       <h1>Insertar Silos</h1>
       <div className="cerrar-btn" onClick={onClose}>
         <FontAwesomeIcon icon={faTimes} />

@@ -31,7 +31,7 @@ function Seleccion() {
       <div className='row mt-3'>
         {data.length !== 0 ?
           <div className='col-12 col-lg-8 offset-0 offset-lg-2'>
-            <div className="table-responsive">
+            <div>
 
               <table class="table">
                 <thead>
