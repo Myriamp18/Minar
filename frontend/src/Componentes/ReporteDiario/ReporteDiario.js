@@ -85,18 +85,18 @@ const ReporteDiario = () => {
   }
   return (
     <div className=''>
-    <h1>Reporte Diario:</h1>
-    <div className="text-center">
+    <h1 className="d-flex" style={{ marginLeft: '360px' }}>Reporte Diario:</h1>
+    <div className="d-flex" style={{ marginLeft: '450px' }}>
         <Link to="/createreportediario" className="btn btn-danger btn-lg font-weight-bold   text-lg" >
           <FontAwesomeIcon icon={faPlus} />Insertar</Link>
       </div>
-      <div className='row mt-3'>
+      <div className='row mt-1 col-12 col-lg-8'>
         
-          <div className='col-12 col-lg-8 offset-0 offset-lg-2'>
+          <div className='col-12 col-lg-8 '>
             
               <center><label>PRODUCCION DE JIGGS</label></center>
-              <div className="table-responsive">
-    <table  class="table table-bordered">
+    <div className="table-responsive">
+    <table  className="table table-bordered">
   <thead>
         <tr  >
           <th></th>
@@ -142,22 +142,22 @@ const ReporteDiario = () => {
                       <td>{d.id}</td>
                       <td>{d.fecha}</td>
                       <td>{d.turno}</td>
-                      <td>{d.	alimj1.toFixed(3)}</td>
-                      <td>{d.peaj1.toFixed(2)}</td>
-                      <td>{d.granoj1.toFixed(3)}</td>
-                      <td>{d.pegj1.toFixed(3)}</td>
-                      <td>{d.desenj1.toFixed(3)}</td>
-                      <td>{d.pedj1.toFixed(3)}</td>
-                      <td>{d.colasj1 .toFixed(3)}</td>
-                      <td>{d.pecj1.toFixed(3)}</td>
-                      <td>{d.alimj2.toFixed(3)}</td>
-                      <td>{d.peaj2.toFixed(3)}</td>
-                      <td>{d.granoj2.toFixed(3)}</td>
-                      <td>{d.pegj2.toFixed(3)}</td>
-                      <td>{d.colasj2.toFixed(3)}</td>
-                      <td>{d.pecj2.toFixed(3)}</td>
-                      <td>{d.desenj2.toFixed(3)}</td>
-                      <td>{d.pedj2.toFixed(3)}</td>
+                      <td>{typeof d.alimj1=== 'number' ? d.alimj1.toFixed(3) : 'N/A'}</td>
+                      <td>{typeof d.peaj1=== 'number' ? d.peaj1.toFixed(2) : 'N/A'}</td>
+                      <td>{typeof d.granoj1=== 'number' ? d.granoj1.toFixed(3) : 'N/A'}</td>
+                      <td>{typeof d.pegj1=== 'number' ? d.pegj1.toFixed(2) : 'N/A'}</td>
+                      <td>{typeof d.desenj1=== 'number' ? d.desenj1.toFixed(3) : 'N/A'}</td>
+                      <td>{typeof d.pedj1=== 'number' ? d.pedj1.toFixed(2) : 'N/A'}</td>
+                      <td>{typeof d.colasj1 === 'number' ? d.colasj1.toFixed(3) : 'N/A'}</td>
+                      <td>{typeof d.pecj1=== 'number' ? d.pecj1.toFixed(2) : 'N/A'}</td>
+                      <td>{typeof d.alimj2=== 'number' ? d.alimj2.toFixed(3) : 'N/A'}</td>
+                      <td>{typeof d.peaj2=== 'number' ? d.peaj2.toFixed(2) : 'N/A'}</td>
+                      <td>{typeof d.granoj2=== 'number' ? d.granoj2.toFixed(3) : 'N/A'}</td>
+                      <td>{typeof d.pegj2=== 'number' ? d.pegj2.toFixed(2) : 'N/A'}</td>
+                      <td>{typeof d.colasj2=== 'number' ? d.colasj2.toFixed(3) : 'N/A'}</td>
+                      <td>{typeof d.pecj2=== 'number' ? d.pecj2.toFixed(2) : 'N/A'}</td>
+                      <td>{typeof d.desenj2=== 'number' ? d.desenj2.toFixed(3) : 'N/A'}</td>
+                      <td>{typeof d.pedj2=== 'number' ? d.pedj2.toFixed(2) : 'N/A'}</td>
                     
 
                       
@@ -170,7 +170,7 @@ const ReporteDiario = () => {
     </div>
     <div className="table-responsive">
     <center><label>PRODUCCION DE JIGGS CHINOS</label></center>
-    <table  class="table table-bordered">
+    <table  className="table table-bordered">
   <thead>
         <tr  >
           <th></th>
@@ -215,20 +215,20 @@ const ReporteDiario = () => {
                       <td>{d.id}</td>
                       <td>{d.fecha}</td>
                       <td>{d.turno}</td>
-                      <td>{d.	alimjch.toFixed(3)}</td>
-                      <td>{d.peajch.toFixed(2)}</td>
-                      <td>{d.granojch.toFixed(3)}</td>
-                      <td>{d.pegjch.toFixed(3)}</td>
-                      <td>{d.	colasjch.toFixed(3)}</td>
-                      <td>{d.pecjch.toFixed(3)}</td>
-                      <td>{d.desenjch.toFixed(3)}</td>
-                      <td>{d.pedjch.toFixed(3)}</td>
-                      <td>{d.alimjsec.toFixed(3)}</td>
-                      <td>{d.peajsec.toFixed(3)}</td>
-                      <td>{d.concjsec.toFixed(3)}</td>
-                      <td>{d.pecojsec.toFixed(3)}</td>
-                      <td>{d.colasjsec.toFixed(3)}</td>
-                      <td>{d.pecjsec.toFixed(3)}</td>
+                      <td>{typeof d.alimjch=== 'number' ? d.alimjch.toFixed(2) : 'N/A'}</td>
+                      <td>{typeof d.peajch=== 'number' ? d.peajch.toFixed(2) : 'N/A'}</td>
+                      <td>{typeof d.granojch=== 'number' ? d.granojch.toFixed(2) : 'N/A'}</td>
+                      <td>{typeof d.pegjch=== 'number' ? d.pegjch.toFixed(2) : 'N/A'}</td>
+                      <td>{typeof d.colasjch=== 'number' ? d.colasjch.toFixed(2) : 'N/A'}</td>
+                      <td>{typeof d.pecjch=== 'number' ? d.pecjch.toFixed(2) : 'N/A'}</td>
+                      <td>{typeof d.desenjch=== 'number' ? d.desenjch.toFixed(2) : 'N/A'}</td>
+                      <td>{typeof d.pedjch=== 'number' ? d.pedjch.toFixed(2) : 'N/A'}</td>
+                      <td>{typeof d.alimjsec=== 'number' ? d.alimjsec.toFixed(2) : 'N/A'}</td>
+                      <td>{typeof d.peajsec=== 'number' ? d.peajsec.toFixed(2) : 'N/A'}</td>
+                      <td>{typeof d.concjsec=== 'number' ? d.concjsec.toFixed(2) : 'N/A'}</td>
+                      <td>{typeof d.pecojsec=== 'number' ? d.pecojsec.toFixed(2) : 'N/A'}</td>
+                      <td>{typeof d.colasjsec=== 'number' ? d.colasjsec.toFixed(2) : 'N/A'}</td>
+                      <td>{typeof d.pecjsec=== 'number' ? d.pecjsec.toFixed(2) : 'N/A'}</td>
                       
                     
 
@@ -239,13 +239,12 @@ const ReporteDiario = () => {
                   {/* Puedes agregar más filas según sea necesario */}
                 </tbody>
     </table>
-    
           
     </div>
 
     <div className="table-responsive">
     <center><label>PRODUCCION DE MESAS</label></center>
-    <table  class="table table-bordered">
+    <table  className="table table-bordered">
   <thead>
         <tr  >
           <th></th>
@@ -312,38 +311,38 @@ const ReporteDiario = () => {
                       <td>{d.id}</td>
                       <td>{d.fecha}</td>
                       <td>{d.turno}</td>
-                      <td>{d.alimm12.toFixed(3)}</td>
-                      <td>{d.peam12.toFixed(2)}</td>
-                      <td>{d.conm12.toFixed(3)}</td>
-                      <td>{d.pecnm12.toFixed(3)}</td>
-                      <td>{d.mediom12.toFixed(3)}</td>
-                      <td>{d.pemm12.toFixed(3)}</td>
-                      <td>{d.colasm12.toFixed(3)}</td>
-                      <td>{d.pecm12.toFixed(3)}</td>
-                      <td>{d.	alimm34.toFixed(3)}</td>
-                      <td>{d.peam34.toFixed(2)}</td>
-                      <td>{d.conm34.toFixed(3)}</td>
-                      <td>{d.pecnm34.toFixed(3)}</td>
-                      <td>{d.mediosm34.toFixed(3)}</td>
-                      <td>{d.pemm34.toFixed(3)}</td>
-                      <td>{d.colasm34.toFixed(3)}</td>
-                      <td>{d.pecm34.toFixed(3)}</td>
-                      <td>{d.alimm5.toFixed(3)}</td>
-                      <td>{d.peam5.toFixed(3)}</td>
-                      <td>{d.conm5.toFixed(3)}</td>
-                      <td>{d.pecnm5.toFixed(3)}</td>
-                      <td>{d.mediosm5.toFixed(3)}</td>
-                      <td>{d.pemm5.toFixed(3)}</td>
-                      <td>{d.colasm5.toFixed(3)}</td>
-                      <td>{d.pecm5.toFixed(3)}</td>
-                      <td>{d.alimm6.toFixed(3)}</td>
-                      <td>{d.peam6.toFixed(3)}</td>
-                      <td>{d.conm6.toFixed(3)}</td>
-                      <td>{d.pecnm6.toFixed(3)}</td>
-                      <td>{d.mediom6.toFixed(3)}</td>
-                      <td>{d.pemm6.toFixed(3)}</td>
-                      <td>{d.colasm6.toFixed(3)}</td>
-                      <td>{d.pecm6.toFixed(3)}</td>
+                      <td>{typeof d.alimm12=== 'number' ? d.alimm12.toFixed(3) : 'N/A'}</td>
+                      <td>{typeof d.peam12=== 'number' ? d.peam12.toFixed(2) : 'N/A'}</td>
+                      <td>{typeof d.conm12=== 'number' ? d.conm12.toFixed(3) : 'N/A'}</td>
+                      <td>{typeof d.pecnm12=== 'number' ? d.pecnm12.toFixed(2) : 'N/A'}</td>
+                      <td>{typeof d.mediom12=== 'number' ? d.mediom12.toFixed(3) : 'N/A'}</td>
+                      <td>{typeof d.pemm12=== 'number' ? d.pemm12.toFixed(2) : 'N/A'}</td>
+                      <td>{typeof d.colasm12=== 'number' ? d.colasm12.toFixed(3) : 'N/A'}</td>
+                      <td>{typeof d.pecm12=== 'number' ? d.pecm12.toFixed(2) : 'N/A'}</td>
+                      <td>{typeof d.	alimm34=== 'number' ? d.alimm34.toFixed(3) : 'N/A'}</td>
+                      <td>{typeof d.peam34=== 'number' ? d.peam34.toFixed(2) : 'N/A'}</td>
+                      <td>{typeof d.conm34=== 'number' ? d.conm34.toFixed(3) : 'N/A'}</td>
+                      <td>{typeof d.pecnm34=== 'number' ? d.pecnm34.toFixed(2) : 'N/A'}</td>
+                      <td>{typeof d.mediosm34=== 'number' ? d.mediosm34.toFixed(3) : 'N/A'}</td>
+                      <td>{typeof d.pemm34=== 'number' ? d.pemm34.toFixed(2) : 'N/A'}</td>
+                      <td>{typeof d.colasm34=== 'number' ? d.colasm34.toFixed(3) : 'N/A'}</td>
+                      <td>{typeof d.pecm34=== 'number' ? d.pecm34.toFixed(2) : 'N/A'}</td>
+                      <td>{typeof d.alimm5=== 'number' ? d.alimm5.toFixed(3) : 'N/A'}</td>
+                      <td>{typeof d.peam5=== 'number' ? d.peam5.toFixed(2) : 'N/A'}</td>
+                      <td>{typeof d.conm5=== 'number' ? d.conm5.toFixed(3) : 'N/A'}</td>
+                      <td>{typeof d.pecnm5=== 'number' ? d.pecnm5.toFixed(2) : 'N/A'}</td>
+                      <td>{typeof d.mediosm5=== 'number' ? d.mediosm5.toFixed(3) : 'N/A'}</td>
+                      <td>{typeof d.pemm5=== 'number' ? d.pemm5.toFixed(2) : 'N/A'}</td>
+                      <td>{typeof d.colasm5=== 'number' ? d.colasm5.toFixed(3) : 'N/A'}</td>
+                      <td>{typeof d.pecm5=== 'number' ? d.pecm5.toFixed(2) : 'N/A'}</td>
+                      <td>{typeof d.alimm6=== 'number' ? d.alimm6.toFixed(3) : 'N/A'}</td>
+                      <td>{typeof d.peam6=== 'number' ? d.peam6.toFixed(2) : 'N/A'}</td>
+                      <td>{typeof d.conm6=== 'number' ? d.conm6.toFixed(3) : 'N/A'}</td>
+                      <td>{typeof d.pecnm6=== 'number' ? d.pecnm6.toFixed(2) : 'N/A'}</td>
+                      <td>{typeof d.mediom6=== 'number' ? d.mediom6.toFixed(3) : 'N/A'}</td>
+                      <td>{typeof d.pemm6=== 'number' ? d.pemm6.toFixed(2) : 'N/A'}</td>
+                      <td>{typeof d.colasm6=== 'number' ? d.colasm6.toFixed(3) : 'N/A'}</td>
+                      <td>{typeof d.pecm6=== 'number' ? d.pecm6.toFixed(2) : 'N/A'}</td>
 
 
                       
@@ -362,7 +361,7 @@ const ReporteDiario = () => {
 
     <div className="table-responsive">
     <center><label >PRODUCCION SELECCION</label></center>
-    <table  class="table table-bordered">
+    <table  className="table table-bordered">
   <thead>
         <tr  >
           <th></th>
@@ -377,13 +376,28 @@ const ReporteDiario = () => {
           <th>P.E</th>
           <th>TONPIEDRA</th>
           <th>P.E</th>
+          <th>A</th>
           <th>MinaLE</th>
+          <th>P.E</th>
+          <th>A</th>
           <th>MinaLS</th>
+          <th>P.E</th>
+          <th>A</th>
           <th>PatioLE</th>
+          <th>P.E</th>
+          <th>A</th>
           <th>PatioLS</th>
+          <th>P.E</th>
+          <th>A</th>
           <th>Med3y4</th>
+          <th>P.E</th>
+          <th>A</th>
           <th>Desensolve</th>
+          <th>P.E</th>
+          <th>A</th>
           <th>Colas</th>
+          <th>P.E</th>
+        
           
          
         </tr>
@@ -407,22 +421,38 @@ const ReporteDiario = () => {
                       <td>{d.id}</td>
                       <td>{d.fecha}</td>
                       <td>{d.turno}</td>
-                      <td>{d.alimgrano.toFixed(3)}</td>
-                      <td>{d.peag.toFixed(2)}</td>
-                      <td>{d.concgrano.toFixed(3)}</td>
-                      <td>{d.pecng.toFixed(2)}</td>
-                      <td>{d.colasgrano.toFixed(3)}</td>
-                      <td>{d.pecg.toFixed(2)}</td>
-                      <td>{d.tonpiedra.toFixed(3)}</td>
-                      <td>{d.petp.toFixed(2)}</td>
-                      <td>{d.tolvageneral	.toFixed(3)}</td>
-                      <td>{d.medio3y4.toFixed(3)}</td>
-                      <td>{d.minale.toFixed(3)}</td>
-                      <td>{d.minals.toFixed(3)}</td>
-                      <td>{d.patiols.toFixed(3)}</td>
-                      <td>{d.desensolve	.toFixed(3)}</td>
-                      <td>{d.colas.toFixed(3)}</td>
-                      
+                      <td>{typeof d.alimgrano=== 'number' ? d.alimgrano.toFixed(3) : 'N/A'}</td>
+                      <td>{typeof d.peag=== 'number' ? d.peag.toFixed(2) : 'N/A'}</td>
+                      <td>{typeof d.concgrano=== 'number' ? d.concgrano.toFixed(3) : 'N/A'}</td>
+                      <td>{typeof d.pecng=== 'number' ? d.pecng.toFixed(2) : 'N/A'}</td>
+                      <td>{typeof d.colasgrano=== 'number' ? d.colasgrano.toFixed(3) : 'N/A'}</td>
+                      <td>{typeof d.pecg=== 'number' ? d.pecg.toFixed(2) : 'N/A'}</td>
+                      <td>{typeof d.tonpiedra=== 'number' ? d.tonpiedra.toFixed(3) : 'N/A'}</td>
+                      <td>{typeof d.petp=== 'number' ? d.petp.toFixed(2) : 'N/A'}</td>
+                      <td>{d.aminale}</td>
+                      <td>{typeof d.minale=== 'number' ? d.minale.toFixed(3) : 'N/A'}</td>
+                      <td>{typeof d.pemle=== 'number' ? d.pemle.toFixed(2) : 'N/A'}</td>
+                      <td>{d.aminals}</td>
+                      <td>{typeof d.minals=== 'number' ? d.minals.toFixed(3) : 'N/A'}</td>
+                      <td>{typeof d.pemls=== 'number' ? d.pemls.toFixed(2) : 'N/A'}</td>
+                      <td>{d.apatiole}</td>
+                      <td>{typeof d.patiols=== 'number' ? d.patiols.toFixed(3) : 'N/A'}</td>
+                      <td>{typeof d.peple=== 'number' ? d.peple.toFixed(2) : 'N/A'}</td>
+                      <td>{d.apatiols}</td>
+                      <td>{typeof d.tolvageneral=== 'number' ? d.tolvageneral.toFixed(3) : 'N/A'}</td>
+                      <td>{typeof d.pepls=== 'number' ? d.pepls.toFixed(2) : 'N/A'}</td>
+                      <td>{d.amedio34}</td>
+                      <td>{typeof d.medio3y4=== 'number' ? d.medio3y4.toFixed(3) : 'N/A'}</td>
+                      <td>{typeof d.psm34=== 'number' ? d.psm34.toFixed(2) : 'N/A'}</td>
+                      <td>{d.adesensolve}</td>
+                      <td>{typeof d.desensolve=== 'number' ? d.desensolve.toFixed(3) : 'N/A'}</td>
+                      <td>{typeof d.pedese=== 'number' ? d.pedese.toFixed(2) : 'N/A'}</td>
+                      <td>{d.acolas}</td>
+                      <td>{typeof d.colas=== 'number' ?  d.colas.toFixed(3) : 'N/A'}</td>
+                      <td>{typeof d.pecolas=== 'number' ? d.pecolas.toFixed(2) : 'N/A'}</td>
+                     
+                    
+                     
                     
 
                      

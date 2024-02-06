@@ -28,7 +28,7 @@ function Menu({children}) {
             icon:<GiNotebook />
         },
         {
-            path:"/reporteexistencia",
+            path:"/pdfdiario",
             name:"Reporte de Existencia",
             icon:<GiNotebook />
         },

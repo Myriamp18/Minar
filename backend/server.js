@@ -392,7 +392,7 @@ app.get('/updateobtenerSaldoAnterior', (req, res) => {
 });
 //////////////////////REPORTEDIAIRIO//////////
 app.get('/reportediario', (req, res) => {
-    const sql = 'SELECT * FROM produccionjigs ORDER BY id DESC LIMIT 3';
+    const sql = "SELECT * FROM produccionjigs";
     db.query(sql, (err, data) => {
         if (err) return res.json(err);
         return res.json(data);
@@ -552,7 +552,7 @@ app.post('/createrreportegrano', (req, res) => {
     req.body.concgrano = req.body.concgrano- (req.body.concgrano * 0.14);
     req.body.colasgrano = req.body.colasgrano - (req.body.colasgrano * 0.109);
 
-    const sql = "INSERT INTO prodseleccion (fecha, turno, alimgrano, peag, concgrano, pecng, colasgrano, pecg, tonpiedra, petp, tolvageneral, medio3y4, minale, minals, patiols, desensolve, colas) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?)";
+    const sql = "INSERT INTO prodseleccion (fecha, turno, alimgrano, peag, concgrano, pecng, colasgrano, pecg, tonpiedra, petp, aminale, minale, pemle, aminals, minals, pemls, apatiole, patiols, peple, apatiols, tolvageneral, pepls, amedio34, medio3y4, psm34, adesensolve, desensolve, pedese, acolas, colas, pecolas) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
     const values = [
         req.body.fecha,
         req.body.turno,
@@ -564,13 +564,30 @@ app.post('/createrreportegrano', (req, res) => {
         req.body.pecg,
         req.body.tonpiedra,
         req.body.petp,
-        req.body.tolvageneral,
-        req.body.medio3y4,
+        req.body.aminale,
         req.body.minale,
+        req.body.pemle,
+        req.body.aminals,
         req.body.minals,
+        req.body.pemls,
+        req.body.apatiole,
         req.body.patiols,
+        req.body.peple,
+        req.body.apatiols,
+        req.body.tolvageneral,
+        req.body.pepls,
+        req.body.amedio34,
+        req.body.medio3y4,
+        req.body.psm34,
+        req.body.adesensolve,
         req.body.desensolve,
-        req.body.colas
+        req.body.pedese,
+        req.body.acolas,
+        req.body.colas,
+        req.body.pecolas,
+
+
+      
     ];
 
     db.query(sql, values, (err, data) => {

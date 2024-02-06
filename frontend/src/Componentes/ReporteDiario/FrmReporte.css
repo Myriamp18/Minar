@@ -4,12 +4,12 @@
   margin-bottom: 20px;
 }
 .JIGS input{
-  width: 98%;
+  width: 100%;
   padding: 2px;
   box-sizing: border-box;
   border: 1px solid #141313;
   border-radius: 4px;
-  margin-bottom: 5px;
+ 
 }
 
 .JIGS1 {
@@ -39,7 +39,7 @@
 
 
 .btn-container {
-  margin-top: 20px;
+  margin-top: -5px;
 }
 
 .BTN {

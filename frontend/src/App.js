@@ -21,6 +21,7 @@ import GranoBandas from './Componentes/GranoBandas/GranoBandas';
 import ReporteDiario from './Componentes/ReporteDiario/ReporteDiario'
 import FrmReporte from './Componentes/ReporteDiario/FrmReporte'
 import ReporteExistencia from './Componentes/ReporteExistencia/ReporteExistencia ';
+import Pdf from './Componentes/ReporteDiario/Pdf';
 
 function App() {
   return (
@@ -32,6 +33,8 @@ function App() {
         <Route path="/" element={<Login />} />
         <Route path="/Inicio" element={<Inicio />} />
         <Route path="/diario" element={<ReporteDiario />} />
+        <Route path="/pdfdiario" element={<Pdf />} />
+
 
        /////////SILOS///////
        <Route path="/create" element={<FrmSilos/>}/>

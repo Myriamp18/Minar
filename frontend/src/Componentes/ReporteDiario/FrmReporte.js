@@ -100,6 +100,14 @@ function FrmReporte() {
     psm34:"",
     pedese:"",
     pecolas:"",
+    aminale:"",
+    aminals:"",
+    apatiole:"",
+    apatiols:"",
+    amedio34:"",
+    adesensolve:"",
+    acolas:"",
+
     })
 
 
@@ -174,7 +182,17 @@ function FrmReporte() {
           </div>
         </div>
         <div className='columnas'>
+        <div className="JIGS">
+            
+            <input
+              type="text"
+              placeholder="A"
+              name='	aminale	'
+              onChange={(e) => setValues({ ...values, 	aminale: e.target.value })} />
+          </div>
+
           <div className="JIGS">
+            
             <input
               type="numers"
               placeholder="Mina LE"
@@ -187,6 +205,14 @@ function FrmReporte() {
               placeholder="P.E"
               name='psemle	'
               onChange={(e) => setValues({ ...values ,psemle: e.target.value })} />
+          </div>
+         
+          <div className="JIGS">
+            <input
+              type="text"
+              placeholder="A"
+              name='aminals'
+              onChange={(e) => setValues({ ...values, aminals: e.target.value })} />
           </div>
 
           <div className="JIGS">
@@ -203,7 +229,15 @@ function FrmReporte() {
               name='pemls	'
               onChange={(e) => setValues({ ...values ,pemls: e.target.value })} />
           </div>
-         
+          </div>
+          <div className='columnas'>
+           <div className="JIGS">
+            <input
+              type="text"
+              placeholder="A"
+              name='apatiole	'
+              onChange={(e) => setValues({ ...values, apatiole: e.target.value })} />
+          </div>
     
           <div className="JIGS">
             <input
@@ -219,8 +253,16 @@ function FrmReporte() {
               name='peple	'
               onChange={(e) => setValues({ ...values ,peple: e.target.value })} />
           </div>
+          
+         
+          
+          <div className="JIGS">
+            <input
+              type="text"
+              placeholder="A"
+              name='apatiols'
+              onChange={(e) => setValues({ ...values, apatiols: e.target.value })} />
           </div>
-          <div className='columnas'>
           <div className="JIGS">
             <input
               type="numers"
@@ -235,6 +277,17 @@ function FrmReporte() {
               name='pepls	'
               onChange={(e) => setValues({ ...values , pepls: e.target.value })} />
           </div>
+          </div>
+          
+          <div className='columnas'>
+          <div className="JIGS">
+            <input
+              type="text"
+              placeholder="A"
+              name='amedio34'
+              onChange={(e) => setValues({ ...values, amedio34: e.target.value })} />
+          
+        </div>
           <div className="JIGS">
             <input
               type="moler"
@@ -250,6 +303,17 @@ function FrmReporte() {
               name='psm34	'
               onChange={(e) => setValues({ ...values ,psm34: e.target.value })} />
           </div>
+          
+
+          
+          <div className="JIGS">
+            <input
+              type="text"
+              placeholder="A"
+              name='adesensolve'
+              onChange={(e) => setValues({ ...values, adesensolve: e.target.value })} />
+          
+        </div>
         <div className="JIGS">
             <input
               type="moler"
@@ -265,9 +329,18 @@ function FrmReporte() {
               name='pedese	'
               onChange={(e) => setValues({ ...values ,pedese: e.target.value })} />
           </div>
+          </div>
         
-        </div>
+      
         <div className='columnas'>
+        <div className="JIGS">
+            <input
+              type="text"
+              placeholder="A"
+              name='acolas'
+              onChange={(e) => setValues({ ...values, acolas: e.target.value })} />
+          
+          </div>
         <div className="JIGS">
             <input
               type="moler"
