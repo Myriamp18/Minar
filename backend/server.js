@@ -399,21 +399,21 @@ app.get('/reportediario', (req, res) => {
     });
 });
 app.get('/reportediariojch', (req, res) => {
-    const sql = "SELECT * FROM jigschinos ORDER BY id DESC LIMIT 3";
+    const sql = "SELECT * FROM jigschinos ";
     db.query(sql, (err, data) => {
         if (err) return res.json(err);
         return res.json(data);
     });
 });
 app.get('/reportediariomesas', (req, res) => {
-    const sql = "SELECT * FROM mesas ORDER BY id DESC LIMIT 3";
+    const sql = "SELECT * FROM mesas";
     db.query(sql, (err, data) => {
         if (err) return res.json(err);
         return res.json(data);
     });
 });
 app.get('/reportediariograno', (req, res) => {
-    const sql = "SELECT * FROM prodseleccion ORDER BY id DESC LIMIT 3";
+    const sql = "SELECT * FROM prodseleccion ";
     db.query(sql, (err, data) => {
         if (err) return res.json(err);
         return res.json(data);
