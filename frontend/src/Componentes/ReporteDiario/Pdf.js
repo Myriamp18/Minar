@@ -3,8 +3,7 @@ import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import './Pdj.css';
 import Logo from'../../assest/logo.png'
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
+
 
 function Pdf() {
     const [products, setProducts] = useState([]);
