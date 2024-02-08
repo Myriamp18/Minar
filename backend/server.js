@@ -628,3 +628,50 @@ app.delete('/deletediariograno/:id', (req, res) => {
         return res.json(data);
     });
 });
+
+app.get('/getjigs/:fecha', (req, res) => {
+    const fecha= req.params.fecha;
+    const sql = "SELECT * FROM produccionjigs WHERE fecha = ?"
+    db.query(sql, [fecha], (err, data) => {
+        if (err) {
+            return res.json({ Error: "Error" })
+        }
+
+        return res.json(data)
+    })
+})
+app.get('/getjch/:fecha', (req, res) => {
+    const fecha= req.params.fecha;
+    const sql = "SELECT * FROM jigschinos WHERE fecha = ?"
+    db.query(sql, [fecha], (err, data) => {
+        if (err) {
+            return res.json({ Error: "Error" })
+        }
+
+        return res.json(data)
+    })
+})
+app.get('/getmesas/:fecha', (req, res) => {
+    const fecha= req.params.fecha;
+    const sql = "SELECT * FROM mesas WHERE fecha = ?"
+    db.query(sql, [fecha], (err, data) => {
+        if (err) {
+            return res.json({ Error: "Error" })
+        }
+
+        return res.json(data)
+    })
+})
+app.get('/getgrano/:fecha', (req, res) => {
+    const fecha= req.params.fecha;
+    const sql = "SELECT * FROM prodseleccion WHERE fecha = ?"
+    db.query(sql, [fecha], (err, data) => {
+        if (err) {
+            return res.json({ Error: "Error" })
+        }
+
+        return res.json(data)
+    })
+})
+
+

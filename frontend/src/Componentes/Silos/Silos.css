@@ -5,3 +5,60 @@
     font-size:40px;
     
   }
+  .jigs{
+    
+    gap: 10px;
+    margin-top: 10px;
+    
+  }
+  .button-container {
+    display: flex;
+    gap: 5px; /* Espacio entre los botones */
+}
+
+  .big-button {
+    font-size: 18px; /* Tamaño del texto */
+    padding: 15px 30px; /* Espacio interno (padding) */
+    border: none; /* Sin borde */
+    background-color: #ff0008; /* Color de fondo */
+    color: #ffffff; /* Color del texto */
+    border-radius: 8px; /* Borde redondeado */
+    cursor: pointer; /* Cambiar el cursor al pasar el ratón */
+    margin-left: 5px;
+    
+  }
+  .big-buttonch {
+    font-size: 18px; /* Tamaño del texto */
+    padding: 15px 30px; /* Espacio interno (padding) */
+    border: none; /* Sin borde */
+    background-color: #007bff; /* Color de fondo */
+    color: #ffffff; /* Color del texto */
+    border-radius: 8px; /* Borde redondeado */
+    cursor: pointer; /* Cambiar el cursor al pasar el ratón */
+  }
+  .big-buttonmesas {
+    font-size: 18px; /* Tamaño del texto */
+    padding: 15px 30px; /* Espacio interno (padding) */
+    border: none; /* Sin borde */
+    background-color: #020202; /* Color de fondo */
+    color: #ffffff; /* Color del texto */
+    border-radius: 8px; /* Borde redondeado */
+    cursor: pointer; /* Cambiar el cursor al pasar el ratón */
+  }
+  .big-buttonselc {
+    font-size: 18px; /* Tamaño del texto */
+    padding: 15px 30px; /* Espacio interno (padding) */
+    border: none; /* Sin borde */
+    background-color: #2f5519; /* Color de fondo */
+    color: #ffffff; /* Color del texto */
+    border-radius: 8px; /* Borde redondeado */
+    cursor: pointer; /* Cambiar el cursor al pasar el ratón */
+  }
+  .big-button i {
+    margin-right: 10px; /* Espacio entre el icono y el texto */
+  }
+
+  .link-style {
+    text-decoration: none; /* Elimina el subrayado del enlace */
+    color: inherit; /* Hereda el color del texto del botón */
+  }

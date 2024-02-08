@@ -23,7 +23,7 @@ function Menu({children}) {
             icon:<FaHome />
         },
         {
-            path:"/createreportediario",
+            path:"/diario",
             name:"Reporte Diario",
             icon:<GiNotebook />
         },
