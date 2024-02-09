@@ -628,44 +628,204 @@ app.delete('/deletediariograno/:id', (req, res) => {
         return res.json(data);
     });
 });
-
+/////////////EXPORTACION POR FECHA REPORTE PROD.PLANTA///////////7
 app.get('/getjigs/:fecha', (req, res) => {
     const fecha= req.params.fecha;
     const sql = "SELECT * FROM produccionjigs WHERE fecha = ?"
     db.query(sql, [fecha], (err, data) => {
         if (err) {
-            return res.json({ Error: "Error" })
+            console.error("Error en la consulta SQL:", err);
+            return res.status(500).json({ error: "Error en la consulta SQL. Por favor, inténtalo de nuevo más tarde." });
         }
 
-        return res.json(data)
-    })
+        return res.json(data);
+    });
 })
 app.get('/getjch/:fecha', (req, res) => {
     const fecha= req.params.fecha;
     const sql = "SELECT * FROM jigschinos WHERE fecha = ?"
     db.query(sql, [fecha], (err, data) => {
         if (err) {
-            return res.json({ Error: "Error" })
+            console.error("Error en la consulta SQL:", err);
+            return res.status(500).json({ error: "Error en la consulta SQL. Por favor, inténtalo de nuevo más tarde." });
         }
 
-        return res.json(data)
-    })
+        return res.json(data);
+    });
 })
 app.get('/getmesas/:fecha', (req, res) => {
     const fecha= req.params.fecha;
     const sql = "SELECT * FROM mesas WHERE fecha = ?"
     db.query(sql, [fecha], (err, data) => {
         if (err) {
-            return res.json({ Error: "Error" })
+            console.error("Error en la consulta SQL:", err);
+            return res.status(500).json({ error: "Error en la consulta SQL. Por favor, inténtalo de nuevo más tarde." });
         }
 
-        return res.json(data)
-    })
+        return res.json(data);
+    });
 })
 app.get('/getgrano/:fecha', (req, res) => {
     const fecha= req.params.fecha;
     const sql = "SELECT * FROM prodseleccion WHERE fecha = ?"
     db.query(sql, [fecha], (err, data) => {
+        if (err) {
+            console.error("Error en la consulta SQL:", err);
+            return res.status(500).json({ error: "Error en la consulta SQL. Por favor, inténtalo de nuevo más tarde." });
+        }
+
+        return res.json(data);
+    });
+})
+//////////////////////////MODIFICACIONES/////////
+app.put('/updatejigs/:id', (req, res) => {
+    const sql = "UPDATE produccionjigs  SET fecha = ?, turno = ?, alimj1 = ?, peaj1= ?, granoj1 = ?, pegj1 = ?, colasj1 = ?, pecj1 = ?, desenj1 = ?, pedj1 = ?, alimj2 = ?, peaj2 = ?, granoj2 = ?, pegj2 = ?, colasj2 = ?, pecj2 = ?, desenj2 = ?, pedj2 = ? WHERE id = ?";
+    const values = [
+        req.body.fecha,
+        req.body.turno,
+        req.body.alimj1,
+        req.body.peaj1,
+        req.body.granoj1,
+        req.body.pegj1,
+        req.body.colasj1,
+        req.body.pecj1,
+        req.body.desenj1,
+        req.body.pedj1,
+        req.body.alimj2,
+        req.body.peaj2,
+        req.body.granoj2,
+        req.body.pegj2,
+        req.body.colasj2,
+        req.body.pecj2,
+        req.body.desenj2,
+        req.body.pedj2
+
+    ];
+    const id = req.params.id;
+    db.query(sql, [...values, id], (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+});
+app.put('/updatejigsch/:id', (req, res) => {
+    const sql = "UPDATE jigschinos  SET fecha = ?, turno = ?, alimjch = ?, peajch =?, granojch =?, pegjch=?, colasjch=?, pecjch=?, desenjch=?, pedjch=?, alimjsec=?, peajsec=?, concjsec=?, pecojsec=?, colasjsec=?, pecjsec=? WHERE id = ?";
+    const values = [
+        req.body.fecha,
+        req.body.turno,
+        req.body.alimjch,
+        req.body.peajch,
+        req.body.granojch,
+        req.body.pegjch,
+        req.body.colasjch,
+        req.body.pecjch,
+        req.body.desenjch,
+        req.body.pedjch,
+        req.body.alimjsec,
+        req.body.peajsec,
+        req.body.concjsec,
+        req.body.pecojsec,
+        req.body.colasjsec,
+        req.body.pecjsec
+
+    ];
+    const id = req.params.id;
+    db.query(sql, [...values, id], (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+});
+app.put('/updatejigsch/:id', (req, res) => {
+    const sql = "UPDATE mesas SET fecha=?, turno=?, alimm12=?, peam12=?, conm12=?, pecnm12=?, mediom12=?, pemm12=?, colasm12=?, pecm12=?, alimm34=?, peam34=?, conm34=?, pecnm34=?, mediosm34=?, pemm34=?, colasm34=?, pecm34=?, alimm5=?, peam5=?, conm5=?, pecnm5=?, mediosm5=?, pemm5=?, colasm5=?, pecm5=?, alimm6=?, peam6=?, conm6=?, pecnm6=?, mediom6=?, pemm6=?, colasm6=?, pecm6=? WHERE id = ?";
+    const values = [
+        req.body.fecha,
+        req.body.turno,
+        req.body.alimm12,
+        req.body.peam12,
+        req.body.conm12,
+        req.body.pecnm12,
+        req.body.mediom12,
+        req.body.pemm12,
+        req.body.colasm12,
+        req.body.pecm12,
+        req.body.alimm34,
+        req.body.peam34,
+        req.body.conm34,
+        req.body.pecnm34,
+        req.body.mediosm34,
+        req.body.pemm34,
+        req.body.colasm34,
+        req.body.pecm34,
+        req.body.alimm5,
+        req.body.peam5,
+        req.body.conm5,
+        req.body.pecnm5,
+        req.body.mediosm5,
+        req.body.pemm5,
+        req.body.colasm5,
+        req.body.pecm5,
+        req.body.alimm6,
+        req.body.peam6,
+        req.body.conm6,
+        req.body.pecnm6,
+        req.body.mediom6,
+        req.body.pemm6,
+        req.body.colasm6,
+        req.body.pecm6
+
+    ];
+    const id = req.params.id;
+    db.query(sql, [...values, id], (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+});
+app.put('/updategrano/:id', (req, res) => {
+    const sql = "UPDATE prodseleccion SET fecha=?, turno=?, alimgrano=?, peag=?, concgrano=?, pecng=?, colasgrano=?, pecg=?, tonpiedra=?, petp=?, aminale=?, minale=?, pemle=?, aminals=?, minals=?, pemls=?, apatiole=?, patiols=?, peple=?, apatiols=?, tolvageneral=?, pepls=?, amedio34=?, medio3y4=?, psm34=?, adesensolve=?, desensolve=?, pedese=?, acolas=?, colas=?, pecolas=? WHERE id = ?";
+    const values = [
+        req.body.fecha,
+        req.body.turno,
+        req.body.alimgrano,
+        req.body.peag,
+        req.body.concgrano,
+        req.body.pecng,
+        req.body.colasgrano,
+        req.body.pecg,
+        req.body.tonpiedra,
+        req.body.petp,
+        req.body.aminale,
+        req.body.minale,
+        req.body.pemle,
+        req.body.aminals,
+        req.body.minals,
+        req.body.pemls,
+        req.body.apatiole,
+        req.body.patiols,
+        req.body.peple,
+        req.body.apatiols,
+        req.body.tolvageneral,
+        req.body.pepls,
+        req.body.amedio34,
+        req.body.medio3y4,
+        req.body.psm34,
+        req.body.adesensolve,
+        req.body.desensolve,
+        req.body.pedese,
+        req.body.acolas,
+        req.body.colas,
+        req.body.pecolas,
+
+
+    ];
+    const id = req.params.id;
+    db.query(sql, [...values, id], (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+});
+app.get('/getrecorjigs/:id', (req, res) => {
+    const id = req.params.id;
+    const sql = "SELECT * FROM produccionjigs WHERE id = ?"
+    db.query(sql, [id], (err, data) => {
         if (err) {
             return res.json({ Error: "Error" })
         }
@@ -673,5 +833,36 @@ app.get('/getgrano/:fecha', (req, res) => {
         return res.json(data)
     })
 })
+app.get('/getrecorjigsch/:id', (req, res) => {
+    const id = req.params.id;
+    const sql = "SELECT * FROM  jigschinos WHERE id = ?"
+    db.query(sql, [id], (err, data) => {
+        if (err) {
+            return res.json({ Error: "Error" })
+        }
 
+        return res.json(data)
+    })
+})
+app.get('/getrecormesas/:id', (req, res) => {
+    const id = req.params.id;
+    const sql = "SELECT * FROM  mesas WHERE id = ?"
+    db.query(sql, [id], (err, data) => {
+        if (err) {
+            return res.json({ Error: "Error" })
+        }
 
+        return res.json(data)
+    })
+})
+app.get('/getrecorgrano/:id', (req, res) => {
+    const id = req.params.id;
+    const sql = "SELECT * FROM prodseleccion  WHERE id = ?"
+    db.query(sql, [id], (err, data) => {
+        if (err) {
+            return res.json({ Error: "Error" })
+        }
+
+        return res.json(data)
+    })
+})

@@ -81,7 +81,7 @@ function Menu({children}) {
       }, []);
   return (
     <div className='containermenu'>
-    <div style={{width: isOpen ? "250px":"50px"}} className='menu'>
+    <div style={{width: isOpen ? "300px":"50px"}} className='menu'>
         <div className='top_section'>
         <img style={{display: isOpen ? "block": "none"}}  src={Logo} alt='logomenu' />
             <h1 style={{display: isOpen ? "block": "none"}} className='logo'>MINAR</h1>
@@ -99,7 +99,7 @@ function Menu({children}) {
         }
     </div>
 
-       <main> {children}</main>
+       <main className='main'> {children}</main>
     
 
    

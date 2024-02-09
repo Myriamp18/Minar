@@ -203,8 +203,8 @@ function FrmReporte() {
             <input
               type="numers"
               placeholder="P.E"
-              name='psemle	'
-              onChange={(e) => setValues({ ...values ,psemle: e.target.value })} />
+              name='psmle	'
+              onChange={(e) => setValues({ ...values ,psmle: e.target.value })} />
           </div>
          
           <div className="JIGS">

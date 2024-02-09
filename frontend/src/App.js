@@ -22,6 +22,7 @@ import ReporteDiario from './Componentes/ReporteDiario/ReporteDiario'
 import FrmReporte from './Componentes/ReporteDiario/FrmReporte'
 import ReporteExistencia from './Componentes/ReporteExistencia/ReporteExistencia ';
 import Pdf from './Componentes/ReporteDiario/Pdf';
+import Modificarjigs from './Componentes/ReporteDiario/Modificarjigs';
 
 function App() {
   return (
@@ -61,6 +62,7 @@ function App() {
 
        //////////REPORTESDIARIOS//////////7
        <Route path="/createreportediario" element={<FrmReporte/>}/>
+       <Route path="/updatejigs/:id" element={<Modificarjigs/>}/>
        <Route path="/reporteexistencia" element={<ReporteExistencia/>}/>
          
        
