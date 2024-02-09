@@ -143,8 +143,8 @@ const ReporteDiario = () => {
 
         </div>
         {showTable1 && (
-            <div className='col-12 col-lg-8 d-flex alim-items-center'>
-            
+            <div className='col-12 col-lg-8 '>
+            <center><label>PRODUCCION DE JIGG´S</label></center>
             <div className="table-responsive">
               <table className="table table-bordered">
                 <thead>
