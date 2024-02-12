@@ -136,7 +136,9 @@ const styles = {
   };
 const generatePrimTable = (doc, data, title, startY) => {
     doc.setFontSize(14);
-    doc.text('Produccion', 95, 18);
+    doc.text('Produccion', 95,18);
+
+  
 
     // Crear tabla
     const tableColumn = ['', 'Turno', 'A', 'TON', 'P.E'];
@@ -199,7 +201,7 @@ const generatePrimTable = (doc, data, title, startY) => {
             item.pecolas
         ];
         tableRows.push(rowData6);
-
+        
     });
     const firstTableHeight = doc.autoTable.previous.finalY || startY;
     const tablePropsTurnos = {
@@ -388,6 +390,8 @@ const generatePrimtresTable = (doc, data, title, startY) => {
 };
 
 const generateTable = (doc, data, title, startY) => {
+    doc.setFontSize(14);
+    doc.text('Produccion JIGG´S ', 90,90);
 
 
     // Crear tabla
@@ -441,12 +445,16 @@ const generateTable = (doc, data, title, startY) => {
     });
 };
 const generateOtherTable = (doc, data, title, startY) => {
+    // Título de la primera tabla
+    doc.setFontSize(14);
+    doc.text('Produccion JIGG´S Chinos Primario', 80, 158);
+
+    // Primera tabla
     const tableColumns1 = ['Turno', 'Alimentacion', 'P.E', 'Grano', 'P.E', 'Desensolve', 'P.E', 'Colas', 'P.E'];
     const tableRows1 = [];
 
     data.forEach((item) => {
         const rowData = [
-
             item.turno,
             item.alimjch,
             item.peajch,
@@ -460,13 +468,27 @@ const generateOtherTable = (doc, data, title, startY) => {
         tableRows1.push(rowData);
     });
 
+    // Dibujar la primera tabla
+    doc.autoTable({
+        head: [tableColumns1],
+        body: tableRows1,
+        startY: startY + 25,
+        theme: 'grid',
+        headStyles: styles.tableHeader,
+        bodyStyles: styles.tableRow
+    });
 
-    const tableColumns2 = ['Turno', 'Alimentacion', 'P.E', 'Concentrado', 'Colas', 'P.E'];
+    // Título de la segunda tabla
+    doc.setFontSize(14);
+    doc.text('Produccion JIGG´S Secundario', 80, 196); // Ajusta la posición del título según sea necesario
+
+    // Segunda tabla
+    const tableColumns2 = ['Horas','Turno', 'Alimentacion', 'P.E', 'Concentrado', 'Colas', 'P.E'];
     const tableRows2 = [];
 
     data.forEach((item) => {
         const rowData = [
-
+            item.horasec,
             item.turno,
             item.alimjsec,
             item.peajsec,
@@ -474,39 +496,23 @@ const generateOtherTable = (doc, data, title, startY) => {
             item.pecojsec,
             item.colasjsec,
             item.pecjsec,
-
         ];
         tableRows2.push(rowData);
     });
-    // Obtener la altura de la primera tabla
 
-    doc.autoTable({
-        head: [tableColumns1],
-        body: tableRows1,
-        startY: startY + 25,
-        theme: 'grid',
-        headStyles: {
-            fillColor: [0, 0, 255] // Cambia el color del encabezado de la tabla a azul
-        },
-        headStyles: styles.tableHeader,
-        bodyStyles: styles.tableRow
-    });
-    const firstTableHeight = doc.autoTable.previous.finalY || startY;
-    // Agregar tabla al documento
+    // Dibujar la segunda tabla
     doc.autoTable({
         head: [tableColumns2],
         body: tableRows2,
-        startY: firstTableHeight + 10,
+        startY: startY + 65, // Ajusta la posición de la segunda tabla según sea necesario
         theme: 'grid',
-        headStyles: {
-            fillColor: [0, 0, 255] // Cambia el color del encabezado de la tabla a azul
-        },
         headStyles: styles.tableHeader,
         bodyStyles: styles.tableRow
     });
 };
 
 const generateTridTableData = (doc, data, title, startY) => {
+    
     const tableColumns3 = ['', 'Turno', 'Alimentacion', 'P.E', 'Concentrado', 'P.E', 'Medios', 'P.E', 'Colas', 'P.E'];
     const tableRows3 = [];
 

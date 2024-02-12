@@ -463,7 +463,7 @@ app.post('/createrreportejigsch', (req, res) => {
     req.body.colasjsec = req.body.colasjsec - (req.body.colasjsec *0.109);
     req.body.desenjch = req.body.desenjch - (req.body.desenjch * 0.108);
     req.body.concjsec = req.body.concjsec - (req.body. concjsec * 0.14);
-    const sql = "INSERT INTO jigschinos (fecha, turno, alimjch, peajch, granojch, pegjch, colasjch, pecjch, desenjch, pedjch, alimjsec, peajsec, concjsec, pecojsec, colasjsec, pecjsec) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?)";
+    const sql = "INSERT INTO jigschinos (fecha, turno, alimjch, peajch, granojch, pegjch, colasjch, pecjch, desenjch, pedjch, horasec, alimjsec, peajsec, concjsec, pecojsec, colasjsec, pecjsec) VALUES (?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?)";
     const values = [
         req.body.fecha,
         req.body.turno,
@@ -475,6 +475,7 @@ app.post('/createrreportejigsch', (req, res) => {
         req.body.pecjch,
         req.body.desenjch,
         req.body.pedjch,
+        req.body.horasec,
         req.body.alimjsec,
         req.body.peajsec,
         req.body.concjsec,
@@ -708,7 +709,7 @@ app.put('/updatejigs/:id', (req, res) => {
     });
 });
 app.put('/updatejigsch/:id', (req, res) => {
-    const sql = "UPDATE jigschinos  SET fecha = ?, turno = ?, alimjch = ?, peajch =?, granojch =?, pegjch=?, colasjch=?, pecjch=?, desenjch=?, pedjch=?, alimjsec=?, peajsec=?, concjsec=?, pecojsec=?, colasjsec=?, pecjsec=? WHERE id = ?";
+    const sql = "UPDATE jigschinos  SET fecha = ?, turno = ?, alimjch = ?, peajch =?, granojch =?, pegjch=?, colasjch=?, pecjch=?, desenjch=?, pedjch=?, horasec = ?,alimjsec=?, peajsec=?, concjsec=?, pecojsec=?, colasjsec=?, pecjsec=? WHERE id = ?";
     const values = [
         req.body.fecha,
         req.body.turno,
@@ -720,6 +721,7 @@ app.put('/updatejigsch/:id', (req, res) => {
         req.body.pecjch,
         req.body.desenjch,
         req.body.pedjch,
+        req.body.horasec,
         req.body.alimjsec,
         req.body.peajsec,
         req.body.concjsec,
@@ -734,7 +736,7 @@ app.put('/updatejigsch/:id', (req, res) => {
         return res.json(data);
     });
 });
-app.put('/updatejigsch/:id', (req, res) => {
+app.put('/updatemesas/:id', (req, res) => {
     const sql = "UPDATE mesas SET fecha=?, turno=?, alimm12=?, peam12=?, conm12=?, pecnm12=?, mediom12=?, pemm12=?, colasm12=?, pecm12=?, alimm34=?, peam34=?, conm34=?, pecnm34=?, mediosm34=?, pemm34=?, colasm34=?, pecm34=?, alimm5=?, peam5=?, conm5=?, pecnm5=?, mediosm5=?, pemm5=?, colasm5=?, pecm5=?, alimm6=?, peam6=?, conm6=?, pecnm6=?, mediom6=?, pemm6=?, colasm6=?, pecm6=? WHERE id = ?";
     const values = [
         req.body.fecha,
@@ -779,7 +781,7 @@ app.put('/updatejigsch/:id', (req, res) => {
         return res.json(data);
     });
 });
-app.put('/updategrano/:id', (req, res) => {
+app.put('/updategranoseleccion/:id', (req, res) => {
     const sql = "UPDATE prodseleccion SET fecha=?, turno=?, alimgrano=?, peag=?, concgrano=?, pecng=?, colasgrano=?, pecg=?, tonpiedra=?, petp=?, aminale=?, minale=?, pemle=?, aminals=?, minals=?, pemls=?, apatiole=?, patiols=?, peple=?, apatiols=?, tolvageneral=?, pepls=?, amedio34=?, medio3y4=?, psm34=?, adesensolve=?, desensolve=?, pedese=?, acolas=?, colas=?, pecolas=? WHERE id = ?";
     const values = [
         req.body.fecha,

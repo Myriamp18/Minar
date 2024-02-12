@@ -242,6 +242,7 @@ const ReporteDiario = () => {
                     <th>P.E</th>
                     <th>ColasJCH</th>
                     <th>P.E</th>
+                    <th>Horas</th>
                     <th>AlimJSEC</th>
                     <th>P.E</th>
                     <th>Conc.JSEC</th>
@@ -258,7 +259,7 @@ const ReporteDiario = () => {
                     <tr key={i}>
                       <td>
                         <div style={{ display: 'flex', alignItems: 'center' }}>
-                          <Link to={`/updateseleccion/${d.id}`} className='btn btn-warning'>
+                          <Link to={`/updatejigsch/${d.id}`} className='btn btn-warning'>
                             <i className='fa-solid fa-edit'></i>
                           </Link>
                           &nbsp;
@@ -272,19 +273,20 @@ const ReporteDiario = () => {
                       <td>{d.id}</td>
                       <td>{d.fecha}</td>
                       <td>{d.turno}</td>
-                      <td>{typeof d.alimjch === 'number' ? d.alimjch.toFixed(2) : 'N/A'}</td>
+                      <td>{typeof d.alimjch === 'number' ? d.alimjch.toFixed(3) : 'N/A'}</td>
                       <td>{typeof d.peajch === 'number' ? d.peajch.toFixed(2) : 'N/A'}</td>
-                      <td>{typeof d.granojch === 'number' ? d.granojch.toFixed(2) : 'N/A'}</td>
+                      <td>{typeof d.granojch === 'number' ? d.granojch.toFixed(3) : 'N/A'}</td>
                       <td>{typeof d.pegjch === 'number' ? d.pegjch.toFixed(2) : 'N/A'}</td>
-                      <td>{typeof d.colasjch === 'number' ? d.colasjch.toFixed(2) : 'N/A'}</td>
+                      <td>{typeof d.colasjch === 'number' ? d.colasjch.toFixed(3) : 'N/A'}</td>
                       <td>{typeof d.pecjch === 'number' ? d.pecjch.toFixed(2) : 'N/A'}</td>
-                      <td>{typeof d.desenjch === 'number' ? d.desenjch.toFixed(2) : 'N/A'}</td>
+                      <td>{typeof d.desenjch === 'number' ? d.desenjch.toFixed(3) : 'N/A'}</td>
                       <td>{typeof d.pedjch === 'number' ? d.pedjch.toFixed(2) : 'N/A'}</td>
-                      <td>{typeof d.alimjsec === 'number' ? d.alimjsec.toFixed(2) : 'N/A'}</td>
+                      <td>{d.horasec}</td>
+                      <td>{typeof d.alimjsec === 'number' ? d.alimjsec.toFixed(3) : 'N/A'}</td>
                       <td>{typeof d.peajsec === 'number' ? d.peajsec.toFixed(2) : 'N/A'}</td>
-                      <td>{typeof d.concjsec === 'number' ? d.concjsec.toFixed(2) : 'N/A'}</td>
+                      <td>{typeof d.concjsec === 'number' ? d.concjsec.toFixed(3) : 'N/A'}</td>
                       <td>{typeof d.pecojsec === 'number' ? d.pecojsec.toFixed(2) : 'N/A'}</td>
-                      <td>{typeof d.colasjsec === 'number' ? d.colasjsec.toFixed(2) : 'N/A'}</td>
+                      <td>{typeof d.colasjsec === 'number' ? d.colasjsec.toFixed(3) : 'N/A'}</td>
                       <td>{typeof d.pecjsec === 'number' ? d.pecjsec.toFixed(2) : 'N/A'}</td>
 
 
@@ -358,7 +360,7 @@ const ReporteDiario = () => {
                     <tr key={i}>
                       <td>
                         <div style={{ display: 'flex', alignItems: 'center' }}>
-                          <Link to={`/updateseleccion/${d.id}`} className='btn btn-warning'>
+                          <Link to={`/updatemesas/${d.id}`} className='btn btn-warning'>
                             <i className='fa-solid fa-edit'></i>
                           </Link>
                           &nbsp;
@@ -472,7 +474,7 @@ const ReporteDiario = () => {
                     <tr key={i}>
                       <td>
                         <div style={{ display: 'flex', alignItems: 'center' }}>
-                          <Link to={`/updateseleccion/${d.id}`} className='btn btn-warning'>
+                          <Link to={`/updategranoseleccion/${d.id}`} className='btn btn-warning'>
                             <i className='fa-solid fa-edit'></i>
                           </Link>
                           &nbsp;
