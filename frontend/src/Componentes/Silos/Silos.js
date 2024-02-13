@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
-
+import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios'
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
 const Silos = () => {
 
-
+  const navigate = useNavigate()
 
   const [data, setData] = useState([]);
 
@@ -29,6 +30,9 @@ const Silos = () => {
     <div className='justify-content flex-end'>
 
       <h1>Minerales Silos:</h1>
+      <div className="close-button" onClick={() => navigate('/pt')}>
+            <FontAwesomeIcon icon={faTimes} />
+            </div>
       <div className="text-center">
         <Link to="/create" className="btn btn-danger btn-lg font-weight-bold   text-lg" >
           <FontAwesomeIcon icon={faPlus} />Insertar</Link>

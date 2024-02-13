@@ -99,7 +99,8 @@ const ReporteDiario = () => {
 
   return (
     <div className=''>
-      <h1 className="d-flex">Reporte Diario:</h1>
+      <h1 className="d-flex">Reporte Diario Planta:</h1>
+      
       <div className="d-flex justify-content-center" >
         <Link to="/createreportediario" className="btn btn-danger btn-lg font-weight-bold  justify-content-center text-lg" >
           <FontAwesomeIcon icon={faPlus} />Insertar</Link>

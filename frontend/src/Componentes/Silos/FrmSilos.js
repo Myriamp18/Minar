@@ -31,16 +31,15 @@ function FrmSilos() {
       .catch(err => console.log(err));
   };
 
-  const onClose = () => {
-    navigate('/Silos')
-  }
+  
 
   return (
     <div className="d-flex align-items-center flex-column mt-2">
       <h1>Insertar Silos</h1>
-      <div className="cerrar-btn" onClick={onClose}>
-        <FontAwesomeIcon icon={faTimes} />
-      </div>
+      <div className="close-button" onClick={() => navigate('/silos')}>
+            <FontAwesomeIcon icon={faTimes} />
+            </div>
+    
       <form className="w-50" onSubmit={handleSubmit} >
         <div class="mb-3 mt-3">
           <label form='fecha' class="form-label"> Fecha:</label>

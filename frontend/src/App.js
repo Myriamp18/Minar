@@ -26,6 +26,9 @@ import Modificarjigs from './Componentes/ReporteDiario/Modificarjigs';
 import Modificarjigsch from './Componentes/ReporteDiario/Modificarjigsch';
 import Modificarmesas from './Componentes/ReporteDiario/Modificarmesas';
 import Modificargrano from './Componentes/ReporteDiario/Modificargrano';
+import PP from './Componentes/ReporteExistencia/PP';
+import PT from './Componentes/ReporteExistencia/PT';
+
 
 function App() {
   return (
@@ -71,7 +74,10 @@ function App() {
        <Route path="/updategranoseleccion/:id" element={<Modificargrano/>}/>
        <Route path="/reporteexistencia" element={<ReporteExistencia/>}/>
          
-       
+         ////////////REPORTEEXISTENCIA////////
+         <Route path="/existencia" element={<ReporteExistencia/>}/>
+         <Route path="/pp" element={<PP/>}/>
+         <Route path="/pt" element={<PT/>}/>
        </Routes>
        </Menu >
       </div>

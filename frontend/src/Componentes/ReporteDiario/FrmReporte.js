@@ -3,6 +3,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './FrmReporte.css'
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
 
 function FrmReporte() {
@@ -152,10 +154,20 @@ function FrmReporte() {
         .catch(err => console.log(err));
     };
 
+   
+  
+    
+
+
+    
+
   return (
 
     <div className="d-flex align-items-center flex-column mt-3" >
       <h1>Insertar Reporte Diario</h1>
+      <div className="close-button" onClick={() => navigate('/diario')}>
+            <FontAwesomeIcon icon={faTimes} />
+            </div>
       <form className="w-50" onSubmit={handleSubmit} >
         <div className='mmm'>
           <div className='JIGS1'>

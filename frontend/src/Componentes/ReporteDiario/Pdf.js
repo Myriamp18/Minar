@@ -47,6 +47,7 @@ function Pdf() {
     };
 
     const handleDateChange = (date) => {
+        console.log(date);
         // Convertir la fecha al formato deseado antes de actualizar el estado
         const formattedDate = formatDate(date);
         setSelectedDate(formattedDate);
@@ -58,10 +59,10 @@ function Pdf() {
         const year = date.getFullYear();
         const month = date.getMonth() + 1; // Los meses van de 0 a 11
         const day = date.getDate();
-
+    
         // Formatear la fecha como desees (por ejemplo, YYYY-MM-DD)
         const formattedDate = `${year}-${month < 10 ? '0' + month : month}-${day < 10 ? '0' + day : day}`;
-
+    
         return formattedDate;
     };
     const generatePDF = async () => {
@@ -102,7 +103,7 @@ function Pdf() {
     generateTable(doc, products.filter(item => item.turno === 2), 'Turno 2', 80);
 
     // Generar otra tabla para los datos de la otra tabla
-    generateOtherTable(doc, otherTableData, 'Otra Tabla', 135);
+    generateOtherTable(doc, otherTableData, 'Otra Tabla', 130);
 
 
 
@@ -112,7 +113,7 @@ function Pdf() {
     generateTridTableData(doc, tridTableData.filter(item => item.turno === 2), 'Turno 2', 170);
     generateTridTableData(doc, tridTableData.filter(item => item.turno === 3), 'Turno 3', 175);
 
-    generateCuartTableData(doc, cuartTableData, 'Otra Tabla', 190);
+    generateCuartTableData(doc, cuartTableData.filter(item => item.turno ===1), 'Otra Tabla', 190);
 
     let fileName = `reporte_diario.pdf`;
 
@@ -127,11 +128,13 @@ const styles = {
     tableHeader: {
       fillColor:[255, 0, 0],
       textColor:[255, 255, 255], // Color blanco para el texto del encabezado
-      fontStyle: 'bold' // Fuente en negrita para el encabezado
+      fontStyle: 'bold', // Fuente en negrita para el encabezado
+      fontSize: 12
     },
     tableRow: {
       fillColor: [255, 255, 255], // Color blanco para las filas de la tabla
-      textColor: [0, 0, 0] // Color negro para el texto de las filas
+      textColor: [0, 0, 0], // Color negro para el texto de las filas
+      fontSize: 8
     }
   };
 const generatePrimTable = (doc, data, title, startY) => {
@@ -376,7 +379,7 @@ const generatePrimtresTable = (doc, data, title, startY) => {
     doc.autoTable({
         head: [tableColumn],
         body: tableRows,
-        startY: firstTableHeight + 10,
+        startY: firstTableHeight + 5,
         theme: 'grid',
         headStyles: {
             fillColor: [0, 128, 0] // Cambia el color del encabezado de la tabla a azul
@@ -390,8 +393,8 @@ const generatePrimtresTable = (doc, data, title, startY) => {
 };
 
 const generateTable = (doc, data, title, startY) => {
-    doc.setFontSize(14);
-    doc.text('Produccion JIGG´S ', 90,90);
+    doc.setFontSize(12);
+    doc.text('Produccion JIGG´S ', 90,80);
 
 
     // Crear tabla
@@ -435,7 +438,7 @@ const generateTable = (doc, data, title, startY) => {
     doc.autoTable({
         head: [tableColumn],
         body: tableRows,
-        startY: firstTableHeight + 10,
+        startY: firstTableHeight + 5,
         theme: 'grid',
         headStyles: {
             fillColor: [255, 0, 0] // Cambia el color del encabezado de la tabla a azul
@@ -446,8 +449,8 @@ const generateTable = (doc, data, title, startY) => {
 };
 const generateOtherTable = (doc, data, title, startY) => {
     // Título de la primera tabla
-    doc.setFontSize(14);
-    doc.text('Produccion JIGG´S Chinos Primario', 80, 158);
+    doc.setFontSize(12);
+    doc.text('Produccion JIGG´S Chinos Primario', 80, 133);
 
     // Primera tabla
     const tableColumns1 = ['Turno', 'Alimentacion', 'P.E', 'Grano', 'P.E', 'Desensolve', 'P.E', 'Colas', 'P.E'];
@@ -472,15 +475,15 @@ const generateOtherTable = (doc, data, title, startY) => {
     doc.autoTable({
         head: [tableColumns1],
         body: tableRows1,
-        startY: startY + 25,
+        startY: startY + 5,
         theme: 'grid',
         headStyles: styles.tableHeader,
         bodyStyles: styles.tableRow
     });
 
     // Título de la segunda tabla
-    doc.setFontSize(14);
-    doc.text('Produccion JIGG´S Secundario', 80, 196); // Ajusta la posición del título según sea necesario
+    doc.setFontSize(12);
+    doc.text('Produccion JIGG´S Chino Secundario', 80, 168); // Ajusta la posición del título según sea necesario
 
     // Segunda tabla
     const tableColumns2 = ['Horas','Turno', 'Alimentacion', 'P.E', 'Concentrado', 'Colas', 'P.E'];
@@ -504,7 +507,7 @@ const generateOtherTable = (doc, data, title, startY) => {
     doc.autoTable({
         head: [tableColumns2],
         body: tableRows2,
-        startY: startY + 65, // Ajusta la posición de la segunda tabla según sea necesario
+        startY: startY + 40, // Ajusta la posición de la segunda tabla según sea necesario
         theme: 'grid',
         headStyles: styles.tableHeader,
         bodyStyles: styles.tableRow
@@ -512,6 +515,8 @@ const generateOtherTable = (doc, data, title, startY) => {
 };
 
 const generateTridTableData = (doc, data, title, startY) => {
+    doc.setFontSize(12);
+    doc.text('Produccion de Mesas', 90, 203); // Ajusta la posición del título según sea necesario
     
     const tableColumns3 = ['', 'Turno', 'Alimentacion', 'P.E', 'Concentrado', 'P.E', 'Medios', 'P.E', 'Colas', 'P.E'];
     const tableRows3 = [];
@@ -582,7 +587,7 @@ const generateTridTableData = (doc, data, title, startY) => {
     doc.autoTable({
         head: [tableColumns3],
         body: tableRows3,
-        startY: firstTableHeight + 10,
+        startY: firstTableHeight + 5,
         theme: 'grid',
         headStyles: {
             fillColor: [0, 0, 0] // Cambia el color del encabezado de la tabla a azul
@@ -593,7 +598,8 @@ const generateTridTableData = (doc, data, title, startY) => {
 };
 
 const generateCuartTableData = (doc, data, title, startY) => {
-   
+    doc.setFontSize(12);
+    doc.text('Produccion Seleccion', 90, 324); // Ajusta la posición del título según sea necesario
 
     // Crear tabla
     
@@ -625,7 +631,7 @@ const generateCuartTableData = (doc, data, title, startY) => {
     doc.autoTable({
         head: [tableColumn],
         body: tableRows,
-        startY: firstTableHeight + 10,
+        startY: firstTableHeight + 5,
         theme: 'grid',
         headStyles: {
             fillColor: [0, 128, 0] // Cambia el color del encabezado de la tabla a azul
@@ -638,7 +644,8 @@ const generateCuartTableData = (doc, data, title, startY) => {
 return (
     <div className="pdf-container">
     <h1>Descargar Reporte</h1>
-    <DatePicker selected={selectedDate} onChange={handleDateChange} />
+    <DatePicker selected={selectedDate} onChange={ handleDateChange} />
+    
             <button onClick={generatePDF}>Descargar PDF</button>
 </div>
 );

@@ -392,28 +392,28 @@ app.get('/updateobtenerSaldoAnterior', (req, res) => {
 });
 //////////////////////REPORTEDIAIRIO//////////
 app.get('/reportediario', (req, res) => {
-    const sql = "SELECT * FROM produccionjigs";
+    const sql = "SELECT * FROM produccionjigs ORDER BY id DESC LIMIT 3";
     db.query(sql, (err, data) => {
         if (err) return res.json(err);
         return res.json(data);
     });
 });
 app.get('/reportediariojch', (req, res) => {
-    const sql = "SELECT * FROM jigschinos ";
+    const sql = "SELECT * FROM jigschinos ORDER BY id DESC LIMIT 3;";
     db.query(sql, (err, data) => {
         if (err) return res.json(err);
         return res.json(data);
     });
 });
 app.get('/reportediariomesas', (req, res) => {
-    const sql = "SELECT * FROM mesas";
+    const sql = "SELECT * FROM mesas ORDER BY id DESC LIMIT 3";
     db.query(sql, (err, data) => {
         if (err) return res.json(err);
         return res.json(data);
     });
 });
 app.get('/reportediariograno', (req, res) => {
-    const sql = "SELECT * FROM prodseleccion ";
+    const sql = "SELECT * FROM prodseleccion ORDER BY id DESC LIMIT 3";
     db.query(sql, (err, data) => {
         if (err) return res.json(err);
         return res.json(data);

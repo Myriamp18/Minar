@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
 function ModificarSilos() {
     const { id } = useParams()
@@ -51,6 +53,9 @@ function ModificarSilos() {
     return (
         <div className="d-flex align-items-center flex-column mt-3">
             <h1>Modificar Silos</h1>
+            <div className="close-button" onClick={() => navigate('/silos')}>
+            <FontAwesomeIcon icon={faTimes} />
+            </div>
             <form className="w-50" onSubmit={handleSubmit} >
                 <div class="mb-3 mt-3">
                     <label form='fecha' class="form-label"> Fecha:</label>

@@ -7,8 +7,7 @@ import {
 from "react-icons/fa"
 import { GiNotebook } from "react-icons/gi";
 import { GiManualMeatGrinder } from "react-icons/gi";
-import { BsMinecartLoaded } from "react-icons/bs";
-import { GiMineralPearls } from "react-icons/gi";
+
 import { FaRoad } from "react-icons/fa";
 import { NavLink } from 'react-router-dom'
 import Logo from '../assest/logo.png'
@@ -24,12 +23,12 @@ function Menu({children}) {
         },
         {
             path:"/diario",
-            name:"Reporte Diario",
+            name:"Reporte Planta",
             icon:<GiNotebook />
         },
         {
-            path:"/pdfdiario",
-            name:"Reporte de Existencia",
+            path:"/existencia",
+            name:"Reporte Existencia",
             icon:<GiNotebook />
         },
         {
@@ -39,7 +38,7 @@ function Menu({children}) {
         },
         {
             path:"/diario",
-            name:"Molienda",
+            name:"Reporte Molienda",
             icon:<GiNotebook />
         },
         {
@@ -47,16 +46,8 @@ function Menu({children}) {
             name:"Conc. P/Moler",
             icon:<GiManualMeatGrinder />
         },
-        {
-            path:"/silos",
-            name:"Silos",
-            icon:<BsMinecartLoaded />
-        },
-        {
-            path:"/seleccion",
-            name:"Seleccion",
-            icon:<GiMineralPearls />
-        },
+       
+       
         {
             path:"/granobandas",
             name:"Grano Bandas",
