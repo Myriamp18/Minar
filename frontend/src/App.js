@@ -28,6 +28,11 @@ import Modificarmesas from './Componentes/ReporteDiario/Modificarmesas';
 import Modificargrano from './Componentes/ReporteDiario/Modificargrano';
 import PP from './Componentes/ReporteExistencia/PP';
 import PT from './Componentes/ReporteExistencia/PT';
+import GranoBaribright from './Componentes/GranoBaribright/GranoBaribright';
+import FrmGranoBaribright from './Componentes/GranoBaribright/FrmGranoBaribright';
+import ModificarGranoBaribrigth from './Componentes/GranoBaribright/ModificarGranoBaribrigth';
+import ConcBaribright from './Componentes/ConcBaribright/ConcBaribright';
+import FrmConcBaribright from './Componentes/ConcBaribright/FrmConcBaribright';
 
 
 function App() {
@@ -78,6 +83,17 @@ function App() {
          <Route path="/existencia" element={<ReporteExistencia/>}/>
          <Route path="/pp" element={<PP/>}/>
          <Route path="/pt" element={<PT/>}/>
+
+
+         ///////////////////granobaribright///
+         <Route path="/granobaribright" element={<GranoBaribright/>}/>
+         <Route path="/creategranobaribright" element={<FrmGranoBaribright/>}/>
+         <Route path="/updategranobaribright/:id" element={<ModificarGranoBaribrigth/>}/>
+
+         ///////////////////concentradobaribright///
+         <Route path="/concentradobaribright" element={<ConcBaribright/>}/>
+         <Route path="/createconcentradobaribaright" element={<FrmConcBaribright/>}/>
+         <Route path="/updateconcentradobaribright/:id" element={<ModificarGranoBaribrigth/>}/>
        </Routes>
        </Menu >
       </div>

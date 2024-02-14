@@ -1,3 +1,11 @@
+.silos{
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+  overflow-x: auto;
+}
+
+
 
   h1{
     display: flex;

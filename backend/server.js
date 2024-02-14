@@ -64,14 +64,19 @@ app.get('/silos', (req, res) => {
 });
 
 app.post('/create', (req, res) => {
-    const sql = "INSERT INTO silos (fecha, silo1, silo2, silo3, silo4, silo5) VALUES (?, ?, ?, ?, ?, ?)";
+    const sql = "INSERT INTO silos (fecha, silo1, pes1, silo2, pes2, silo3, pes3, silo4,pes4, silo5,pes5) VALUES (?, ?, ?, ?, ?, ?,?,?,?,?,?)";
     const values = [
         req.body.fecha,
         req.body.silo1,
+        req.body.pes1,
         req.body.silo2,
+        req.body.pes2,
         req.body.silo3,
+        req.body.pes3,
         req.body.silo4,
-        req.body.silo5
+        req.body.pes4,
+        req.body.silo5,
+        req.body.pes5,
     ];
     db.query(sql, values, (err, data) => {
         if (err) return res.json(err);
@@ -80,14 +85,19 @@ app.post('/create', (req, res) => {
 });
 
 app.put('/update/:id', (req, res) => {
-    const sql = "UPDATE silos SET fecha = ?, silo1 = ?, silo2 = ?, silo3 = ?, silo4 = ?, silo5 = ? WHERE id_silos = ?";
+    const sql = "UPDATE silos SET fecha=?, silo1=?, pes1=?, silo2=?, pes2=?, silo3=?, pes3=?, silo4=?,pes4=?, silo5=?,pes5=? WHERE id_silos = ?";
     const values = [
         req.body.fecha,
         req.body.silo1,
+        req.body.pes1,
         req.body.silo2,
+        req.body.pes2,
         req.body.silo3,
+        req.body.pes3,
         req.body.silo4,
-        req.body.silo5
+        req.body.pes4,
+        req.body.silo5,
+        req.body.pes5,
     ];
     const id = req.params.id;
     db.query(sql, [...values, id], (err, data) => {
@@ -190,20 +200,48 @@ app.get('/seleccion', (req, res) => {
     });
 });
 
-app.post('/createseleccion', (req, res) => {
-    const sql = "INSERT INTO seleccion (fecha, entrada, salida, pesp, saldo) VALUES (?, ?, ?, ?, ?)";
-    const values = [
-        req.body.fecha,
-        req.body.entrada,
-        req.body.salida,
-        req.body.pesp,
-        req.body.saldo
-    ];
-    db.query(sql, values, (err, data) => {
-        if (err) return res.json(err);
-        return res.json(data);
-    });
+app.post('/createseleccion', async (req, res) => { // Añade 'async' aquí
+    try {
+        // Obtener el saldo anterior
+        const saldoAnteriorData = await new Promise((resolve, reject) => {
+            db.query("SELECT saldo FROM seleccion ORDER BY id DESC LIMIT 1", (err, data) => {
+                if (err) reject(err);
+                else resolve(data);
+            });
+        });
+
+        // Si hay registros en la tabla, obtén el saldo anterior, de lo contrario, establece el saldo anterior en 0
+        const saldoAnterior = saldoAnteriorData.length > 0 ? saldoAnteriorData[0].saldo : 0;
+
+        // Calcula el nuevo saldo sumando el saldo anterior a las entradas y restando las salidas
+        const nuevoSaldo = saldoAnterior + parseFloat(req.body.entrada) - parseFloat(req.body.salida);
+
+        // Realiza la inserción con el nuevo saldo
+        const sql = "INSERT INTO seleccion (fecha, entrada, salida, pesp, saldo) VALUES (?, ?, ?, ?, ?)";
+        const values = [
+            req.body.fecha,
+            req.body.entrada,
+            req.body.salida,
+            req.body.pesp,
+            nuevoSaldo
+        ];
+
+        db.query(sql, values, (err, data) => {
+            if (err) {
+                console.error('Error al insertar datos:', err);
+                return res.status(500).json({ error: "Error al insertar datos" });
+            }
+
+            console.log('Datos insertados correctamente.');
+            return res.json(data);
+        });
+    } catch (error) {
+        console.error('Error al manejar la solicitud:', error);
+        return res.status(500).json({ error: "Error al manejar la solicitud" });
+    }
 });
+
+
 
 app.delete('/deleteseleccion/:id', (req, res) => {
     const sql = "DELETE FROM seleccion WHERE id = ?";
@@ -860,6 +898,253 @@ app.get('/getrecormesas/:id', (req, res) => {
 app.get('/getrecorgrano/:id', (req, res) => {
     const id = req.params.id;
     const sql = "SELECT * FROM prodseleccion  WHERE id = ?"
+    db.query(sql, [id], (err, data) => {
+        if (err) {
+            return res.json({ Error: "Error" })
+        }
+
+        return res.json(data)
+    })
+})
+
+//////////////////GranoBarbigth//////////
+
+app.get('/granobaribright', (req, res) => {
+    const sql = "SELECT * FROM granobaribright";
+    db.query(sql, (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+});
+app.post('/creategranobaribright', async (req, res) => {
+    try {
+        // Obtener el saldo anterior
+        const saldoAnteriorData = await new Promise((resolve, reject) => {
+            db.query("SELECT saldo FROM granobaribright ORDER BY id DESC LIMIT 1", (err, data) => {
+                if (err) reject(err);
+                else resolve(data);
+            });
+        });
+
+        // Si hay registros en la tabla, obtén el saldo anterior, de lo contrario, establece el saldo anterior en 0
+        const saldoAnterior = saldoAnteriorData.length > 0 ? saldoAnteriorData[0].saldo : 0;
+
+        // Calcula el nuevo saldo sumando el saldo anterior a las entradas y restando las salidas
+        const nuevoSaldo = saldoAnterior + parseFloat(req.body.entradas) - parseFloat(req.body.salidas);
+
+        // Realiza la inserción con el nuevo saldo
+        const sql = "INSERT INTO granobaribright (fecha, entradas, salidas, pe, saldo) VALUES (?, ?, ?, ?, ?)";
+        const values = [
+            req.body.fecha,
+            req.body.entradas,
+            req.body.salidas,
+            req.body.pe,
+            nuevoSaldo
+        ];
+
+        db.query(sql, values, (err, data) => {
+            if (err) {
+                console.error('Error al insertar datos:', err);
+                return res.status(500).json({ error: "Error al insertar datos" });
+            }
+
+            console.log('Datos insertados correctamente.');
+            return res.json(data);
+        });
+    } catch (error) {
+        console.error('Error al manejar la solicitud:', error);
+        return res.status(500).json({ error: "Error al manejar la solicitud" });
+    }
+});
+
+app.delete('/deletegranobaribright/:id', (req, res) => {
+    const sql = "DELETE FROM granobaribright WHERE id = ?";
+    const id = req.params.id;
+    db.query(sql, [id], (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+});
+app.put('/updategranobaribright/:id', async (req, res) => {
+    try {
+        const obtenerSaldoAnterior = async (id) => {
+            return new Promise((resolve, reject) => {
+                db.query("SELECT saldo FROM granobaribright WHERE id = ?", [id], (err, data) => {
+                    if (err) reject(err);
+                    else resolve(data);
+                });
+            });
+        };
+        
+        // Obtener el saldo anterior antes de realizar la actualización
+        const saldoAnteriorData = await obtenerSaldoAnterior(req.params.id);
+        
+        // Verificar si se encontró el saldo anterior
+        if (saldoAnteriorData.length > 0) {
+            const saldoAnterior = saldoAnteriorData[0].saldo;
+        
+            // Calcula el nuevo saldo utilizando el saldo anterior
+            const nuevoSaldo = saldoAnterior + parseFloat(req.body.entradas) - parseFloat(req.body.salidas);
+        
+            // Realiza la actualización en la base de datos utilizando el nuevo saldo
+            const sql = "UPDATE granobaribright SET fecha = ?, entradas = ?, salidas = ?, pe = ?, saldo = ? WHERE id = ?";
+            const values = [
+                req.body.fecha,
+                req.body.entradas,
+                req.body.salidas,
+                req.body.pe,
+                nuevoSaldo,
+                req.params.id
+            ];
+        
+            db.query(sql, values, (err, data) => {
+                if (err) {
+                    console.error('Error al actualizar los datos:', err);
+                    return res.status(500).json({ error: "Error al actualizar los datos" });
+                }
+        
+                console.log('Datos actualizados correctamente.');
+                return res.json(data);
+            });
+        } else {
+            console.error('No se encontró el saldo anterior.');
+            return res
+        }
+    } catch (error) {
+        console.error('Error al obtener el saldo anterior:', error);
+        return res.status(500).json({ error: "Error al obtener el saldo anterior" });
+    }
+        
+   
+});
+
+app.get('/getrecorgranobaribright/:id', (req, res) => {
+    const id = req.params.id;
+    const sql = "SELECT * FROM granobaribright WHERE id = ?"
+    db.query(sql, [id], (err, data) => {
+        if (err) {
+            return res.json({ Error: "Error" })
+        }
+
+        return res.json(data)
+    })
+})
+
+
+//////////////////ConcentradoBarbigth//////////
+
+app.get('/concentradobaribaright', (req, res) => {
+    const sql = "SELECT * FROM concentradobaribaright";
+    db.query(sql, (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+});
+app.post('/createconcentradobaribaright', async (req, res) => {
+    try {
+        // Obtener el saldo anterior
+        const saldoAnteriorData = await new Promise((resolve, reject) => {
+            db.query("SELECT saldo FROM concentradobaribaright ORDER BY id DESC LIMIT 1", (err, data) => {
+                if (err) reject(err);
+                else resolve(data);
+            });
+        });
+
+        // Si hay registros en la tabla, obtén el saldo anterior, de lo contrario, establece el saldo anterior en 0
+        const saldoAnterior = saldoAnteriorData.length > 0 ? saldoAnteriorData[0].saldo : 0;
+
+        // Calcula el nuevo saldo sumando el saldo anterior a las entradas y restando las salidas
+        const nuevoSaldo = saldoAnterior + parseFloat(req.body.entradas) - parseFloat(req.body.salidas);
+
+        // Realiza la inserción con el nuevo saldo
+        const sql = "INSERT INTO concentradobaribaright (fecha, entradas, salidas, pe, saldo) VALUES (?, ?, ?, ?, ?)";
+        const values = [
+            req.body.fecha,
+            req.body.entradas,
+            req.body.salidas,
+            req.body.pe,
+            nuevoSaldo
+        ];
+
+        db.query(sql, values, (err, data) => {
+            if (err) {
+                console.error('Error al insertar datos:', err);
+                return res.status(500).json({ error: "Error al insertar datos" });
+            }
+
+            console.log('Datos insertados correctamente.');
+            return res.json(data);
+        });
+    } catch (error) {
+        console.error('Error al manejar la solicitud:', error);
+        return res.status(500).json({ error: "Error al manejar la solicitud" });
+    }
+});
+
+app.delete('/deleteconcentradobaribaright/:id', (req, res) => {
+    const sql = "DELETE FROM concentradobaribaright WHERE id = ?";
+    const id = req.params.id;
+    db.query(sql, [id], (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+});
+app.put('/updateconcentradobaribaright/:id', async (req, res) => {
+    try {
+        const obtenerSaldoAnterior = async (id) => {
+            return new Promise((resolve, reject) => {
+                db.query("SELECT saldo FROM concentradobaribaright WHERE id = ?", [id], (err, data) => {
+                    if (err) reject(err);
+                    else resolve(data);
+                });
+            });
+        };
+        
+        // Obtener el saldo anterior antes de realizar la actualización
+        const saldoAnteriorData = await obtenerSaldoAnterior(req.params.id);
+        
+        // Verificar si se encontró el saldo anterior
+        if (saldoAnteriorData.length > 0) {
+            const saldoAnterior = saldoAnteriorData[0].saldo;
+        
+            // Calcula el nuevo saldo utilizando el saldo anterior
+            const nuevoSaldo = saldoAnterior + parseFloat(req.body.entradas) - parseFloat(req.body.salidas);
+        
+            // Realiza la actualización en la base de datos utilizando el nuevo saldo
+            const sql = "UPDATE concentradobaribaright SET fecha = ?, entradas = ?, salidas = ?, pe = ?, saldo = ? WHERE id = ?";
+            const values = [
+                req.body.fecha,
+                req.body.entradas,
+                req.body.salidas,
+                req.body.pe,
+                nuevoSaldo,
+                req.params.id
+            ];
+        
+            db.query(sql, values, (err, data) => {
+                if (err) {
+                    console.error('Error al actualizar los datos:', err);
+                    return res.status(500).json({ error: "Error al actualizar los datos" });
+                }
+        
+                console.log('Datos actualizados correctamente.');
+                return res.json(data);
+            });
+        } else {
+            console.error('No se encontró el saldo anterior.');
+            return res
+        }
+    } catch (error) {
+        console.error('Error al obtener el saldo anterior:', error);
+        return res.status(500).json({ error: "Error al obtener el saldo anterior" });
+    }
+        
+   
+});
+
+app.get('/getrecorconcentradobaribaright/:id', (req, res) => {
+    const id = req.params.id;
+    const sql = "SELECT * FROM concentradobaribaright WHERE id = ?"
     db.query(sql, [id], (err, data) => {
         if (err) {
             return res.json({ Error: "Error" })

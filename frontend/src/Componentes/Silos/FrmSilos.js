@@ -11,10 +11,16 @@ function FrmSilos() {
   const [values, setValues] = useState({
     fecha: '',
     silo1: "",
+    pes1:"",
     silo2: "",
+    pes2:"",
     silo3: "",
+    pes3:"",
     silo4: "",
-    silo5: ""
+    pes4:"",
+    silo5: "",
+    pes4:"",
+
 
   })
 
@@ -52,8 +58,8 @@ function FrmSilos() {
             onChange={(e) => setValues({ ...values, fecha: e.target.value })}
           />
         </div>
-
-        <div class="mb-3">
+       <div className='silos'>
+        <div class="mb-3 ">
           <label form='text' class="form-label"> Silo 1:</label>
           <input
             type="text"
@@ -63,8 +69,18 @@ function FrmSilos() {
             name='silo1'
             onChange={(e) => setValues({ ...values, silo1: e.target.value })} />
         </div>
-
-
+        <div class="mb-3">
+          <label form='text' class="form-label"> P.ESP:</label>
+          <input
+            type="text"
+            class="form-control"
+            id='pesilo1'
+            placeholder='Insertar P.ESP'
+            name='pes1'
+            onChange={(e) => setValues({ ...values, pes1: e.target.value })} />
+        </div>
+        </div>
+        <div className='silos'>
         <div class="mb-3">
           <label form='text' class="form-label"> Silo 2:</label>
           <input
@@ -75,7 +91,18 @@ function FrmSilos() {
             name='silo2'
             onChange={(e) => setValues({ ...values, silo2: e.target.value })} />
         </div>
-
+        <div class="mb-3">
+          <label form='text' class="form-label"> P.ESP:</label>
+          <input
+            type="text"
+            class="form-control"
+            id='pesilo2'
+            placeholder='Insertar P.ESP'
+            name='pes2'
+            onChange={(e) => setValues({ ...values, pes2: e.target.value })} />
+        </div>
+        </div>
+        <div className='silos'>
         <div class="mb-3">
           <label form='text' class="form-label"> Silo 3:</label>
           <input
@@ -86,7 +113,18 @@ function FrmSilos() {
             name='silo3'
             onChange={(e) => setValues({ ...values, silo3: e.target.value })} />
         </div>
-
+        <div class="mb-3">
+          <label form='text' class="form-label"> P.ESP:</label>
+          <input
+            type="text"
+            class="form-control"
+            id='pesilo3'
+            placeholder='Insertar P.ESP'
+            name='pes3'
+            onChange={(e) => setValues({ ...values, pes3: e.target.value })} />
+        </div>
+        </div>
+        <div className='silos'>
         <div class="mb-3">
           <label form='text' class="form-label"> Silo 4:</label>
           <input
@@ -97,7 +135,18 @@ function FrmSilos() {
             name='silo4'
             onChange={(e) => setValues({ ...values, silo4: e.target.value })} />
         </div>
-
+        <div class="mb-3">
+          <label form='text' class="form-label"> P.ESP:</label>
+          <input
+            type="text"
+            class="form-control"
+            id='pesilo4'
+            placeholder='Insertar P.ESP'
+            name='pes4'
+            onChange={(e) => setValues({ ...values, pes4: e.target.value })} />
+        </div>
+        </div>
+        <div className='silos'>
         <div class="mb-3">
           <label form='text' class="form-label"> Silo 5:</label>
           <input
@@ -108,7 +157,17 @@ function FrmSilos() {
             name='silo5'
             onChange={(e) => setValues({ ...values, silo5: e.target.value })} />
         </div>
-
+        <div class="mb-3">
+          <label form='text' class="form-label"> P.ESP:</label>
+          <input
+            type="text"
+            class="form-control"
+            id='pesilo5'
+            placeholder='Insertar P.ESP'
+            name='pes5'
+            onChange={(e) => setValues({ ...values, pes5: e.target.value })} />
+        </div>
+        </div>
         <div className="btn-container">
           <button type="submit" className="BTN"  >GUARDAR</button>
         </div>

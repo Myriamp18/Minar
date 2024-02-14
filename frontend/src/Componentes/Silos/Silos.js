@@ -48,10 +48,15 @@ const Silos = () => {
                     <th>ID</th>
                     <th>Fecha</th>
                     <th>Silo 1</th>
+                    <th>P.ESP</th>
                     <th>Silo 2</th>
+                    <th>P.ESP</th>
                     <th>Silo 3</th>
+                    <th>P.ESP</th>
                     <th>Silo 4</th>
+                    <th>P.ESP</th>
                     <th>Silo 5</th>
+                    <th>P.ESP</th>
                     <th></th>
 
                   </tr>
@@ -61,11 +66,16 @@ const Silos = () => {
                     <tr key={i}>
                       <td>{d.id_silos}</td>
                       <td>{d.fecha}</td>
-                      <td>{d.silo1.toFixed(3)}</td>
-                      <td>{d.silo2.toFixed(3)}</td>
-                      <td>{d.silo3.toFixed(3)}</td>
-                      <td>{d.silo4.toFixed(3)}</td>
-                      <td>{d.silo5.toFixed(3)}</td>
+                      <td>{typeof d.silo1=== 'number' ? d.silo1.toFixed(3) : 'N/A'}</td>
+                      <td>{typeof d.pes1=== 'number' ? d.pes1.toFixed(2) : 'N/A'}</td>
+                      <td>{typeof d.silo2=== 'number' ? d.silo2.toFixed(3) : 'N/A'}</td>
+                      <td>{typeof d.pes2=== 'number' ? d.pes2.toFixed(2) : 'N/A'}</td>
+                      <td>{typeof d.silo3=== 'number' ? d.silo3.toFixed(3) : 'N/A'}</td>
+                      <td>{typeof d.pes3=== 'number' ? d.pes3.toFixed(2) : 'N/A'}</td>
+                      <td>{typeof d.silo4=== 'number' ? d.silo4.toFixed(3) : 'N/A'}</td>
+                      <td>{typeof d.pes4=== 'number' ? d.pes4.toFixed(2) : 'N/A'}</td>
+                      <td>{typeof d.silo5=== 'number' ? d.silo5.toFixed(3) : 'N/A'}</td>
+                      <td>{typeof d.pes5=== 'number' ? d.pes5.toFixed(2) : 'N/A'}</td>
 
 
                       <td>
