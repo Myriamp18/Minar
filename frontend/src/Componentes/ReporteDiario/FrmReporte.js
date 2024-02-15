@@ -3,6 +3,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './FrmReporte.css'
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
 
 function FrmReporte() {
@@ -35,6 +37,7 @@ function FrmReporte() {
     pedjch: "",
     colasjch: "",
     pecjch: "",
+    horasec:"",
     alimjsec: "",
     peajsec: "",
     concjsec: "",
@@ -151,10 +154,20 @@ function FrmReporte() {
         .catch(err => console.log(err));
     };
 
+   
+  
+    
+
+
+    
+
   return (
 
     <div className="d-flex align-items-center flex-column mt-3" >
       <h1>Insertar Reporte Diario</h1>
+      <div className="close-button" onClick={() => navigate('/diario')}>
+            <FontAwesomeIcon icon={faTimes} />
+            </div>
       <form className="w-50" onSubmit={handleSubmit} >
         <div className='mmm'>
           <div className='JIGS1'>
@@ -203,8 +216,8 @@ function FrmReporte() {
             <input
               type="numers"
               placeholder="P.E"
-              name='psemle	'
-              onChange={(e) => setValues({ ...values ,psemle: e.target.value })} />
+              name='pemle	'
+              onChange={(e) => setValues({ ...values ,pemle: e.target.value })} />
           </div>
          
           <div className="JIGS">
@@ -510,6 +523,7 @@ function FrmReporte() {
           <div className="columna">
 
             <label>J.CHINO</label>
+            
             <div className="JIGS1">
               <input
                 placeholder="Alim."
@@ -564,6 +578,12 @@ function FrmReporte() {
           {/* Cuarta columna */}
           <div className="columna">
             <label>J.SECU</label>
+            <div className="JIGS1">
+              <input
+                placeholder="Horas"
+                name='horasec'
+                onChange={(e) => setValues({ ...values, horasec: e.target.value })} />
+            </div>
             <div className="JIGS1">
               <input
                 placeholder="Alim."
@@ -790,8 +810,8 @@ function FrmReporte() {
             <div className="JIGS1">
               <input
                 placeholder="Medios"
-                name='mediosm6'
-                onChange={(e) => setValues({ ...values, mediosm6: e.target.value })} />
+                name='mediom6'
+                onChange={(e) => setValues({ ...values, mediom6: e.target.value })} />
             </div>
             <div className="JIGS1">
               <input

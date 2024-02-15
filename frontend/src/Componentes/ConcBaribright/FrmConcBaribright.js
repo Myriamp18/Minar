@@ -1,62 +1,54 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { useNavigate, useParams } from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import axios from 'axios'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
-function ModificarCPMoler() {
-    const { id } = useParams()
+
+function FrmConcBaribright() {
     const [values, setValues] = useState({
         fecha: '',
-        entrada: "",
-        salida: "",
-        pesp: "",
-      
+        entradas: "",
+        salidas: "",
+        pe: "",
+        
+        
        
     
       })
       const navigate = useNavigate()
-      const [segundoSaldoAnterior, setSaldoAnterior] = useState(0);
 
-    
+      const [saldoAnterior, setSaldoAnterior] = useState(0);
 
-      const handleSubmit = (e) => {
+
+    const handleSubmit = (e) => {
         e.preventDefault();
-      
+
         // Calcula el nuevo saldo sumando el saldo anterior a las entradas y restando las salidas
-        const nuevoSaldo =segundoSaldoAnterior + parseFloat(values.entrada) - parseFloat(values.salida);
-      
+        const nuevoSaldo = saldoAnterior + parseFloat(values.entradas) - parseFloat(values.salidas);
+
         // Actualiza el valor del saldo en el objeto de valores
         setValues({ ...values, saldo: nuevoSaldo });
-      
-        // Realiza la actualización con el nuevo saldo usando una solicitud PUT
-        axios.put(`http://localhost:8081/updateconcpmoler/${id}`, { ...values, saldo: nuevoSaldo })
-          .then(res => {
+
+        // Realiza la inserción con el nuevo saldo
+        axios.post('http://localhost:8081/createconcentradobaribaright', { ...values, saldo: nuevoSaldo })
+        .then(res => {
             console.log(res);
-            navigate('/Inicio');
-          })
-          .catch(err => console.log(err));
-      };
-      
-      useEffect(() => {
-        axios.get(`http://localhost:8081/getrecorconcpmoler/${id}`)
-            .then((res) => {
-                
-                    setValues({
-                        ...values,
-                        fecha: res.data[0].fecha,
-                        entrada: res.data[0].entrada,
-                        salida: res.data[0].salida,
-                        pesp: res.data[0].pesp,
-                      
-                    });
-               
-            })
-            .catch(err => console.log(err));
-    }, []);
+            navigate('/concentradobaribright');
+        })
+        .catch(err => {
+            console.error('Error inserting data:', err);
+        });
+};
+return (
     
-  return (
+
     <div className="d-flex align-items-center flex-column mt-3" >
-    <h1>Modificar Conc. P/Moler:</h1>
+    <h1 >Insertar Concentrado Barbigth:</h1>
+    <div className="close-button" onClick={() => navigate('/concentradobaribright')}>
+        <FontAwesomeIcon icon={faTimes} />
+        </div>
       <form className="w-50" onSubmit={handleSubmit} >
           <div class="mb-3 mt-3">
             <label form='fecha' class="form-label"> Fecha:</label>
@@ -66,7 +58,6 @@ function ModificarCPMoler() {
               id='date'
               placeholder='Insertar Cantidad'
               name='fecha'
-              value={values.fecha}
               onChange={(e) => setValues({...values, fecha: e.target.value})}
             />
           </div>
@@ -79,8 +70,7 @@ function ModificarCPMoler() {
              id='entradas'
              placeholder='Insertar Cantidad'  
              name='entradas'
-             value={values.entrada}
-             onChange={(e) => setValues({...values, entrada: e.target.value})}/>
+             onChange={(e) => setValues({...values, entradas: e.target.value})}/>
           </div>
 
 
@@ -92,8 +82,7 @@ function ModificarCPMoler() {
              id='salidas'
              placeholder='Insertar Cantidad'  
              name='salidas'
-             value={values.salida}
-             onChange={(e) => setValues({...values, salida: e.target.value})}/>
+             onChange={(e) => setValues({...values, salidas: e.target.value})}/>
           </div>
 
           <div class="mb-3">
@@ -101,11 +90,10 @@ function ModificarCPMoler() {
             <input
              type="text"  
              class="form-control"
-             id='pesp'
+             id='pe'
              placeholder='Insertar Peso'  
-             name='pesp'
-             value={values.pesp}
-             onChange={(e) => setValues({...values, pesp: e.target.value})}/>
+             name='pe'
+             onChange={(e) => setValues({...values, pe: e.target.value})}/>
           </div>
 
         
@@ -127,4 +115,5 @@ function ModificarCPMoler() {
   )
 }
 
-export default ModificarCPMoler
+
+export default FrmConcBaribright

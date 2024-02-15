@@ -7,8 +7,7 @@ import {
 from "react-icons/fa"
 import { GiNotebook } from "react-icons/gi";
 import { GiManualMeatGrinder } from "react-icons/gi";
-import { BsMinecartLoaded } from "react-icons/bs";
-import { GiMineralPearls } from "react-icons/gi";
+
 import { FaRoad } from "react-icons/fa";
 import { NavLink } from 'react-router-dom'
 import Logo from '../assest/logo.png'
@@ -24,12 +23,17 @@ function Menu({children}) {
         },
         {
             path:"/diario",
-            name:"Reporte Diario",
+            name:"Reporte Planta",
             icon:<GiNotebook />
         },
         {
-            path:"/pdfdiario",
-            name:"Reporte de Existencia",
+            path:"/molienda",
+            name:"Reporte Molienda",
+            icon:<GiNotebook />
+        },
+        {
+            path:"/existencia",
+            name:"Reporte Existencia",
             icon:<GiNotebook />
         },
         {
@@ -37,31 +41,11 @@ function Menu({children}) {
             name:"Reporte Produccion",
             icon:<GiNotebook />
         },
-        {
-            path:"/diario",
-            name:"Molienda",
-            icon:<GiNotebook />
-        },
-        {
-            path:"/concpmoler",
-            name:"Conc. P/Moler",
-            icon:<GiManualMeatGrinder />
-        },
-        {
-            path:"/silos",
-            name:"Silos",
-            icon:<BsMinecartLoaded />
-        },
-        {
-            path:"/seleccion",
-            name:"Seleccion",
-            icon:<GiMineralPearls />
-        },
-        {
-            path:"/granobandas",
-            name:"Grano Bandas",
-            icon:<FaRoad />
-        }
+      
+      
+       
+       
+       
     ]
     useEffect(() => {
         const handleResize = () => {
@@ -81,7 +65,7 @@ function Menu({children}) {
       }, []);
   return (
     <div className='containermenu'>
-    <div style={{width: isOpen ? "250px":"50px"}} className='menu'>
+    <div style={{width: isOpen ? "300px":"50px"}} className='menu'>
         <div className='top_section'>
         <img style={{display: isOpen ? "block": "none"}}  src={Logo} alt='logomenu' />
             <h1 style={{display: isOpen ? "block": "none"}} className='logo'>MINAR</h1>
@@ -99,7 +83,7 @@ function Menu({children}) {
         }
     </div>
 
-       <main> {children}</main>
+       <main className='main'> {children}</main>
     
 
    

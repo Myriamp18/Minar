@@ -1,21 +1,57 @@
+.silos{
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+  overflow-x: auto;
+}
+.table-top-scroll {
+  overflow-x: auto;
+  width: 100%;
+}
+
+thead {
+  position: sticky; /* Mantén el encabezado fijo */
+  top: 0; /* Fija el encabezado en la parte superior de su contenedor */
+  z-index: 1; /* Asegura que el encabezado esté encima del contenido desplazable */
+ 
+}
+.table-container {
+  margin-left:10px; /* Ajusta según sea necesario para evitar la superposición con el menú */
+}
+
+.table-responsive {
+ 
+  overflow-x: visible;
+  overflow-y: auto;
+  max-height: calc(100vh - 200px); /* Ajusta la altura máxima según sea necesario */
+}
+
 
   h1{
     display: flex;
+    justify-content: center;
     margin-left: 500;
     font-size:40px;
     
   }
   .jigs{
-    
-    gap: 10px;
+    display:flex;
+    justify-content: center; 
+  
     margin-top: 10px;
     
   }
   .button-container {
-    display: flex;
-    gap: 5px; /* Espacio entre los botones */
+    display: flex; /* Utilizamos flexbox para alinear los botones */
+    gap:2px; 
+    
 }
 
+.tablas{
+  display:flex;
+  justify-content: center;
+  margin-top: 10px;
+}
   .big-button {
     font-size: 18px; /* Tamaño del texto */
     padding: 15px 30px; /* Espacio interno (padding) */
@@ -54,6 +90,15 @@
     border-radius: 8px; /* Borde redondeado */
     cursor: pointer; /* Cambiar el cursor al pasar el ratón */
   }
+  .big-buttonpdf {
+    font-size: 18px; /* Tamaño del texto */
+    padding: 15px 30px; /* Espacio interno (padding) */
+    border: none; /* Sin borde */
+    background-color: #348eafb1; /* Color de fondo */
+    color: #000000; /* Color del texto */
+    border-radius: 8px; /* Borde redondeado */
+    cursor: pointer; /* Cambiar el cursor al pasar el ratón */
+  }
   .big-button i {
     margin-right: 10px; /* Espacio entre el icono y el texto */
   }
@@ -61,4 +106,27 @@
   .link-style {
     text-decoration: none; /* Elimina el subrayado del enlace */
     color: inherit; /* Hereda el color del texto del botón */
+  }
+
+  @media screen and (max-width: 600px) {
+    .big-button {
+      padding: 8px 16px;
+      font-size: 14px;
+    }
+    .big-buttonch  {
+      padding: 8px 16px;
+      font-size: 14px;
+    }
+    .big-buttonmesas  {
+      padding: 8px 16px;
+      font-size: 14px;
+    }
+    .big-buttonselc {
+      padding: 8px 16px;
+      font-size: 14px;
+    }
+    .big-buttonpdf {
+      padding: 8px 16px;
+      font-size: 14px;
+    }
   }

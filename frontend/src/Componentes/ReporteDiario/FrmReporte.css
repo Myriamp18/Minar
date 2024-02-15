@@ -1,7 +1,9 @@
 .columns {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 20px;
+  margin-bottom: 5px;
+  overflow-x: auto;
+  
 }
 .JIGS input{
   width: 100%;
@@ -13,8 +15,11 @@
 }
 
 .JIGS1 {
+  
   margin-bottom: 2px;
+ 
 }
+
 .mmm{
   display: flex;
   justify-content: space-between;
@@ -65,13 +70,12 @@ input::placeholder {
 
 label {
   display: block;
-  font-size: 15px;
-  margin-bottom: 2px;
+  font-size: 13px;
   font-weight: bold;
   color: #f80505;
 }
 .columna input{
-  width: 100%;
+  width: auto;
   padding: 2px;
   box-sizing: border-box;
   border: 1px solid #251f8c;
@@ -95,6 +99,18 @@ label {
     
 }
 
+.close-button {
+  position: fixed;
+  top: 10px;
+  right: 80px;
+  cursor: pointer;
+  color: #333; /* color del ícono */
+  font-size: 1.5rem; /* tamaño del ícono */
+}
+
+.close-button:hover {
+  color: red; /* color del ícono al pasar el mouse sobre él */
+}
 /* Add more specific styles for different input types if needed */
 
 /* You may also add more specific styles for different sections, labels, and inputs as needed. */

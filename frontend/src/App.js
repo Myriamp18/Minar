@@ -22,6 +22,22 @@ import ReporteDiario from './Componentes/ReporteDiario/ReporteDiario'
 import FrmReporte from './Componentes/ReporteDiario/FrmReporte'
 import ReporteExistencia from './Componentes/ReporteExistencia/ReporteExistencia ';
 import Pdf from './Componentes/ReporteDiario/Pdf';
+import Modificarjigs from './Componentes/ReporteDiario/Modificarjigs';
+import Modificarjigsch from './Componentes/ReporteDiario/Modificarjigsch';
+import Modificarmesas from './Componentes/ReporteDiario/Modificarmesas';
+import Modificargrano from './Componentes/ReporteDiario/Modificargrano';
+import PP from './Componentes/ReporteExistencia/PP';
+import PT from './Componentes/ReporteExistencia/PT';
+import GranoBaribright from './Componentes/GranoBaribright/GranoBaribright';
+import FrmGranoBaribright from './Componentes/GranoBaribright/FrmGranoBaribright';
+import ModificarGranoBaribrigth from './Componentes/GranoBaribright/ModificarGranoBaribrigth';
+import ConcBaribright from './Componentes/ConcBaribright/ConcBaribright';
+import FrmConcBaribright from './Componentes/ConcBaribright/FrmConcBaribright';
+
+import Molienda from './Componentes/Molienda/Molienda';
+import Mezclas from './Componentes/Molienda/Mezclas';
+
+
 
 function App() {
   return (
@@ -61,8 +77,33 @@ function App() {
 
        //////////REPORTESDIARIOS//////////7
        <Route path="/createreportediario" element={<FrmReporte/>}/>
+       <Route path="/updatejigs/:id" element={<Modificarjigs/>}/>
+       <Route path="/updatejigsch/:id" element={<Modificarjigsch/>}/>
+       <Route path="/updatemesas/:id" element={<Modificarmesas/>}/>
+       <Route path="/updategranoseleccion/:id" element={<Modificargrano/>}/>
        <Route path="/reporteexistencia" element={<ReporteExistencia/>}/>
          
+         ////////////REPORTEEXISTENCIA////////
+         <Route path="/existencia" element={<ReporteExistencia/>}/>
+         <Route path="/pp" element={<PP/>}/>
+         <Route path="/pt" element={<PT/>}/>
+
+
+         ///////////////////granobaribright///
+         <Route path="/granobaribright" element={<GranoBaribright/>}/>
+         <Route path="/creategranobaribright" element={<FrmGranoBaribright/>}/>
+         <Route path="/updategranobaribright/:id" element={<ModificarGranoBaribrigth/>}/>
+
+         ///////////////////concentradobaribright///
+         <Route path="/concentradobaribright" element={<ConcBaribright/>}/>
+         <Route path="/createconcentradobaribaright" element={<FrmConcBaribright/>}/>
+         <Route path="/updateconcentradobaribright/:id" element={<ModificarGranoBaribrigth/>}/>
+
+          ////////////////////////////MOLIENDA//////
+          <Route path="/molienda" element={<Molienda/>}/>
+          <Route path="/mezclas" element={<Mezclas/>}/>
+
+         //////////conmesas////////////
        
        </Routes>
        </Menu >

@@ -12,17 +12,20 @@ function Pdf() {
     const [tridTableData, setTridTableData] = useState([]);
     const [cuartTableData, setCuartTableData] = useState([]);
     const [selectedDate, setSelectedDate] = useState(null);
-
+    
     useEffect(() => {
-        fetchData(selectedDate);
-    }, [selectedDate]); // Agregar selectedDate como una dependencia
+        // Verificar si selectedDate tiene un valor antes de llamar a fetchData
+        if (selectedDate) {
+            fetchData(selectedDate);
+        }
+    }, [selectedDate]);
 
-    const fetchData = async (date) => {
+    const fetchData = async (fecha) => {
         try {
-            const responseProducts = await fetch(`http://localhost:8081/getjigs?fecha=${date}`);
-            const responseOtherTable = await fetch(`http://localhost:8081/getjch?fecha=${date}`);
-            const responseTridTable = await fetch(`http://localhost:8081/getmesas?fecha=${date}`);
-            const responseCuartTable = await fetch(`http://localhost:8081/getgrano?fecha=${date}`);
+            const responseProducts = await fetch(`http://localhost:8081/getjigs/${fecha}`);
+            const responseOtherTable = await fetch(`http://localhost:8081/getjch/${fecha}`);
+            const responseTridTable = await fetch(`http://localhost:8081/getmesas/${fecha}`);
+            const responseCuartTable = await fetch(`http://localhost:8081/getgrano/${fecha}`);
 
             if ( !responseCuartTable.ok||!responseProducts.ok || !responseOtherTable.ok || !responseTridTable.ok || !responseCuartTable.ok) {
                 throw new Error('Error al obtener los datos');
@@ -42,11 +45,41 @@ function Pdf() {
         }
     };
 
+    const handleDateChange = (date) => {
+        console.log(date);
+        // Convertir la fecha al formato deseado antes de actualizar el estado
+        const formattedDate = formatDate(date);
+        setSelectedDate(formattedDate);
+    };
 
+    // Función para convertir la fecha al formato deseado
+    const formatDate = (date) => {
+        // Obtener los componentes de la fecha
+        const year = date.getFullYear();
+        const month = date.getMonth() + 1; // Los meses van de 0 a 11
+        const day = date.getDate();
+    
+        // Formatear la fecha como desees (por ejemplo, YYYY-MM-DD)
+        const formattedDate = `${year}-${month < 10 ? '0' + month : month}-${day < 10 ? '0' + day : day}`;
+    
+        return formattedDate;
+    };
     const generatePDF = async () => {
         // Esperar a que los datos se actualicen completamente
         await fetchData(selectedDate);
-    const doc = new jsPDF();
+        const doc = new jsPDF({
+            orientation: 'p', // Orientación: 'p' para retrato, 'l' para paisaje
+            unit: 'mm', // Unidad de medida: milímetros
+            format:[216, 356], // Tamaño del papel: 'a4', 'letter', 'legal', etc.
+            putOnlyUsedFonts: true,
+            floatPrecision: 16,
+            margins: { // Márgenes personalizados
+                top: 20,
+                bottom: 20,
+                left: 15,
+                right: 15
+            }
+        });
 
     // Configuración del título del documento
     doc.setFont("fontName");
@@ -56,7 +89,7 @@ function Pdf() {
     const imgData = Logo; // Asigna la imagen importada a una variable
     doc.addImage(imgData, 'PNG', 15, 5, 20, 15); // Agrega la imagen al PDF
 
-  
+    
 
     generatePrimTable(doc, cuartTableData.filter(item => item.turno === 1), 'Turno 1', 25);
     generatePrimdosTable(doc, cuartTableData.filter(item => item.turno === 2), 'Turno 2', 25)
@@ -75,11 +108,11 @@ function Pdf() {
 
 
 
-    generateTridTableData(doc, tridTableData.filter(item => item.turno === 1), 'Turno 1', 120);
-    generateTridTableData(doc, tridTableData.filter(item => item.turno === 2), 'Turno 2', 145);
-    generateTridTableData(doc, tridTableData.filter(item => item.turno === 3), 'Turno 3', 170);
+    generateTridTableData(doc, tridTableData.filter(item => item.turno === 1), 'Turno 1', 150);
+    generateTridTableData(doc, tridTableData.filter(item => item.turno === 2), 'Turno 2', 170);
+    generateTridTableData(doc, tridTableData.filter(item => item.turno === 3), 'Turno 3', 175);
 
-    generateCuartTableData(doc, cuartTableData, 'Otra Tabla', 195);
+    generateCuartTableData(doc, cuartTableData.filter(item => item.turno ===1), 'Otra Tabla', 190);
 
     let fileName = `reporte_diario.pdf`;
 
@@ -90,9 +123,24 @@ function Pdf() {
     // Actualizar el estado para indicar que el PDF ha sido generado
     setPdfGenerated(true);
 };
-
+const styles = {
+    tableHeader: {
+      fillColor:[255, 0, 0],
+      textColor:[255, 255, 255], // Color blanco para el texto del encabezado
+      fontStyle: 'bold', // Fuente en negrita para el encabezado
+      fontSize: 12
+    },
+    tableRow: {
+      fillColor: [255, 255, 255], // Color blanco para las filas de la tabla
+      textColor: [0, 0, 0], // Color negro para el texto de las filas
+      fontSize: 8
+    }
+  };
 const generatePrimTable = (doc, data, title, startY) => {
+    doc.setFontSize(14);
+    doc.text('Produccion', 95,18);
 
+  
 
     // Crear tabla
     const tableColumn = ['', 'Turno', 'A', 'TON', 'P.E'];
@@ -155,7 +203,7 @@ const generatePrimTable = (doc, data, title, startY) => {
             item.pecolas
         ];
         tableRows.push(rowData6);
-
+        
     });
     const firstTableHeight = doc.autoTable.previous.finalY || startY;
     const tablePropsTurnos = {
@@ -167,20 +215,25 @@ const generatePrimTable = (doc, data, title, startY) => {
     doc.autoTable({
         head: [tableColumn],
         body: tableRows,
-        startY: firstTableHeight + 5,
+        startY: firstTableHeight + 10,
         theme: 'grid',
         headStyles: {
             fillColor: [0, 128, 0] // Cambia el color del encabezado de la tabla a azul
         },
         ...tablePropsTurnos,
-        setFontSize: 10
+        setFontSize: 10,
+        headStyles: styles.tableHeader,
+        bodyStyles: styles.tableRow,
+        
 
     });
 };
 const generatePrimdosTable = (doc, data, title, startY) => {
+   
 
 
     // Crear tabla
+  
     const tableColumn = ['Turno', 'TON', 'P.E'];
     const tableRows = [];
 
@@ -246,12 +299,14 @@ const generatePrimdosTable = (doc, data, title, startY) => {
     doc.autoTable({
         head: [tableColumn],
         body: tableRows,
-        startY: firstTableHeight + 5,
+        startY: firstTableHeight + 10,
         theme: 'grid',
         headStyles: {
             fillColor: [0, 128, 0] // Cambia el color del encabezado de la tabla a azul
         },
-        ...tablePropsOtraTabla
+        ...tablePropsOtraTabla,
+        headStyles: styles.tableHeader,
+        bodyStyles: styles.tableRow
     });
 };
 const generatePrimtresTable = (doc, data, title, startY) => {
@@ -328,14 +383,21 @@ const generatePrimtresTable = (doc, data, title, startY) => {
         headStyles: {
             fillColor: [0, 128, 0] // Cambia el color del encabezado de la tabla a azul
         },
-        ...tablePropsOtraTabla
+        ...tablePropsOtraTabla,
+        headStyles: styles.tableHeader,
+        bodyStyles: styles.tableRow,
+    
+
     });
 };
 
 const generateTable = (doc, data, title, startY) => {
+    doc.setFontSize(12);
+    doc.text('Produccion JIGG´S ', 90,80);
 
 
     // Crear tabla
+    
     const tableColumn = ['', 'Turno', 'Alimentacion', 'P.E', 'Grano', 'P.E', 'Desensolve', 'P.E', 'Colas', 'P.E'];
     const tableRows = [];
 
@@ -380,15 +442,21 @@ const generateTable = (doc, data, title, startY) => {
         headStyles: {
             fillColor: [255, 0, 0] // Cambia el color del encabezado de la tabla a azul
         },
+        headStyles: styles.tableHeader,
+        bodyStyles: styles.tableRow
     });
 };
 const generateOtherTable = (doc, data, title, startY) => {
+    // Título de la primera tabla
+    doc.setFontSize(12);
+    doc.text('Produccion JIGG´S Chinos Primario', 80, 133);
+
+    // Primera tabla
     const tableColumns1 = ['Turno', 'Alimentacion', 'P.E', 'Grano', 'P.E', 'Desensolve', 'P.E', 'Colas', 'P.E'];
     const tableRows1 = [];
 
     data.forEach((item) => {
         const rowData = [
-
             item.turno,
             item.alimjch,
             item.peajch,
@@ -402,13 +470,27 @@ const generateOtherTable = (doc, data, title, startY) => {
         tableRows1.push(rowData);
     });
 
+    // Dibujar la primera tabla
+    doc.autoTable({
+        head: [tableColumns1],
+        body: tableRows1,
+        startY: startY + 5,
+        theme: 'grid',
+        headStyles: styles.tableHeader,
+        bodyStyles: styles.tableRow
+    });
 
-    const tableColumns2 = ['Turno', 'Alimentacion', 'P.E', 'Concentrado', 'Colas', 'P.E'];
+    // Título de la segunda tabla
+    doc.setFontSize(12);
+    doc.text('Produccion JIGG´S Chino Secundario', 80, 168); // Ajusta la posición del título según sea necesario
+
+    // Segunda tabla
+    const tableColumns2 = ['Horas','Turno', 'Alimentacion', 'P.E', 'Concentrado', 'Colas', 'P.E'];
     const tableRows2 = [];
 
     data.forEach((item) => {
         const rowData = [
-
+            item.horasec,
             item.turno,
             item.alimjsec,
             item.peajsec,
@@ -416,35 +498,25 @@ const generateOtherTable = (doc, data, title, startY) => {
             item.pecojsec,
             item.colasjsec,
             item.pecjsec,
-
         ];
         tableRows2.push(rowData);
     });
-    // Obtener la altura de la primera tabla
 
-    doc.autoTable({
-        head: [tableColumns1],
-        body: tableRows1,
-        startY: startY + 10,
-        theme: 'grid',
-        headStyles: {
-            fillColor: [0, 0, 255] // Cambia el color del encabezado de la tabla a azul
-        },
-    });
-    const firstTableHeight = doc.autoTable.previous.finalY || startY;
-    // Agregar tabla al documento
+    // Dibujar la segunda tabla
     doc.autoTable({
         head: [tableColumns2],
         body: tableRows2,
-        startY: firstTableHeight + 5,
+        startY: startY + 40, // Ajusta la posición de la segunda tabla según sea necesario
         theme: 'grid',
-        headStyles: {
-            fillColor: [0, 0, 255] // Cambia el color del encabezado de la tabla a azul
-        },
+        headStyles: styles.tableHeader,
+        bodyStyles: styles.tableRow
     });
 };
 
 const generateTridTableData = (doc, data, title, startY) => {
+    doc.setFontSize(12);
+    doc.text('Produccion de Mesas', 90, 203); // Ajusta la posición del título según sea necesario
+    
     const tableColumns3 = ['', 'Turno', 'Alimentacion', 'P.E', 'Concentrado', 'P.E', 'Medios', 'P.E', 'Colas', 'P.E'];
     const tableRows3 = [];
 
@@ -514,18 +586,22 @@ const generateTridTableData = (doc, data, title, startY) => {
     doc.autoTable({
         head: [tableColumns3],
         body: tableRows3,
-        startY: firstTableHeight + 10,
+        startY: firstTableHeight + 5,
         theme: 'grid',
         headStyles: {
             fillColor: [0, 0, 0] // Cambia el color del encabezado de la tabla a azul
         },
+        headStyles: styles.tableHeader,
+        bodyStyles: styles.tableRow,
     });
 };
 
 const generateCuartTableData = (doc, data, title, startY) => {
-
+    doc.setFontSize(12);
+    doc.text('Produccion Seleccion', 90, 324); // Ajusta la posición del título según sea necesario
 
     // Crear tabla
+    
     const tableColumn = ['', 'Turno', 'Alimentacion', 'P.E', 'Concentrado', 'P.E', 'Colas', 'P.E', '', 'TON', 'P.E'];
     const tableRows = [];
 
@@ -554,18 +630,21 @@ const generateCuartTableData = (doc, data, title, startY) => {
     doc.autoTable({
         head: [tableColumn],
         body: tableRows,
-        startY: firstTableHeight + 10,
+        startY: firstTableHeight + 5,
         theme: 'grid',
         headStyles: {
             fillColor: [0, 128, 0] // Cambia el color del encabezado de la tabla a azul
         },
+        headStyles: styles.tableHeader,
+        bodyStyles: styles.tableRow,
     });
 };
 
 return (
     <div className="pdf-container">
     <h1>Descargar Reporte</h1>
-            <input type="date" value={selectedDate} onChange={(e) => setSelectedDate(e.target.value)} />
+    <DatePicker selected={selectedDate} onChange={ handleDateChange} />
+    
             <button onClick={generatePDF}>Descargar PDF</button>
 </div>
 );

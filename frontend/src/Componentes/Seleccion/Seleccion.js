@@ -4,8 +4,12 @@ import { Link } from 'react-router-dom';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios'
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import {useNavigate} from 'react-router-dom';
 
 function Seleccion() {
+
+  const navigate = useNavigate()
     const [data, setData] = useState([]);
 
   useEffect(() => {
@@ -24,6 +28,9 @@ function Seleccion() {
     <>
 
       <h1>Seleccion:</h1>
+      <div className="close-button" onClick={() => navigate('/pt')}>
+            <FontAwesomeIcon icon={faTimes} />
+            </div>
       <div className="text-center">
         <Link to="/createseleccion" className="btn btn-danger btn-lg font-weight-bold   text-lg" >
           <FontAwesomeIcon icon={faPlus} />Insertar</Link>
@@ -31,7 +38,9 @@ function Seleccion() {
       <div className='row mt-3'>
         {data.length !== 0 ?
           <div className='col-12 col-lg-8 offset-0 offset-lg-2'>
-            <div>
+          <div className='table-top-scroll'> {/* Nuevo contenedor */}
+              <div className='table-responsive'>
+
 
               <table class="table">
                 <thead>
@@ -77,6 +86,7 @@ function Seleccion() {
                 </tbody>
               </table>
 
+            </div>
             </div>
           </div>
           : <h2 className='aling-itemns-center'>Sin Datos</h2>

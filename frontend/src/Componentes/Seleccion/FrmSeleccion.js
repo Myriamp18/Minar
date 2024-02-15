@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {useNavigate} from 'react-router-dom';
 import axios from 'axios'
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
 function FrmSeleccion() {
 
@@ -11,29 +12,41 @@ function FrmSeleccion() {
         entrada: "",
         salida: "",
         pesp: "",
-        saldo: "",
+       
        
     
       })
 
       const navigate = useNavigate()
+      const [saldoAnterior, setSaldoAnterior] = useState(0);
 
-      const handleSubmit =(e) => {
-        e.preventDefault()
-        axios.post('http://localhost:8081/createseleccion', values)
-        .then(res => {
-          console.log(res);
-          // Optionally, you can navigate to a different page or update the UI
-          navigate('/Inicio'); // Example: Navigate to the home page
-        })
-        .catch(err => console.log(err));
-    };
+
+      const handleSubmit = (e) => {
+          e.preventDefault();
+  
+          // Calcula el nuevo saldo sumando el saldo anterior a las entradas y restando las salidas
+          const nuevoSaldo = saldoAnterior + parseFloat(values.entrada) - parseFloat(values.salida);
+  
+          // Actualiza el valor del saldo en el objeto de valores
+          setValues({ ...values, saldo: nuevoSaldo });
+  
+          // Realiza la inserción con el nuevo saldo
+          axios.post('http://localhost:8081/createseleccion', { ...values, saldo: nuevoSaldo })
+              .then(res => {
+                  console.log(res);
+                  navigate('/seleccion');
+              })
+              .catch(err => console.log(err));
+      };
       
 
   return (
 
     <div className="d-flex align-items-center flex-column mt-3" >
     <h1>Insertar Seleccion</h1>
+    <div className="close-button" onClick={() => navigate('/seleccion')}>
+            <FontAwesomeIcon icon={faTimes} />
+            </div>
       <form className="w-50" onSubmit={handleSubmit} >
           <div class="mb-3 mt-3">
             <label form='fecha' class="form-label"> Fecha:</label>
@@ -81,16 +94,7 @@ function FrmSeleccion() {
              onChange={(e) => setValues({...values, pesp: e.target.value})}/>
           </div>
 
-          <div class="mb-3">
-            <label form='text' class="form-label"> Saldo:</label>
-            <input
-             type="text"  
-             class="form-control"
-             id='saldo'
-             placeholder='Insertar Cantidad'  
-             name='saldo'
-             onChange={(e) => setValues({...values, saldo: e.target.value})}/>
-          </div>
+         
 
           
           <div className="btn-container">
