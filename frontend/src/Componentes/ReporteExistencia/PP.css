@@ -1,0 +1,54 @@
+.pp-container {
+    display: flex;
+    flex-direction: column;
+   
+}
+
+.buttonpp-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .iconnnespp {
+    /* Estilos para el icono */
+ position: absolute; /* Establece la posición absoluta para el icono */
+ top: 40%; /* Lo posiciona en la mitad superior del botón */
+ left: 5px; /* Lo posiciona 5px desde el borde izquierdo del botón */
+ transform: translateY(-50%); /* Centra verticalmente el icono */
+ font-size: 3em; /* Tamaño del icono relativo al tamaño del botón */
+  }
+
+
+.buttonpp-text {
+  font-size: 15px;
+  margin-left:10px;
+  font-family: 'Verdana', sans-serif;
+}
+
+.buttonpp-textss {
+    font-size: 12px;
+    margin-left:10px;
+    font-family: 'Verdana', sans-serif;
+  }
+
+  .btnpp-large {
+    padding: 20px 50px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    border: none;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    position: relative;
+ 
+    color: #03122b;
+  }
+  .btnpp-large:hover {
+    background-color: #000000e8;
+    color: #f6f6f6;
+  }
+
+  

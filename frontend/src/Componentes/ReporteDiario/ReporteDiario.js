@@ -147,7 +147,9 @@ const ReporteDiario = () => {
         {showTable === 'table1' && (
           <div className='col-12 col-lg-7 '>
             <center><label>PRODUCCION DE JIGG´S</label></center>
-            <div className="table-responsive">
+            <div className='table-container'> 
+            <div className='table-top-scroll'> {/* Nuevo contenedor */}
+              <div className='table-responsive'>
               <table className="table table-bordered">
                 <thead>
                   <tr  >
@@ -221,6 +223,8 @@ const ReporteDiario = () => {
               </table>
             </div>
           </div>
+           </div>
+           </div>
         )}
 
 

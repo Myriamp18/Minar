@@ -12,7 +12,9 @@ export default function ReporteExistencia() {
   const handelePT = () =>{
     navigate('/pt')
   }
-  
+  const handelePP = () =>{
+    navigate('/pp')
+  }
 
 
   return (
@@ -33,7 +35,7 @@ export default function ReporteExistencia() {
         </span>
 
         </button>
-        <button className="btn-large btn-pp" onClick={() => handleButtonClick('PP')}>
+        <button className="btn-large btn-pp" onClick={handelePP}>
         <span className="iconnnes"><GiMiner /> </span>
           <span className="button-text">
            Produccion Patio

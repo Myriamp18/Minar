@@ -4,7 +4,27 @@
   margin-bottom: 5px;
   overflow-x: auto;
 }
+.table-top-scroll {
+  overflow-x: auto;
+  width: 100%;
+}
 
+thead {
+  position: sticky; /* Mantén el encabezado fijo */
+  top: 0; /* Fija el encabezado en la parte superior de su contenedor */
+  z-index: 1; /* Asegura que el encabezado esté encima del contenido desplazable */
+ 
+}
+.table-container {
+  margin-left:10px; /* Ajusta según sea necesario para evitar la superposición con el menú */
+}
+
+.table-responsive {
+ 
+  overflow-x: visible;
+  overflow-y: auto;
+  max-height: calc(100vh - 200px); /* Ajusta la altura máxima según sea necesario */
+}
 
 
   h1{

@@ -34,6 +34,10 @@ import ModificarGranoBaribrigth from './Componentes/GranoBaribright/ModificarGra
 import ConcBaribright from './Componentes/ConcBaribright/ConcBaribright';
 import FrmConcBaribright from './Componentes/ConcBaribright/FrmConcBaribright';
 
+import Molienda from './Componentes/Molienda/Molienda';
+import Mezclas from './Componentes/Molienda/Mezclas';
+
+
 
 function App() {
   return (
@@ -94,6 +98,13 @@ function App() {
          <Route path="/concentradobaribright" element={<ConcBaribright/>}/>
          <Route path="/createconcentradobaribaright" element={<FrmConcBaribright/>}/>
          <Route path="/updateconcentradobaribright/:id" element={<ModificarGranoBaribrigth/>}/>
+
+          ////////////////////////////MOLIENDA//////
+          <Route path="/molienda" element={<Molienda/>}/>
+          <Route path="/mezclas" element={<Mezclas/>}/>
+
+         //////////conmesas////////////
+       
        </Routes>
        </Menu >
       </div>

@@ -56,7 +56,7 @@ app.post('/login', (req, res) => {
 
 /////////////SILOS//////////
 app.get('/silos', (req, res) => {
-    const sql = "SELECT * FROM silos";
+    const sql = "SELECT * FROM silos ORDER BY id_silos DESC";
     db.query(sql, (err, data) => {
         if (err) return res.json(err);
         return res.json(data);
@@ -193,7 +193,7 @@ app.get('/getrecordgrano/:id', (req, res) => {
 /////////////////////////SELECCION///////////
 
 app.get('/seleccion', (req, res) => {
-    const sql = "SELECT * FROM seleccion";
+    const sql = "SELECT * FROM seleccion ORDER BY id DESC";
     db.query(sql, (err, data) => {
         if (err) return res.json(err);
         return res.json(data);
@@ -430,7 +430,7 @@ app.get('/updateobtenerSaldoAnterior', (req, res) => {
 });
 //////////////////////REPORTEDIAIRIO//////////
 app.get('/reportediario', (req, res) => {
-    const sql = "SELECT * FROM produccionjigs ORDER BY id DESC LIMIT 3";
+    const sql = "SELECT * FROM produccionjigs ORDER BY id DESC";
     db.query(sql, (err, data) => {
         if (err) return res.json(err);
         return res.json(data);
@@ -1145,6 +1145,104 @@ app.put('/updateconcentradobaribaright/:id', async (req, res) => {
 app.get('/getrecorconcentradobaribaright/:id', (req, res) => {
     const id = req.params.id;
     const sql = "SELECT * FROM concentradobaribaright WHERE id = ?"
+    db.query(sql, [id], (err, data) => {
+        if (err) {
+            return res.json({ Error: "Error" })
+        }
+
+        return res.json(data)
+    })
+})
+
+//////////////CONCENTRADOMESAS////////////////
+app.get('/concmesas', (req, res) => {
+    const sql = "SELECT * FROM concmesas ORDER BY id DESC";
+    db.query(sql, (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+});
+app.post('/createconcmesas', async (req, res) => {
+    try {
+        // Obtener el saldo anterior
+        const saldoAnteriorData = await new Promise((resolve, reject) => {
+            db.query("SELECT saldo FROM granobaribright ORDER BY id DESC LIMIT 1", (err, data) => {
+                if (err) reject(err);
+                else resolve(data);
+            });
+        });
+
+        // Si hay registros en la tabla, obtén el saldo anterior, de lo contrario, establece el saldo anterior en 0
+        const saldoAnterior = saldoAnteriorData.length > 0 ? saldoAnteriorData[0].saldo : 0;
+
+        // Calcula el nuevo saldo sumando el saldo anterior a las entradas y restando las salidas
+        const nuevoSaldo = saldoAnterior + parseFloat(req.body.entradas) - parseFloat(req.body.salidas);
+
+        // Obtener el total concentrado de las mesas para la fecha especificada
+        const totalConcentradoMesas = await new Promise((resolve, reject) => {
+            const query = "SELECT (SUM(conm12) + SUM(conm34) + SUM(conm5) + SUM(conm6)) AS total_concentrado FROM mesas WHERE fecha = ?;";
+            db.query(query, [req.body.fecha], (err, data) => {
+                if (err) reject(err);
+                else resolve(data[0].total_concentrado); // Obtenemos el total concentrado de la primera fila
+            });
+        });
+
+        // Realizar la inserción en la tabla concmesas
+        const sql = "INSERT INTO concmesas (fecha, entradas, salidas, saldo, pe) VALUES (?, ?, ?, ?, ?)";
+        const values = [
+            req.body.fecha,
+            totalConcentradoMesas,
+            req.body.salidas,
+            req.body.pe,
+            nuevoSaldo
+        ];
+
+        db.query(sql, values, (err, result) => {
+            if (err) throw err;
+            console.log("Registro insertado en concmesas con éxito.");
+            res.send("Registro insertado en concmesas con éxito.");
+        });
+    } catch (error) {
+        console.error("Error al crear el registro en concmesas:", error);
+        res.status(500).send("Error al crear el registro en concmesas.");
+    }
+});
+
+
+app.put('/updateconcmesas/:id', (req, res) => {
+    const sql = "UPDATE silos SET fecha=?, silo1=?, pes1=?, silo2=?, pes2=?, silo3=?, pes3=?, silo4=?,pes4=?, silo5=?,pes5=? WHERE id_silos = ?";
+    const values = [
+        req.body.fecha,
+        req.body.silo1,
+        req.body.pes1,
+        req.body.silo2,
+        req.body.pes2,
+        req.body.silo3,
+        req.body.pes3,
+        req.body.silo4,
+        req.body.pes4,
+        req.body.silo5,
+        req.body.pes5,
+    ];
+    const id = req.params.id;
+    db.query(sql, [...values, id], (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+});
+
+app.delete('/deleteconcmesas/:id', (req, res) => {
+    const sql = "DELETE FROM concmesas WHERE id = ?";
+    const id = req.params.id;
+    db.query(sql, [id], (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+});
+
+app.get('/getrecord/:id', (req, res) => {
+    const id = req.params.id;
+    const sql = "SELECT * FROM silos WHERE id_silos = ?"
     db.query(sql, [id], (err, data) => {
         if (err) {
             return res.json({ Error: "Error" })

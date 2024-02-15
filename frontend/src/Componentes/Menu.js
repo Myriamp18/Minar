@@ -27,6 +27,11 @@ function Menu({children}) {
             icon:<GiNotebook />
         },
         {
+            path:"/molienda",
+            name:"Reporte Molienda",
+            icon:<GiNotebook />
+        },
+        {
             path:"/existencia",
             name:"Reporte Existencia",
             icon:<GiNotebook />
@@ -36,23 +41,11 @@ function Menu({children}) {
             name:"Reporte Produccion",
             icon:<GiNotebook />
         },
-        {
-            path:"/diario",
-            name:"Reporte Molienda",
-            icon:<GiNotebook />
-        },
-        {
-            path:"/concpmoler",
-            name:"Conc. P/Moler",
-            icon:<GiManualMeatGrinder />
-        },
+      
+      
        
        
-        {
-            path:"/granobandas",
-            name:"Grano Bandas",
-            icon:<FaRoad />
-        }
+       
     ]
     useEffect(() => {
         const handleResize = () => {

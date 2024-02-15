@@ -6,8 +6,11 @@ import { GiStonePile } from "react-icons/gi";
 import { MdFrontLoader } from "react-icons/md";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import './ReporteExistencia.css'
 function PT() {
+
     const navigate = useNavigate();
+
     const onSilos= () =>{
         navigate('/silos')
     }
@@ -27,6 +30,8 @@ function PT() {
     <div className="close-button" onClick={() => navigate('/existencia')}>
             <FontAwesomeIcon icon={faTimes} />
             </div>
+        
+           
     <div className="button-container">
       <button className="btn-large btn-pt"  onClick={onSilos}>
         <span className="iconnnes"><BsMinecartLoaded /></span>

@@ -6,7 +6,7 @@ import axios from 'axios'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
-function FrmSilos() {
+function FrmSilos(){
 
   const [values, setValues] = useState({
     fecha: '',
@@ -31,10 +31,12 @@ function FrmSilos() {
     axios.post('http://localhost:8081/create', values)
       .then(res => {
         console.log(res);
+      
         // Optionally, you can navigate to a different page or update the UI
         navigate('/Silos'); // Example: Navigate to the home page
       })
       .catch(err => console.log(err));
+     
   };
 
   
