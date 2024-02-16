@@ -2,8 +2,8 @@ import React from 'react'
 import { GiManualMeatGrinder } from "react-icons/gi";
 import { useNavigate } from 'react-router-dom';
 import { FaPercent } from "react-icons/fa";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
+
+import { FaFilePdf } from "react-icons/fa6";
 import './Molienda.css'
 
 function Molienda() {
@@ -16,16 +16,14 @@ function Molienda() {
   const onPromedios= () =>{
       navigate('/promedios')
   }
- 
+  const onPdf= () =>{
+    navigate('/pdfmolienda')
+}
   return (
     <div>
     <div className="molienda-container">
     <h1>Reporte Molienda:</h1>
-    <div className="close-button" onClick={() => navigate('/existencia')}>
-            <FontAwesomeIcon icon={faTimes} />
-            </div>
-        
-           
+    
     <div className="buttonmo-container">
       <button className="btnmo-large btnmo-pt"  onClick={onMezclas}>
         <span className="iconnnesmo"><GiManualMeatGrinder /></span>
@@ -49,7 +47,10 @@ function Molienda() {
          
       </span>
       </button>
-    
+      <button className="btnmo btnmo-bs" onClick={onPdf}>
+        <span className="iconnnespdf"><FaFilePdf /> </span>
+       
+        </button>
     </div>
     </div>
   </div>

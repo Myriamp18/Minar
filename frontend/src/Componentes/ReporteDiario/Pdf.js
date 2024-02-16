@@ -79,6 +79,7 @@ function Pdf() {
                 bottom: 20,
                 left: 15,
                 right: 15
+           
             }
         });
 

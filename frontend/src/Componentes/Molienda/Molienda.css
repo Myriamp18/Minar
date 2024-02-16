@@ -5,7 +5,7 @@
     align-items: center;
     justify-content: center;
     /* Centra verticalmente los elementos */
-    height: 60vh;
+    height: 50vh;
 
 }
 
@@ -13,7 +13,7 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 10px;
+    gap: 5px;
   }
 
   .iconnnesmo {
@@ -24,7 +24,14 @@
  transform: translateY(-50%); /* Centra verticalmente el icono */
  font-size: 3em; /* Tamaño del icono relativo al tamaño del botón */
   }
-
+  .iconnnespdf {
+    /* Estilos para el icono */
+ position: absolute; /* Establece la posición absoluta para el icono */
+ top: 40%; /* Lo posiciona en la mitad superior del botón */
+ left: 15px; /* Lo posiciona 5px desde el borde izquierdo del botón */
+ transform: translateY(-50%); /* Centra verticalmente el icono */
+ font-size: 2em; /* Tamaño del icono relativo al tamaño del botón */
+  }
   .buttonmo-text {
     font-size: 18px;
     margin-left:10px;
@@ -47,7 +54,18 @@
     position: relative;
    
   }
-
+.btnmo{
+  padding: 20px 30px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    border: none;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    position: relative;
+   
+}
   .btnmo-large:hover {
     background-color: #000000e8;
     color: #f6f6f6;
@@ -60,6 +78,11 @@
 
   .btnmo-pp {
     background-color: #ff6200;
+    color: #040404;
+  }
+  
+  .btnmo-bs {
+    background-color: #ff0000;
     color: #040404;
   }
   

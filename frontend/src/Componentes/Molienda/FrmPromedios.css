@@ -1,0 +1,59 @@
+.molinos {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+    overflow-x: auto;
+    
+  }
+
+  .molinos input{
+    width: 100%;
+    padding: 2px;
+    box-sizing: border-box;
+    border: 1px solid #00426e;
+    border-radius: 4px;
+   
+  }
+  .nnn{
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .nnn select {
+    width: 100%;
+    padding: 2px;
+    box-sizing: border-box;
+    border: 1px solid #00426e;
+    border-radius: 4px;
+      
+  }
+  .nnn input{
+    width:100%;
+    padding: 5px;
+    box-sizing: border-box;
+    border: 1px solid #00426e;
+    border-radius: 4px;
+    margin-bottom: 5px;
+  }
+  .btnmolino-container {
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+  
+  }
+
+  .BTNmolino {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 190px;
+    height: 40px;
+    color: #ffefef;
+    background: #af0707;
+    border-radius: 50px;
+    font-size: 15px;
+    font-weight: 300;
+    cursor: pointer;
+    font-weight: bold;
+    gap: 5px;
+  }

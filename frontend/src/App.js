@@ -36,6 +36,12 @@ import FrmConcBaribright from './Componentes/ConcBaribright/FrmConcBaribright';
 
 import Molienda from './Componentes/Molienda/Molienda';
 import Mezclas from './Componentes/Molienda/Mezclas';
+import FrmMezclas from './Componentes/Molienda/FrmMezclas';
+import ModificarMezclas from './Componentes/Molienda/ModificarMezclas';
+import Promedios from './Componentes/Molienda/Promedios';
+import FrmPromedios from './Componentes/Molienda/FrmPromedios';
+import ModificarPromedios from './Componentes/Molienda/ModificarPromedios';
+import PdfMolienda from './Componentes/Molienda/PdfMolienda';
 
 
 
@@ -102,7 +108,12 @@ function App() {
           ////////////////////////////MOLIENDA//////
           <Route path="/molienda" element={<Molienda/>}/>
           <Route path="/mezclas" element={<Mezclas/>}/>
-
+          <Route path="/createmezclasmolienda" element={<FrmMezclas/>}/>
+          <Route path="/updatemezclasmolienda/:id" element={<ModificarMezclas/>}/>
+          <Route path="/promedios" element={<Promedios/>}/>
+          <Route path="/createpromedios" element={<FrmPromedios/>}/>
+          <Route path="/updatepromedios/:id" element={<ModificarPromedios/>}/>
+          <Route path="/pdfmolienda" element={<PdfMolienda/>}/>
          //////////conmesas////////////
        
        </Routes>

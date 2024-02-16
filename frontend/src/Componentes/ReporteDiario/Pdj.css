@@ -2,12 +2,25 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 20px;
+    justify-content: center;
+    /* Centra verticalmente los elementos */
+    height: 70vh;
 }
+
+.pdfs {
+    background-color: #000000; /* Color de fondo del contenedor interno */
+    padding: 20px; /* Espacio alrededor del contenido */
+    border-radius: 10px; /* Bordes redondeados */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    text-align: center; /* Alineación del contenido */
+    width: 300px; /* Ancho máximo del contenedor */
+  }
+  
 
 .pdf-container h1 {
     font-size: 24px;
     margin-bottom: 20px;
+    color: #fff;
 }
 
 .pdf-container button {
@@ -24,5 +37,5 @@
 }
 
 .pdf-container button:hover {
-    background-color: #0056b3;
+    background-color: #d12a5c;
 }

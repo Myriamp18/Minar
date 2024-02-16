@@ -1251,3 +1251,173 @@ app.get('/getrecord/:id', (req, res) => {
         return res.json(data)
     })
 })
+///////////////////MOLIENDAMEZCLAS////////////
+app.get('/mezclasmolienda', (req, res) => {
+    const sql = "SELECT * FROM molienda ORDER BY id DESC";
+    db.query(sql, (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+});
+app.delete('/deletemezclasmolienda/:id', (req, res) => {
+    const sql = "DELETE FROM molienda WHERE id = ?";
+    const id = req.params.id;
+    db.query(sql, [id], (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+});
+app.post('/createmezclasmolienda', (req, res) => {
+    const sql = "INSERT INTO molienda (fecha, turno, concmesas, pecm, medios, pem,desenslovez,pedese,mezclatotal,pemt,concjigs,pejig) VALUES (?,?, ?, ?, ?, ?,?,?,?,?,?,?)";
+    const values = [
+        req.body.fecha,
+        req.body.turno,
+        req.body.concmesas,
+        req.body.pecm,
+        req.body.medios,
+        req.body.pem,
+        req.body.desenslovez,
+        req.body.pedese,
+        req.body.mezclatotal,
+        req.body.pemt,
+        req.body.concjigs,
+        req.body.pejig,
+
+    ];
+    db.query(sql, values, (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+});
+app.put('/updatemezclasmolienda/:id', (req, res) => {
+    const sql = "UPDATE molienda SET fecha=?,turno=?, concmesas=?, pecm=?, medios=?, pem=?,desenslovez=?,pedese=?,mezclatotal=?,pemt=?,concjigs=?,pejig=? WHERE id = ?";
+    const values = [
+        req.body.fecha,
+        req.body.turno,
+        req.body.concmesas,
+        req.body.pecm,
+        req.body.medios,
+        req.body.pem,
+        req.body.desenslovez,
+        req.body.pedese,
+        req.body.mezclatotal,
+        req.body.pemt,
+        req.body.concjigs,
+        req.body.pejig,
+
+    ];
+    const id = req.params.id;
+    db.query(sql, [...values, id], (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+});
+app.get('/getrecordmezclasmolienda/:id', (req, res) => {
+    const id = req.params.id;
+    const sql = "SELECT * FROM molienda WHERE id = ?"
+    db.query(sql, [id], (err, data) => {
+        if (err) {
+            return res.json({ Error: "Error" })
+        }
+
+        return res.json(data)
+    })
+})
+////////////////PROMEDIOS//////////////7777
+app.get('/promedios', (req, res) => {
+    const sql = "SELECT * FROM promedios ORDER BY id DESC";
+    db.query(sql, (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+});
+app.delete('/deletepromedios/:id', (req, res) => {
+    const sql = "DELETE FROM promedios WHERE id = ?";
+    const id = req.params.id;
+    db.query(sql, [id], (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+});
+app.post('/createpromedios', (req, res) => {
+    const sql = "INSERT INTO promedios (fecha,turno, pemolino1, malla200mo1, malla325mo1, calciosmo1,humedadmo1,pemolino2,malla200mo2,malla325mo2,calciosmo2,humedadmo2) VALUES (?,?, ?, ?, ?, ?,?,?,?,?,?,?)";
+    const values = [
+        req.body.fecha,
+        req.body.turno,
+        req.body.pemolino1,
+        req.body.malla200mo1,
+        req.body.malla325mo1,
+        req.body.calciosmo1,
+        req.body.humedadmo1,
+        req.body.pemolino2,
+        req.body.malla200mo2,
+        req.body.malla325mo2,
+        req.body.calciosmo2,
+        req.body.humedadmo2,
+
+    ];
+    db.query(sql, values, (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+});
+app.put('/updatepromedios/:id', (req, res) => {
+    const sql = "UPDATE promedios SET fecha=?, turno=?, pemolino1=?, malla200mo1=?, malla325mo1=?, calciosmo1=?,humedadmo1=?,pemolino2=?,malla200mo2=?,malla325mo2=?,calciosmo2=?,humedadmo2=? WHERE id = ?";
+    const values = [
+        req.body.fecha,
+        req.body.turno,
+        req.body.pemolino1,
+        req.body.malla200mo1,
+        req.body.malla325mo1,
+        req.body.calciosmo1,
+        req.body.humedadmo1,
+        req.body.pemolino2,
+        req.body.malla200mo2,
+        req.body.malla325mo2,
+        req.body.calciosmo2,
+        req.body.humedadmo2,
+
+    ];
+    const id = req.params.id;
+    db.query(sql, [...values, id], (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+});
+app.get('/getrecordpromedios/:id', (req, res) => {
+    const id = req.params.id;
+    const sql = "SELECT * FROM promedios WHERE id = ?"
+    db.query(sql, [id], (err, data) => {
+        if (err) {
+            return res.json({ Error: "Error" })
+        }
+
+        return res.json(data)
+    })
+})
+
+/////////////EXPORTACION POR FECHA REPORTE Molienda///////////7
+app.get('/getmezclas/:fecha', (req, res) => {
+    const fecha= req.params.fecha;
+    const sql = "SELECT * FROM molienda WHERE fecha = ?"
+    db.query(sql, [fecha], (err, data) => {
+        if (err) {
+            console.error("Error en la consulta SQL:", err);
+            return res.status(500).json({ error: "Error en la consulta SQL. Por favor, inténtalo de nuevo más tarde." });
+        }
+
+        return res.json(data);
+    });
+})
+app.get('/getpromedios/:fecha', (req, res) => {
+    const fecha= req.params.fecha;
+    const sql = "SELECT * FROM promedios WHERE fecha = ?"
+    db.query(sql, [fecha], (err, data) => {
+        if (err) {
+            console.error("Error en la consulta SQL:", err);
+            return res.status(500).json({ error: "Error en la consulta SQL. Por favor, inténtalo de nuevo más tarde." });
+        }
+
+        return res.json(data);
+    });
+})
