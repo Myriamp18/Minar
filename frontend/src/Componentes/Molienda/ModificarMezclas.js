@@ -18,7 +18,6 @@ function ModificarMezclas() {
     pejig: "",
     desenslovez: "",
     pedese: "",
-    mezclatotal: "",
     pemt: "",
 
 
@@ -53,7 +52,6 @@ function ModificarMezclas() {
           pejig: res.data[0].pejig,
           desenslovez: res.data[0].desenslovez,
           pedese: res.data[0].pedese,
-          mezclatotal: res.data[0].mezclatotal,
           pemt: res.data[0].pemt,
         });
 
@@ -196,17 +194,7 @@ function ModificarMezclas() {
           </div>
         </div>
         <div className='silos'>
-          <div class="mb-3">
-            <label form='text' class="form-label"> Mezcla Total:</label>
-            <input
-              type="text"
-              class="form-control"
-              id='mezclatotal'
-              placeholder='Insertar Cantidad'
-              name='mezclatotal'
-              value={values.mezclatotal}
-              onChange={(e) => setValues({ ...values, mezclatotal: e.target.value })} />
-          </div>
+         
           <div class="mb-3">
             <label form='text' class="form-label"> P.ESP:</label>
             <input

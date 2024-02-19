@@ -42,6 +42,11 @@ import Promedios from './Componentes/Molienda/Promedios';
 import FrmPromedios from './Componentes/Molienda/FrmPromedios';
 import ModificarPromedios from './Componentes/Molienda/ModificarPromedios';
 import PdfMolienda from './Componentes/Molienda/PdfMolienda';
+import ConcMesas from './Componentes/ConcMesas/ConcMesas';
+import FrmConcMesas from './Componentes/ConcMesas/FrmConcMesas';
+import ModificrConcMesas from './Componentes/ConcMesas/ModificrConcMesas';
+import ConcJigsSec from './Componentes/ConcJigsSec/ConcJigsSec';
+import FrmConcJigsSec from './Componentes/ConcJigsSec/FrmConcJigsSec';
 
 
 
@@ -115,7 +120,13 @@ function App() {
           <Route path="/updatepromedios/:id" element={<ModificarPromedios/>}/>
           <Route path="/pdfmolienda" element={<PdfMolienda/>}/>
          //////////conmesas////////////
-       
+         <Route path="/concmesas" element={<ConcMesas/>}/>
+         <Route path="/createconcmesas" element={<FrmConcMesas/>}/>
+         <Route path="/updateconcmesas/:id" element={<ModificrConcMesas/>}/>
+
+         ////////////CONCJIGSSEC/////////
+         <Route path="/concjigssec" element={<ConcJigsSec/>}/>
+         <Route path="/createconcjigssec" element={<FrmConcJigsSec/>}/>
        </Routes>
        </Menu >
       </div>

@@ -19,7 +19,7 @@ function FrmMezclas() {
     pejig: "",
     desenslovez: "",
     pedese: "",
-    mezclatotal: "",
+ 
     pemt: "",
 
 
@@ -169,16 +169,7 @@ function FrmMezclas() {
           </div>
         </div>
         <div className='silos'>
-          <div class="mb-3">
-            <label form='text' class="form-label"> Mezcla Total:</label>
-            <input
-              type="text"
-              class="form-control"
-              id='mezclatotal'
-              placeholder='Insertar Cantidad'
-              name='mezclatotal'
-              onChange={(e) => setValues({ ...values, mezclatotal: e.target.value })} />
-          </div>
+       
           <div class="mb-3">
             <label form='text' class="form-label"> P.ESP:</label>
             <input

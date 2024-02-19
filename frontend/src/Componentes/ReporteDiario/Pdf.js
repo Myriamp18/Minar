@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
-import './Pdj.css';
+import '../ReporteDiario/Pdj.css';
 import Logo from'../../assest/logo.png'
-
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+import { useNavigate } from 'react-router-dom';
 
 function Pdf() {
+    const navigate = useNavigate();
     const [products, setProducts] = useState([]);
     const [pdfGenerated, setPdfGenerated] = useState(false);
     const [otherTableData, setOtherTableData] = useState([]);
@@ -67,6 +70,7 @@ function Pdf() {
     const generatePDF = async () => {
         // Esperar a que los datos se actualicen completamente
         await fetchData(selectedDate);
+        navigate('/diario')
         const doc = new jsPDF({
             orientation: 'p', // Orientación: 'p' para retrato, 'l' para paisaje
             unit: 'mm', // Unidad de medida: milímetros
@@ -643,10 +647,11 @@ const generateCuartTableData = (doc, data, title, startY) => {
 
 return (
     <div className="pdf-container">
-    <h1>Descargar Reporte</h1>
-    <DatePicker selected={selectedDate} onChange={ handleDateChange} />
-    
-            <button onClick={generatePDF}>Descargar PDF</button>
+    <div className='pdfs'>
+<h1>Descargar Reporte</h1>
+<DatePicker selected={selectedDate} onChange={ handleDateChange} />
+<button onClick={generatePDF}>Descargar PDF</button>
+</div>
 </div>
 );
 }

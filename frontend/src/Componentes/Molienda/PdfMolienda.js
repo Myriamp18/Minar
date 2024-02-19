@@ -6,6 +6,8 @@ import Logo from'../../assest/logo.png'
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { useNavigate } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
 function PdfMolienda() {
     const navigate = useNavigate();
@@ -566,6 +568,9 @@ function PdfMolienda() {
     <div className="pdf-container">
         <div className='pdfs'>
     <h1>Descargar Reporte</h1>
+    <div className="close-button" onClick={() => navigate('/molienda')}>
+        <FontAwesomeIcon icon={faTimes} />
+      </div>
     <DatePicker selected={selectedDate} onChange={ handleDateChange} />
     <button onClick={generatePDF}>Descargar PDF</button>
 </div>

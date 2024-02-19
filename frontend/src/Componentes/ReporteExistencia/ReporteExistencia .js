@@ -55,9 +55,9 @@ export default function ReporteExistencia() {
            
         </span>
         </button>
-        <button className="btn-large btn-bs" onClick={() => handleButtonClick('BS')}>
-        <span className="iconnnes"><FaFilePdf /> </span>
-         
+        <button className="btnmo btnmo-bs" >
+        <span className="iconnnespdf"><FaFilePdf /> </span>
+       
         </button>
       </div>
     </div>

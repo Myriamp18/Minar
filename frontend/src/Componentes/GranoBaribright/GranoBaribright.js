@@ -44,9 +44,11 @@ function GranoBaribright() {
     <div className='row mt-3'>
       {data.length !== 0 ?
         <div className='col-12 col-lg-8 offset-0 offset-lg-2'>
-          <div>
+             <div className='table-container'>
+              <div className='table-top-scroll'> {/* Nuevo contenedor */}
+                <div className='table-responsive'>
 
-            <table className="table">
+                  <table class="table table-bordered">
               <thead>
                 <tr  >
                   <th>ID</th>
@@ -91,6 +93,8 @@ function GranoBaribright() {
               </tbody>
             </table>
 
+          </div>
+          </div>
           </div>
         </div>
         : <h2 className='aling-itemns-center'>Sin Datos</h2>

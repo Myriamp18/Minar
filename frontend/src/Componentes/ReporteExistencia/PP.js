@@ -24,9 +24,12 @@ function PP() {
   const onGrano= () =>{
     navigate('/granobaribright')
 }
-const onConc= () =>{ 
-  navigate('/concentradobaribright')
+const onConcmesas= () =>{ 
+  navigate('/concmesas')
 }
+const onConcjigs= () =>{ 
+   navigate('/concjigssec')
+ }
 
 return (
  
@@ -38,10 +41,10 @@ return (
       
          
   <div className="buttonpp-container">
-    <button className="btnpp-large btnpp-pt"  onClick={onMesas}>
+    <button className="btnpp-large btnpp-pt"  onClick={onConcmesas}>
       <span className="iconnnespp"><MdTableRestaurant /></span>
       <span className="buttonpp-text">
-      Concentrado Mesas
+      Conc. Mesas
        
     </span>
     <span className="buttonpp-textss">
@@ -50,10 +53,10 @@ return (
     </span>
 
     </button>
-    <button className="btnpp-large btnpp-pp" onClick={onSeleccion}>
+    <button className="btnpp-large btnpp-pp" onClick={onConcjigs}>
     <span className="iconnnespp"> <GiManualMeatGrinder /></span>
       <span className="buttonpp-text">
-       Concentrado JIGG´S Secundario
+       Conc. JIGG´S Secundario
     </span>
     <span className="buttonpp-textss">
      Pendiente
@@ -70,7 +73,7 @@ return (
        
     </span>
     </button>
-    <button className="btnpp-large btnpp-bs" onClick={onConc}>
+    <button className="btnpp-large btnpp-bs" onClick={onConcmesas}>
     <span className="iconnnespp"><FaRoad /></span>
     <span className="buttonpp-text">
        Grano Bandas Seleccion 4.25
@@ -82,7 +85,7 @@ return (
      
     </button>
 
-    <button className="btnpp-large btnpp-bs" onClick={onConc}>
+    <button className="btnpp-large btnpp-bs" onClick={onConcmesas}>
     <span className="iconnnespp"><GiMineralPearls /> </span>
     <span className="buttonpp-text">
        Grano P/Molienda
@@ -94,7 +97,7 @@ return (
      
     </button>
 
-    <button className="btnpp-large btnpp-bs" onClick={onConc}>
+    <button className="btnpp-large btnpp-bs" onClick={onConcmesas}>
     <span className="iconnnespp"><GiMineralPearls /> </span>
     <span className="buttonpp-text">
        Grano JIG´SS Chino
@@ -106,7 +109,7 @@ return (
      
     </button>
 
-    <button className="btnpp-large btnpp-bs" onClick={onConc}>
+    <button className="btnpp-large btnpp-bs" onClick={onConcmesas}>
     <span className="iconnnespp"><MdFrontLoader /> </span>
     <span className="buttonpp-text">
        Desensolve JIG´SS Chino
@@ -118,7 +121,7 @@ return (
      
     </button>
 
-    <button className="btnpp-large btnpp-bs" onClick={onConc}>
+    <button className="btnpp-large btnpp-bs" onClick={onConcmesas}>
     <span className="iconnnespp"><MdFrontLoader /> </span>
     <span className="buttonpp-text">
        Desensolve 4.00-4.10
@@ -130,7 +133,7 @@ return (
      
     </button>
 
-    <button className="btnpp-large btnpp-bs" onClick={onConc}>
+    <button className="btnpp-large btnpp-bs" onClick={onConcmesas}>
     <span className="iconnnespp">< GiMineWagon /> </span>
     <span className="buttonpp-text">
      Desecho Grano Seleccion
@@ -142,7 +145,7 @@ return (
      
     </button>
 
-    <button className="btnpp-large btnpp-bs" onClick={onConc}>
+    <button className="btnpp-large btnpp-bs" onClick={onConcmesas}>
     <span className="iconnnespp"><GiMinerals /> </span>
     <span className="buttonpp-text">
        Baritron
@@ -154,7 +157,7 @@ return (
      
     </button>
 
-    <button className="btnpp-large btnpp-bs" onClick={onConc}>
+    <button className="btnpp-large btnpp-bs" onClick={onConcmesas}>
     <span className="iconnnespp"><GiWheelbarrow /> </span>
     <span className="buttonpp-text">
        Tolvas de Molinos y Mezclas

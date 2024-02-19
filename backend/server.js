@@ -459,15 +459,15 @@ app.get('/reportediariograno', (req, res) => {
 });
 
 app.post('/createrreportejigs', (req, res) => {
-     // Restar el 1.80% de los valores antes de la inserción
-     req.body.granoj1 = req.body.granoj1 - (req.body.granoj1 * 0.018);
-     req.body.granoj2 = req.body.granoj2 - (req.body.granoj2 * 0.018);
+    // Restar el 1.80% de los valores antes de la inserción
+    req.body.granoj1 = req.body.granoj1 - (req.body.granoj1 * 0.018);
+    req.body.granoj2 = req.body.granoj2 - (req.body.granoj2 * 0.018);
 
-     req.body.colasj1 = req.body.colasj1 - (req.body.colasj1 * 0.109);
-     req.body.colasj2 = req.body.colasj2 - (req.body.colasj2 * 0.109);
-     
-     req.body.desenj1 = req.body.desenj1 - (req.body.desenj1 * 0.108);
-     req.body.desenj2 = req.body.desenj2 - (req.body.desenj2 * 0.108);
+    req.body.colasj1 = req.body.colasj1 - (req.body.colasj1 * 0.109);
+    req.body.colasj2 = req.body.colasj2 - (req.body.colasj2 * 0.109);
+
+    req.body.desenj1 = req.body.desenj1 - (req.body.desenj1 * 0.108);
+    req.body.desenj2 = req.body.desenj2 - (req.body.desenj2 * 0.108);
     const sql = "INSERT INTO produccionjigs (fecha, turno, alimj1, peaj1, granoj1, pegj1, colasj1, pecj1, desenj1, pedj1, alimj2, peaj2, granoj2, pegj2, colasj2, pecj2, desenj2, pedj2) VALUES (?, ?, ?, ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
     const values = [
         req.body.fecha,
@@ -498,9 +498,9 @@ app.post('/createrreportejigs', (req, res) => {
 app.post('/createrreportejigsch', (req, res) => {
     req.body.granojch = req.body.granojch - (req.body.granojch * 0.018);
     req.body.colasjch = req.body.colasjch - (req.body.colasjch * 0.109);
-    req.body.colasjsec = req.body.colasjsec - (req.body.colasjsec *0.109);
+    req.body.colasjsec = req.body.colasjsec - (req.body.colasjsec * 0.109);
     req.body.desenjch = req.body.desenjch - (req.body.desenjch * 0.108);
-    req.body.concjsec = req.body.concjsec - (req.body. concjsec * 0.14);
+    req.body.concjsec = req.body.concjsec - (req.body.concjsec * 0.14);
     const sql = "INSERT INTO jigschinos (fecha, turno, alimjch, peajch, granojch, pegjch, colasjch, pecjch, desenjch, pedjch, horasec, alimjsec, peajsec, concjsec, pecojsec, colasjsec, pecjsec) VALUES (?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?)";
     const values = [
         req.body.fecha,
@@ -588,7 +588,7 @@ app.post('/createrreportemesas', (req, res) => {
 });
 
 app.post('/createrreportegrano', (req, res) => {
-    req.body.concgrano = req.body.concgrano- (req.body.concgrano * 0.14);
+    req.body.concgrano = req.body.concgrano - (req.body.concgrano * 0.14);
     req.body.colasgrano = req.body.colasgrano - (req.body.colasgrano * 0.109);
 
     const sql = "INSERT INTO prodseleccion (fecha, turno, alimgrano, peag, concgrano, pecng, colasgrano, pecg, tonpiedra, petp, aminale, minale, pemle, aminals, minals, pemls, apatiole, patiols, peple, apatiols, tolvageneral, pepls, amedio34, medio3y4, psm34, adesensolve, desensolve, pedese, acolas, colas, pecolas) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
@@ -626,7 +626,7 @@ app.post('/createrreportegrano', (req, res) => {
         req.body.pecolas,
 
 
-      
+
     ];
 
     db.query(sql, values, (err, data) => {
@@ -669,7 +669,7 @@ app.delete('/deletediariograno/:id', (req, res) => {
 });
 /////////////EXPORTACION POR FECHA REPORTE PROD.PLANTA///////////7
 app.get('/getjigs/:fecha', (req, res) => {
-    const fecha= req.params.fecha;
+    const fecha = req.params.fecha;
     const sql = "SELECT * FROM produccionjigs WHERE fecha = ?"
     db.query(sql, [fecha], (err, data) => {
         if (err) {
@@ -681,7 +681,7 @@ app.get('/getjigs/:fecha', (req, res) => {
     });
 })
 app.get('/getjch/:fecha', (req, res) => {
-    const fecha= req.params.fecha;
+    const fecha = req.params.fecha;
     const sql = "SELECT * FROM jigschinos WHERE fecha = ?"
     db.query(sql, [fecha], (err, data) => {
         if (err) {
@@ -693,7 +693,7 @@ app.get('/getjch/:fecha', (req, res) => {
     });
 })
 app.get('/getmesas/:fecha', (req, res) => {
-    const fecha= req.params.fecha;
+    const fecha = req.params.fecha;
     const sql = "SELECT * FROM mesas WHERE fecha = ?"
     db.query(sql, [fecha], (err, data) => {
         if (err) {
@@ -705,7 +705,7 @@ app.get('/getmesas/:fecha', (req, res) => {
     });
 })
 app.get('/getgrano/:fecha', (req, res) => {
-    const fecha= req.params.fecha;
+    const fecha = req.params.fecha;
     const sql = "SELECT * FROM prodseleccion WHERE fecha = ?"
     db.query(sql, [fecha], (err, data) => {
         if (err) {
@@ -975,17 +975,17 @@ app.put('/updategranobaribright/:id', async (req, res) => {
                 });
             });
         };
-        
+
         // Obtener el saldo anterior antes de realizar la actualización
         const saldoAnteriorData = await obtenerSaldoAnterior(req.params.id);
-        
+
         // Verificar si se encontró el saldo anterior
         if (saldoAnteriorData.length > 0) {
             const saldoAnterior = saldoAnteriorData[0].saldo;
-        
+
             // Calcula el nuevo saldo utilizando el saldo anterior
             const nuevoSaldo = saldoAnterior + parseFloat(req.body.entradas) - parseFloat(req.body.salidas);
-        
+
             // Realiza la actualización en la base de datos utilizando el nuevo saldo
             const sql = "UPDATE granobaribright SET fecha = ?, entradas = ?, salidas = ?, pe = ?, saldo = ? WHERE id = ?";
             const values = [
@@ -996,13 +996,13 @@ app.put('/updategranobaribright/:id', async (req, res) => {
                 nuevoSaldo,
                 req.params.id
             ];
-        
+
             db.query(sql, values, (err, data) => {
                 if (err) {
                     console.error('Error al actualizar los datos:', err);
                     return res.status(500).json({ error: "Error al actualizar los datos" });
                 }
-        
+
                 console.log('Datos actualizados correctamente.');
                 return res.json(data);
             });
@@ -1014,8 +1014,8 @@ app.put('/updategranobaribright/:id', async (req, res) => {
         console.error('Error al obtener el saldo anterior:', error);
         return res.status(500).json({ error: "Error al obtener el saldo anterior" });
     }
-        
-   
+
+
 });
 
 app.get('/getrecorgranobaribright/:id', (req, res) => {
@@ -1099,17 +1099,17 @@ app.put('/updateconcentradobaribaright/:id', async (req, res) => {
                 });
             });
         };
-        
+
         // Obtener el saldo anterior antes de realizar la actualización
         const saldoAnteriorData = await obtenerSaldoAnterior(req.params.id);
-        
+
         // Verificar si se encontró el saldo anterior
         if (saldoAnteriorData.length > 0) {
             const saldoAnterior = saldoAnteriorData[0].saldo;
-        
+
             // Calcula el nuevo saldo utilizando el saldo anterior
             const nuevoSaldo = saldoAnterior + parseFloat(req.body.entradas) - parseFloat(req.body.salidas);
-        
+
             // Realiza la actualización en la base de datos utilizando el nuevo saldo
             const sql = "UPDATE concentradobaribaright SET fecha = ?, entradas = ?, salidas = ?, pe = ?, saldo = ? WHERE id = ?";
             const values = [
@@ -1120,13 +1120,13 @@ app.put('/updateconcentradobaribaright/:id', async (req, res) => {
                 nuevoSaldo,
                 req.params.id
             ];
-        
+
             db.query(sql, values, (err, data) => {
                 if (err) {
                     console.error('Error al actualizar los datos:', err);
                     return res.status(500).json({ error: "Error al actualizar los datos" });
                 }
-        
+
                 console.log('Datos actualizados correctamente.');
                 return res.json(data);
             });
@@ -1138,8 +1138,8 @@ app.put('/updateconcentradobaribaright/:id', async (req, res) => {
         console.error('Error al obtener el saldo anterior:', error);
         return res.status(500).json({ error: "Error al obtener el saldo anterior" });
     }
-        
-   
+
+
 });
 
 app.get('/getrecorconcentradobaribaright/:id', (req, res) => {
@@ -1164,9 +1164,42 @@ app.get('/concmesas', (req, res) => {
 });
 app.post('/createconcmesas', async (req, res) => {
     try {
+        //Obtener el total concentrado de las mesas para la fecha especificada
+        const totalConcentradoMesas = await new Promise((resolve, reject) => {
+            const query = "SELECT (SUM(conm12) + SUM(conm34) + SUM(conm5) + SUM(conm6)) AS total_concentrado FROM mesas WHERE fecha = ?;";
+            db.query(query, [req.body.fecha], (err, data) => {
+                if (err) reject(err);
+                else resolve(data[0].total_concentrado); // Obtenemos el total concentrado de la primera fila
+            });
+        });
+        const totalSalidasMesas = await new Promise((resolve, reject) => {
+            const query = "SELECT (SUM(concmesas)) AS total_salidas FROM molienda WHERE fecha = ?;";
+            db.query(query, [req.body.fecha], (err, data) => {
+                if (err) reject(err);
+                else resolve(data[0].total_salidas); // Obtenemos el total concentrado de la primera fila
+            });
+        });
+        const totalpe = await new Promise((resolve, reject) => {
+            const query = "SELECT fecha, SUM(pecnm12) AS total_pecnm12, SUM(pecnm34) AS total_pecnm34, SUM(pecnm5) AS total_pecnm5, SUM(pecnm6) AS total_pecnm6, COUNT(*) AS count_peconcmesas, (SUM(pecnm12) + SUM(pecnm34) + SUM(pecnm5) + SUM(pecnm6)) / COUNT(*) AS average_concmesas FROM mesas WHERE fecha = ? GROUP BY fecha;";
+        
+            db.query(query, [req.body.fecha], (err, data) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    if (data.length > 0) {
+                        const average = data[0].average_concmesas;
+                        resolve(average);
+                    } else {
+                        resolve(0); // Si no hay registros para esa fecha, el promedio es 0
+                    }
+                }
+            });
+        });
+        
+        
         // Obtener el saldo anterior
         const saldoAnteriorData = await new Promise((resolve, reject) => {
-            db.query("SELECT saldo FROM granobaribright ORDER BY id DESC LIMIT 1", (err, data) => {
+            db.query("SELECT saldo FROM concmesas ORDER BY id DESC LIMIT 1", (err, data) => {
                 if (err) reject(err);
                 else resolve(data);
             });
@@ -1176,25 +1209,16 @@ app.post('/createconcmesas', async (req, res) => {
         const saldoAnterior = saldoAnteriorData.length > 0 ? saldoAnteriorData[0].saldo : 0;
 
         // Calcula el nuevo saldo sumando el saldo anterior a las entradas y restando las salidas
-        const nuevoSaldo = saldoAnterior + parseFloat(req.body.entradas) - parseFloat(req.body.salidas);
-
-        // Obtener el total concentrado de las mesas para la fecha especificada
-        const totalConcentradoMesas = await new Promise((resolve, reject) => {
-            const query = "SELECT (SUM(conm12) + SUM(conm34) + SUM(conm5) + SUM(conm6)) AS total_concentrado FROM mesas WHERE fecha = ?;";
-            db.query(query, [req.body.fecha], (err, data) => {
-                if (err) reject(err);
-                else resolve(data[0].total_concentrado); // Obtenemos el total concentrado de la primera fila
-            });
-        });
+        const nuevoSaldo = saldoAnterior + parseFloat(totalConcentradoMesas) - parseFloat(totalSalidasMesas);
 
         // Realizar la inserción en la tabla concmesas
         const sql = "INSERT INTO concmesas (fecha, entradas, salidas, saldo, pe) VALUES (?, ?, ?, ?, ?)";
         const values = [
             req.body.fecha,
             totalConcentradoMesas,
-            req.body.salidas,
-            req.body.pe,
-            nuevoSaldo
+            totalSalidasMesas,
+            nuevoSaldo,
+            totalpe,
         ];
 
         db.query(sql, values, (err, result) => {
@@ -1209,27 +1233,55 @@ app.post('/createconcmesas', async (req, res) => {
 });
 
 
-app.put('/updateconcmesas/:id', (req, res) => {
-    const sql = "UPDATE silos SET fecha=?, silo1=?, pes1=?, silo2=?, pes2=?, silo3=?, pes3=?, silo4=?,pes4=?, silo5=?,pes5=? WHERE id_silos = ?";
-    const values = [
-        req.body.fecha,
-        req.body.silo1,
-        req.body.pes1,
-        req.body.silo2,
-        req.body.pes2,
-        req.body.silo3,
-        req.body.pes3,
-        req.body.silo4,
-        req.body.pes4,
-        req.body.silo5,
-        req.body.pes5,
-    ];
-    const id = req.params.id;
-    db.query(sql, [...values, id], (err, data) => {
-        if (err) return res.json(err);
-        return res.json(data);
+app.put('/updateconcmesas/:id',async(req, res) => {
+    try {
+        //Obtener el total concentrado de las mesas para la fecha especificada
+        const totalConcentradoMesas = await new Promise((resolve, reject) => {
+            const query = "SELECT (SUM(conm12) + SUM(conm34) + SUM(conm5) + SUM(conm6)) AS total_concentrado FROM mesas WHERE fecha = ?;";
+            db.query(query, [req.body.fecha], (err, data) => {
+                if (err) reject(err);
+                else resolve(data[0].total_concentrado); // Obtenemos el total concentrado de la primera fila
+            });
+        });
+        const totalSalidasMesas = await new Promise((resolve, reject) => {
+            const query = "SELECT (SUM(concmesas)) AS total_salidas FROM molienda WHERE fecha = ?;";
+            db.query(query, [req.body.fecha], (err, data) => {
+                if (err) reject(err);
+                else resolve(data[0].total_salidas); // Obtenemos el total concentrado de la primera fila
+            });
+        });
+
+        // Obtener el saldo anterior
+        const saldoAnteriorData = await new Promise((resolve, reject) => {
+            db.query("SELECT saldo FROM concmesas ORDER BY id DESC LIMIT 1", (err, data) => {
+                if (err) reject(err);
+                else resolve(data);
+            });
+        });
+
+        // Si hay registros en la tabla, obtén el saldo anterior, de lo contrario, establece el saldo anterior en 0
+        const saldoAnterior = saldoAnteriorData.length > 0 ? saldoAnteriorData[0].saldo : 0;
+
+        // Calcula el nuevo saldo sumando el saldo anterior a las entradas y restando las salidas
+        const nuevoSaldo = saldoAnterior + parseFloat(totalConcentradoMesas) - parseFloat(totalSalidasMesas);
+        const sql = "UPDATE concmesas SET fecha=?, entradas=?, salidas=?, saldo=?, pe=? WHERE id = ?";
+        const values = [
+            req.body.fecha,
+            totalConcentradoMesas,
+            totalSalidasMesas,
+            nuevoSaldo,
+            req.body.pe,
+        ];
+        const id = req.params.id;
+        db.query(sql, [...values, id], (err, data) => {
+            if (err) return res.json(err);
+            return res.json(data);
+        });
+    } catch (error) {
+        console.error("Error al crear el registro en concmesas:", error);
+        res.status(500).send("Error al crear el registro en concmesas.");
+    }
     });
-});
 
 app.delete('/deleteconcmesas/:id', (req, res) => {
     const sql = "DELETE FROM concmesas WHERE id = ?";
@@ -1240,9 +1292,9 @@ app.delete('/deleteconcmesas/:id', (req, res) => {
     });
 });
 
-app.get('/getrecord/:id', (req, res) => {
+app.get('/getrecordconcmesas/:id', (req, res) => {
     const id = req.params.id;
-    const sql = "SELECT * FROM silos WHERE id_silos = ?"
+    const sql = "SELECT * FROM concmesas WHERE id = ?"
     db.query(sql, [id], (err, data) => {
         if (err) {
             return res.json({ Error: "Error" })
@@ -1268,29 +1320,39 @@ app.delete('/deletemezclasmolienda/:id', (req, res) => {
     });
 });
 app.post('/createmezclasmolienda', (req, res) => {
-    const sql = "INSERT INTO molienda (fecha, turno, concmesas, pecm, medios, pem,desenslovez,pedese,mezclatotal,pemt,concjigs,pejig) VALUES (?,?, ?, ?, ?, ?,?,?,?,?,?,?)";
+    // Convierte los valores de req.body a números antes de sumarlos
+    const concmesas = parseFloat(req.body.concmesas);
+    const medios = parseFloat(req.body.medios);
+    const desenslovez = parseFloat(req.body.desenslovez);
+    const conjigs = parseFloat(req.body.concjigs);
+
+    // Calcula la mezcla total como la suma de concmesas, medios, desenslovez y conjigs
+    const mezclaTotal = concmesas + medios + desenslovez + conjigs;
+
+    const sql = "INSERT INTO molienda (fecha, turno, concmesas, pecm, medios, pem, desenslovez, pedese, concjigs, pejig, mezclatotal, pemt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     const values = [
         req.body.fecha,
         req.body.turno,
-        req.body.concmesas,
+        concmesas,
         req.body.pecm,
-        req.body.medios,
+        medios,
         req.body.pem,
-        req.body.desenslovez,
+        desenslovez,
         req.body.pedese,
-        req.body.mezclatotal,
-        req.body.pemt,
-        req.body.concjigs,
+        conjigs,
         req.body.pejig,
-
+        mezclaTotal, // Usamos la mezcla total calculada
+        req.body.pemt,
     ];
+
     db.query(sql, values, (err, data) => {
         if (err) return res.json(err);
         return res.json(data);
     });
 });
+
 app.put('/updatemezclasmolienda/:id', (req, res) => {
-    const sql = "UPDATE molienda SET fecha=?,turno=?, concmesas=?, pecm=?, medios=?, pem=?,desenslovez=?,pedese=?,mezclatotal=?,pemt=?,concjigs=?,pejig=? WHERE id = ?";
+    const sql = "UPDATE molienda SET fecha=?,turno=?, concmesas=?, pecm=?, medios=?, pem=?,desenslovez=?,pedese=?,pemt=?,concjigs=?,pejig=? WHERE id = ?";
     const values = [
         req.body.fecha,
         req.body.turno,
@@ -1300,7 +1362,6 @@ app.put('/updatemezclasmolienda/:id', (req, res) => {
         req.body.pem,
         req.body.desenslovez,
         req.body.pedese,
-        req.body.mezclatotal,
         req.body.pemt,
         req.body.concjigs,
         req.body.pejig,
@@ -1340,6 +1401,7 @@ app.delete('/deletepromedios/:id', (req, res) => {
     });
 });
 app.post('/createpromedios', (req, res) => {
+
     const sql = "INSERT INTO promedios (fecha,turno, pemolino1, malla200mo1, malla325mo1, calciosmo1,humedadmo1,pemolino2,malla200mo2,malla325mo2,calciosmo2,humedadmo2) VALUES (?,?, ?, ?, ?, ?,?,?,?,?,?,?)";
     const values = [
         req.body.fecha,
@@ -1398,7 +1460,7 @@ app.get('/getrecordpromedios/:id', (req, res) => {
 
 /////////////EXPORTACION POR FECHA REPORTE Molienda///////////7
 app.get('/getmezclas/:fecha', (req, res) => {
-    const fecha= req.params.fecha;
+    const fecha = req.params.fecha;
     const sql = "SELECT * FROM molienda WHERE fecha = ?"
     db.query(sql, [fecha], (err, data) => {
         if (err) {
@@ -1410,7 +1472,7 @@ app.get('/getmezclas/:fecha', (req, res) => {
     });
 })
 app.get('/getpromedios/:fecha', (req, res) => {
-    const fecha= req.params.fecha;
+    const fecha = req.params.fecha;
     const sql = "SELECT * FROM promedios WHERE fecha = ?"
     db.query(sql, [fecha], (err, data) => {
         if (err) {
@@ -1420,4 +1482,156 @@ app.get('/getpromedios/:fecha', (req, res) => {
 
         return res.json(data);
     });
+})
+
+
+//////////////CONCENTRADOJIGSSEC////////////////
+app.get('/concjigssec', (req, res) => {
+    const sql = "SELECT * FROM concjigssec ORDER BY id DESC";
+    db.query(sql, (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+});
+app.post('/createconcjigssec', async (req, res) => {
+    try {
+        //Obtener el total concentrado de las mesas para la fecha especificada
+        const totalConcentradojigss = await new Promise((resolve, reject) => {
+            const query = "SELECT (SUM(concjsec	)) AS total_concjigs FROM jigschinos WHERE fecha = ?;";
+            db.query(query, [req.body.fecha], (err, data) => {
+                if (err) reject(err);
+                else resolve(data[0].total_concjigs); // Obtenemos el total concentrado de la primera fila
+            });
+        });
+        const totalSalidasConcjigs = await new Promise((resolve, reject) => {
+            const query = "SELECT (SUM(concjigs)) AS total_concjig FROM molienda WHERE fecha = ?;";
+            db.query(query, [req.body.fecha], (err, data) => {
+                if (err) reject(err);
+                else resolve(data[0].total_concjig); // Obtenemos el total concentrado de la primera fila
+            });
+        });
+        const totalpe = await new Promise((resolve, reject) => {
+            const query = "SELECT (SUM(pecojsec)) AS total_concjig, COUNT(pecojsec) AS count_pecojsec FROM jigschinos WHERE fecha = ?;";
+            db.query(query, [req.body.fecha], (err, data) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    const totalConcjig = data[0].total_concjig;
+                    const countPecojsec = data[0].count_pecojsec;
+                    let average = 0;
+                    
+                    if (countPecojsec > 0) {
+                        average = totalConcjig / countPecojsec;
+                    }
+                    
+                    resolve(average);
+                }
+            });
+        });
+        
+        // Obtener el saldo anterior
+        const saldoAnteriorData = await new Promise((resolve, reject) => {
+            db.query("SELECT saldo FROM concjigssec ORDER BY id DESC LIMIT 1", (err, data) => {
+                if (err) reject(err);
+                else resolve(data);
+            });
+        });
+
+        // Si hay registros en la tabla, obtén el saldo anterior, de lo contrario, establece el saldo anterior en 0
+        const saldoAnterior = saldoAnteriorData.length > 0 ? saldoAnteriorData[0].saldo : 0;
+
+        // Calcula el nuevo saldo sumando el saldo anterior a las entradas y restando las salidas
+        const nuevoSaldo = saldoAnterior + parseFloat(totalConcentradojigss) - parseFloat(totalSalidasConcjigs);
+
+        // Realizar la inserción en la tabla concmesas
+        const sql = "INSERT INTO concjigssec (fecha, entradas, salidas, saldo, pe) VALUES (?, ?, ?, ?, ?)";
+        const values = [
+            req.body.fecha,
+            totalConcentradojigss,
+            totalSalidasConcjigs,
+            nuevoSaldo,
+            totalpe
+        ];
+
+        db.query(sql, values, (err, result) => {
+            if (err) throw err;
+            console.log("Registro insertado en concmesas con éxito.");
+            res.send("Registro insertado en concmesas con éxito.");
+        });
+    } catch (error) {
+        console.error("Error al crear el registro en concmesas:", error);
+        res.status(500).send("Error al crear el registro en concmesas.");
+    }
+});
+
+
+app.put('/updatenconcjigssec/:id',async(req, res) => {
+    try {
+        const totalConcentradojigss = await new Promise((resolve, reject) => {
+            const query = "SELECT (SUM(concjsec	)) AS total_concjigs FROM jigschinos WHERE fecha = ?;";
+            db.query(query, [req.body.fecha], (err, data) => {
+                if (err) reject(err);
+                else resolve(data[0].total_concjigs); // Obtenemos el total concentrado de la primera fila
+            });
+        });
+        const totalSalidasConcjigs = await new Promise((resolve, reject) => {
+            const query = "SELECT (SUM(concjigs)) AS total_concjig FROM molienda WHERE fecha = ?;";
+            db.query(query, [req.body.fecha], (err, data) => {
+                if (err) reject(err);
+                else resolve(data[0].total_concjig); // Obtenemos el total concentrado de la primera fila
+            });
+        });
+
+        // Obtener el saldo anterior
+        const saldoAnteriorData = await new Promise((resolve, reject) => {
+            db.query("SELECT saldo FROM concjigssec ORDER BY id DESC LIMIT 1", (err, data) => {
+                if (err) reject(err);
+                else resolve(data);
+            });
+        });
+
+        // Si hay registros en la tabla, obtén el saldo anterior, de lo contrario, establece el saldo anterior en 0
+        const saldoAnterior = saldoAnteriorData.length > 0 ? saldoAnteriorData[0].saldo : 0;
+
+        // Calcula el nuevo saldo sumando el saldo anterior a las entradas y restando las salidas
+        const nuevoSaldo = saldoAnterior + parseFloat(totalSalidasConcjigs) - parseFloat(totalSalidasConcjigs);
+
+        const sql = "UPDATE concjigssec SET fecha=?, entradas=?, salidas=?, saldo=?, pe=? WHERE id = ?";
+        const values = [
+            req.body.fecha,
+            totalConcentradojigss,
+            totalSalidasConcjigs,
+            nuevoSaldo,
+            req.body.pe,
+        ];
+        const id = req.params.id;
+        db.query(sql, [...values, id], (err, data) => {
+            if (err) return res.json(err);
+            return res.json(data);
+        });
+    } catch (error) {
+        console.error("Error al crear el registro en concmesas:", error);
+        res.status(500).send("Error al crear el registro en concmesas.");
+    }
+    });
+
+app.delete('/deleteconcjigssec/:id', (req, res) => {
+    const sql = "DELETE FROM concjigssec WHERE id = ?";
+    const id = req.params.id;
+    db.query(sql, [id], (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+});
+
+app.get('/getrecordconcjigssec/:id', (req, res) => {
+    const id = req.params.id;
+    const sql = "SELECT * FROM concjigssec WHERE id = ?"
+    db.query(sql, [id], (err, data) => {
+        if (err) {
+            return res.json({ Error: "Error" })
+        }
+
+        return res.json(data)
+    })
 })

@@ -1,7 +1,8 @@
 .pp-container {
     display: flex;
     flex-direction: column;
-   
+    margin-left:10px;
+    margin-top: 30px;
 }
 
 .buttonpp-container {
@@ -50,5 +51,28 @@
     background-color: #000000e8;
     color: #f6f6f6;
   }
-
   
+  @media screen and (max-width: 600px) {
+    .btnpp-large {
+      padding: 12px 8px;
+      font-size: 14px;
+    }
+
+    .iconnnespp {
+    /* Estilos para el icono */
+    position: absolute; /* Establece la posición absoluta para el icono */
+    top: 0; /* Posiciona el icono en la parte superior del contenedor */
+    left: 50%; /* Lo posiciona en el centro horizontal del contenedor */
+    transform: translate(-50%, -50%); /* Centra vertical y horizontalmente el icono */
+    font-size: 2em; /* Tamaño del icono */
+    z-index:1; /* Asegura que el icono esté por encima del texto */
+    gap: 2px;
+    }
+    .buttonpp-text {
+      font-size: 15px;
+      margin-left:10px;
+      font-family: 'Verdana', sans-serif;
+      position: relative; /* Establece la posición relativa para el texto */
+      z-index: 0; /* Asegura que el texto esté detrás del icono */
+    }
+  }
