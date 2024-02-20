@@ -130,7 +130,7 @@ app.get('/getrecord/:id', (req, res) => {
 ////////////////////////GRANO BANDAS/////////
 
 app.get('/granobandas', (req, res) => {
-    const sql = "SELECT * FROM granobandas";
+    const sql = "SELECT * FROM granobandas ";
     db.query(sql, (err, data) => {
         if (err) return res.json(err);
         return res.json(data);
@@ -209,20 +209,36 @@ app.post('/createseleccion', async (req, res) => { // Añade 'async' aquí
                 else resolve(data);
             });
         });
+        const totalEntradasSelecc= await new Promise((resolve, reject) => {
+            const query = "SELECT (SUM(tonpiedra)) AS total_entradas FROM prodseleccion WHERE fecha = ?;";
+            db.query(query, [req.body.fecha], (err, data) => {
+                if (err) reject(err);
+                else resolve(data[0].total_entradas); // Obtenemos el total concentrado de la primera fila
+            });
+        });
+        const totalPe = await new Promise((resolve, reject) => {
+            const query = 'SELECT AVG((petp_anterior + nueva_petp) / 2) AS promedio_petp FROM (SELECT petp_anterior, nueva_petp FROM (SELECT LAG(petp, 1) OVER (ORDER BY fecha) AS petp_anterior, petp AS nueva_petp FROM prodseleccion WHERE fecha = ?) AS subquery) AS subquery2';
+        
+            db.query(query, [req.body.fecha], (err, data) => {
+                if (err) reject(err);
+                else resolve(data[0].promedio_petp); // Corrección aquí, acceder al promedio calculado
+            });
+        });
+        
 
         // Si hay registros en la tabla, obtén el saldo anterior, de lo contrario, establece el saldo anterior en 0
         const saldoAnterior = saldoAnteriorData.length > 0 ? saldoAnteriorData[0].saldo : 0;
 
         // Calcula el nuevo saldo sumando el saldo anterior a las entradas y restando las salidas
-        const nuevoSaldo = saldoAnterior + parseFloat(req.body.entrada) - parseFloat(req.body.salida);
+        const nuevoSaldo = saldoAnterior + parseFloat(totalEntradasSelecc) - parseFloat(req.body.salida);
 
         // Realiza la inserción con el nuevo saldo
         const sql = "INSERT INTO seleccion (fecha, entrada, salida, pesp, saldo) VALUES (?, ?, ?, ?, ?)";
         const values = [
             req.body.fecha,
-            req.body.entrada,
+            totalEntradasSelecc,
             req.body.salida,
-            req.body.pesp,
+            totalPe,
             nuevoSaldo
         ];
 
@@ -1179,22 +1195,33 @@ app.post('/createconcmesas', async (req, res) => {
                 else resolve(data[0].total_salidas); // Obtenemos el total concentrado de la primera fila
             });
         });
-        const totalpe = await new Promise((resolve, reject) => {
-            const query = "SELECT fecha, SUM(pecnm12) AS total_pecnm12, SUM(pecnm34) AS total_pecnm34, SUM(pecnm5) AS total_pecnm5, SUM(pecnm6) AS total_pecnm6, COUNT(*) AS count_peconcmesas, (SUM(pecnm12) + SUM(pecnm34) + SUM(pecnm5) + SUM(pecnm6)) / COUNT(*) AS average_concmesas FROM mesas WHERE fecha = ? GROUP BY fecha;";
-        
-            db.query(query, [req.body.fecha], (err, data) => {
-                if (err) {
-                    reject(err);
-                } else {
-                    if (data.length > 0) {
-                        const average = data[0].average_concmesas;
-                        resolve(average);
-                    } else {
-                        resolve(0); // Si no hay registros para esa fecha, el promedio es 0
-                    }
-                }
-            });
-        });
+      const totalpe = await new Promise((resolve, reject) => {
+    const query = `
+        SELECT 
+            fecha, 
+            (SUM(pecnm12) + SUM(pecnm34) + SUM(pecnm5) + SUM(pecnm6)) / (COUNT(*) * 3) AS total_promedio
+        FROM 
+            mesas 
+        WHERE 
+            fecha = ? 
+        GROUP BY 
+            fecha;
+    `;
+
+    db.query(query, [req.body.fecha], (err, data) => {
+        if (err) {
+            reject(err);
+        } else {
+            if (data.length > 0) {
+                const totalPromedio = data[0].total_promedio;
+                resolve(totalPromedio);
+            } else {
+                resolve(0); // Si no hay registros para esa fecha, el promedio es 0
+            }
+        }
+    });
+});
+
         
         
         // Obtener el saldo anterior
@@ -1627,6 +1654,420 @@ app.delete('/deleteconcjigssec/:id', (req, res) => {
 app.get('/getrecordconcjigssec/:id', (req, res) => {
     const id = req.params.id;
     const sql = "SELECT * FROM concjigssec WHERE id = ?"
+    db.query(sql, [id], (err, data) => {
+        if (err) {
+            return res.json({ Error: "Error" })
+        }
+
+        return res.json(data)
+    })
+})
+//////////////MEDIOS/////////
+app.get('/medios46', (req, res) => {
+    const sql = "SELECT * FROM medios46 ORDER BY id DESC";
+    db.query(sql, (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+});
+app.post('/createmedios46', async (req, res) => {
+    try {
+    
+        
+        // Obtener el saldo anterior
+        const saldoAnteriorData = await new Promise((resolve, reject) => {
+            db.query("SELECT saldo46 FROM medios46 ORDER BY id DESC LIMIT 1", (err, data) => {
+                if (err) reject(err);
+                else resolve(data);
+            });
+        });
+
+        // Si hay registros en la tabla, obtén el saldo anterior, de lo contrario, establece el saldo anterior en 0
+        const saldoAnterior = saldoAnteriorData.length > 0 ? saldoAnteriorData[0].saldo46 : 0;
+
+        // Calcula el nuevo saldo sumando el saldo anterior a las entradas y restando las salidas
+        const nuevoSaldo = saldoAnterior + parseFloat(req.body.entradasm46) - parseFloat(req.body.salidasm46);
+
+
+        // Realizar la inserción en la tabla concmesas
+        const sql = "INSERT INTO medios46 (fecha, entradasm46, salidasm46, saldo46, pe46) VALUES (?, ?, ?, ?, ?)";
+        const values = [
+            req.body.fecha,
+            req.body.entradasm46,
+            req.body.salidasm46,
+            nuevoSaldo,
+            req.body.pe46,
+        ];
+
+        db.query(sql, values, (err, result) => {
+            if (err) throw err;
+            console.log("Registro insertado en medios46 con éxito.");
+            res.send("Registro insertado en medios46 con éxito.");
+        });
+    } catch (error) {
+        console.error("Error al crear el registro en medios46:", error);
+        res.status(500).send("Error al crear el registro en medios46.");
+    }
+});
+app.delete('/deletemedios46/:id', (req, res) => {
+    const sql = "DELETE FROM medios46 WHERE id = ?";
+    const id = req.params.id;
+    db.query(sql, [id], (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+});
+
+app.put('/updatemedios46/:id', async (req, res) => {
+    try {
+        const id = req.params.id; // Obtener el ID del parámetro de la URL
+
+        // Obtener el saldo anterior
+        const saldoAnteriorData = await new Promise((resolve, reject) => {
+            db.query("SELECT saldo46 FROM medios46 ORDER BY id DESC LIMIT 1", (err, data) => {
+                if (err) reject(err);
+                else resolve(data);
+            });
+        });
+
+        // Si hay registros en la tabla, obtén el saldo anterior, de lo contrario, establece el saldo anterior en 0
+        const saldoAnterior = saldoAnteriorData.length > 0 ? saldoAnteriorData[0].saldo46 : 0;
+
+        // Calcula el nuevo saldo sumando el saldo anterior a las entradas y restando las salidas
+        const nuevoSaldo = saldoAnterior + parseFloat(req.body.entradasm46) - parseFloat(req.body.salidasm46);
+
+        // Realizar la actualización en la tabla medios46
+        const sql = "UPDATE medios46 SET fecha=?, entradasm46=?, salidasm46=?, saldo46=?, pe46=? WHERE id=?";
+        const values = [
+            req.body.fecha,
+            req.body.entradasm46,
+            req.body.salidasm46,
+            nuevoSaldo,
+            req.body.pe46,
+            id // Utilizar el ID del registro que se desea actualizar
+        ];
+
+        db.query(sql, values, (err, data) => {
+            if (err) return res.status(500).json(err);
+            return res.status(200).json(data);
+        });
+    } catch (error) {
+        console.error("Error al actualizar el registro en medios46:", error);
+        res.status(500).send("Error al actualizar el registro en medios46.");
+    }
+});
+
+app.get('/getrecordmedios46/:id', (req, res) => {
+    const id = req.params.id;
+    const sql = "SELECT * FROM medios46 WHERE id = ?"
+    db.query(sql, [id], (err, data) => {
+        if (err) {
+            return res.json({ Error: "Error" })
+        }
+
+        return res.json(data)
+    })
+})
+app.get('/medios4', (req, res) => {
+    const sql = "SELECT * FROM medios4 ORDER BY id DESC";
+    db.query(sql, (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+});
+app.post('/createmedios4', async (req, res) => {
+    try {
+    
+        
+        // Obtener el saldo anterior
+        const saldoAnteriorData = await new Promise((resolve, reject) => {
+            db.query("SELECT saldo FROM medios4 ORDER BY id DESC LIMIT 1", (err, data) => {
+                if (err) reject(err);
+                else resolve(data);
+            });
+        });
+
+        // Si hay registros en la tabla, obtén el saldo anterior, de lo contrario, establece el saldo anterior en 0
+        const saldoAnterior = saldoAnteriorData.length > 0 ? saldoAnteriorData[0].saldo : 0;
+
+         // Calcula el nuevo saldo sumando el saldo anterior a las entradas y restando las salidas
+         const nuevoSaldo = saldoAnterior + parseFloat(req.body.entradas) - parseFloat(req.body.salidas);
+
+        // Realizar la inserción en la tabla concmesas
+        const sql = "INSERT INTO medios4 (fecha, entradas, salidas, saldo, pe) VALUES (?, ?, ?, ?, ?)";
+        const values = [
+            req.body.fecha,
+            req.body.entradas,
+            req.body.salidas,
+            nuevoSaldo,
+            req.body.pe,
+        ];
+
+        db.query(sql, values, (err, result) => {
+            if (err) throw err;
+            console.log("Registro insertado en concmesas con éxito.");
+            res.send("Registro insertado en concmesas con éxito.");
+        });
+    } catch (error) {
+        console.error("Error al crear el registro en concmesas:", error);
+        res.status(500).send("Error al crear el registro en concmesas.");
+    }
+});
+app.put('/updatemedios4/:id', async (req, res) => {
+    try {
+        const id = req.params.id; // Obtener el ID del parámetro de la URL
+
+        // Obtener el saldo anterior
+        const saldoAnteriorData = await new Promise((resolve, reject) => {
+            db.query("SELECT saldo FROM medios4 ORDER BY id DESC LIMIT 1", (err, data) => {
+                if (err) reject(err);
+                else resolve(data);
+            });
+        });
+
+        // Si hay registros en la tabla, obtén el saldo anterior, de lo contrario, establece el saldo anterior en 0
+        const saldoAnterior = saldoAnteriorData.length > 0 ? saldoAnteriorData[0].saldo: 0;
+
+        // Calcula el nuevo saldo sumando el saldo anterior a las entradas y restando las salidas
+        const nuevoSaldo = saldoAnterior + parseFloat(req.body.entradas) - parseFloat(req.body.salidas);
+
+        // Realizar la actualización en la tabla medios46
+        const sql = "UPDATE medios4 SET fecha=?, entradas=?, salidas=?, saldo=?, pe=? WHERE id=?";
+        const values = [
+            req.body.fecha,
+            req.body.entradas,
+            req.body.salidas,
+            nuevoSaldo,
+            req.body.pe,
+            id // Utilizar el ID del registro que se desea actualizar
+        ];
+
+        db.query(sql, values, (err, data) => {
+            if (err) return res.status(500).json(err);
+            return res.status(200).json(data);
+        });
+    } catch (error) {
+        console.error("Error al actualizar el registro en medios46:", error);
+        res.status(500).send("Error al actualizar el registro en medios46.");
+    }
+});
+app.delete('/deletemedios4/:id', (req, res) => {
+    const sql = "DELETE FROM medios4 WHERE id = ?";
+    const id = req.params.id;
+    db.query(sql, [id], (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+});
+app.get('/getrecordmedios4/:id', (req, res) => {
+    const id = req.params.id;
+    const sql = "SELECT * FROM medios4 WHERE id = ?"
+    db.query(sql, [id], (err, data) => {
+        if (err) {
+            return res.json({ Error: "Error" })
+        }
+
+        return res.json(data)
+    })
+})
+
+app.get('/medios3', (req, res) => {
+    const sql = "SELECT * FROM medios3 ORDER BY id DESC";
+    db.query(sql, (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+});
+app.post('/createmedios3', async (req, res) => {
+    try {
+    
+        
+        // Obtener el saldo anterior
+        const saldoAnteriorData = await new Promise((resolve, reject) => {
+            db.query("SELECT saldo FROM medios3 ORDER BY id DESC LIMIT 1", (err, data) => {
+                if (err) reject(err);
+                else resolve(data);
+            });
+        });
+
+        // Si hay registros en la tabla, obtén el saldo anterior, de lo contrario, establece el saldo anterior en 0
+        const saldoAnterior = saldoAnteriorData.length > 0 ? saldoAnteriorData[0].saldo : 0;
+
+         // Calcula el nuevo saldo sumando el saldo anterior a las entradas y restando las salidas
+         const nuevoSaldo = saldoAnterior + parseFloat(req.body.entradas) - parseFloat(req.body.salidas);
+
+        // Realizar la inserción en la tabla concmesas
+        const sql = "INSERT INTO medios3 (fecha, entradas, salidas, saldo, pe) VALUES (?, ?, ?, ?, ?)";
+        const values = [
+            req.body.fecha,
+            req.body.entradas,
+            req.body.salidas,
+            nuevoSaldo,
+            req.body.pe,
+        ];
+
+        db.query(sql, values, (err, result) => {
+            if (err) throw err;
+            console.log("Registro insertado en concmesas con éxito.");
+            res.send("Registro insertado en concmesas con éxito.");
+        });
+    } catch (error) {
+        console.error("Error al crear el registro en concmesas:", error);
+        res.status(500).send("Error al crear el registro en concmesas.");
+    }
+});
+app.put('/updatemedios3/:id', async (req, res) => {
+    try {
+        const id = req.params.id; // Obtener el ID del parámetro de la URL
+
+        // Obtener el saldo anterior
+        const saldoAnteriorData = await new Promise((resolve, reject) => {
+            db.query("SELECT saldo FROM medios3 ORDER BY id DESC LIMIT 1", (err, data) => {
+                if (err) reject(err);
+                else resolve(data);
+            });
+        });
+
+        // Si hay registros en la tabla, obtén el saldo anterior, de lo contrario, establece el saldo anterior en 0
+        const saldoAnterior = saldoAnteriorData.length > 0 ? saldoAnteriorData[0].saldo: 0;
+
+        // Calcula el nuevo saldo sumando el saldo anterior a las entradas y restando las salidas
+        const nuevoSaldo = saldoAnterior + parseFloat(req.body.entradas) - parseFloat(req.body.salidas);
+
+        // Realizar la actualización en la tabla medios46
+        const sql = "UPDATE medios3 SET fecha=?, entradas=?, salidas=?, saldo=?, pe=? WHERE id=?";
+        const values = [
+            req.body.fecha,
+            req.body.entradas,
+            req.body.salidas,
+            nuevoSaldo,
+            req.body.pe,
+            id // Utilizar el ID del registro que se desea actualizar
+        ];
+
+        db.query(sql, values, (err, data) => {
+            if (err) return res.status(500).json(err);
+            return res.status(200).json(data);
+        });
+    } catch (error) {
+        console.error("Error al actualizar el registro en medios46:", error);
+        res.status(500).send("Error al actualizar el registro en medios46.");
+    }
+});
+app.delete('/deletemedios3/:id', (req, res) => {
+    const sql = "DELETE FROM medios3 WHERE id = ?";
+    const id = req.params.id;
+    db.query(sql, [id], (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+});
+app.get('/getrecordmedios3/:id', (req, res) => {
+    const id = req.params.id;
+    const sql = "SELECT * FROM medios3 WHERE id = ?"
+    db.query(sql, [id], (err, data) => {
+        if (err) {
+            return res.json({ Error: "Error" })
+        }
+
+        return res.json(data)
+    })
+})
+/////////GranoPMOLER//////////////7777
+app.get('/granomoler', (req, res) => {
+    const sql = "SELECT * FROM granopmoler ORDER BY id DESC";
+    db.query(sql, (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+});
+app.post('/creategranomoler', async (req, res) => {
+    try {
+    
+        
+        // Obtener el saldo anterior
+        const saldoAnteriorData = await new Promise((resolve, reject) => {
+            db.query("SELECT saldo FROM granopmoler ORDER BY id DESC LIMIT 1", (err, data) => {
+                if (err) reject(err);
+                else resolve(data);
+            });
+        });
+
+        // Si hay registros en la tabla, obtén el saldo anterior, de lo contrario, establece el saldo anterior en 0
+        const saldoAnterior = saldoAnteriorData.length > 0 ? saldoAnteriorData[0].saldo : 0;
+
+         // Calcula el nuevo saldo sumando el saldo anterior a las entradas y restando las salidas
+         const nuevoSaldo = saldoAnterior + parseFloat(req.body.entradas) - parseFloat(req.body.salidas);
+
+        // Realizar la inserción en la tabla concmesas
+        const sql = "INSERT INTO granopmoler (fecha, entradas, salidas, saldo, pe) VALUES (?, ?, ?, ?, ?)";
+        const values = [
+            req.body.fecha,
+            req.body.entradas,
+            req.body.salidas,
+            nuevoSaldo,
+            req.body.pe,
+        ];
+
+        db.query(sql, values, (err, result) => {
+            if (err) throw err;
+            console.log("Registro insertado en concmesas con éxito.");
+            res.send("Registro insertado en concmesas con éxito.");
+        });
+    } catch (error) {
+        console.error("Error al crear el registro en concmesas:", error);
+        res.status(500).send("Error al crear el registro en concmesas.");
+    }
+});
+app.put('/updategranomoler/:id', async (req, res) => {
+    try {
+        const id = req.params.id; // Obtener el ID del parámetro de la URL
+
+        // Obtener el saldo anterior
+        const saldoAnteriorData = await new Promise((resolve, reject) => {
+            db.query("SELECT saldo FROM granopmoler ORDER BY id DESC LIMIT 1", (err, data) => {
+                if (err) reject(err);
+                else resolve(data);
+            });
+        });
+
+        // Si hay registros en la tabla, obtén el saldo anterior, de lo contrario, establece el saldo anterior en 0
+        const saldoAnterior = saldoAnteriorData.length > 0 ? saldoAnteriorData[0].saldo: 0;
+
+        // Calcula el nuevo saldo sumando el saldo anterior a las entradas y restando las salidas
+        const nuevoSaldo = saldoAnterior + parseFloat(req.body.entradas) - parseFloat(req.body.salidas);
+
+        // Realizar la actualización en la tabla medios46
+        const sql = "UPDATE granopmoler SET fecha=?, entradas=?, salidas=?, saldo=?, pe=? WHERE id=?";
+        const values = [
+            req.body.fecha,
+            req.body.entradas,
+            req.body.salidas,
+            nuevoSaldo,
+            req.body.pe,
+            id // Utilizar el ID del registro que se desea actualizar
+        ];
+
+        db.query(sql, values, (err, data) => {
+            if (err) return res.status(500).json(err);
+            return res.status(200).json(data);
+        });
+    } catch (error) {
+        console.error("Error al actualizar el registro en medios46:", error);
+        res.status(500).send("Error al actualizar el registro en medios46.");
+    }
+});
+app.delete('/deletegranomoler/:id', (req, res) => {
+    const sql = "DELETE FROM granopmoler WHERE id = ?";
+    const id = req.params.id;
+    db.query(sql, [id], (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+});
+app.get('/getrecordgranomoler/:id', (req, res) => {
+    const id = req.params.id;
+    const sql = "SELECT * FROM granopmoler WHERE id = ?"
     db.query(sql, [id], (err, data) => {
         if (err) {
             return res.json({ Error: "Error" })

@@ -25,7 +25,7 @@ function FrmSeleccion() {
           e.preventDefault();
   
           // Calcula el nuevo saldo sumando el saldo anterior a las entradas y restando las salidas
-          const nuevoSaldo = saldoAnterior + parseFloat(values.entrada) - parseFloat(values.salida);
+          const nuevoSaldo = saldoAnterior + parseFloat(values.totalEntradasSelecc) - parseFloat(values.salida);
   
           // Actualiza el valor del saldo en el objeto de valores
           setValues({ ...values, saldo: nuevoSaldo });
@@ -60,17 +60,7 @@ function FrmSeleccion() {
             />
           </div>
 
-          <div class="mb-3">
-            <label form='text' class="form-label"> Entradas:</label>
-            <input
-             type="text"  
-             class="form-control"
-             id='entradas'
-             placeholder='Insertar Cantidad'  
-             name='entradas'
-             onChange={(e) => setValues({...values, entrada: e.target.value})}/>
-          </div>
-
+         
 
           <div class="mb-3">
             <label form='text' class="form-label"> Salidas:</label>
@@ -83,17 +73,7 @@ function FrmSeleccion() {
              onChange={(e) => setValues({...values, salida: e.target.value})}/>
           </div>
 
-          <div class="mb-3">
-            <label form='text' class="form-label"> P.ESP:</label>
-            <input
-             type="text"  
-             class="form-control"
-             id='pesp'
-             placeholder='Insertar Peso'  
-             name='pesp'
-             onChange={(e) => setValues({...values, pesp: e.target.value})}/>
-          </div>
-
+         
          
 
           

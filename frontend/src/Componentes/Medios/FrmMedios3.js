@@ -1,66 +1,47 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { useNavigate, useParams } from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import axios from 'axios'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
-
-function ModificrConcMesas() {
-    const { id } = useParams()
+function FrmMedios3() {
     const [values, setValues] = useState({
         fecha: '',
-        entradas: "",
+        entradas:"",
         salidas: "",
         pe: "",
-      
+        
        
     
       })
+      
       const navigate = useNavigate()
+
       const [saldoAnterior, setSaldoAnterior] = useState(0);
 
-    
 
-      const handleSubmit = (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
-      
-         // Calcula el nuevo saldo sumando el saldo anterior a las entradas y restando las salidas
-         const nuevoSaldo = saldoAnterior + parseFloat(values.totalconcentradomesas) - parseFloat(values.totalSalidasMesas);
 
-         // Actualiza el valor del saldo en el objeto de valores
-         setValues({ ...values, saldo: nuevoSaldo });
+        // Calcula el nuevo saldo sumando el saldo anterior a las entradas y restando las salidas
+        const nuevoSaldo = saldoAnterior + parseFloat(values.entradas) - parseFloat(values.salidas);
 
-        // Realiza la actualización con el nuevo saldo usando una solicitud PUT
-        axios.put(`http://localhost:8081/updateconcmesas/${id}`, { ...values, saldo: nuevoSaldo })
-          .then(res => {
-            console.log(res);
-            navigate('/concmesas');
-          })
-          .catch(err => console.log(err));
-      };
-      
-      useEffect(() => {
-        axios.get(`http://localhost:8081/getrecordconcmesas/${id}`)
-            .then((res) => {
-                
-                    setValues({
-                        ...values,
-                        fecha: res.data[0].fecha,
-                        entradas: res.data[0].entradas,
-                        salidas: res.data[0].salidas,
-                        pe: res.data[0].pe,
-                      
-                    });
-               
+        // Actualiza el valor del saldo en el objeto de valores
+        setValues({ ...values, saldo: nuevoSaldo });
+
+        // Realiza la inserción con el nuevo saldo
+        axios.post('http://localhost:8081/createmedios3', { ...values, saldo: nuevoSaldo })
+            .then(res => {
+                console.log(res);
+                navigate('/medios3');
             })
             .catch(err => console.log(err));
-    }, []);
-    
+    };
   return (
     <div className="d-flex align-items-center flex-column mt-3" >
-    <h1>Modificar Conc. Mesas:</h1>
-    <div className="close-button" onClick={() => navigate('/concmesas')}>
+    <h1 >Insertar Medios 3.98:</h1>
+    <div className="close-button" onClick={() => navigate('/medios3')}>
             <FontAwesomeIcon icon={faTimes} />
             </div>
       <form className="w-50" onSubmit={handleSubmit} >
@@ -72,7 +53,6 @@ function ModificrConcMesas() {
               id='date'
               placeholder='Insertar Cantidad'
               name='fecha'
-              value={values.fecha}
               onChange={(e) => setValues({...values, fecha: e.target.value})}
             />
           </div>
@@ -85,11 +65,10 @@ function ModificrConcMesas() {
              id='entradas'
              placeholder='Insertar Cantidad'  
              name='entradas'
-             value={values.entradas}
              onChange={(e) => setValues({...values, entradas: e.target.value})}/>
           </div>
 
-
+        
           <div class="mb-3">
             <label form='text' class="form-label"> Salidas:</label>
             <input
@@ -98,27 +77,22 @@ function ModificrConcMesas() {
              id='salidas'
              placeholder='Insertar Cantidad'  
              name='salidas'
-             value={values.salidas}
              onChange={(e) => setValues({...values, salidas: e.target.value})}/>
           </div>
-
+          
           <div class="mb-3">
-            <label form='text' class="form-label"> P.ESP:</label>
+            <label form='text' class="form-label"> P.E:</label>
             <input
              type="text"  
              class="form-control"
-             id='pesp'
-             placeholder='Insertar Peso'  
-             name='pesp'
-             value={values.pe}
+             id='salidas'
+             placeholder='Insertar P.E'  
+             name='pe'
              onChange={(e) => setValues({...values, pe: e.target.value})}/>
           </div>
-
-        
-
           
           <div className="btn-container">
-          <button type="submit" className="BTN"  >MODIFICAR</button>
+          <button type="submit" className="BTN"  >GUARDAR</button>
           </div>
 
 
@@ -126,11 +100,10 @@ function ModificrConcMesas() {
       
      
       
-       
+        </div>
       
 
-  </div>
   )
 }
 
-export default ModificrConcMesas
+export default FrmMedios3

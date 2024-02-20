@@ -47,6 +47,20 @@ import FrmConcMesas from './Componentes/ConcMesas/FrmConcMesas';
 import ModificrConcMesas from './Componentes/ConcMesas/ModificrConcMesas';
 import ConcJigsSec from './Componentes/ConcJigsSec/ConcJigsSec';
 import FrmConcJigsSec from './Componentes/ConcJigsSec/FrmConcJigsSec';
+import ModificarJigsSec from './Componentes/ConcJigsSec/ModificarJigsSec';
+import Medios from './Componentes/Medios/Medios';
+import AllMedios from './Componentes/Medios/AllMedios';
+import FrmAllMedios from './Componentes/Medios/FrmAllMedios';
+import ModificarAllMedios from './Componentes/Medios/ModificarAllMedios';
+import Medios4 from './Componentes/Medios/Medios4';
+import FrmMedios4 from './Componentes/Medios/FrmMedios4';
+import ModificarMedios4 from './Componentes/Medios/ModificarMedios4';
+import Medios3 from './Componentes/Medios/Medios3';
+import FrmMedios3 from './Componentes/Medios/FrmMedios3';
+import ModificarMedios3 from './Componentes/Medios/ModificarMedios3';
+import GranoPMoler from './Componentes/GranoPMoler/GranoPMoler';
+import FrmGranoPMoler from './Componentes/GranoPMoler/FrmGranoPMoler';
+import ModificarGranoPMoler from './Componentes/GranoPMoler/ModificarGranoPMoler';
 
 
 
@@ -127,6 +141,27 @@ function App() {
          ////////////CONCJIGSSEC/////////
          <Route path="/concjigssec" element={<ConcJigsSec/>}/>
          <Route path="/createconcjigssec" element={<FrmConcJigsSec/>}/>
+         <Route path="/updatenconcjigssec/:id" element={<ModificarJigsSec/>}/>
+
+
+         /////////Medios//////////
+         <Route path="/medios" element={<Medios/>}/>
+         <Route path="/medios46" element={<AllMedios/>}/>
+         <Route path="/createmedios46" element={<FrmAllMedios/>}/>
+         <Route path="/updatemedios46/:id" element={<ModificarAllMedios/>}/>
+         <Route path="/medios4" element={<Medios4/>}/>
+         <Route path="/createmedios4" element={<FrmMedios4/>}/>
+         <Route path="/updatemedios4/:id" element={<ModificarMedios4/>}/>
+         <Route path="/medios3" element={<Medios3/>}/>
+         <Route path="/createmedios3" element={<FrmMedios3/>}/>
+         <Route path="/updatemedios3/:id" element={<ModificarMedios3/>}/>
+
+
+         ////////////GRANOP/MOLER////////////
+         <Route path="/granomoler" element={<GranoPMoler/>}/>
+         <Route path="/creategranomoler" element={<FrmGranoPMoler/>}/>
+         <Route path="/updategranomoler/:id" element={<ModificarGranoPMoler/>}/>
+
        </Routes>
        </Menu >
       </div>

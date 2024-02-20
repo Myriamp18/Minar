@@ -2,46 +2,34 @@ import React, { useEffect, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
-
-function ModificrConcMesas() {
+function ModificarGranoPMoler() {
     const { id } = useParams()
     const [values, setValues] = useState({
         fecha: '',
         entradas: "",
         salidas: "",
         pe: "",
-      
+       
        
     
       })
-      const navigate = useNavigate()
-      const [saldoAnterior, setSaldoAnterior] = useState(0);
 
-    
+      const navigate = useNavigate()
 
       const handleSubmit = (e) => {
-        e.preventDefault();
-      
-         // Calcula el nuevo saldo sumando el saldo anterior a las entradas y restando las salidas
-         const nuevoSaldo = saldoAnterior + parseFloat(values.totalconcentradomesas) - parseFloat(values.totalSalidasMesas);
-
-         // Actualiza el valor del saldo en el objeto de valores
-         setValues({ ...values, saldo: nuevoSaldo });
-
-        // Realiza la actualización con el nuevo saldo usando una solicitud PUT
-        axios.put(`http://localhost:8081/updateconcmesas/${id}`, { ...values, saldo: nuevoSaldo })
-          .then(res => {
-            console.log(res);
-            navigate('/concmesas');
-          })
-          .catch(err => console.log(err));
+          e.preventDefault()
+          axios.put(`http://localhost:8081/updategranomoler/${id}`, values)
+  
+              .then(res => {
+                  console.log(res);
+                  // Optionally, you can navigate to a different page or update the UI
+                  navigate('/granomoler'); // Example: Navigate to the home page
+              })
+              .catch(err => console.log(err));
       };
-      
       useEffect(() => {
-        axios.get(`http://localhost:8081/getrecordconcmesas/${id}`)
+        axios.get(`http://localhost:8081/getrecordgranomoler/${id}`)
             .then((res) => {
                 
                     setValues({
@@ -50,19 +38,17 @@ function ModificrConcMesas() {
                         entradas: res.data[0].entradas,
                         salidas: res.data[0].salidas,
                         pe: res.data[0].pe,
+                       
                       
                     });
                
             })
             .catch(err => console.log(err));
     }, []);
-    
+  
   return (
     <div className="d-flex align-items-center flex-column mt-3" >
-    <h1>Modificar Conc. Mesas:</h1>
-    <div className="close-button" onClick={() => navigate('/concmesas')}>
-            <FontAwesomeIcon icon={faTimes} />
-            </div>
+    <h1>Modificar Grano P/Moler:</h1>
       <form className="w-50" onSubmit={handleSubmit} >
           <div class="mb-3 mt-3">
             <label form='fecha' class="form-label"> Fecha:</label>
@@ -114,7 +100,7 @@ function ModificrConcMesas() {
              onChange={(e) => setValues({...values, pe: e.target.value})}/>
           </div>
 
-        
+         
 
           
           <div className="btn-container">
@@ -133,4 +119,4 @@ function ModificrConcMesas() {
   )
 }
 
-export default ModificrConcMesas
+export default ModificarGranoPMoler

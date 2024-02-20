@@ -92,12 +92,12 @@ function FrmMezclas() {
               onChange={(e) => setValues({ ...values, concmesas: e.target.value })} />
           </div>
           <div class="mb-3">
-            <label form='text' class="form-label"> P.ESP:</label>
+            <label form='text' class="form-label"> DE:</label>
             <input
               type="text"
               class="form-control"
               id='pecm'
-              placeholder='Insertar P.ESP'
+              placeholder='De'
               name='pecm'
               onChange={(e) => setValues({ ...values, pecm: e.target.value })} />
           </div>
@@ -114,12 +114,12 @@ function FrmMezclas() {
               onChange={(e) => setValues({ ...values, medios: e.target.value })} />
           </div>
           <div class="mb-3">
-            <label form='text' class="form-label"> P.ESP:</label>
+            <label form='text' class="form-label"> DE:</label>
             <input
               type="text"
               class="form-control"
               id='pem'
-              placeholder='Insertar P.ESP'
+              placeholder='De'
               name='pem'
               onChange={(e) => setValues({ ...values, pem: e.target.value })} />
           </div>
@@ -136,12 +136,12 @@ function FrmMezclas() {
               onChange={(e) => setValues({ ...values, concjigs: e.target.value })} />
           </div>
           <div class="mb-3">
-            <label form='text' class="form-label"> P.ESP:</label>
+            <label form='text' class="form-label"> DE:</label>
             <input
               type="text"
               class="form-control"
               id='pejig'
-              placeholder='Insertar P.ESP'
+              placeholder='De'
               name='pejig'
               onChange={(e) => setValues({ ...values, pejig: e.target.value })} />
           </div>
@@ -158,12 +158,12 @@ function FrmMezclas() {
               onChange={(e) => setValues({ ...values, desenslovez: e.target.value })} />
           </div>
           <div class="mb-3">
-            <label form='text' class="form-label"> P.ESP:</label>
+            <label form='text' class="form-label"> DE:</label>
             <input
               type="text"
               class="form-control"
               id='pedese'
-              placeholder='Insertar P.ESP'
+              placeholder='De'
               name='pedese'
               onChange={(e) => setValues({ ...values, pedese: e.target.value })} />
           </div>
@@ -176,10 +176,11 @@ function FrmMezclas() {
               type="text"
               class="form-control"
               id='pemt'
-              placeholder='Insertar P.ESP'
+              placeholder='P.ESP de Mezcla Total'
               name='pemt'
               onChange={(e) => setValues({ ...values, pemt: e.target.value })} />
           </div>
+       
         </div>
         <div className="btn-container">
           <button type="submit" className="BTN"  >GUARDAR</button>

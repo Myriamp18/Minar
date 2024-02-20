@@ -5,8 +5,7 @@ import axios from 'axios'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
-
-function ModificrConcMesas() {
+function ModificarJigsSec() {
     const { id } = useParams()
     const [values, setValues] = useState({
         fecha: '',
@@ -32,7 +31,7 @@ function ModificrConcMesas() {
          setValues({ ...values, saldo: nuevoSaldo });
 
         // Realiza la actualización con el nuevo saldo usando una solicitud PUT
-        axios.put(`http://localhost:8081/updateconcmesas/${id}`, { ...values, saldo: nuevoSaldo })
+        axios.put(`http://localhost:8081/updatenconcjigssec/${id}`, { ...values, saldo: nuevoSaldo })
           .then(res => {
             console.log(res);
             navigate('/concmesas');
@@ -41,7 +40,7 @@ function ModificrConcMesas() {
       };
       
       useEffect(() => {
-        axios.get(`http://localhost:8081/getrecordconcmesas/${id}`)
+        axios.get(`http://localhost:8081/getrecordconcjigssec/${id}`)
             .then((res) => {
                 
                     setValues({
@@ -56,7 +55,6 @@ function ModificrConcMesas() {
             })
             .catch(err => console.log(err));
     }, []);
-    
   return (
     <div className="d-flex align-items-center flex-column mt-3" >
     <h1>Modificar Conc. Mesas:</h1>
@@ -133,4 +131,4 @@ function ModificrConcMesas() {
   )
 }
 
-export default ModificrConcMesas
+export default ModificarJigsSec

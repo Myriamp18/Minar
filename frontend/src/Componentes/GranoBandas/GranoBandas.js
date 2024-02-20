@@ -1,12 +1,16 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect, useState } from 'react';
+import '../Silos/Silos.css'
+import {useNavigate} from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios'
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
 
 function GranoBandas() {
-
+    const navigate = useNavigate();
+  
     const [data, setData] = useState([])
     useEffect(() => {
         fetch('http://localhost:8081/granobandas')
@@ -15,35 +19,22 @@ function GranoBandas() {
             .catch(err => console.log(err));
     }, [])
 
-    const handleDelete = (id) =>{
-        axios.delete('http://localhost:8081/deletegrano/'+id)
-        .then(res => window.location.reload())
-        .catch(err => console.log(err))
-      }
+    const handleDelete = (id) => {
+        axios.delete('http://localhost:8081/deletegrano/' + id)
+            .then(res => window.location.reload())
+            .catch(err => console.log(err))
+    }
 
-    const [totalSaldo, setTotalSaldo] = useState(0);
 
-    useEffect(() => {
-        calcularSaldo();
-    }, []);
-    
-    const calcularSaldo = () => {
-        let suma = 0;
-    
-        data.forEach((item) => {
-            suma += item.saldo + item.entrada - item.salidas;
-        });
-    
-        setTotalSaldo(suma);
-    };
-    
 
- 
 
 
     return (
         <div>
             <h1>Grano Bandas:</h1>
+            <div className="close-button" onClick={() => navigate('/pp')}>
+            <FontAwesomeIcon icon={faTimes} />
+            </div>
             <div className="text-center">
                 <Link to="/creategrano" className="btn btn-danger btn-lg font-weight-bold   text-lg" >
                     <FontAwesomeIcon icon={faPlus} />Insertar</Link>
@@ -51,54 +42,59 @@ function GranoBandas() {
             <div className='row mt-3'>
                 {data.length !== 0 ?
                     <div className='col-12 col-lg-8 offset-0 offset-lg-2'>
-                        <div>
+                        <div className='table-container'>
+                            <div className='table-top-scroll'> {/* Nuevo contenedor */}
+                                <div className='table-responsive'>
+                                    <table className="table table-bordered">
 
-                            <table class="table">
-                                <thead>
-                                    <tr  >
-                                        <th>ID</th>
-                                        <th>Fecha</th>
-                                        <th>Entradas</th>
-                                        <th>Salidas</th>
-                                        <th>P.ESP</th>
-                                        <th>Saldo</th>
+                                        <thead>
+                                            <tr  >
+                                                <th>ID</th>
+                                                <th>Fecha</th>
+                                                <th>Entradas</th>
+                                                <th>Salidas</th>
+                                                <th>P.ESP</th>
+                                                <th>Saldo</th>
 
-                                        <th></th>
+                                                <th></th>
 
-                                    </tr>
-                                </thead>
-                                <tbody className='table-group-divider'>
-                                    {data.map((d, i) => (
-                                        <tr key={i}>
-                                            <td>{d.id}</td>
-                                            <td>{d.fecha}</td>
-                                            <td>{d.entrada.toFixed(3)}</td>
-                                            <td>{d.salidas.toFixed(3)}</td>
-                                            <td>{d.pesp.toFixed(2)}</td>
-                                            <td>{d.saldo.toFixed(3)}</td>
-
+                                            </tr>
+                                        </thead>
+                                        <tbody className='table-group-divider'>
+                                            {data.map((d, i) => (
+                                                <tr key={i}>
+                                                    <td>{d.id}</td>
+                                                    <td>{d.fecha}</td>
+                                                    <td>{d.entrada.toFixed(3)}</td>
+                                                    <td>{d.salidas.toFixed(3)}</td>
+                                                    <td>{d.pesp.toFixed(2)}</td>
+                                                    <td>{d.saldo.toFixed(3)}</td>
 
 
-                                            <td>
-                                                <div style={{ display: 'flex', alignItems: 'center' }}>
-                                                    <Link to={`/updategrano/${d.id}`} className='btn btn-warning'>
-                                                        <i className='fa-solid fa-edit'></i>
-                                                    </Link>
-                                                    &nbsp;
 
-                                                    <button className='btn btn-danger' onClick={() => handleDelete(d.id)}>
-                                                        <i className='fa-solid fa-trash'></i>
-                                                    </button>
-                                                </div>
+                                                    <td>
+                                                        <div style={{ display: 'flex', alignItems: 'center' }}>
+                                                            <Link to={`/updategrano/${d.id}`} className='btn btn-warning'>
+                                                                <i className='fa-solid fa-edit'></i>
+                                                            </Link>
+                                                            &nbsp;
 
-                                            </td>
-                                        </tr>
-                                    ))}
+                                                            <button className='btn btn-danger' onClick={() => handleDelete(d.id)}>
+                                                                <i className='fa-solid fa-trash'></i>
+                                                            </button>
+                                                        </div>
 
-                                    {/* Puedes agregar más filas según sea necesario */}
-                                </tbody>
-                            </table>
+                                                    </td>
+                                                </tr>
+                                            ))}
 
+                                            {/* Puedes agregar más filas según sea necesario */}
+                                        </tbody>
+                                    </table>
+
+
+                                </div>
+                            </div>
                         </div>
                     </div>
                     : <h2 className='aling-itemns-center'>Sin Datos</h2>

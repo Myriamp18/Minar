@@ -7,39 +7,38 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios'
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
-function ConcMesas() {
-    const [data, setData] = useState([]);
-    const navigate = useNavigate();
+function AllMedios() {
+  const [data, setData] = useState([]);
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    fetch('http://localhost:8081/concmesas')
-      .then(res => res.json())
-      .then(data => setData(data))
-      .catch(err => console.log(err));
-  }, [])
+useEffect(() => {
+  fetch('http://localhost:8081/medios46')
+    .then(res => res.json())
+    .then(data => setData(data))
+    .catch(err => console.log(err));
+}, [])
 
-  const handleDelete = (id) => {
-    axios.delete(`http://localhost:8081/deleteconcmesas/${id}`)
-      .then(res => {
-        // Actualiza la lista de datos excluyendo el registro eliminado
-        const updatedData = data.filter(item => item.id !== id);
-        setData(updatedData);
-  
-        // Recalcula el saldo total con la lista actualizada
-        calcularSaldoTotal(updatedData);
-      })
-      .catch(err => console.log(err));
-  };
-  
+const handleDelete = (id) => {
+  axios.delete(`http://localhost:8081/deletemedios46/${id}`)
+    .then(res => {
+      // Actualiza la lista de datos excluyendo el registro eliminado
+      const updatedData = data.filter(item => item.id !== id);
+      setData(updatedData);
+
+      // Recalcula el saldo total con la lista actualizada
+      calcularSaldoTotal(updatedData);
+    })
+    .catch(err => console.log(err));
+};
   return (
     <>
    
-    <h1>Conc. Mesas:</h1>
-    <div className="close-button" onClick={() => navigate('/pp')}>
+    <h1>Medios Conc 4.06-4.10:</h1>
+    <div className="close-button" onClick={() => navigate('/medios')}>
             <FontAwesomeIcon icon={faTimes} />
             </div>
     <div className="text-center">
-      <Link to="/createconcmesas" className="btn btn-danger btn-lg font-weight-bold   text-lg" >
+      <Link to="/createmedios46" className="btn btn-danger btn-lg font-weight-bold   text-lg" >
         <FontAwesomeIcon icon={faPlus} />Insertar</Link>
     </div>
     <div className='row mt-3'>
@@ -67,16 +66,16 @@ function ConcMesas() {
                   <tr key={i}>
                     <td>{d.id}</td>
                     <td>{d.fecha}</td>
-                    <td>{d.entradas.toFixed(3)}</td>
-                    <td>{d.salidas.toFixed(3)}</td>
-                    <td>{d.pe.toFixed(2)}</td>
-                    <td>{d.saldo.toFixed(3)}</td>
+                    <td>{d.entradasm46.toFixed(3)}</td>
+                    <td>{d.salidasm46.toFixed(3)}</td>
+                    <td>{d.pe46.toFixed(2)}</td>
+                    <td>{d.saldo46.toFixed(3)}</td>
 
                   
 
                     <td>
                       <div style={{ display: 'flex', alignItems: 'center' }}>
-                        <Link to={`/updateconcmesas/${d.id}`} className='btn btn-warning'>
+                        <Link to={`/updatemedios46/${d.id}`} className='btn btn-warning'>
                           <i className='fa-solid fa-edit'></i>
                         </Link>
                         &nbsp;
@@ -105,4 +104,4 @@ function ConcMesas() {
   )
 }
 
-export default ConcMesas
+export default AllMedios

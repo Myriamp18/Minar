@@ -5,18 +5,19 @@ import axios from 'axios'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
+function ModificarAllMedios() {
 
-function ModificrConcMesas() {
     const { id } = useParams()
     const [values, setValues] = useState({
         fecha: '',
-        entradas: "",
-        salidas: "",
-        pe: "",
-      
+        entradasm46:"",
+        salidasm46: "",
+        pe46: "",
+        
        
     
       })
+      
       const navigate = useNavigate()
       const [saldoAnterior, setSaldoAnterior] = useState(0);
 
@@ -24,43 +25,41 @@ function ModificrConcMesas() {
 
       const handleSubmit = (e) => {
         e.preventDefault();
-      
-         // Calcula el nuevo saldo sumando el saldo anterior a las entradas y restando las salidas
-         const nuevoSaldo = saldoAnterior + parseFloat(values.totalconcentradomesas) - parseFloat(values.totalSalidasMesas);
 
-         // Actualiza el valor del saldo en el objeto de valores
-         setValues({ ...values, saldo: nuevoSaldo });
+        // Calcula el nuevo saldo sumando el saldo anterior a las entradas y restando las salidas
+        const nuevoSaldo = saldoAnterior + parseFloat(values.entradasm46) - parseFloat(values.salidasm46);
 
+        // Actualiza el valor del saldo en el objeto de valores
+        setValues({ ...values, saldo: nuevoSaldo });
         // Realiza la actualización con el nuevo saldo usando una solicitud PUT
-        axios.put(`http://localhost:8081/updateconcmesas/${id}`, { ...values, saldo: nuevoSaldo })
+        axios.put(`http://localhost:8081/updatemedios46/${id}`, { ...values, saldo: nuevoSaldo })
           .then(res => {
             console.log(res);
-            navigate('/concmesas');
+            navigate('/medios46');
           })
           .catch(err => console.log(err));
       };
       
       useEffect(() => {
-        axios.get(`http://localhost:8081/getrecordconcmesas/${id}`)
+        axios.get(`http://localhost:8081/getrecordmedios46/${id}`)
             .then((res) => {
                 
                     setValues({
                         ...values,
                         fecha: res.data[0].fecha,
-                        entradas: res.data[0].entradas,
-                        salidas: res.data[0].salidas,
-                        pe: res.data[0].pe,
+                        entradasm46: res.data[0].entradasm46,
+                        salidasm46: res.data[0].salidasm46,
+                        pe46: res.data[0].pe46,
                       
                     });
                
             })
             .catch(err => console.log(err));
     }, []);
-    
   return (
     <div className="d-flex align-items-center flex-column mt-3" >
-    <h1>Modificar Conc. Mesas:</h1>
-    <div className="close-button" onClick={() => navigate('/concmesas')}>
+    <h1 >Modificar Medios 4.06:</h1>
+    <div className="close-button" onClick={() => navigate('/medios46')}>
             <FontAwesomeIcon icon={faTimes} />
             </div>
       <form className="w-50" onSubmit={handleSubmit} >
@@ -85,11 +84,11 @@ function ModificrConcMesas() {
              id='entradas'
              placeholder='Insertar Cantidad'  
              name='entradas'
-             value={values.entradas}
-             onChange={(e) => setValues({...values, entradas: e.target.value})}/>
+             value={values.entradasm46}
+             onChange={(e) => setValues({...values, entradasm46: e.target.value})}/>
           </div>
 
-
+        
           <div class="mb-3">
             <label form='text' class="form-label"> Salidas:</label>
             <input
@@ -98,24 +97,21 @@ function ModificrConcMesas() {
              id='salidas'
              placeholder='Insertar Cantidad'  
              name='salidas'
-             value={values.salidas}
-             onChange={(e) => setValues({...values, salidas: e.target.value})}/>
+             value={values.salidasm46}
+             onChange={(e) => setValues({...values, salidasm46: e.target.value})}/>
           </div>
-
+          
           <div class="mb-3">
-            <label form='text' class="form-label"> P.ESP:</label>
+            <label form='text' class="form-label"> P.E:</label>
             <input
              type="text"  
              class="form-control"
-             id='pesp'
-             placeholder='Insertar Peso'  
-             name='pesp'
-             value={values.pe}
-             onChange={(e) => setValues({...values, pe: e.target.value})}/>
+             id='salidas'
+             placeholder='Insertar P.E'  
+             name='pe'
+             value={values.pe46}
+             onChange={(e) => setValues({...values, pe46: e.target.value})}/>
           </div>
-
-        
-
           
           <div className="btn-container">
           <button type="submit" className="BTN"  >MODIFICAR</button>
@@ -133,4 +129,4 @@ function ModificrConcMesas() {
   )
 }
 
-export default ModificrConcMesas
+export default ModificarAllMedios

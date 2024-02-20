@@ -1,55 +1,54 @@
 import React, { useEffect, useState } from 'react';
 import '../Silos/Silos.css'
-import {useNavigate} from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios'
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import {useNavigate} from 'react-router-dom';
 
-function ConcMesas() {
+function GranoPMoler() {
     const [data, setData] = useState([]);
-    const navigate = useNavigate();
-
-  useEffect(() => {
-    fetch('http://localhost:8081/concmesas')
-      .then(res => res.json())
-      .then(data => setData(data))
-      .catch(err => console.log(err));
-  }, [])
-
-  const handleDelete = (id) => {
-    axios.delete(`http://localhost:8081/deleteconcmesas/${id}`)
-      .then(res => {
-        // Actualiza la lista de datos excluyendo el registro eliminado
-        const updatedData = data.filter(item => item.id !== id);
-        setData(updatedData);
+    const navigate = useNavigate()
   
-        // Recalcula el saldo total con la lista actualizada
-        calcularSaldoTotal(updatedData);
-      })
-      .catch(err => console.log(err));
-  };
+    useEffect(() => {
+      fetch('http://localhost:8081/granomoler')
+        .then(res => res.json())
+        .then(data => setData(data))
+        .catch(err => console.log(err));
+    }, [])
   
+    const handleDelete = (id) => {
+      axios.delete(`http://localhost:8081/deletegranomoler/${id}`)
+        .then(res => {
+          // Actualiza la lista de datos excluyendo el registro eliminado
+          const updatedData = data.filter(item => item.id !== id);
+          setData(updatedData);
+    
+         
+        })
+        .catch(err => console.log(err));
+    };
   return (
     <>
    
-    <h1>Conc. Mesas:</h1>
+    <h1>Grano P/Moler:</h1>
+
+    <div className="text-center">
+      <Link to="/creategranomoler" className="btn btn-danger btn-lg font-weight-bold   text-lg" >
+        <FontAwesomeIcon icon={faPlus} />Insertar</Link>
+    </div>
     <div className="close-button" onClick={() => navigate('/pp')}>
             <FontAwesomeIcon icon={faTimes} />
             </div>
-    <div className="text-center">
-      <Link to="/createconcmesas" className="btn btn-danger btn-lg font-weight-bold   text-lg" >
-        <FontAwesomeIcon icon={faPlus} />Insertar</Link>
-    </div>
     <div className='row mt-3'>
       {data.length !== 0 ?
         <div className='col-12 col-lg-8 offset-0 offset-lg-2'>
-          <div>
-          <div className='table-container'> 
-            <div className='table-top-scroll'> {/* Nuevo contenedor */}
-              <div className='table-responsive'>
-            <table className="table table-bordered">
+             <div className='table-container'>
+              <div className='table-top-scroll'> {/* Nuevo contenedor */}
+                <div className='table-responsive'>
+
+                  <table class="table table-bordered">
               <thead>
                 <tr  >
                   <th>ID</th>
@@ -67,16 +66,16 @@ function ConcMesas() {
                   <tr key={i}>
                     <td>{d.id}</td>
                     <td>{d.fecha}</td>
-                    <td>{d.entradas.toFixed(3)}</td>
-                    <td>{d.salidas.toFixed(3)}</td>
-                    <td>{d.pe.toFixed(2)}</td>
-                    <td>{d.saldo.toFixed(3)}</td>
+                    <td>{typeof d.entradas === 'number' ? d.entradas.toFixed(3) : 'N/A'}</td>
+                    <td>{typeof d.salidas === 'number' ? d.salidas.toFixed(3) : 'N/A'}</td>
+                    <td>{typeof d.pe === 'number' ? d.pe.toFixed(2) : 'N/A'}</td>
+                    <td>{typeof d.saldo === 'number' ? d.saldo.toFixed(3) : 'N/A'}</td>
 
                   
 
                     <td>
                       <div style={{ display: 'flex', alignItems: 'center' }}>
-                        <Link to={`/updateconcmesas/${d.id}`} className='btn btn-warning'>
+                        <Link to={`/updategranomoler/${d.id}`} className='btn btn-warning'>
                           <i className='fa-solid fa-edit'></i>
                         </Link>
                         &nbsp;
@@ -93,9 +92,9 @@ function ConcMesas() {
                 {/* Puedes agregar más filas según sea necesario */}
               </tbody>
             </table>
-            </div>
-            </div>
-            </div>
+
+          </div>
+          </div>
           </div>
         </div>
         : <h2 className='aling-itemns-center'>Sin Datos</h2>
@@ -105,4 +104,4 @@ function ConcMesas() {
   )
 }
 
-export default ConcMesas
+export default GranoPMoler

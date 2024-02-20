@@ -15,14 +15,14 @@ import './PP.css'
 function PP() {
   const navigate = useNavigate();
 
-  const onMesas= () =>{
-      navigate('/concmesas')
-  }
-  const onSeleccion= () =>{
-      navigate('/seleccion')
-  }
   const onGrano= () =>{
-    navigate('/granobaribright')
+      navigate('/granomoler')
+  }
+  const onBandas= () =>{
+      navigate('/granobandas')
+  }
+  const onMedios= () =>{
+    navigate('/medios')
 }
 const onConcmesas= () =>{ 
   navigate('/concmesas')
@@ -63,7 +63,7 @@ return (
        
     </span>
     </button>
-    <button className="btnpp-large btnpp-mp" onClick={onGrano}>
+    <button className="btnpp-large btnpp-mp" onClick={onMedios}>
     <span className="iconnnespp"> <GiStonePile /></span>
       <span className="buttonpp-text">
        Medios
@@ -73,7 +73,7 @@ return (
        
     </span>
     </button>
-    <button className="btnpp-large btnpp-bs" onClick={onConcmesas}>
+    <button className="btnpp-large btnpp-bs" onClick={onBandas}>
     <span className="iconnnespp"><FaRoad /></span>
     <span className="buttonpp-text">
        Grano Bandas Seleccion 4.25
@@ -85,7 +85,7 @@ return (
      
     </button>
 
-    <button className="btnpp-large btnpp-bs" onClick={onConcmesas}>
+    <button className="btnpp-large btnpp-bs" onClick={onGrano}>
     <span className="iconnnespp"><GiMineralPearls /> </span>
     <span className="buttonpp-text">
        Grano P/Molienda

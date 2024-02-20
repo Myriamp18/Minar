@@ -7,19 +7,19 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios'
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
-function ConcMesas() {
+function Medios4() {
     const [data, setData] = useState([]);
     const navigate = useNavigate();
-
+  
   useEffect(() => {
-    fetch('http://localhost:8081/concmesas')
+    fetch('http://localhost:8081/medios4')
       .then(res => res.json())
       .then(data => setData(data))
       .catch(err => console.log(err));
   }, [])
-
+  
   const handleDelete = (id) => {
-    axios.delete(`http://localhost:8081/deleteconcmesas/${id}`)
+    axios.delete(`http://localhost:8081/deletemedios4/${id}`)
       .then(res => {
         // Actualiza la lista de datos excluyendo el registro eliminado
         const updatedData = data.filter(item => item.id !== id);
@@ -30,16 +30,15 @@ function ConcMesas() {
       })
       .catch(err => console.log(err));
   };
-  
   return (
     <>
    
-    <h1>Conc. Mesas:</h1>
-    <div className="close-button" onClick={() => navigate('/pp')}>
+    <h1>Medios Conc 4.00:</h1>
+    <div className="close-button" onClick={() => navigate('/medios')}>
             <FontAwesomeIcon icon={faTimes} />
             </div>
     <div className="text-center">
-      <Link to="/createconcmesas" className="btn btn-danger btn-lg font-weight-bold   text-lg" >
+      <Link to="/createmedios4" className="btn btn-danger btn-lg font-weight-bold   text-lg" >
         <FontAwesomeIcon icon={faPlus} />Insertar</Link>
     </div>
     <div className='row mt-3'>
@@ -76,7 +75,7 @@ function ConcMesas() {
 
                     <td>
                       <div style={{ display: 'flex', alignItems: 'center' }}>
-                        <Link to={`/updateconcmesas/${d.id}`} className='btn btn-warning'>
+                        <Link to={`/updatemedios4/${d.id}`} className='btn btn-warning'>
                           <i className='fa-solid fa-edit'></i>
                         </Link>
                         &nbsp;
@@ -101,8 +100,10 @@ function ConcMesas() {
         : <h2 className='aling-itemns-center'>Sin Datos</h2>
       }
     </div>
-  </>
+    </>
   )
 }
 
-export default ConcMesas
+export default Medios4
+
+

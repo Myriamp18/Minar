@@ -19,11 +19,16 @@ const Silos = () => {
       .catch(err => console.log(err));
   }, [])
 
-  const handleDelete = (id) => {
-    axios.delete('http://localhost:8081/delete/' + id)
-      .then(res => window.location.reload())
-      .catch(err => console.log(err))
-  }
+  const handleDelete = (id_silos) => {
+    axios.delete(`http://localhost:8081/delete/${id_silos}`) // Realiza una solicitud DELETE al servidor para eliminar el registro con el ID proporcionado
+      .then(res => {
+        // Si la solicitud se completa con éxito, actualiza la lista de datos excluyendo el registro eliminado
+        const updatedData = data.filter(item => item.id_silos !== id_silos); // Filtra los datos para excluir el registro eliminado
+        setData(updatedData); // Actualiza el estado de los datos con la nueva lista excluyendo el registro eliminado
+      })
+      .catch(err => console.log(err)); // Maneja cualquier error que ocurra durante la solicitud DELETE
+};
+
 
 
   return (

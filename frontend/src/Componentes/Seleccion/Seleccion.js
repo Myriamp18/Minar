@@ -20,10 +20,17 @@ function Seleccion() {
   }, [])
 
   const handleDelete = (id) => {
-    axios.delete('http://localhost:8081/deleteseleccion/' + id)
-      .then(res => window.location.reload())
-      .catch(err => console.log(err))
-  }
+    axios.delete(`http://localhost:8081/deleteseleccion/${id}`)
+      .then(res => {
+        // Actualiza la lista de datos excluyendo el registro eliminado
+        const updatedData = data.filter(item => item.id !== id);
+        setData(updatedData);
+  
+        // Recalcula el saldo total con la lista actualizada
+        calcularSaldoTotal(updatedData);
+      })
+      .catch(err => console.log(err));
+  };
   return (
     <>
 
