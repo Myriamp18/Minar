@@ -9,7 +9,7 @@ function FrmBandas() {
         entrada: "",
         salidas: "",
         pesp: "",
-        saldo: "",
+        
        
     
       })
@@ -79,16 +79,7 @@ function FrmBandas() {
              onChange={(e) => setValues({...values, pesp: e.target.value})}/>
           </div>
 
-          <div class="mb-3">
-            <label form='text' class="form-label"> Saldo:</label>
-            <input
-             type="text"  
-             class="form-control"
-             id='saldo'
-             placeholder='Insertar Cantidad'  
-             name='saldo'
-             onChange={(e) => setValues({...values, saldo: e.target.value})}/>
-          </div>
+         
 
           
           <div className="btn-container">
