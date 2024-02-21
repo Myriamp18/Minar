@@ -21,6 +21,7 @@ function FrmMezclas() {
     pedese: "",
  
     pemt: "",
+    otrassalidas:"",
 
 
 
@@ -179,6 +180,17 @@ function FrmMezclas() {
               placeholder='P.ESP de Mezcla Total'
               name='pemt'
               onChange={(e) => setValues({ ...values, pemt: e.target.value })} />
+          </div>
+                 
+          <div class="mb-3">
+            <label form='text' class="form-label">Otras Salidas:</label>
+            <input
+              type="text"
+              class="form-control"
+              id='pemt'
+              placeholder='Inserta Salidas Especifica de que son'
+              name='otrassalidas'
+              onChange={(e) => setValues({ ...values, otrassalidas: e.target.value })} />
           </div>
        
         </div>

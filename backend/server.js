@@ -1356,7 +1356,7 @@ app.post('/createmezclasmolienda', (req, res) => {
     // Calcula la mezcla total como la suma de concmesas, medios, desenslovez y conjigs
     const mezclaTotal = concmesas + medios + desenslovez + conjigs;
 
-    const sql = "INSERT INTO molienda (fecha, turno, concmesas, pecm, medios, pem, desenslovez, pedese, concjigs, pejig, mezclatotal, pemt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    const sql = "INSERT INTO molienda (fecha, turno, concmesas, pecm, medios, pem, desenslovez, pedese, concjigs, pejig, mezclatotal, pemt,otrassalidas) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)";
     const values = [
         req.body.fecha,
         req.body.turno,
@@ -1370,6 +1370,8 @@ app.post('/createmezclasmolienda', (req, res) => {
         req.body.pejig,
         mezclaTotal, // Usamos la mezcla total calculada
         req.body.pemt,
+        req.body.otrassalidas,
+
     ];
 
     db.query(sql, values, (err, data) => {
@@ -1379,7 +1381,7 @@ app.post('/createmezclasmolienda', (req, res) => {
 });
 
 app.put('/updatemezclasmolienda/:id', (req, res) => {
-    const sql = "UPDATE molienda SET fecha=?,turno=?, concmesas=?, pecm=?, medios=?, pem=?,desenslovez=?,pedese=?,pemt=?,concjigs=?,pejig=? WHERE id = ?";
+    const sql = "UPDATE molienda SET fecha=?,turno=?, concmesas=?, pecm=?, medios=?, pem=?,desenslovez=?,pedese=?,pemt=?,concjigs=?,pejig=?,otrassalidas=? WHERE id = ?";
     const values = [
         req.body.fecha,
         req.body.turno,
@@ -1392,6 +1394,7 @@ app.put('/updatemezclasmolienda/:id', (req, res) => {
         req.body.pemt,
         req.body.concjigs,
         req.body.pejig,
+        req.body.otrassalidas,
 
     ];
     const id = req.params.id;
@@ -1983,7 +1986,27 @@ app.get('/granomoler', (req, res) => {
 });
 app.post('/creategranomoler', async (req, res) => {
     try {
-    
+        const totalgrano = await new Promise((resolve, reject) => {
+            const query = "SELECT (SUM(granoj1)+SUM(granoj2)) AS total_grano FROM produccionjigs WHERE fecha = ?;";
+            db.query(query, [req.body.fecha], (err, data) => {
+                if (err) reject(err);
+                else resolve(data[0].total_grano); // Obtenemos el total concentrado de la primera fila
+            });
+        });
+        const totalsalidasgrano = await new Promise((resolve, reject) => {
+            const query = "SELECT (SUM(concjigs)) AS total_salidasgrano FROM molienda WHERE fecha = ?;";
+            db.query(query, [req.body.fecha], (err, data) => {
+                if (err) reject(err);
+                else resolve(data[0].total_salidasgrano); // Obtenemos el total concentrado de la primera fila
+            });
+        });
+        const totalpesp = await new Promise((resolve, reject) => {
+            const query = "SELECT AVG((IF(pegj1 IS NOT NULL, pegj1, 0) + IF(pegj2 IS NOT NULL, pegj2, 0)) / (IF(peaj1 IS NOT NULL, 1, 0) + IF(pegj2 IS NOT NULL, 1, 0))) AS promedio_peso FROM produccionjigs WHERE fecha =?";
+            db.query(query, [req.body.fecha], (err, data) => {
+                if (err) reject(err);
+                else resolve(data[0].promedio_peso); // Obtenemos el total concentrado de la primera fila
+            });
+        });
         
         // Obtener el saldo anterior
         const saldoAnteriorData = await new Promise((resolve, reject) => {
@@ -1997,16 +2020,16 @@ app.post('/creategranomoler', async (req, res) => {
         const saldoAnterior = saldoAnteriorData.length > 0 ? saldoAnteriorData[0].saldo : 0;
 
          // Calcula el nuevo saldo sumando el saldo anterior a las entradas y restando las salidas
-         const nuevoSaldo = saldoAnterior + parseFloat(req.body.entradas) - parseFloat(req.body.salidas);
+         const nuevoSaldo = saldoAnterior + parseFloat(totalgrano) - parseFloat(totalsalidasgrano);
 
         // Realizar la inserción en la tabla concmesas
         const sql = "INSERT INTO granopmoler (fecha, entradas, salidas, saldo, pe) VALUES (?, ?, ?, ?, ?)";
         const values = [
             req.body.fecha,
-            req.body.entradas,
-            req.body.salidas,
+            totalgrano,
+            totalsalidasgrano,
             nuevoSaldo,
-            req.body.pe,
+            totalpesp
         ];
 
         db.query(sql, values, (err, result) => {

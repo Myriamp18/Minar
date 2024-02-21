@@ -60,40 +60,9 @@ function FrmGranoPMoler() {
             />
           </div>
 
-          <div class="mb-3">
-            <label form='text' class="form-label"> Entradas:</label>
-            <input
-             type="text"  
-             class="form-control"
-             id='entradas'
-             placeholder='Insertar Cantidad'  
-             name='entradas'
-             onChange={(e) => setValues({...values, entradas: e.target.value})}/>
-          </div>
+        
 
-
-          <div class="mb-3">
-            <label form='text' class="form-label"> Salidas:</label>
-            <input
-             type="text"  
-             class="form-control"
-             id='salidas'
-             placeholder='Insertar Cantidad'  
-             name='salidas'
-             onChange={(e) => setValues({...values, salidas: e.target.value})}/>
-          </div>
-
-          <div class="mb-3">
-            <label form='text' class="form-label"> P.ESP:</label>
-            <input
-             type="text"  
-             class="form-control"
-             id='pe'
-             placeholder='Insertar Peso'  
-             name='pe'
-             onChange={(e) => setValues({...values, pe: e.target.value})}/>
-          </div>
-
+          
         
 
           

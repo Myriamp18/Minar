@@ -68,6 +68,8 @@ function Mezclas() {
                         <th>P.ESP</th>
                         <th>Mezcla Total</th>
                         <th>P.ESP</th>
+                        <th>Otras Salidas</th>
+
                         
                       </tr>
                     </thead>
@@ -100,7 +102,7 @@ function Mezclas() {
                           <td>{ d.pedese}</td>
                           <td>{typeof d.mezclatotal === 'number' ? d.mezclatotal.toFixed(3) : 'N/A'}</td>
                           <td>{typeof d.pemt === 'number' ? d.pemt.toFixed(3) : 'N/A'}</td>
-
+                          <td>{ d.otrassalidas}</td>
 
 
                         </tr>

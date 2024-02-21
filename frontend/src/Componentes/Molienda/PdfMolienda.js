@@ -71,7 +71,7 @@ function PdfMolienda() {
         const doc = new jsPDF({
             orientation: 'l', // Orientación: 'p' para retrato, 'l' para paisaje
             unit: 'mm', // Unidad de medida: milímetros
-            format:'a5', // Tamaño del papel: 'a4', 'letter', 'legal', etc.
+            format: [152, 230], // Tamaño del papel: 'a4', 'letter', 'legal', etc.
             putOnlyUsedFonts: true,
             floatPrecision: 16,
             margins: { // Márgenes personalizados
@@ -99,6 +99,14 @@ function PdfMolienda() {
     generatesecTable(doc, products.filter(item => item.turno === 2), 'Turno 2', 80);
 
     generatetreTable(doc, products.filter(item => item.turno === 3), 'Turno 3', 110);
+
+    generatecuartTable(doc, products.filter(item => item.turno === 1), 'Turno 1', 50);
+
+    // Generar tabla para el turno 2
+    generatequinTable(doc, products.filter(item => item.turno === 2), 'Turno 2', 80);
+
+    generasexTable(doc, products.filter(item => item.turno === 3), 'Turno 3', 110);
+
 
 
     generateprimOtherTable(doc, otherTableData.filter(item => item.turno === 1), 'Turno 1', 140);
@@ -261,7 +269,7 @@ function PdfMolienda() {
         const tablePropsOtraTabla = {
             startY: 20,
             margin: { horizontal: 94 },
-            tableWidth: 50
+            tableWidth: 60
         };
         // Agregar tabla al documento
         doc.autoTable({
@@ -326,8 +334,8 @@ function PdfMolienda() {
         const firstTableHeight = doc.autoTable.previous.finalY || startY;
         const tablePropsOtraTabla = {
             startY: 20,
-            margin: { horizontal: 144 },
-            tableWidth: 50
+            margin: { horizontal: 154 },
+            tableWidth: 60
         };
         // Agregar tabla al documento
         doc.autoTable({
@@ -346,9 +354,130 @@ function PdfMolienda() {
         });
     };
 
+
+    const generatecuartTable = (doc, data, title, startY) => {
+    
+    
+        // Crear tabla
+        const tableColumn = ['Turno', 'Salidas'];
+        const tableRows = [];
+    
+        data.forEach((item) => {
+            const rowData = [
+    
+                item.turno,
+                item. otrassalidas,
+             
+            ];
+            tableRows.push(rowData);
+          
+        });
+        const firstTableHeight = doc.autoTable.previous.finalY || startY;
+        const tablePropsOtraTabla = {
+            startY: 65,
+            margin: { horizontal: 14 },
+            tableWidth: 70
+        };
+        // Agregar tabla al documento
+        doc.autoTable({
+            head: [tableColumn],
+            body: tableRows,
+            startY: firstTableHeight + 10,
+            theme: 'grid',
+            headStyles: {
+                fillColor: [0, 128, 0] // Cambia el color del encabezado de la tabla a azul
+            },
+            ...tablePropsOtraTabla,
+            headStyles: styles.tableHeader,
+            bodyStyles: styles.tableRow,
+        
+    
+        });
+    };
+    const generatequinTable = (doc, data, title, startY) => {
+    
+    
+        // Crear tabla
+        const tableColumn = ['Turno', 'Salidas'];
+        const tableRows = [];
+    
+        data.forEach((item) => {
+            const rowData = [
+    
+                item.turno,
+                item. otrassalidas,
+             
+            ];
+            tableRows.push(rowData);
+          
+        });
+        const firstTableHeight = doc.autoTable.previous.finalY || startY;
+        const tablePropsOtraTabla = {
+            startY: 65,
+            margin: { horizontal: 84},
+            tableWidth: 70
+        };
+        // Agregar tabla al documento
+        doc.autoTable({
+            head: [tableColumn],
+            body: tableRows,
+            startY: firstTableHeight + 10,
+            theme: 'grid',
+            headStyles: {
+                fillColor: [0, 128, 0] // Cambia el color del encabezado de la tabla a azul
+            },
+            ...tablePropsOtraTabla,
+            headStyles: styles.tableHeader,
+            bodyStyles: styles.tableRow,
+        
+    
+        });
+    };
+    const generasexTable = (doc, data, title, startY) => {
+    
+    
+        // Crear tabla
+        const tableColumn = ['Turno', 'Salidas'];
+        const tableRows = [];
+    
+        data.forEach((item) => {
+            const rowData = [
+    
+                item.turno,
+                item. otrassalidas,
+             
+            ];
+            tableRows.push(rowData);
+          
+        });
+        const firstTableHeight = doc.autoTable.previous.finalY || startY;
+        const tablePropsOtraTabla = {
+            startY: 65,
+            margin: { horizontal: 154},
+            tableWidth: 60
+        };
+        // Agregar tabla al documento
+        doc.autoTable({
+            head: [tableColumn],
+            body: tableRows,
+            startY: firstTableHeight + 10,
+            theme: 'grid',
+            headStyles: {
+                fillColor: [0, 128, 0] // Cambia el color del encabezado de la tabla a azul
+            },
+            ...tablePropsOtraTabla,
+            headStyles: styles.tableHeader,
+            bodyStyles: styles.tableRow,
+        
+    
+        });
+    };
+
+
+
     const generateprimOtherTable = (doc, data, title, startY) => {
         doc.setFontSize(14);
-        doc.text('Promedios', 95,78);
+        doc.text('Promedios', 95,90);
     
       
     
@@ -402,7 +531,7 @@ function PdfMolienda() {
         });
         const firstTableHeight = doc.autoTable.previous.finalY || startY;
         const tablePropsTurnos = {
-            startY: 80,
+            startY: 95,
             margin: { horizontal: 14 },
             tableWidth: 80
         };
@@ -474,9 +603,9 @@ function PdfMolienda() {
         });
         const firstTableHeight = doc.autoTable.previous.finalY || startY;
         const tablePropsOtraTabla = {
-            startY: 80,
+            startY: 95,
             margin: { horizontal: 94 },
-            tableWidth: 50
+            tableWidth: 60
         };
         // Agregar tabla al documento
         doc.autoTable({
@@ -540,9 +669,9 @@ function PdfMolienda() {
         });
         const firstTableHeight = doc.autoTable.previous.finalY || startY;
         const tablePropsOtraTabla = {
-            startY: 80,
-            margin: { horizontal: 144 },
-            tableWidth: 50
+            startY: 95,
+            margin: { horizontal: 154 },
+            tableWidth: 60
         };
         // Agregar tabla al documento
         doc.autoTable({

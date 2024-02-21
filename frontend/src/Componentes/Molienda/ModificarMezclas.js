@@ -9,7 +9,7 @@ function ModificarMezclas() {
   const { id } = useParams()
   const [values, setValues] = useState({
     fecha: '',
-    turno: "1",
+    turno: "",
     concmesas: "",
     pecm: "",
     medios: "",
@@ -19,7 +19,7 @@ function ModificarMezclas() {
     desenslovez: "",
     pedese: "",
     pemt: "",
-
+    otrassalidas:"",
 
 
   })
@@ -53,6 +53,7 @@ function ModificarMezclas() {
           desenslovez: res.data[0].desenslovez,
           pedese: res.data[0].pedese,
           pemt: res.data[0].pemt,
+          otrassalidas: res.data[0].otrassalidas,
         });
 
       })
@@ -205,6 +206,17 @@ function ModificarMezclas() {
               name='pemt'
               value={values.pemt}
               onChange={(e) => setValues({ ...values, pemt: e.target.value })} />
+          </div>
+          <div class="mb-3">
+            <label form='text' class="form-label"> Otras Salidas:</label>
+            <input
+              type="text"
+              class="form-control"
+              id='pemt'
+              placeholder='Insertar Salidas'
+              name='pemt'
+              value={values.otrassalidas}
+              onChange={(e) => setValues({ ...values, otrassalidas: e.target.value })} />
           </div>
         </div>
         <div className="btn-container">
