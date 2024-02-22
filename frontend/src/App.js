@@ -61,6 +61,9 @@ import ModificarMedios3 from './Componentes/Medios/ModificarMedios3';
 import GranoPMoler from './Componentes/GranoPMoler/GranoPMoler';
 import FrmGranoPMoler from './Componentes/GranoPMoler/FrmGranoPMoler';
 import ModificarGranoPMoler from './Componentes/GranoPMoler/ModificarGranoPMoler';
+import GranoJigsChino from './Componentes/GranoJigsChino/GranoJigsChino';
+import FrmGranoJigs from './Componentes/GranoJigsChino/FrmGranoJigs';
+import ModificarGranojigs from './Componentes/GranoJigsChino/ModificarGranojigs';
 
 
 
@@ -162,6 +165,10 @@ function App() {
          <Route path="/creategranomoler" element={<FrmGranoPMoler/>}/>
          <Route path="/updategranomoler/:id" element={<ModificarGranoPMoler/>}/>
 
+         /////////GRANOJIGS////////////
+         <Route path="/granojigs" element={<GranoJigsChino/>}/>
+         <Route path="/creategranojigs" element={<FrmGranoJigs/>}/>
+         <Route path="/updategranojigs/:id" element={<ModificarGranojigs/>}/>
        </Routes>
        </Menu >
       </div>

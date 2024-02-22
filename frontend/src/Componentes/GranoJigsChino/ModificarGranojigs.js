@@ -5,14 +5,11 @@ import axios from 'axios'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
-
-   
-function ModificarGranoBaribrigth() {
+function ModificarGranojigs() {
     const { id } = useParams();
     const navigate = useNavigate();
     const [values, setValues] = useState({
         fecha: '',
-        entradas: '',
         salidas: '',
         pe: '',
     });
@@ -20,19 +17,19 @@ function ModificarGranoBaribrigth() {
 
     const handleSubmit = (e) => {
       e.preventDefault()
-      axios.put(`http://localhost:8081/updategranobaribright/${id}`, values)
+      axios.put(`http://localhost:8081/updategranojigs/${id}`, values)
 
           .then(res => {
               console.log(res);
               // Optionally, you can navigate to a different page or update the UI
-              navigate('/granobaribright'); // Example: Navigate to the home page
+              navigate('/granojigs'); // Example: Navigate to the home page
           })
           .catch(err => console.log(err));
   };
     
     
     useEffect(() => {
-        axios.get(`http://localhost:8081/getrecorgranobaribright/${id}`)
+        axios.get(`http://localhost:8081/getrecordgranojigs/${id}`)
             .then((res) => {
                 const data = res.data[0];
                 setValues({
@@ -44,10 +41,10 @@ function ModificarGranoBaribrigth() {
             })
             .catch(err => console.error(err));
     }, [id]);
-return (
+  return (
     <div className="d-flex align-items-center flex-column mt-3" >
-    <h1>Modificar Grano Barbigth:</h1>
-    <div className="close-button" onClick={() => navigate('/granobaribright')}>
+    <h1>Modificar Grano Jigs:</h1>
+    <div className="close-button" onClick={() => navigate('/granojigs')}>
             <FontAwesomeIcon icon={faTimes} />
             </div>
       <form className="w-50" onSubmit={handleSubmit} >
@@ -62,18 +59,6 @@ return (
               value={values.fecha}
               onChange={(e) => setValues({...values, fecha: e.target.value})}
             />
-          </div>
-
-          <div class="mb-3">
-            <label form='text' class="form-label"> Entradas:</label>
-            <input
-             type="text"  
-             class="form-control"
-             id='entradas'
-             placeholder='Insertar Cantidad'  
-             name='entradas'
-             value={values.entradas}
-             onChange={(e) => setValues({...values, entradas: e.target.value})}/>
           </div>
 
 
@@ -105,7 +90,7 @@ return (
 
           
           <div className="btn-container">
-          <button type="submit" className="BTN"  >GUARDAR</button>
+          <button type="submit" className="BTN"  >MODIFICAR</button>
           </div>
 
 
@@ -120,5 +105,4 @@ return (
   )
 }
 
-
-export default ModificarGranoBaribrigth
+export default ModificarGranojigs

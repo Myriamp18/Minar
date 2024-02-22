@@ -1,42 +1,50 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {useNavigate} from 'react-router-dom';
 import axios from 'axios'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
-function FrmBandas() {
+function FrmGranoJigs() {
     const [values, setValues] = useState({
         fecha: '',
-        entrada: "",
         salidas: "",
-        pesp: "",
+        pe: "",
+        
         
        
     
       })
-
       const navigate = useNavigate()
 
-  const handleSubmit =(e) => {
-    e.preventDefault()
-    axios.post('http://localhost:8081/creategranobandas', values)
-    .then(res => {
-      console.log(res);
-      // Optionally, you can navigate to a different page or update the UI
-      navigate('/granobandas'); // Example: Navigate to the home page
-    })
-    .catch(err => console.log(err));
-};
-  
-   
-  return (
+      const [saldoAnterior, setSaldoAnterior] = useState(0);
 
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        // Calcula el nuevo saldo sumando el saldo anterior a las entradas y restando las salidas
+        const nuevoSaldo = saldoAnterior + parseFloat(values.entradas) - parseFloat(values.salidas);
+
+        // Actualiza el valor del saldo en el objeto de valores
+        setValues({ ...values, saldo: nuevoSaldo });
+
+        // Realiza la inserción con el nuevo saldo
+        axios.post('http://localhost:8081/creategranojigs', { ...values, saldo: nuevoSaldo })
+        .then(res => {
+            console.log(res);
+            navigate('/granojigs');
+        })
+        .catch(err => {
+            console.error('Error inserting data:', err);
+        });
+};
+  return (
     <div className="d-flex align-items-center flex-column mt-3" >
-    <h1>Insertar Grano Bandas</h1>
-    <div className="close-button" onClick={() => navigate('/granobandas')}>
-            <FontAwesomeIcon icon={faTimes} />
-            </div>
+    <h1 >Insertar Grano jigs chinos:</h1>
+    <div className="close-button" onClick={() => navigate('/granojigs')}>
+        <FontAwesomeIcon icon={faTimes} />
+        </div>
       <form className="w-50" onSubmit={handleSubmit} >
           <div class="mb-3 mt-3">
             <label form='fecha' class="form-label"> Fecha:</label>
@@ -50,16 +58,7 @@ function FrmBandas() {
             />
           </div>
 
-          <div class="mb-3">
-            <label form='text' class="form-label"> Entradas:</label>
-            <input
-             type="text"  
-             class="form-control"
-             id='entradas'
-             placeholder='Insertar Cantidad'  
-             name='entradas'
-             onChange={(e) => setValues({...values, entrada: e.target.value})}/>
-          </div>
+         
 
 
           <div class="mb-3">
@@ -78,13 +77,13 @@ function FrmBandas() {
             <input
              type="text"  
              class="form-control"
-             id='pesp'
+             id='pe'
              placeholder='Insertar Peso'  
-             name='pesp'
-             onChange={(e) => setValues({...values, pesp: e.target.value})}/>
+             name='pe'
+             onChange={(e) => setValues({...values, pe: e.target.value})}/>
           </div>
 
-         
+        
 
           
           <div className="btn-container">
@@ -103,4 +102,4 @@ function FrmBandas() {
   )
 }
 
-export default FrmBandas
+export default FrmGranoJigs

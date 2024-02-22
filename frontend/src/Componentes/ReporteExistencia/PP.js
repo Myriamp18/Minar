@@ -18,6 +18,9 @@ function PP() {
   const onGrano= () =>{
       navigate('/granomoler')
   }
+  const onGranojigs= () =>{
+   navigate('/granojigs')
+}
   const onBandas= () =>{
       navigate('/granobandas')
   }
@@ -97,7 +100,7 @@ return (
      
     </button>
 
-    <button className="btnpp-large btnpp-bs" onClick={onConcmesas}>
+    <button className="btnpp-large btnpp-bs" onClick={onGranojigs}>
     <span className="iconnnespp"><GiMineralPearls /> </span>
     <span className="buttonpp-text">
        Grano JIG´SS Chino

@@ -12,7 +12,7 @@ function ModificarSeleccion() {
         entrada: "",
         salida: "",
         pesp: "",
-        saldo: "",
+       
 
 
     })
@@ -26,7 +26,7 @@ function ModificarSeleccion() {
             .then(res => {
                 console.log(res);
                 // Optionally, you can navigate to a different page or update the UI
-                navigate('/Inicio'); // Example: Navigate to the home page
+                navigate('/seleccion'); // Example: Navigate to the home page
             })
             .catch(err => console.log(err));
     };
@@ -41,7 +41,7 @@ function ModificarSeleccion() {
                         entrada: res.data[0].entrada,
                         salida: res.data[0].salida,
                         pesp: res.data[0].pesp,
-                        saldo: res.data[0].saldo
+                       
                       
                     });
                
@@ -106,17 +106,7 @@ function ModificarSeleccion() {
              onChange={(e) => setValues({...values, pesp: e.target.value})}/>
           </div>
 
-          <div class="mb-3">
-            <label form='text' class="form-label"> Saldo:</label>
-            <input
-             type="text"  
-             class="form-control"
-             id='saldo'
-             placeholder='Insertar Cantidad'  
-             name='saldo'
-             value={values.saldo}
-             onChange={(e) => setValues({...values, saldo: e.target.value})}/>
-          </div>
+         
 
           
           <div className="btn-container">

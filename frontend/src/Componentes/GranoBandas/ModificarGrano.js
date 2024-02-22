@@ -2,6 +2,9 @@ import React, { useEffect, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
+
 
 function ModificarGrano() {
    const { id } = useParams()
@@ -10,7 +13,7 @@ function ModificarGrano() {
         entrada: "",
         salidas: "",
         pesp: "",
-        saldo: "",
+        
        
     
       })
@@ -19,18 +22,18 @@ function ModificarGrano() {
 
       const handleSubmit = (e) => {
           e.preventDefault()
-          axios.put(`http://localhost:8081/updategrano/${id}`, values)
+          axios.put(`http://localhost:8081/updategranobandas/${id}`, values)
   
               .then(res => {
                   console.log(res);
                   // Optionally, you can navigate to a different page or update the UI
-                  navigate('/Inicio'); // Example: Navigate to the home page
+                  navigate('/granobandas'); // Example: Navigate to the home page
               })
               .catch(err => console.log(err));
       };
   
       useEffect(() => {
-          axios.get(`http://localhost:8081/getrecordgrano/${id}`)
+          axios.get(`http://localhost:8081/getrecordgranobandas/${id}`)
               .then((res) => {
                   
                       setValues({
@@ -51,6 +54,9 @@ function ModificarGrano() {
   return (
     <div className="d-flex align-items-center flex-column mt-3" >
     <h1>Modificar Grano Bandas</h1>
+    <div className="close-button" onClick={() => navigate('/granobandas')}>
+            <FontAwesomeIcon icon={faTimes} />
+            </div>
       <form className="w-50" onSubmit={handleSubmit} >
           <div class="mb-3 mt-3">
             <label form='fecha' class="form-label"> Fecha:</label>
@@ -102,17 +108,7 @@ function ModificarGrano() {
              onChange={(e) => setValues({...values, pesp: e.target.value})}/>
           </div>
 
-          <div class="mb-3">
-            <label form='text' class="form-label"> Saldo:</label>
-            <input
-             type="text"  
-             class="form-control"
-             id='saldo'
-             placeholder='Insertar Cantidad'  
-             name='saldo'
-             value={values.saldo}
-             onChange={(e) => setValues({...values, saldo: e.target.value})}/>
-          </div>
+        
 
           
           <div className="btn-container">
