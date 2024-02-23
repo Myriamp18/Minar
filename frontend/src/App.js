@@ -64,6 +64,25 @@ import ModificarGranoPMoler from './Componentes/GranoPMoler/ModificarGranoPMoler
 import GranoJigsChino from './Componentes/GranoJigsChino/GranoJigsChino';
 import FrmGranoJigs from './Componentes/GranoJigsChino/FrmGranoJigs';
 import ModificarGranojigs from './Componentes/GranoJigsChino/ModificarGranojigs';
+import Desensolvech from './Componentes/Desensolvech/Desensolvech';
+import FrmDesensolvech from './Componentes/Desensolvech/FrmDesensolvech';
+import ModificarDesensolvech from './Componentes/Desensolvech/ModificarDesensolvech';
+import Desensolve from './Componentes/Desensolve/Desensolve';
+import FrmDesensolve from './Componentes/Desensolve/FrmDesensolve';
+import ModificarDesensolve from './Componentes/Desensolve/ModificarDesensolve';
+import DesechoSeleccion from './Componentes/DesechoSeleccion/DesechoSeleccion';
+import Desecho43 from './Componentes/DesechoSeleccion/Desecho43';
+import FrmDesecho43 from './Componentes/DesechoSeleccion/FrmDesecho43';
+import ModificarDesecho43 from './Componentes/DesechoSeleccion/ModificarDesecho43';
+import Desecho39 from './Componentes/DesechoSeleccion/Desecho39';
+import FrmDesecho39 from './Componentes/DesechoSeleccion/FrmDesecho39';
+import ModificarDesecho39 from './Componentes/DesechoSeleccion/ModificarDesecho39';
+import Baritron from './Componentes/Baritron/Baritron';
+import FrmBaritron from './Componentes/Baritron/FrmBaritron';
+import ModificarBaritron from './Componentes/Baritron/ModificarBaritron';
+import TolvasMolinos from './Componentes/TolvasMolinos/TolvasMolinos';
+import FrmTolvasMolinos from './Componentes/TolvasMolinos/FrmTolvasMolinos';
+import ModificarTolvasMolinos from './Componentes/TolvasMolinos/ModificarTolvasMolinos';
 
 
 
@@ -169,6 +188,34 @@ function App() {
          <Route path="/granojigs" element={<GranoJigsChino/>}/>
          <Route path="/creategranojigs" element={<FrmGranoJigs/>}/>
          <Route path="/updategranojigs/:id" element={<ModificarGranojigs/>}/>
+
+         /////////DESENSOLVECH////////////
+         <Route path="/desensolvech" element={<Desensolvech/>}/>
+         <Route path="/createdesensolvech" element={<FrmDesensolvech/>}/>
+         <Route path="/updatedesensolvech/:id" element={<ModificarDesensolvech/>}/>
+         /////////DESENSOLVE////////////
+         <Route path="/desensolve" element={<Desensolve/>}/>
+         <Route path="/createdesensolve" element={<FrmDesensolve/>}/>
+         <Route path="/updatedesensolve/:id" element={<ModificarDesensolve/>}/>
+
+         /////DESECHOSELECCION//////
+         <Route path="/desechoseleccion" element={<DesechoSeleccion/>}/>
+         <Route path="/desecho43" element={<Desecho43/>}/>
+         <Route path="/createdesecho43" element={<FrmDesecho43/>}/>
+         <Route path="/updatedesecho43/:id" element={<ModificarDesecho43/>}/>
+         <Route path="/desecho39" element={<Desecho39/>}/>
+         <Route path="/createdesecho39" element={<FrmDesecho39/>}/>
+         <Route path="/updatedesecho39/:id" element={<ModificarDesecho39/>}/>
+
+         /////////BARITRON////////////
+         <Route path="/baritron" element={<Baritron/>}/>
+         <Route path="/createbaritron" element={<FrmBaritron/>}/>
+         <Route path="/updatebaritron/:id" element={<ModificarBaritron/>}/>
+
+         /////////TOLVAS MOLINOS////////////
+         <Route path="/tolvas" element={<TolvasMolinos/>}/>
+         <Route path="/createtolvas" element={<FrmTolvasMolinos/>}/>
+         <Route path="/updatetolvas/:id" element={<ModificarTolvasMolinos/>}/>
        </Routes>
        </Menu >
       </div>

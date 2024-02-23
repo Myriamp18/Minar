@@ -2236,3 +2236,586 @@ app.delete('/deletegranojigs/:id', (req, res) => {
         return res.json(data);
     });
 });
+
+////////////////////////DESENSOLVECH/////////
+
+app.get('/desensolvech', (req, res) => {
+    const sql = "SELECT * FROM desensolvech  ORDER BY id DESC";
+    db.query(sql, (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+});
+
+app.post('/createdesensolvech',async (req, res) => {
+    try {
+        const totaldesensolve = await new Promise((resolve, reject) => {
+            const query = "SELECT (SUM(desenjch))AS total_desensolvejigs FROM jigschinos WHERE fecha = ?;";
+            db.query(query, [req.body.fecha], (err, data) => {
+                if (err) reject(err);
+                else resolve(data[0].total_desensolvejigs); // Obtenemos el total concentrado de la primera fila
+            });
+        });
+        // Obtener el saldo anterior
+        const saldoAnteriorData = await new Promise((resolve, reject) => {
+            db.query("SELECT saldo FROM desensolvech ORDER BY id DESC LIMIT 1", (err, data) => {
+                if (err) reject(err);
+                else resolve(data);
+            });
+        });
+
+        // Si hay registros en la tabla, obtén el saldo anterior, de lo contrario, establece el saldo anterior en 0
+        const saldoAnterior = saldoAnteriorData.length > 0 ? saldoAnteriorData[0].saldo : 0;
+
+         // Calcula el nuevo saldo sumando el saldo anterior a las entradas y restando las salidas
+         const nuevoSaldo = saldoAnterior + parseFloat(totaldesensolve) - parseFloat(req.body.salidas);
+
+        // Realizar la inserción en la tabla concmesas
+        const sql = "INSERT INTO desensolvech (fecha, entradas, salidas, saldo, pe) VALUES (?, ?, ?, ?, ?)";
+        const values = [
+            req.body.fecha,
+            totaldesensolve,
+            req.body.salidas,
+            nuevoSaldo,
+            req.body.pe
+        ];
+
+        db.query(sql, values, (err, result) => {
+            if (err) throw err;
+            console.log("Registro insertado en concmesas con éxito.");
+            res.send("Registro insertado en concmesas con éxito.");
+        });
+    } catch (error) {
+        console.error("Error al crear el registro en concmesas:", error);
+        res.status(500).send("Error al crear el registro en concmesas.");
+    }
+});
+
+app.put('/updatedesensolvech/:id', async (req, res) => {
+
+    const totaldesensolve = await new Promise((resolve, reject) => {
+        const query = "SELECT (SUM(desenjch))AS total_desensolvejigs FROM jigschinos WHERE fecha = ?;";
+        db.query(query, [req.body.fecha], (err, data) => {
+            if (err) reject(err);
+            else resolve(data[0].total_desensolvejigs); // Obtenemos el total concentrado de la primera fila
+        });
+    });
+    const saldoAnteriorData = await new Promise((resolve, reject) => {
+        db.query("SELECT saldo FROM desensolvech ORDER BY id DESC LIMIT 1, 1", (err, data) => {
+            if (err) reject(err);
+            else resolve(data);
+        });
+    });
+    
+    
+
+    // Si hay registros en la tabla, obtén el saldo anterior, de lo contrario, establece el saldo anterior en 0
+    const saldoAnterior = saldoAnteriorData.length > 0 ? saldoAnteriorData[0].saldo : 0;
+
+     // Calcula el nuevo saldo sumando el saldo anterior a las entradas y restando las salidas
+     const nuevoSaldo = saldoAnterior + parseFloat(totaldesensolve) - parseFloat(req.body.salidas);
+    const sql = "UPDATE desensolvech SET fecha = ?, entradas = ?, salidas = ?, pe = ?, saldo = ? WHERE id = ?";
+    const values = [
+        req.body.fecha,
+        totaldesensolve,
+        req.body.salidas,
+        req.body.pe,
+        nuevoSaldo
+
+    ];
+    const id = req.params.id;
+    db.query(sql, [...values, id], (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+});
+
+app.get('/getrecorddesensolvech/:id', (req, res) => {
+    const id = req.params.id;
+    const sql = "SELECT * FROM desensolvech WHERE id = ?"
+    db.query(sql, [id], (err, data) => {
+        if (err) {
+            return res.json({ Error: "Error" })
+        }
+
+        return res.json(data)
+    })
+})
+app.delete('/deletedesensolvech/:id', (req, res) => {
+    const sql = "DELETE FROM desensolvech WHERE id = ?";
+    const id = req.params.id;
+    db.query(sql, [id], (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+});
+
+////////////////////////DESENSOLVE/////////
+
+app.get('/desensolve', (req, res) => {
+    const sql = "SELECT * FROM desensolve ORDER BY id DESC";
+    db.query(sql, (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+});
+
+app.post('/createdesensolve',async (req, res) => {
+    try {
+       
+        // Obtener el saldo anterior
+        const saldoAnteriorData = await new Promise((resolve, reject) => {
+            db.query("SELECT saldo FROM desensolve ORDER BY id DESC LIMIT 1", (err, data) => {
+                if (err) reject(err);
+                else resolve(data);
+            });
+        });
+
+        // Si hay registros en la tabla, obtén el saldo anterior, de lo contrario, establece el saldo anterior en 0
+        const saldoAnterior = saldoAnteriorData.length > 0 ? saldoAnteriorData[0].saldo : 0;
+
+         // Calcula el nuevo saldo sumando el saldo anterior a las entradas y restando las salidas
+         const nuevoSaldo = saldoAnterior + parseFloat(req.body.entradas) - parseFloat(req.body.salidas);
+
+        // Realizar la inserción en la tabla concmesas
+        const sql = "INSERT INTO desensolve (fecha, entradas, salidas, saldo, pe) VALUES (?, ?, ?, ?, ?)";
+        const values = [
+            req.body.fecha,
+            req.body.entradas,
+            req.body.salidas,
+            nuevoSaldo,
+            req.body.pe
+        ];
+
+        db.query(sql, values, (err, result) => {
+            if (err) throw err;
+            console.log("Registro insertado en concmesas con éxito.");
+            res.send("Registro insertado en concmesas con éxito.");
+        });
+    } catch (error) {
+        console.error("Error al crear el registro en concmesas:", error);
+        res.status(500).send("Error al crear el registro en concmesas.");
+    }
+});
+
+app.put('/updatedesensolve/:id', async (req, res) => {
+
+   
+    const saldoAnteriorData = await new Promise((resolve, reject) => {
+        db.query("SELECT saldo FROM desensolve ORDER BY id DESC LIMIT 1, 1", (err, data) => {
+            if (err) reject(err);
+            else resolve(data);
+        });
+    });
+    
+    
+
+    // Si hay registros en la tabla, obtén el saldo anterior, de lo contrario, establece el saldo anterior en 0
+    const saldoAnterior = saldoAnteriorData.length > 0 ? saldoAnteriorData[0].saldo : 0;
+
+     // Calcula el nuevo saldo sumando el saldo anterior a las entradas y restando las salidas
+     const nuevoSaldo = saldoAnterior + parseFloat(req.body.entradas) - parseFloat(req.body.salidas);
+    const sql = "UPDATE desensolve SET fecha = ?, entradas = ?, salidas = ?, pe = ?, saldo = ? WHERE id = ?";
+    const values = [
+        req.body.fecha,
+        req.body.entradas,
+        req.body.salidas,
+        req.body.pe,
+        nuevoSaldo
+
+    ];
+    const id = req.params.id;
+    db.query(sql, [...values, id], (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+});
+
+app.get('/getrecorddesensolve/:id', (req, res) => {
+    const id = req.params.id;
+    const sql = "SELECT * FROM desensolve WHERE id = ?"
+    db.query(sql, [id], (err, data) => {
+        if (err) {
+            return res.json({ Error: "Error" })
+        }
+
+        return res.json(data)
+    })
+})
+app.delete('/deletedesensolve/:id', (req, res) => {
+    const sql = "DELETE FROM desensolve WHERE id = ?";
+    const id = req.params.id;
+    db.query(sql, [id], (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+});
+
+////////////////////////Desecho Seleccion/////////
+
+app.get('/desecho43', (req, res) => {
+    const sql = "SELECT * FROM desecho43 ORDER BY id DESC";
+    db.query(sql, (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+});
+app.get('/desecho39', (req, res) => {
+    const sql = "SELECT * FROM desecho39 ORDER BY id DESC";
+    db.query(sql, (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+});
+
+app.post('/createdesecho39',async (req, res) => {
+    try {
+       
+        // Obtener el saldo anterior
+        const saldoAnteriorData = await new Promise((resolve, reject) => {
+            db.query("SELECT saldo FROM desecho39 ORDER BY id DESC LIMIT 1", (err, data) => {
+                if (err) reject(err);
+                else resolve(data);
+            });
+        });
+
+        // Si hay registros en la tabla, obtén el saldo anterior, de lo contrario, establece el saldo anterior en 0
+        const saldoAnterior = saldoAnteriorData.length > 0 ? saldoAnteriorData[0].saldo : 0;
+
+         // Calcula el nuevo saldo sumando el saldo anterior a las entradas y restando las salidas
+         const nuevoSaldo = saldoAnterior + parseFloat(req.body.entradas) - parseFloat(req.body.salidas);
+
+        // Realizar la inserción en la tabla concmesas
+        const sql = "INSERT INTO desecho39 (fecha, entradas, salidas, saldo, pe) VALUES (?, ?, ?, ?, ?)";
+        const values = [
+            req.body.fecha,
+            req.body.entradas,
+            req.body.salidas,
+            nuevoSaldo,
+            req.body.pe
+        ];
+
+        db.query(sql, values, (err, result) => {
+            if (err) throw err;
+            console.log("Registro insertado en concmesas con éxito.");
+            res.send("Registro insertado en concmesas con éxito.");
+        });
+    } catch (error) {
+        console.error("Error al crear el registro en concmesas:", error);
+        res.status(500).send("Error al crear el registro en concmesas.");
+    }
+});
+app.post('/createdesecho43',async (req, res) => {
+    try {
+       
+        // Obtener el saldo anterior
+        const saldoAnteriorData = await new Promise((resolve, reject) => {
+            db.query("SELECT saldo FROM desecho43 ORDER BY id DESC LIMIT 1", (err, data) => {
+                if (err) reject(err);
+                else resolve(data);
+            });
+        });
+
+        // Si hay registros en la tabla, obtén el saldo anterior, de lo contrario, establece el saldo anterior en 0
+        const saldoAnterior = saldoAnteriorData.length > 0 ? saldoAnteriorData[0].saldo : 0;
+
+         // Calcula el nuevo saldo sumando el saldo anterior a las entradas y restando las salidas
+         const nuevoSaldo = saldoAnterior + parseFloat(req.body.entradas) - parseFloat(req.body.salidas);
+
+        // Realizar la inserción en la tabla concmesas
+        const sql = "INSERT INTO desecho43 (fecha, entradas, salidas, saldo, pe) VALUES (?, ?, ?, ?, ?)";
+        const values = [
+            req.body.fecha,
+            req.body.entradas,
+            req.body.salidas,
+            nuevoSaldo,
+            req.body.pe
+        ];
+
+        db.query(sql, values, (err, result) => {
+            if (err) throw err;
+            console.log("Registro insertado en concmesas con éxito.");
+            res.send("Registro insertado en concmesas con éxito.");
+        });
+    } catch (error) {
+        console.error("Error al crear el registro en concmesas:", error);
+        res.status(500).send("Error al crear el registro en concmesas.");
+    }
+});
+
+app.put('/updatededesecho43/:id', async (req, res) => {
+
+   
+    const saldoAnteriorData = await new Promise((resolve, reject) => {
+        db.query("SELECT saldo FROM desecho43 ORDER BY id DESC LIMIT 1, 1", (err, data) => {
+            if (err) reject(err);
+            else resolve(data);
+        });
+    });
+    
+    
+
+    // Si hay registros en la tabla, obtén el saldo anterior, de lo contrario, establece el saldo anterior en 0
+    const saldoAnterior = saldoAnteriorData.length > 0 ? saldoAnteriorData[0].saldo : 0;
+
+     // Calcula el nuevo saldo sumando el saldo anterior a las entradas y restando las salidas
+     const nuevoSaldo = saldoAnterior + parseFloat(req.body.entradas) - parseFloat(req.body.salidas);
+    const sql = "UPDATE desecho43 SET fecha = ?, entradas = ?, salidas = ?, pe = ?, saldo = ? WHERE id = ?";
+    const values = [
+        req.body.fecha,
+        req.body.entradas,
+        req.body.salidas,
+        req.body.pe,
+        nuevoSaldo
+
+    ];
+    const id = req.params.id;
+    db.query(sql, [...values, id], (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+});
+app.put('/updatededesecho39/:id', async (req, res) => {
+
+   
+    const saldoAnteriorData = await new Promise((resolve, reject) => {
+        db.query("SELECT saldo FROM desecho39 ORDER BY id DESC LIMIT 1, 1", (err, data) => {
+            if (err) reject(err);
+            else resolve(data);
+        });
+    });
+    
+    
+
+    // Si hay registros en la tabla, obtén el saldo anterior, de lo contrario, establece el saldo anterior en 0
+    const saldoAnterior = saldoAnteriorData.length > 0 ? saldoAnteriorData[0].saldo : 0;
+
+     // Calcula el nuevo saldo sumando el saldo anterior a las entradas y restando las salidas
+     const nuevoSaldo = saldoAnterior + parseFloat(req.body.entradas) - parseFloat(req.body.salidas);
+    const sql = "UPDATE desecho39 SET fecha = ?, entradas = ?, salidas = ?, pe = ?, saldo = ? WHERE id = ?";
+    const values = [
+        req.body.fecha,
+        req.body.entradas,
+        req.body.salidas,
+        req.body.pe,
+        nuevoSaldo
+
+    ];
+    const id = req.params.id;
+    db.query(sql, [...values, id], (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+});
+app.get('/getrecorddesecho43/:id', (req, res) => {
+    const id = req.params.id;
+    const sql = "SELECT * FROM desecho43 WHERE id = ?"
+    db.query(sql, [id], (err, data) => {
+        if (err) {
+            return res.json({ Error: "Error" })
+        }
+
+        return res.json(data)
+    })
+})
+app.get('/getrecorddesecho39/:id', (req, res) => {
+    const id = req.params.id;
+    const sql = "SELECT * FROM desecho39 WHERE id = ?"
+    db.query(sql, [id], (err, data) => {
+        if (err) {
+            return res.json({ Error: "Error" })
+        }
+
+        return res.json(data)
+    })
+})
+app.delete('/deletedesecho43/:id', (req, res) => {
+    const sql = "DELETE FROM desecho43 WHERE id = ?";
+    const id = req.params.id;
+    db.query(sql, [id], (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+});
+app.delete('/deletedesecho39/:id', (req, res) => {
+    const sql = "DELETE FROM desecho39 WHERE id = ?";
+    const id = req.params.id;
+    db.query(sql, [id], (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+});
+////////////////////////BARITRON/////////
+
+app.get('/baritron', (req, res) => {
+    const sql = "SELECT * FROM baritron ORDER BY id DESC";
+    db.query(sql, (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+});
+
+app.post('/createbaritron',async (req, res) => {
+    try {
+       
+        // Obtener el saldo anterior
+        const saldoAnteriorData = await new Promise((resolve, reject) => {
+            db.query("SELECT saldo FROM baritron ORDER BY id DESC LIMIT 1", (err, data) => {
+                if (err) reject(err);
+                else resolve(data);
+            });
+        });
+
+        // Si hay registros en la tabla, obtén el saldo anterior, de lo contrario, establece el saldo anterior en 0
+        const saldoAnterior = saldoAnteriorData.length > 0 ? saldoAnteriorData[0].saldo : 0;
+
+         // Calcula el nuevo saldo sumando el saldo anterior a las entradas y restando las salidas
+         const nuevoSaldo = saldoAnterior + parseFloat(req.body.entradas) - parseFloat(req.body.salidas);
+
+        // Realizar la inserción en la tabla concmesas
+        const sql = "INSERT INTO baritron (fecha, entradas, salidas, saldo, pe) VALUES (?, ?, ?, ?, ?)";
+        const values = [
+            req.body.fecha,
+            req.body.entradas,
+            req.body.salidas,
+            nuevoSaldo,
+            req.body.pe
+        ];
+
+        db.query(sql, values, (err, result) => {
+            if (err) throw err;
+            console.log("Registro insertado en concmesas con éxito.");
+            res.send("Registro insertado en concmesas con éxito.");
+        });
+    } catch (error) {
+        console.error("Error al crear el registro en concmesas:", error);
+        res.status(500).send("Error al crear el registro en concmesas.");
+    }
+});
+
+app.put('/updatebaritron/:id', async (req, res) => {
+
+   
+    const saldoAnteriorData = await new Promise((resolve, reject) => {
+        db.query("SELECT saldo FROM baritron ORDER BY id DESC LIMIT 1, 1", (err, data) => {
+            if (err) reject(err);
+            else resolve(data);
+        });
+    });
+    
+    
+
+    // Si hay registros en la tabla, obtén el saldo anterior, de lo contrario, establece el saldo anterior en 0
+    const saldoAnterior = saldoAnteriorData.length > 0 ? saldoAnteriorData[0].saldo : 0;
+
+     // Calcula el nuevo saldo sumando el saldo anterior a las entradas y restando las salidas
+     const nuevoSaldo = saldoAnterior + parseFloat(req.body.entradas) - parseFloat(req.body.salidas);
+    const sql = "UPDATE baritron SET fecha = ?, entradas = ?, salidas = ?, pe = ?, saldo = ? WHERE id = ?";
+    const values = [
+        req.body.fecha,
+        req.body.entradas,
+        req.body.salidas,
+        req.body.pe,
+        nuevoSaldo
+
+    ];
+    const id = req.params.id;
+    db.query(sql, [...values, id], (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+});
+
+app.get('/getrecordbaritron/:id', (req, res) => {
+    const id = req.params.id;
+    const sql = "SELECT * FROM baritron WHERE id = ?"
+    db.query(sql, [id], (err, data) => {
+        if (err) {
+            return res.json({ Error: "Error" })
+        }
+
+        return res.json(data)
+    })
+})
+app.delete('/deletebaritron/:id', (req, res) => {
+    const sql = "DELETE FROM baritron WHERE id = ?";
+    const id = req.params.id;
+    db.query(sql, [id], (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+});
+
+////////////TOLVAS MOLINOS///////
+app.get('/tolvas', (req, res) => {
+    const sql = "SELECT * FROM tolvasmolinos ORDER BY id DESC";
+    db.query(sql, (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+});
+
+app.post('/createtolvas',async (req, res) => {
+    try {
+
+        // Realizar la inserción en la tabla concmesas
+        const sql = "INSERT INTO tolvasmolinos (fecha, tolvamolinos,petm,mezclasmoler,pememo) VALUES (?, ?, ?,?,?)";
+        const values = [
+            req.body.fecha,
+            req.body.tolvamolinos,
+            req.body.petm,
+            req.body.mezclasmoler,
+            req.body.pememo
+        ];
+
+        db.query(sql, values, (err, result) => {
+            if (err) throw err;
+            console.log("Registro insertado en concmesas con éxito.");
+            res.send("Registro insertado en concmesas con éxito.");
+        });
+    } catch (error) {
+        console.error("Error al crear el registro en concmesas:", error);
+        res.status(500).send("Error al crear el registro en concmesas.");
+    }
+});
+app.put('/updatetolvas/:id', async (req, res) => {
+
+   
+   
+    
+
+    
+    const sql = "UPDATE tolvasmolinos SET fecha = ?, tolvamolinos = ?, petm = ?, mezclasmoler = ?, pememo = ? WHERE id = ?";
+    const values = [
+        req.body.fecha,
+        req.body.tolvamolinos,
+        req.body.petm,
+        req.body.mezclasmoler,
+        req.body.pememo
+
+    ];
+    const id = req.params.id;
+    db.query(sql, [...values, id], (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+});
+app.get('/getrecordtolvas/:id', (req, res) => {
+    const id = req.params.id;
+    const sql = "SELECT * FROM tolvasmolinos WHERE id = ?"
+    db.query(sql, [id], (err, data) => {
+        if (err) {
+            return res.json({ Error: "Error" })
+        }
+
+        return res.json(data)
+    })
+})
+app.delete('/deletetolvas/:id', (req, res) => {
+    const sql = "DELETE FROM tolvasmolinos WHERE id = ?";
+    const id = req.params.id;
+    db.query(sql, [id], (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+});

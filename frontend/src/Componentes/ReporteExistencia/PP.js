@@ -10,6 +10,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { GiMinerals } from "react-icons/gi";
 import { GiMineWagon } from "react-icons/gi";
+
 import { GiWheelbarrow } from "react-icons/gi";
 import './PP.css'
 function PP() {
@@ -32,6 +33,21 @@ const onConcmesas= () =>{
 }
 const onConcjigs= () =>{ 
    navigate('/concjigssec')
+ }
+ const onDesensolvech= () =>{ 
+   navigate('/desensolvech')
+ }
+ const onDesensolve= () =>{ 
+   navigate('/desensolve')
+ }
+ const onGranoSele= () =>{ 
+   navigate('/desechoseleccion')
+ }
+ const onBaritron= () =>{ 
+   navigate('/baritron')
+ }
+ const onMolinos= () =>{ 
+   navigate('/tolvas')
  }
 
 return (
@@ -112,7 +128,7 @@ return (
      
     </button>
 
-    <button className="btnpp-large btnpp-bs" onClick={onConcmesas}>
+    <button className="btnpp-large btnpp-bs" onClick={onDesensolvech}>
     <span className="iconnnespp"><MdFrontLoader /> </span>
     <span className="buttonpp-text">
        Desensolve JIG´SS Chino
@@ -124,7 +140,7 @@ return (
      
     </button>
 
-    <button className="btnpp-large btnpp-bs" onClick={onConcmesas}>
+    <button className="btnpp-large btnpp-bs" onClick={onDesensolve}>
     <span className="iconnnespp"><MdFrontLoader /> </span>
     <span className="buttonpp-text">
        Desensolve 4.00-4.10
@@ -136,7 +152,7 @@ return (
      
     </button>
 
-    <button className="btnpp-large btnpp-bs" onClick={onConcmesas}>
+    <button className="btnpp-large btnpp-bs" onClick={onGranoSele}>
     <span className="iconnnespp">< GiMineWagon /> </span>
     <span className="buttonpp-text">
      Desecho Grano Seleccion
@@ -148,7 +164,7 @@ return (
      
     </button>
 
-    <button className="btnpp-large btnpp-bs" onClick={onConcmesas}>
+    <button className="btnpp-large btnpp-bs" onClick={onBaritron}>
     <span className="iconnnespp"><GiMinerals /> </span>
     <span className="buttonpp-text">
        Baritron
@@ -160,10 +176,10 @@ return (
      
     </button>
 
-    <button className="btnpp-large btnpp-bs" onClick={onConcmesas}>
+    <button className="btnpp-large btnpp-bs" onClick={onMolinos}>
     <span className="iconnnespp"><GiWheelbarrow /> </span>
     <span className="buttonpp-text">
-       Tolvas de Molinos y Mezclas
+       Tolvas de Molinos
     </span>
     <span className="buttonpp-textss">
      Pendiente
