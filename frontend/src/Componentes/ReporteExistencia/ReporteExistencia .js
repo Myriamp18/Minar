@@ -15,7 +15,9 @@ export default function ReporteExistencia() {
   const handelePP = () =>{
     navigate('/pp')
   }
-
+  const handeleMP = () =>{
+    navigate('/mp')
+  }
 
   return (
 
@@ -45,10 +47,10 @@ export default function ReporteExistencia() {
            
         </span>
         </button>
-        <button className="btn-large btn-mp" onClick={() => handleButtonClick('MP')}>
+        <button className="btn-large btn-mp" onClick={handeleMP}>
         <span className="iconnnes"><GiGoldMine /> </span>
           <span className="button-text">
-           Minas Patio
+           Mineral Patio
         </span>
         <span className="button-textss">
          Pendiente

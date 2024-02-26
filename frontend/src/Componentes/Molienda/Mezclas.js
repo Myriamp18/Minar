@@ -59,15 +59,17 @@ function Mezclas() {
                         <th>Fecha</th>
                         <th>Turno</th>
                         <th>Conc.Mesas</th>
-                        <th>P.ESP</th>
+                        <th>DE</th>
                         <th>Medios</th>
-                        <th>P.ESP</th>
+                        <th>DE</th>
                         <th>Conc.Jigs</th>
-                        <th>P.ESP</th>
+                        <th>DE</th>
                         <th>Desensolvez</th>
-                        <th>P.ESP</th>
+                        <th>DE</th>
                         <th>Mezcla Total</th>
                         <th>P.ESP</th>
+                        <th>PatioMLT</th>
+                        <th>PatioMLE</th>
                         <th>Otras Salidas</th>
 
                         
@@ -94,14 +96,16 @@ function Mezclas() {
                           <td>{d.turno}</td>
                           <td>{typeof d.concmesas === 'number' ? d.concmesas.toFixed(3) : 'N/A'}</td>
                           <td>{d.pecm}</td>
-                          <td>{typeof d.concjigs === 'number' ? d.concjigs.toFixed(3) : 'N/A'}</td>
-                          <td>{ d.pejig}</td>
                           <td>{typeof d.medios === 'number' ? d.medios.toFixed(3) : 'N/A'}</td>
                           <td>{ d.pem}</td>
+                          <td>{typeof d.concjigs === 'number' ? d.concjigs.toFixed(3) : 'N/A'}</td>
+                          <td>{ d.pejig}</td>
                           <td>{typeof d.desenslovez === 'number' ? d.desenslovez.toFixed(3) : 'N/A'}</td>
                           <td>{ d.pedese}</td>
                           <td>{typeof d.mezclatotal === 'number' ? d.mezclatotal.toFixed(3) : 'N/A'}</td>
                           <td>{typeof d.pemt === 'number' ? d.pemt.toFixed(3) : 'N/A'}</td>
+                          <td>{typeof d.pmlt === 'number' ? d.pmlt.toFixed(3) : 'N/A'}</td>
+                          <td>{typeof d.pmle === 'number' ? d.pmle.toFixed(3) : 'N/A'}</td>
                           <td>{ d.otrassalidas}</td>
 
 

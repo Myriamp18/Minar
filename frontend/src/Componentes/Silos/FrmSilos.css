@@ -44,11 +44,12 @@
 
  Label{
     font-weight: bold;
+    
  }
 
  .silos input{
     width:100%;
-    padding: 5px;
+    padding:5px;
     box-sizing: border-box;
     border: 1px solid #00426e;
     border-radius: 4px;

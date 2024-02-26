@@ -71,7 +71,7 @@ function PdfMolienda() {
         const doc = new jsPDF({
             orientation: 'l', // Orientación: 'p' para retrato, 'l' para paisaje
             unit: 'mm', // Unidad de medida: milímetros
-            format: [152, 230], // Tamaño del papel: 'a4', 'letter', 'legal', etc.
+            format: [168, 230], // Tamaño del papel: 'a4', 'letter', 'legal', etc.
             putOnlyUsedFonts: true,
             floatPrecision: 16,
             margins: { // Márgenes personalizados
@@ -191,7 +191,7 @@ function PdfMolienda() {
                
             ];
             tableRows.push(rowData4);
-          
+         
             
         });
         const firstTableHeight = doc.autoTable.previous.finalY || startY;
@@ -262,7 +262,7 @@ function PdfMolienda() {
                 item.pemt,
             ];
             tableRows.push(rowData4);
-           
+       
     
         });
         const firstTableHeight = doc.autoTable.previous.finalY || startY;
@@ -328,7 +328,7 @@ function PdfMolienda() {
                 item.pemt,
             ];
             tableRows.push(rowData4);
-           
+          
     
         });
         const firstTableHeight = doc.autoTable.previous.finalY || startY;
@@ -359,22 +359,37 @@ function PdfMolienda() {
     
     
         // Crear tabla
-        const tableColumn = ['Turno', 'Salidas'];
+        const tableColumn = ['','Turno', 'Salidas'];
         const tableRows = [];
     
         data.forEach((item) => {
             const rowData = [
-    
+                'PMLT',
+                item.turno,
+                item.pmlt,
+              
+             
+            ];
+            tableRows.push(rowData);
+            const rowData1 = [
+                'PMLE',
+                item.turno,
+                item.pmle,
+                
+             
+            ];
+            tableRows.push(rowData1);
+            const rowData2 = [
+                'Otras Salidas',
                 item.turno,
                 item. otrassalidas,
              
             ];
-            tableRows.push(rowData);
-          
+            tableRows.push(rowData2);
         });
         const firstTableHeight = doc.autoTable.previous.finalY || startY;
         const tablePropsOtraTabla = {
-            startY: 65,
+            startY: 70,
             margin: { horizontal: 14 },
             tableWidth: 70
         };
@@ -405,15 +420,29 @@ function PdfMolienda() {
             const rowData = [
     
                 item.turno,
-                item. otrassalidas,
+                item.pmlt,
              
             ];
             tableRows.push(rowData);
-          
+            const rowData1 = [
+                
+                item.turno,
+                item.pmle,
+              
+             
+            ];
+            tableRows.push(rowData1);
+            const rowData2 = [
+                
+                item.turno,
+                item. otrassalidas,
+             
+            ];
+            tableRows.push(rowData2);
         });
         const firstTableHeight = doc.autoTable.previous.finalY || startY;
         const tablePropsOtraTabla = {
-            startY: 65,
+            startY: 70,
             margin: { horizontal: 84},
             tableWidth: 70
         };
@@ -448,11 +477,26 @@ function PdfMolienda() {
              
             ];
             tableRows.push(rowData);
+            const rowData1 = [
+                
+                item.turno,
+                item.pmle,
+              
+             
+            ];
+            tableRows.push(rowData1);
+            const rowData2 = [
+                
+                item.turno,
+                item. otrassalidas,
+             
+            ];
+            tableRows.push(rowData2);
           
         });
         const firstTableHeight = doc.autoTable.previous.finalY || startY;
         const tablePropsOtraTabla = {
-            startY: 65,
+            startY: 70,
             margin: { horizontal: 154},
             tableWidth: 60
         };
@@ -477,7 +521,7 @@ function PdfMolienda() {
 
     const generateprimOtherTable = (doc, data, title, startY) => {
         doc.setFontSize(14);
-        doc.text('Promedios', 95,90);
+        doc.text('Promedios', 95,108);
     
       
     
@@ -531,7 +575,7 @@ function PdfMolienda() {
         });
         const firstTableHeight = doc.autoTable.previous.finalY || startY;
         const tablePropsTurnos = {
-            startY: 95,
+            startY: 110,
             margin: { horizontal: 14 },
             tableWidth: 80
         };
@@ -603,7 +647,7 @@ function PdfMolienda() {
         });
         const firstTableHeight = doc.autoTable.previous.finalY || startY;
         const tablePropsOtraTabla = {
-            startY: 95,
+            startY: 110,
             margin: { horizontal: 94 },
             tableWidth: 60
         };
@@ -669,7 +713,7 @@ function PdfMolienda() {
         });
         const firstTableHeight = doc.autoTable.previous.finalY || startY;
         const tablePropsOtraTabla = {
-            startY: 95,
+            startY: 110,
             margin: { horizontal: 154 },
             tableWidth: 60
         };

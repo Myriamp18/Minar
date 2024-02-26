@@ -19,7 +19,8 @@ function FrmMezclas() {
     pejig: "",
     desenslovez: "",
     pedese: "",
- 
+    pmlt:"",
+    pmle:"",
     pemt: "",
     otrassalidas:"",
 
@@ -82,7 +83,7 @@ function FrmMezclas() {
 
 </div>
         <div className='silos'>
-          <div class="mb-3 ">
+          <div class="mb-2 ">
             <label form='text' class="form-label"> Con.Mesas:</label>
             <input
               type="text"
@@ -92,7 +93,7 @@ function FrmMezclas() {
               name='concmesas'
               onChange={(e) => setValues({ ...values, concmesas: e.target.value })} />
           </div>
-          <div class="mb-3">
+          <div class="mb-2">
             <label form='text' class="form-label"> DE:</label>
             <input
               type="text"
@@ -104,7 +105,7 @@ function FrmMezclas() {
           </div>
         </div>
         <div className='silos'>
-          <div class="mb-3">
+          <div class="mb-2">
             <label form='text' class="form-label"> Medios:</label>
             <input
               type="text"
@@ -114,7 +115,7 @@ function FrmMezclas() {
               name='medios'
               onChange={(e) => setValues({ ...values, medios: e.target.value })} />
           </div>
-          <div class="mb-3">
+          <div class="mb-2">
             <label form='text' class="form-label"> DE:</label>
             <input
               type="text"
@@ -126,7 +127,7 @@ function FrmMezclas() {
           </div>
         </div>
         <div className='silos'>
-          <div class="mb-3">
+          <div class="mb-2">
             <label form='text' class="form-label"> Conc.Jigs:</label>
             <input
               type="text"
@@ -136,7 +137,7 @@ function FrmMezclas() {
               name='concjigs'
               onChange={(e) => setValues({ ...values, concjigs: e.target.value })} />
           </div>
-          <div class="mb-3">
+          <div class="mb-2">
             <label form='text' class="form-label"> DE:</label>
             <input
               type="text"
@@ -148,7 +149,7 @@ function FrmMezclas() {
           </div>
         </div>
         <div className='silos'>
-          <div class="mb-3">
+          <div class="mb-2">
             <label form='text' class="form-label"> Desensolvez:</label>
             <input
               type="text"
@@ -158,7 +159,7 @@ function FrmMezclas() {
               name='desenslovez'
               onChange={(e) => setValues({ ...values, desenslovez: e.target.value })} />
           </div>
-          <div class="mb-3">
+          <div class="mb-2">
             <label form='text' class="form-label"> DE:</label>
             <input
               type="text"
@@ -171,7 +172,7 @@ function FrmMezclas() {
         </div>
         <div className='silos'>
        
-          <div class="mb-3">
+          <div class="mb-2">
             <label form='text' class="form-label"> P.ESP:</label>
             <input
               type="text"
@@ -181,8 +182,8 @@ function FrmMezclas() {
               name='pemt'
               onChange={(e) => setValues({ ...values, pemt: e.target.value })} />
           </div>
-                 
-          <div class="mb-3">
+             
+          <div class="mb-2">
             <label form='text' class="form-label">Otras Salidas:</label>
             <input
               type="text"
@@ -192,7 +193,31 @@ function FrmMezclas() {
               name='otrassalidas'
               onChange={(e) => setValues({ ...values, otrassalidas: e.target.value })} />
           </div>
+          </div>
+          <div className='silos'>
        
+       <div class="mb-2">
+         <label form='text' class="form-label"> Patio MLT:</label>
+         <input
+           type="text"
+           class="form-control"
+           id='pemt'
+           placeholder='Insertar Cantidad'
+           name='pmlt'
+           onChange={(e) => setValues({ ...values, pmlt: e.target.value })} />
+       </div>
+              
+       <div class="mb-2">
+         <label form='text' class="form-label">Patio MLE:</label>
+         <input
+           type="text"
+           class="form-control"
+           id='pemt'
+           placeholder='Insertar Cantidad'
+           name='pmle'
+           onChange={(e) => setValues({ ...values, pmle: e.target.value })} />
+       </div>
+    
         </div>
         <div className="btn-container">
           <button type="submit" className="BTN"  >GUARDAR</button>

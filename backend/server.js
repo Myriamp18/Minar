@@ -1274,7 +1274,7 @@ app.post('/createmezclasmolienda', (req, res) => {
     // Calcula la mezcla total como la suma de concmesas, medios, desenslovez y conjigs
     const mezclaTotal = concmesas + medios + desenslovez + conjigs;
 
-    const sql = "INSERT INTO molienda (fecha, turno, concmesas, pecm, medios, pem, desenslovez, pedese, concjigs, pejig, mezclatotal, pemt,otrassalidas) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)";
+    const sql = "INSERT INTO molienda (fecha, turno, concmesas, pecm, medios, pem, desenslovez, pedese, concjigs, pejig, mezclatotal, pemt,pmlt,pmle,otrassalidas) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?,?)";
     const values = [
         req.body.fecha,
         req.body.turno,
@@ -1288,6 +1288,8 @@ app.post('/createmezclasmolienda', (req, res) => {
         req.body.pejig,
         mezclaTotal, // Usamos la mezcla total calculada
         req.body.pemt,
+        req.body.pmlt,
+        req.body.pmle,
         req.body.otrassalidas,
 
     ];
@@ -1299,7 +1301,7 @@ app.post('/createmezclasmolienda', (req, res) => {
 });
 
 app.put('/updatemezclasmolienda/:id', (req, res) => {
-    const sql = "UPDATE molienda SET fecha=?,turno=?, concmesas=?, pecm=?, medios=?, pem=?,desenslovez=?,pedese=?,pemt=?,concjigs=?,pejig=?,otrassalidas=? WHERE id = ?";
+    const sql = "UPDATE molienda SET fecha=?,turno=?, concmesas=?, pecm=?, medios=?, pem=?,desenslovez=?,pedese=?,pemt=?,concjigs=?,pejig=?,pmlt=?,pmle=?,otrassalidas=? WHERE id = ?";
     const values = [
         req.body.fecha,
         req.body.turno,
@@ -1312,6 +1314,8 @@ app.put('/updatemezclasmolienda/:id', (req, res) => {
         req.body.pemt,
         req.body.concjigs,
         req.body.pejig,
+        req.body.pmlt,
+        req.body.pmle,
         req.body.otrassalidas,
 
     ];
@@ -2813,6 +2817,418 @@ app.get('/getrecordtolvas/:id', (req, res) => {
 })
 app.delete('/deletetolvas/:id', (req, res) => {
     const sql = "DELETE FROM tolvasmolinos WHERE id = ?";
+    const id = req.params.id;
+    db.query(sql, [id], (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+});
+////////////MMLT/////////
+app.get('/mmlt', (req, res) => {
+    const sql = "SELECT * FROM mmlt ORDER BY id DESC";
+    db.query(sql, (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+});
+
+app.post('/createmmlt',async (req, res) => {
+    try {
+       
+        // Obtener el saldo anterior
+        const saldoAnteriorData = await new Promise((resolve, reject) => {
+            db.query("SELECT saldo FROM mmlt ORDER BY id DESC LIMIT 1", (err, data) => {
+                if (err) reject(err);
+                else resolve(data);
+            });
+        });
+
+        // Si hay registros en la tabla, obtén el saldo anterior, de lo contrario, establece el saldo anterior en 0
+        const saldoAnterior = saldoAnteriorData.length > 0 ? saldoAnteriorData[0].saldo : 0;
+
+         // Calcula el nuevo saldo sumando el saldo anterior a las entradas y restando las salidas
+         const nuevoSaldo = saldoAnterior + parseFloat(req.body.entradas) - parseFloat(req.body.salidas);
+
+        // Realizar la inserción en la tabla concmesas
+        const sql = "INSERT INTO mmlt (fecha, entradas, salidas, saldo, pe) VALUES (?, ?, ?, ?, ?)";
+        const values = [
+            req.body.fecha,
+            req.body.entradas,
+            req.body.salidas,
+            nuevoSaldo,
+            req.body.pe
+        ];
+
+        db.query(sql, values, (err, result) => {
+            if (err) throw err;
+            console.log("Registro insertado en concmesas con éxito.");
+            res.send("Registro insertado en concmesas con éxito.");
+        });
+    } catch (error) {
+        console.error("Error al crear el registro en concmesas:", error);
+        res.status(500).send("Error al crear el registro en concmesas.");
+    }
+});
+
+app.put('/updatemmlt/:id', async (req, res) => {
+
+   
+    const saldoAnteriorData = await new Promise((resolve, reject) => {
+        db.query("SELECT saldo FROM mmlt ORDER BY id DESC LIMIT 1, 1", (err, data) => {
+            if (err) reject(err);
+            else resolve(data);
+        });
+    });
+    
+    
+
+    // Si hay registros en la tabla, obtén el saldo anterior, de lo contrario, establece el saldo anterior en 0
+    const saldoAnterior = saldoAnteriorData.length > 0 ? saldoAnteriorData[0].saldo : 0;
+
+     // Calcula el nuevo saldo sumando el saldo anterior a las entradas y restando las salidas
+     const nuevoSaldo = saldoAnterior + parseFloat(req.body.entradas) - parseFloat(req.body.salidas);
+    const sql = "UPDATE mmlt SET fecha = ?, entradas = ?, salidas = ?, pe = ?, saldo = ? WHERE id = ?";
+    const values = [
+        req.body.fecha,
+        req.body.entradas,
+        req.body.salidas,
+        req.body.pe,
+        nuevoSaldo
+
+    ];
+    const id = req.params.id;
+    db.query(sql, [...values, id], (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+});
+
+app.get('/getrecordmmlt/:id', (req, res) => {
+    const id = req.params.id;
+    const sql = "SELECT * FROM mmlt WHERE id = ?"
+    db.query(sql, [id], (err, data) => {
+        if (err) {
+            return res.json({ Error: "Error" })
+        }
+
+        return res.json(data)
+    })
+})
+app.delete('/deletemmlt/:id', (req, res) => {
+    const sql = "DELETE FROM mmlt WHERE id = ?";
+    const id = req.params.id;
+    db.query(sql, [id], (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+});
+
+////////////MMLE/////////
+app.get('/mmle', (req, res) => {
+    const sql = "SELECT * FROM mmle ORDER BY id DESC";
+    db.query(sql, (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+});
+
+app.post('/createmmle',async (req, res) => {
+    try {
+       
+        // Obtener el saldo anterior
+        const saldoAnteriorData = await new Promise((resolve, reject) => {
+            db.query("SELECT saldo FROM mmle ORDER BY id DESC LIMIT 1", (err, data) => {
+                if (err) reject(err);
+                else resolve(data);
+            });
+        });
+
+        // Si hay registros en la tabla, obtén el saldo anterior, de lo contrario, establece el saldo anterior en 0
+        const saldoAnterior = saldoAnteriorData.length > 0 ? saldoAnteriorData[0].saldo : 0;
+
+         // Calcula el nuevo saldo sumando el saldo anterior a las entradas y restando las salidas
+         const nuevoSaldo = saldoAnterior + parseFloat(req.body.entradas) - parseFloat(req.body.salidas);
+
+        // Realizar la inserción en la tabla concmesas
+        const sql = "INSERT INTO mmle (fecha, entradas, salidas, saldo, pe) VALUES (?, ?, ?, ?, ?)";
+        const values = [
+            req.body.fecha,
+            req.body.entradas,
+            req.body.salidas,
+            nuevoSaldo,
+            req.body.pe
+        ];
+
+        db.query(sql, values, (err, result) => {
+            if (err) throw err;
+            console.log("Registro insertado en concmesas con éxito.");
+            res.send("Registro insertado en concmesas con éxito.");
+        });
+    } catch (error) {
+        console.error("Error al crear el registro en concmesas:", error);
+        res.status(500).send("Error al crear el registro en concmesas.");
+    }
+});
+
+app.put('/updatemmle/:id', async (req, res) => {
+
+   
+    const saldoAnteriorData = await new Promise((resolve, reject) => {
+        db.query("SELECT saldo FROM mmle ORDER BY id DESC LIMIT 1, 1", (err, data) => {
+            if (err) reject(err);
+            else resolve(data);
+        });
+    });
+    
+    
+
+    // Si hay registros en la tabla, obtén el saldo anterior, de lo contrario, establece el saldo anterior en 0
+    const saldoAnterior = saldoAnteriorData.length > 0 ? saldoAnteriorData[0].saldo : 0;
+
+     // Calcula el nuevo saldo sumando el saldo anterior a las entradas y restando las salidas
+     const nuevoSaldo = saldoAnterior + parseFloat(req.body.entradas) - parseFloat(req.body.salidas);
+    const sql = "UPDATE mmle SET fecha = ?, entradas = ?, salidas = ?, pe = ?, saldo = ? WHERE id = ?";
+    const values = [
+        req.body.fecha,
+        req.body.entradas,
+        req.body.salidas,
+        req.body.pe,
+        nuevoSaldo
+
+    ];
+    const id = req.params.id;
+    db.query(sql, [...values, id], (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+});
+
+app.get('/getrecordmmle/:id', (req, res) => {
+    const id = req.params.id;
+    const sql = "SELECT * FROM mmle WHERE id = ?"
+    db.query(sql, [id], (err, data) => {
+        if (err) {
+            return res.json({ Error: "Error" })
+        }
+
+        return res.json(data)
+    })
+})
+app.delete('/deletemmle/:id', (req, res) => {
+    const sql = "DELETE FROM mmle WHERE id = ?";
+    const id = req.params.id;
+    db.query(sql, [id], (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+});
+
+////////////MPMLE/////////
+app.get('/mpmle', (req, res) => {
+    const sql = "SELECT * FROM mpmle ORDER BY id DESC";
+    db.query(sql, (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+});
+
+app.post('/creatempmle',async (req, res) => {
+    try {
+       
+        // Obtener el saldo anterior
+        const saldoAnteriorData = await new Promise((resolve, reject) => {
+            db.query("SELECT saldo FROM mpmle ORDER BY id DESC LIMIT 1", (err, data) => {
+                if (err) reject(err);
+                else resolve(data);
+            });
+        });
+
+        // Si hay registros en la tabla, obtén el saldo anterior, de lo contrario, establece el saldo anterior en 0
+        const saldoAnterior = saldoAnteriorData.length > 0 ? saldoAnteriorData[0].saldo : 0;
+
+         // Calcula el nuevo saldo sumando el saldo anterior a las entradas y restando las salidas
+         const nuevoSaldo = saldoAnterior + parseFloat(req.body.entradas) - parseFloat(req.body.salidas);
+
+        // Realizar la inserción en la tabla concmesas
+        const sql = "INSERT INTO mpmle (fecha, entradas, salidas, saldo, pe) VALUES (?, ?, ?, ?, ?)";
+        const values = [
+            req.body.fecha,
+            req.body.entradas,
+            req.body.salidas,
+            nuevoSaldo,
+            req.body.pe
+        ];
+
+        db.query(sql, values, (err, result) => {
+            if (err) throw err;
+            console.log("Registro insertado en concmesas con éxito.");
+            res.send("Registro insertado en concmesas con éxito.");
+        });
+    } catch (error) {
+        console.error("Error al crear el registro en concmesas:", error);
+        res.status(500).send("Error al crear el registro en concmesas.");
+    }
+});
+
+app.put('/updatempmle/:id', async (req, res) => {
+
+   
+    const saldoAnteriorData = await new Promise((resolve, reject) => {
+        db.query("SELECT saldo FROM mpmle ORDER BY id DESC LIMIT 1, 1", (err, data) => {
+            if (err) reject(err);
+            else resolve(data);
+        });
+    });
+    
+    
+
+    // Si hay registros en la tabla, obtén el saldo anterior, de lo contrario, establece el saldo anterior en 0
+    const saldoAnterior = saldoAnteriorData.length > 0 ? saldoAnteriorData[0].saldo : 0;
+
+     // Calcula el nuevo saldo sumando el saldo anterior a las entradas y restando las salidas
+     const nuevoSaldo = saldoAnterior + parseFloat(req.body.entradas) - parseFloat(req.body.salidas);
+    const sql = "UPDATE mpmle SET fecha = ?, entradas = ?, salidas = ?, pe = ?, saldo = ? WHERE id = ?";
+    const values = [
+        req.body.fecha,
+        req.body.entradas,
+        req.body.salidas,
+        req.body.pe,
+        nuevoSaldo
+
+    ];
+    const id = req.params.id;
+    db.query(sql, [...values, id], (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+});
+
+app.get('/getrecordmpmle/:id', (req, res) => {
+    const id = req.params.id;
+    const sql = "SELECT * FROM mpmle WHERE id = ?"
+    db.query(sql, [id], (err, data) => {
+        if (err) {
+            return res.json({ Error: "Error" })
+        }
+
+        return res.json(data)
+    })
+})
+app.delete('/deletempmle/:id', (req, res) => {
+    const sql = "DELETE FROM mpmle WHERE id = ?";
+    const id = req.params.id;
+    db.query(sql, [id], (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+});
+
+////////////MPMLT/////////
+app.get('/mpmlet', (req, res) => {
+    const sql = "SELECT * FROM mpmlt ORDER BY id DESC";
+    db.query(sql, (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+});
+
+app.post('/creatempmlt',async (req, res) => {
+    try {
+        const totalsalidas = await new Promise((resolve, reject) => {
+            const query = "SELECT SUM(ps.patiols) + SUM(pj.alimj2) + SUM(m.pmlt) AS total_salidas " +
+                          "FROM prodseleccion ps " +
+                          "JOIN produccionjigs pj ON ps.id = pj.id " +
+                          "JOIN molienda m ON ps.id = m.id " +
+                          "WHERE ps.fecha = ?;"; // Ajusta la condición de fecha según tus necesidades
+            db.query(query, [req.body.fecha], (err, data) => {
+                if (err) reject(err);
+                else resolve(data[0].total_salidas); // Obtenemos el total de salidas combinadas
+            });
+        });
+        
+        
+        
+        // Obtener el saldo anterior
+        const saldoAnteriorData = await new Promise((resolve, reject) => {
+            db.query("SELECT saldo FROM mpmlt ORDER BY id DESC LIMIT 1", (err, data) => {
+                if (err) reject(err);
+                else resolve(data);
+            });
+        });
+
+        // Si hay registros en la tabla, obtén el saldo anterior, de lo contrario, establece el saldo anterior en 0
+        const saldoAnterior = saldoAnteriorData.length > 0 ? saldoAnteriorData[0].saldo : 0;
+
+         // Calcula el nuevo saldo sumando el saldo anterior a las entradas y restando las salidas
+         const nuevoSaldo = saldoAnterior + parseFloat(req.body.entradas) - parseFloat(totalsalidas);
+
+        // Realizar la inserción en la tabla concmesas
+        const sql = "INSERT INTO mpmlt (fecha, entradas, salidas, saldo, pe) VALUES (?, ?, ?, ?, ?)";
+        const values = [
+            req.body.fecha,
+            req.body.entradas,
+            totalsalidas,
+            nuevoSaldo,
+            req.body.pe
+        ];
+
+        db.query(sql, values, (err, result) => {
+            if (err) throw err;
+            console.log("Registro insertado en concmesas con éxito.");
+            res.send("Registro insertado en concmesas con éxito.");
+        });
+    } catch (error) {
+        console.error("Error al crear el registro en concmesas:", error);
+        res.status(500).send("Error al crear el registro en concmesas.");
+    }
+});
+
+app.put('/updatempmlt/:id', async (req, res) => {
+
+   
+    const saldoAnteriorData = await new Promise((resolve, reject) => {
+        db.query("SELECT saldo FROM mpmlt ORDER BY id DESC LIMIT 1, 1", (err, data) => {
+            if (err) reject(err);
+            else resolve(data);
+        });
+    });
+    
+    
+
+    // Si hay registros en la tabla, obtén el saldo anterior, de lo contrario, establece el saldo anterior en 0
+    const saldoAnterior = saldoAnteriorData.length > 0 ? saldoAnteriorData[0].saldo : 0;
+
+     // Calcula el nuevo saldo sumando el saldo anterior a las entradas y restando las salidas
+     const nuevoSaldo = saldoAnterior + parseFloat(req.body.entradas) - parseFloat(req.body.salidas);
+    const sql = "UPDATE mpmlt SET fecha = ?, entradas = ?, salidas = ?, pe = ?, saldo = ? WHERE id = ?";
+    const values = [
+        req.body.fecha,
+        req.body.entradas,
+        req.body.salidas,
+        req.body.pe,
+        nuevoSaldo
+
+    ];
+    const id = req.params.id;
+    db.query(sql, [...values, id], (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+});
+
+app.get('/getrecordmpmlt/:id', (req, res) => {
+    const id = req.params.id;
+    const sql = "SELECT * FROM mpmlt WHERE id = ?"
+    db.query(sql, [id], (err, data) => {
+        if (err) {
+            return res.json({ Error: "Error" })
+        }
+
+        return res.json(data)
+    })
+})
+app.delete('/deletempmlt/:id', (req, res) => {
+    const sql = "DELETE FROM mpmlt WHERE id = ?";
     const id = req.params.id;
     db.query(sql, [id], (err, data) => {
         if (err) return res.json(err);

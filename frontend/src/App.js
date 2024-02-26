@@ -83,6 +83,21 @@ import ModificarBaritron from './Componentes/Baritron/ModificarBaritron';
 import TolvasMolinos from './Componentes/TolvasMolinos/TolvasMolinos';
 import FrmTolvasMolinos from './Componentes/TolvasMolinos/FrmTolvasMolinos';
 import ModificarTolvasMolinos from './Componentes/TolvasMolinos/ModificarTolvasMolinos';
+import MP from './Componentes/ReporteExistencia/MP';
+import FrmMezclasMLT from './Componentes/Mezclas/FrmMezclasMLT';
+import MezclasMLE from './Componentes/Mezclas/MezclasMLE';
+import MezclasMLT from './Componentes/Mezclas/MezclasMLT';
+
+import MMezclas from './Componentes/Mezclas/MMezclas';
+import FrmMezclasMLE from './Componentes/Mezclas/FrmMezclasMLE';
+import ModificarMezclasMLE from './Componentes/Mezclas/ModificarMezclasMLE';
+import ModificarMezclasMLT from './Componentes/Mezclas/ModificarMezclasMLT';
+import MPatio from './Componentes/MPatio/MPatio';
+import PatioMLE from './Componentes/MPatio/PatioMLE';
+import PatioMLT from './Componentes/MPatio/PatioMLT';
+import FrmPatioMLE from './Componentes/MPatio/FrmPatioMLE';
+import FrmPatioMLT from './Componentes/MPatio/FrmPatioMLT';
+
 
 
 
@@ -134,6 +149,10 @@ function App() {
          <Route path="/existencia" element={<ReporteExistencia/>}/>
          <Route path="/pp" element={<PP/>}/>
          <Route path="/pt" element={<PT/>}/>
+         <Route path="/mp" element={<MP/>}/>
+
+
+
 
 
          ///////////////////granobaribright///
@@ -216,6 +235,22 @@ function App() {
          <Route path="/tolvas" element={<TolvasMolinos/>}/>
          <Route path="/createtolvas" element={<FrmTolvasMolinos/>}/>
          <Route path="/updatetolvas/:id" element={<ModificarTolvasMolinos/>}/>
+
+         ////////////////MP//////////
+         <Route path="/mineral" element={<MMezclas/>}/>
+         <Route path="/mmlt" element={<MezclasMLT/>}/>
+         <Route path="/createmmlt" element={<FrmMezclasMLT/>}/>
+         <Route path="/updatemmlt/:id" element={<ModificarMezclasMLT/>}/>
+         <Route path="/mmle" element={<MezclasMLE/>}/>
+         <Route path="/createmmle" element={<FrmMezclasMLE/>}/>
+         <Route path="/updatemmle/:id" element={<ModificarMezclasMLE/>}/>
+
+         <Route path="/patio" element={<MPatio/>}/>
+         <Route path="/mpmle" element={<PatioMLE/>}/>
+         <Route path="/creatempmle" element={<FrmPatioMLE/>}/>
+         <Route path="/mpmlt" element={<PatioMLT/>}/>
+         <Route path="/creatempmlt" element={<FrmPatioMLT/>}/>
+
        </Routes>
        </Menu >
       </div>
