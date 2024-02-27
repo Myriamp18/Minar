@@ -5,7 +5,7 @@ import axios from 'axios'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
-function FrmPatioMLE() {
+function FrmTrituradaMLE() {
   const [values, setValues] = useState({
     fecha: '',
     entradas:'',
@@ -31,10 +31,10 @@ const handleSubmit = (e) => {
     setValues({ ...values, saldo: nuevoSaldo });
 
     // Realiza la inserción con el nuevo saldo
-    axios.post('http://localhost:8081/creatempmle', { ...values, saldo: nuevoSaldo })
+    axios.post('http://localhost:8081/createtmle', { ...values, saldo: nuevoSaldo })
     .then(res => {
         console.log(res);
-        navigate('/mpmle');
+        navigate('/tmle');
     })
     .catch(err => {
         console.error('Error inserting data:', err);
@@ -42,8 +42,8 @@ const handleSubmit = (e) => {
 };
   return (
     <div className="d-flex align-items-center flex-column mt-3" >
-    <h1 >Insertar Patio MLE:</h1>
-    <div className="close-button" onClick={() => navigate('/mmle')}>
+    <h1 >Insertar Triturada MLE:</h1>
+    <div className="close-button" onClick={() => navigate('/tmle')}>
         <FontAwesomeIcon icon={faTimes} />
         </div>
       <form className="w-50" onSubmit={handleSubmit} >
@@ -72,7 +72,16 @@ const handleSubmit = (e) => {
          
 
 
-          
+          <div class="mb-3">
+            <label form='text' class="form-label"> Salidas:</label>
+            <input
+             type="text"  
+             class="form-control"
+             id='salidas'
+             placeholder='Insertar Cantidad'  
+             name='salidas'
+             onChange={(e) => setValues({...values, salidas: e.target.value})}/>
+          </div>
 
           <div class="mb-3">
             <label form='text' class="form-label"> P.ESP:</label>
@@ -104,4 +113,4 @@ const handleSubmit = (e) => {
   )
 }
 
-export default FrmPatioMLE
+export default FrmTrituradaMLE

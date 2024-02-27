@@ -16,7 +16,7 @@ function MPatio() {
   }
   return (
     <div className="existencia-container">
-    <h1>Minera en Patio:</h1>
+    <h1>Mineral en Patio:</h1>
     <div className="close-button" onClick={() => navigate('/mp')}>
             <FontAwesomeIcon icon={faTimes} />
             </div>

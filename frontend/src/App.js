@@ -97,6 +97,18 @@ import PatioMLE from './Componentes/MPatio/PatioMLE';
 import PatioMLT from './Componentes/MPatio/PatioMLT';
 import FrmPatioMLE from './Componentes/MPatio/FrmPatioMLE';
 import FrmPatioMLT from './Componentes/MPatio/FrmPatioMLT';
+import ModificarPatioMLE from './Componentes/MPatio/ModificarPatioMLE';
+import ModificarPatioMLT from './Componentes/MPatio/ModificarPatioMLT';
+import Triturada from './Componentes/Triturada/Triturada';
+import TrituradaMLE from './Componentes/Triturada/TrituradaMLE';
+import TrituradaMLT from './Componentes/Triturada/TrituradaMLT';
+import TolvaG from './Componentes/Triturada/TolvaG';
+import FrmTrituradaMLE from './Componentes/Triturada/FrmTrituradaMLE';
+import FrmTrituradaMLT from './Componentes/Triturada/FrmTrituradaMLT';
+import FrmTolvaG from './Componentes/Triturada/FrmTolvaG';
+import ModificarTrituradaMLE from './Componentes/Triturada/ModificarTrituradaMLE';
+import ModificarTrituradaMLT from './Componentes/Triturada/ModificarTrituradaMLT';
+import ModificarTolvaG from './Componentes/Triturada/ModificarTolvaG';
 
 
 
@@ -248,9 +260,21 @@ function App() {
          <Route path="/patio" element={<MPatio/>}/>
          <Route path="/mpmle" element={<PatioMLE/>}/>
          <Route path="/creatempmle" element={<FrmPatioMLE/>}/>
+         <Route path="/updatempmle/:id" element={<ModificarPatioMLE/>}/>
          <Route path="/mpmlt" element={<PatioMLT/>}/>
          <Route path="/creatempmlt" element={<FrmPatioMLT/>}/>
+         <Route path="/updatempmlt/:id" element={<ModificarPatioMLT/>}/>
 
+         <Route path="/triturada" element={<Triturada/>}/>
+         <Route path="/tmle" element={<TrituradaMLE/>}/>
+         <Route path="/tmlt" element={<TrituradaMLT/>}/>
+         <Route path="/tolvag" element={<TolvaG/>}/>
+         <Route path="/createtmle" element={<FrmTrituradaMLE/>}/>
+         <Route path="/createtmlt" element={<FrmTrituradaMLT/>}/>
+         <Route path="/createtolvag" element={<FrmTolvaG/>}/>
+         <Route path="/updatetmle/:id" element={<ModificarTrituradaMLE/>}/>
+         <Route path="/updatetmlt/:id" element={<ModificarTrituradaMLT/>}/>
+         <Route path="/updatetolvag/:id" element={<ModificarTolvaG/>}/>
        </Routes>
        </Menu >
       </div>

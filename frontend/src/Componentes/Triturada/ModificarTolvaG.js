@@ -5,45 +5,45 @@ import axios from 'axios'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
-function ModificarPatioMLT() {
+function ModificarTolvaG() {
   const { id } = useParams();
-  const navigate = useNavigate();
-  const [values, setValues] = useState({
-      fecha: '',
-      entradas: '',
-      salidas: '',
-      pe: '',
-  });
-  const [error, setError] = useState(null); // Estado para manejar errores
+    const navigate = useNavigate();
+    const [values, setValues] = useState({
+        fecha: '',
+        entradas: '',
+        salidas: '',
+        pe: '',
+    });
+    const [error, setError] = useState(null); // Estado para manejar errores
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    axios.put(`http://localhost:8081/updatempmlt/${id}`, values)
+    const handleSubmit = (e) => {
+      e.preventDefault()
+      axios.put(`http://localhost:8081/updatetolvag/${id}`, values)
 
-        .then(res => {
-            console.log(res);
-            // Optionally, you can navigate to a different page or update the UI
-            navigate('/mpmlt'); // Example: Navigate to the home page
+          .then(res => {
+              console.log(res);
+              // Optionally, you can navigate to a different page or update the UI
+              navigate('/tolvag'); // Example: Navigate to the home page
+          })
+          .catch(err => console.log(err));
+  };
+  useEffect(() => {
+    axios.get(`http://localhost:8081/getrecordtolvag/${id}`)
+        .then((res) => {
+            const data = res.data[0];
+            setValues({
+                fecha: data.fecha,
+                entradas: data.entradas,
+                salidas: data.salidas,
+                pe: data.pe,
+            });
         })
-        .catch(err => console.log(err));
-};
-useEffect(() => {
-  axios.get(`http://localhost:8081/getrecordmpmlt/${id}`)
-      .then((res) => {
-          const data = res.data[0];
-          setValues({
-              fecha: data.fecha,
-              entradas: data.entradas,
-              salidas: data.salidas,
-              pe: data.pe,
-          });
-      })
-      .catch(err => console.error(err));
+        .catch(err => console.error(err));
 }, [id]);
   return (
     <div className="d-flex align-items-center flex-column mt-3" >
-    <h1>Modificar Patio MLT:</h1>
-    <div className="close-button" onClick={() => navigate('/mpmlt')}>
+    <h1>Modificar Tolva MLE:</h1>
+    <div className="close-button" onClick={() => navigate('/tolvag')}>
             <FontAwesomeIcon icon={faTimes} />
             </div>
       <form className="w-50" onSubmit={handleSubmit} >
@@ -115,4 +115,4 @@ useEffect(() => {
   )
 }
 
-export default ModificarPatioMLT
+export default ModificarTolvaG

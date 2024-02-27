@@ -7,19 +7,19 @@ import axios from 'axios'
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import {useNavigate} from 'react-router-dom'
 
-function PatioMLT() {
+function TrituradaMLT() {
   const [data, setData] = useState([]);
   const navigate = useNavigate()
 
   useEffect(() => {
-    fetch('http://localhost:8081/mpmlet')
+    fetch('http://localhost:8081/tmlt')
       .then(res => res.json())
       .then(data => setData(data))
       .catch(err => console.log(err));
   }, [])
 
   const handleDelete = (id) => {
-    axios.delete(`http://localhost:8081/deletempmlt/${id}`)
+    axios.delete(`http://localhost:8081/deletetmlt/${id}`)
       .then(res => {
         // Actualiza la lista de datos excluyendo el registro eliminado
         const updatedData = data.filter(item => item.id !== id);
@@ -32,13 +32,13 @@ function PatioMLT() {
   return (
     <>
    
-    <h1>Patio MLT:</h1>
+    <h1>Triturada MLT:</h1>
  
     <div className="text-center">
-      <Link to="/creatempmlt" className="btn btn-danger btn-lg font-weight-bold   text-lg" >
+      <Link to="/createtmlt" className="btn btn-danger btn-lg font-weight-bold   text-lg" >
         <FontAwesomeIcon icon={faPlus} />Insertar</Link>
     </div>
-    <div className="close-button" onClick={() => navigate('/patio')}>
+    <div className="close-button" onClick={() => navigate('/triturada')}>
             <FontAwesomeIcon icon={faTimes} />
             </div>
     <div className='row mt-3'>
@@ -75,7 +75,7 @@ function PatioMLT() {
  
                     <td>
                       <div style={{ display: 'flex', alignItems: 'center' }}>
-                        <Link to={`/updatempmlt/${d.id}`} className='btn btn-warning'>
+                        <Link to={`/updatetmlt/${d.id}`} className='btn btn-warning'>
                           <i className='fa-solid fa-edit'></i>
                         </Link>
                         &nbsp;
@@ -104,4 +104,4 @@ function PatioMLT() {
   )
 }
 
-export default PatioMLT
+export default TrituradaMLT
