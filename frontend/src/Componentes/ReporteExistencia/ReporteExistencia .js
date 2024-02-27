@@ -18,7 +18,10 @@ export default function ReporteExistencia() {
   const handeleMP = () =>{
     navigate('/mp')
   }
-
+  const handelePDF = () =>{
+    navigate('/pdfexistencia')
+  }
+ 
   return (
 
 
@@ -57,7 +60,7 @@ export default function ReporteExistencia() {
            
         </span>
         </button>
-        <button className="btnmo btnmo-bs" >
+        <button className="btnmo btnmo-bs" onClick={handelePDF}>
         <span className="iconnnespdf"><FaFilePdf /> </span>
        
         </button>

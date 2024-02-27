@@ -109,6 +109,7 @@ import FrmTolvaG from './Componentes/Triturada/FrmTolvaG';
 import ModificarTrituradaMLE from './Componentes/Triturada/ModificarTrituradaMLE';
 import ModificarTrituradaMLT from './Componentes/Triturada/ModificarTrituradaMLT';
 import ModificarTolvaG from './Componentes/Triturada/ModificarTolvaG';
+import PdfExistencia from './Componentes/ReporteExistencia/PdfExistencia';
 
 
 
@@ -162,7 +163,7 @@ function App() {
          <Route path="/pp" element={<PP/>}/>
          <Route path="/pt" element={<PT/>}/>
          <Route path="/mp" element={<MP/>}/>
-
+         <Route path="/pdfexistencia" element={<PdfExistencia/>}/>
 
 
 

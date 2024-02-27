@@ -3560,3 +3560,29 @@ app.delete('/deletetolvag/:id', (req, res) => {
         return res.json(data);
     });
 });
+
+//////////PDF EXISTENCIAS///////////
+app.get('/getsilos/:fecha', (req, res) => {
+    const fecha = req.params.fecha;
+    const sql = "SELECT * FROM silos WHERE fecha = ?"
+    db.query(sql, [fecha], (err, data) => {
+        if (err) {
+            console.error("Error en la consulta SQL:", err);
+            return res.status(500).json({ error: "Error en la consulta SQL. Por favor, inténtalo de nuevo más tarde." });
+        }
+
+        return res.json(data);
+    });
+})
+app.get('/getmesas/:fecha', (req, res) => {
+    const fecha = req.params.fecha;
+    const sql = "SELECT * FROM concmesas WHERE fecha = ?"
+    db.query(sql, [fecha], (err, data) => {
+        if (err) {
+            console.error("Error en la consulta SQL:", err);
+            return res.status(500).json({ error: "Error en la consulta SQL. Por favor, inténtalo de nuevo más tarde." });
+        }
+
+        return res.json(data);
+    });
+})
