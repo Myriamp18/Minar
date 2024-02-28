@@ -110,6 +110,8 @@ import ModificarTrituradaMLE from './Componentes/Triturada/ModificarTrituradaMLE
 import ModificarTrituradaMLT from './Componentes/Triturada/ModificarTrituradaMLT';
 import ModificarTolvaG from './Componentes/Triturada/ModificarTolvaG';
 import PdfExistencia from './Componentes/ReporteExistencia/PdfExistencia';
+import Notas from './Componentes/Notas/Notas';
+import FrmNotas from './Componentes/Notas/FrmNotas';
 
 
 
@@ -276,6 +278,8 @@ function App() {
          <Route path="/updatetmle/:id" element={<ModificarTrituradaMLE/>}/>
          <Route path="/updatetmlt/:id" element={<ModificarTrituradaMLT/>}/>
          <Route path="/updatetolvag/:id" element={<ModificarTolvaG/>}/>
+         <Route path="/notas" element={<Notas/>}/>
+         <Route path="/createnotas" element={<FrmNotas/>}/>
        </Routes>
        </Menu >
       </div>

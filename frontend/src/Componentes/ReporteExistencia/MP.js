@@ -3,7 +3,7 @@ import { BsMinecartLoaded } from "react-icons/bs";
 import { useNavigate } from 'react-router-dom';
 import { GiMineralPearls } from "react-icons/gi";
 import { GiStonePile } from "react-icons/gi";
-
+import { HiOutlineAnnotation } from "react-icons/hi"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import './ReporteExistencia.css'
@@ -20,7 +20,10 @@ function MP() {
     const onTriturada= () =>{
       navigate('/triturada')
   }
- 
+  const onNotas= () =>{
+    navigate('/notas')
+}
+
 
   
   return (
@@ -64,7 +67,16 @@ function MP() {
          
       </span>
       </button>
-      
+      <button className="btn-large btn-mp" onClick={onNotas}>
+      <span className="iconnnes"> <HiOutlineAnnotation /></span>
+        <span className="button-text">
+         Notas
+      </span>
+      <span className="button-textss">
+       Pendiente
+         
+      </span>
+      </button>
     </div>
   </div>
   )
