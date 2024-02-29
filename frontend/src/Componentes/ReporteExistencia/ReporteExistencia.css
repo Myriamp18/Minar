@@ -64,7 +64,10 @@
     background-color: #22611c;
     color: #ffffff;
   }
-  
+  .btn-nota {
+    background-color: #d3390e;
+    color: #ffffff;
+  }
   .btn-bs {
     background-color: #121241;
     color: #ffffff;

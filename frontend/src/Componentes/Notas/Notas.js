@@ -65,7 +65,7 @@ function Notas() {
                       <tr key={i}>
                         <td>
                           <div style={{ display: 'flex', alignItems: 'center' }}>
-                            <Link to={`/updatemezclasmolienda/${d.id}`} className='btn btn-warning'>
+                            <Link to={`/updatenotas/${d.id}`} className='btn btn-warning'>
                               <i className='fa-solid fa-edit'></i>
                             </Link>
                             &nbsp;
@@ -78,7 +78,7 @@ function Notas() {
                         </td>
                         <td>{d.id}</td>
                         <td>{d.fecha}</td>
-                        <td>{d.descripcion}</td>
+                        <td>{d.comentario}</td>
                        
 
 

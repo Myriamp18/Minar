@@ -85,8 +85,10 @@ function PdfMolienda() {
 
     // Configuración del título del documento
     doc.setFont("fontName");
+    doc.setFontSize(18);
     doc.text('MINERALES Y ARCILLAS, S.A. DE C.V', 60, 10);
-
+    doc.setFontSize(12);
+    doc.text(`Fecha: ${selectedDate}`, 170, 18); // Agrega el texto de la fecha en la posición deseada
 
     const imgData = Logo; // Asigna la imagen importada a una variable
     doc.addImage(imgData, 'PNG', 15, 5, 20, 15); // Agrega la imagen al PDF

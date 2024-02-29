@@ -36,6 +36,7 @@ function PdfExistencia() {
   const [seleccion, setSeleccion] = useState([]);
   const [granobari, setGranoBari] = useState([]);
   const [concbari, setConcBari] = useState([]);
+  const [notas, setNotas] = useState([]);
   const [pdfGenerated, setPdfGenerated] = useState(false);
   const [selectedDate, setSelectedDate] = useState(null);
 
@@ -74,7 +75,7 @@ const fetchData = async (fecha) => {
       const responseSeleccion = await fetch(`http://localhost:8081/getseleccion/${fecha}`);
       const responseGranoBari = await fetch(`http://localhost:8081/getgrabari/${fecha}`);
       const responseConcBari = await fetch(`http://localhost:8081/getconcbari/${fecha}`);
-     
+      const responseNotas = await fetch(`http://localhost:8081/getnotas/${fecha}`)
 
 
 
@@ -83,7 +84,7 @@ const fetchData = async (fecha) => {
       if ( !responseSilos.ok||!responseMesas.ok || !responseSec.ok || !responseMedios46.ok|| !responseMedios4.ok|| 
         !responseMedios3|| !responseGranoBandas|| !responseGranoPMoler|| !responseGranoJigs.ok|| !responseDesensolveCh.ok|| !responseDesensolve||
          !responseDesecho43||!responseDesecho39|| !responseBaritron|| !responseTolvasMolinos||!responseMMLT.ok||!responseMMLE.ok||!responseMPMLT.ok||
-         !responseMPMLE.ok||!responseTMLT.ok||!responseTMLE.ok||!responseTolvaG.ok||!responseSeleccion.ok|| !responseGranoBari.ok|| !responseConcBari.ok) {
+         !responseMPMLE.ok||!responseTMLT.ok||!responseTMLE.ok||!responseTolvaG.ok||!responseSeleccion.ok|| !responseGranoBari.ok|| !responseConcBari.ok|| !responseNotas.ok) {
           throw new Error('Error al obtener los datos');
       }
 
@@ -112,6 +113,7 @@ const fetchData = async (fecha) => {
       const dataSeleccion = await responseSeleccion.json();
       const dataGranoBari = await responseGranoBari.json();
       const dataConcBari = await responseConcBari.json();
+      const dataNotas = await responseNotas.json();
       
 
       setSilos(dataSilos);
@@ -140,6 +142,7 @@ const fetchData = async (fecha) => {
       setSeleccion(dataSeleccion);
       setGranoBari(dataGranoBari);
       setConcBari(dataConcBari);
+      setNotas(dataNotas);
      
   } catch (error) {
       console.log('Error:', error);
@@ -148,6 +151,7 @@ const fetchData = async (fecha) => {
 
 const handleDateChange = (date) => {
   console.log(date);
+  
   // Convertir la fecha al formato deseado antes de actualizar el estado
   const formattedDate = formatDate(date);
   setSelectedDate(formattedDate);
@@ -172,7 +176,7 @@ const generatePDF = async () => {
   const doc = new jsPDF({
       orientation: 'p', // Orientación: 'p' para retrato, 'l' para paisaje
       unit: 'mm', // Unidad de medida: milímetros
-      format:[216, 356], // Tamaño del papel: 'a4', 'letter', 'legal', etc.
+      format:[216, 345], // Tamaño del papel: 'a4', 'letter', 'legal', etc.
       putOnlyUsedFonts: true,
       floatPrecision: 16,
       margins: { // Márgenes personalizados
@@ -184,9 +188,16 @@ const generatePDF = async () => {
       }
   });
 
+ 
+
+  // Agrega el texto de la fecha al PDF usando la fecha seleccionada
+
 // Configuración del título del documento
 doc.setFont("fontName");
+doc.setFontSize(18);
 doc.text('REPORTE DE PRODUCCION DE EXISTENCIAS', 50, 10);
+doc.setFontSize(12);
+doc.text(`Fecha: ${selectedDate}`, 150, 17); // Agrega el texto de la fecha en la posición deseada
 const imgData = Logo; // Asigna la imagen importada a una variable
 doc.addImage(imgData, 'PNG', 15, 5, 20, 15); // Agrega la imagen al PDF
 
@@ -198,6 +209,7 @@ generateCombinedTable(doc, mesas, sec, medios46,medios4,medios3,granobandas,gran
 generateSecondCombinedTable(doc, mmlt,mmle,mpmlt,mpmle,tmlt,tmle,tolvag, 'Tabla 2 Combinada', 100);
 
 generateTridCombinedTable(doc, seleccion, granobari, concbari, 'Tabla 2 Combinada', 100);
+generateCuartCombinedTable(doc, notas, 'Tabla NOTAS', 150);
 
 
 let fileName = `reporte_existencias.pdf`;
@@ -474,6 +486,39 @@ const generateTridCombinedTable = (doc, seleccion,granobari,concbari, title, sta
   const firstTableHeight = doc.autoTable.previous.finalY || startY;
   const tablePropsTurnos = {
     startY: 250,
+    margin: { horizontal: 14 },
+    tableWidth: 190
+  };
+
+  doc.autoTable({
+    head: [tableColumn],
+    body: tableRows,
+    startY: firstTableHeight + 10,
+    theme: 'grid',
+    headStyles: {
+      fillColor: [0, 128, 0] // Cambia el color del encabezado de la tabla a azul
+    },
+    ...tablePropsTurnos,
+    setFontSize: 10,
+    headStyles: styles.tableHeader,
+    bodyStyles: styles.tableRow,
+  });
+};
+const generateCuartCombinedTable = (doc, notas, title, startY) => {
+  const tableColumn = ['NOTAS'];
+  const tableRows = [];
+
+  // Agregar datos de la primera tabla
+  notas.forEach((item) => {
+    const rowData = [item.comentario];
+    tableRows.push(rowData);
+  });
+
+  // Agregar datos de la segunda tabla
+  
+  const firstTableHeight = doc.autoTable.previous.finalY || startY;
+  const tablePropsTurnos = {
+    startY: 290,
     margin: { horizontal: 14 },
     tableWidth: 190
   };

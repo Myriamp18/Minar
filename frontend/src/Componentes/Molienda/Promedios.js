@@ -45,7 +45,7 @@ function Promedios() {
 
     <div className='row mt-3'>
       {data.length !== 0 ?
-        <div className='col-11 col-lg-8 offset-0 offset-lg-2'>
+        <div className='col-11 col-lg-7 offset-0 offset-lg-2'>
           <div className='table-container'>
             <div className='table-top-scroll'> {/* Nuevo contenedor */}
               <div className='table-responsive'>

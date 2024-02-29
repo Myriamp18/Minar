@@ -112,6 +112,7 @@ import ModificarTolvaG from './Componentes/Triturada/ModificarTolvaG';
 import PdfExistencia from './Componentes/ReporteExistencia/PdfExistencia';
 import Notas from './Componentes/Notas/Notas';
 import FrmNotas from './Componentes/Notas/FrmNotas';
+import ModificarNotas from './Componentes/Notas/ModificarNotas';
 
 
 
@@ -280,6 +281,7 @@ function App() {
          <Route path="/updatetolvag/:id" element={<ModificarTolvaG/>}/>
          <Route path="/notas" element={<Notas/>}/>
          <Route path="/createnotas" element={<FrmNotas/>}/>
+         <Route path="/updatenotas/:id" element={<ModificarNotas/>}/>
        </Routes>
        </Menu >
       </div>

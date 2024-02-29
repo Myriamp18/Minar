@@ -67,7 +67,7 @@ function MP() {
          
       </span>
       </button>
-      <button className="btn-large btn-mp" onClick={onNotas}>
+      <button className="btn-large btn-nota" onClick={onNotas}>
       <span className="iconnnes"> <HiOutlineAnnotation /></span>
         <span className="button-text">
          Notas

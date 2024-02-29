@@ -3863,6 +3863,18 @@ app.get('/getconcbari/:fecha', (req, res) => {
         return res.json(data);
     });
 })
+app.get('/getnotas/:fecha', (req, res) => {
+    const fecha = req.params.fecha;
+    const sql = "SELECT * FROM notas WHERE fecha = ?"
+    db.query(sql, [fecha], (err, data) => {
+        if (err) {
+            console.error("Error en la consulta SQL:", err);
+            return res.status(500).json({ error: "Error en la consulta SQL. Por favor, inténtalo de nuevo más tarde." });
+        }
+
+        return res.json(data);
+    });
+})
 
 /////////NOTAS////////
 app.get('/notas', (req, res) => {
@@ -3899,10 +3911,10 @@ app.put('/updatenotas/:id', async (req, res) => {
 
 
   
-    const sql = "UPDATE notas SET fecha = ?, comentarios = ? WHERE id = ?";
+    const sql = "UPDATE notas SET fecha = ?, comentario = ? WHERE id = ?";
     const values = [
         req.body.fecha,
-        req.body.comentarios,
+        req.body.comentario,
        
 
     ];
