@@ -9,7 +9,12 @@ function ModificarNotas() {
   const { id } = useParams()
     const [values, setValues] = useState({
         fecha: '',
+        totmedios:"",
+        totdesensolve:"",
+        totcolas:"",
+        totjigssec:"",
         comentario: "",
+
        
        
     
@@ -36,6 +41,10 @@ function ModificarNotas() {
                   setValues({
                       ...values,
                       fecha: res.data[0].fecha,
+                      totmedios : res.data[0].totmedios,
+                      totdesensolve : res.data[0].totdesensolve,
+                      totcolas : res.data[0].totcolas,
+                      totjigssec : res.data[0].totjigssec,
                       comentario : res.data[0].comentario,
                     
                   });
@@ -67,9 +76,51 @@ function ModificarNotas() {
         />
       </div>
 
+      <div class="mb-3">
+            <label form='text' class="form-label"> Medios a Lavar:</label>
+            <input
+             type="text"  
+             class="form-control"
+             id='medios lavar'
+             placeholder='Insertar Cantidad'  
+             name='medios'
+             value={values.totmedios}
+             onChange={(e) => setValues({...values, totmedios: e.target.value})}/>
+          </div>
 
-
-
+          <div class="mb-3">
+            <label form='text' class="form-label"> Desensolve a Lavar:</label>
+            <input
+             type="text"  
+             class="form-control"
+             id='desensolve lavar'
+             placeholder='Insertar Cantidad'  
+             name='desensolve'
+             value={values.totdesensolve}
+             onChange={(e) => setValues({...values, totdesensolve: e.target.value})}/>
+          </div>
+          <div class="mb-3">
+            <label form='text' class="form-label"> Colas a Lavar:</label>
+            <input
+             type="text"  
+             class="form-control"
+             id='colas lavar'
+             placeholder='Insertar Cantidad'  
+             name='colas'
+             value={values.totcolas}
+             onChange={(e) => setValues({...values, totcolas: e.target.value})}/>
+          </div>
+          <div class="mb-3">
+            <label form='text' class="form-label"> Jigss a Lavar:</label>
+            <input
+             type="text"  
+             class="form-control"
+             id='jigssec lavar'
+             placeholder='Insertar Cantidad'  
+             name='jigsec'
+             value={values.totjigssec}
+             onChange={(e) => setValues({...values, totjigssec: e.target.value})}/>
+          </div>
 
       <label form='text'> Nota:</label>
 
@@ -77,7 +128,7 @@ function ModificarNotas() {
         placeholder="Inserte los medios a lavar a mesas y a jigss ."
         className="form-control"
         name='descripcion'
-        style={{ height: '200px', width: '100%', whiteSpace: 'pre-wrap', wordWrap: 'break-word', overflowWrap: 'break-word' }}
+        style={{ height: '100px', width: '100%', whiteSpace: 'pre-wrap', wordWrap: 'break-word', overflowWrap: 'break-word' }}
         value={values.comentario}
         onChange={(e) => setValues({ ...values, comentario: e.target.value })}
       />

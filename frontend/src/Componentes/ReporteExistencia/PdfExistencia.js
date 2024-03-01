@@ -176,7 +176,7 @@ const generatePDF = async () => {
   const doc = new jsPDF({
       orientation: 'p', // Orientación: 'p' para retrato, 'l' para paisaje
       unit: 'mm', // Unidad de medida: milímetros
-      format:[216, 345], // Tamaño del papel: 'a4', 'letter', 'legal', etc.
+      format:[216, 360], // Tamaño del papel: 'a4', 'letter', 'legal', etc.
       putOnlyUsedFonts: true,
       floatPrecision: 16,
       margins: { // Márgenes personalizados
@@ -505,13 +505,27 @@ const generateTridCombinedTable = (doc, seleccion,granobari,concbari, title, sta
   });
 };
 const generateCuartCombinedTable = (doc, notas, title, startY) => {
-  const tableColumn = ['NOTAS'];
+  const tableColumn = ['NOTAS', ''];
   const tableRows = [];
 
   // Agregar datos de la primera tabla
   notas.forEach((item) => {
-    const rowData = [item.comentario];
+    const rowData = [item.totmedios, "TONS DE MEDIOS PASARON A LAVAR A MESAS "];
     tableRows.push(rowData);
+
+    const rowData1 = [item.totjigssec , "TON DE MEDIOS PASARON A LAVAR A JIGG´S SECUNDARIO"];
+    tableRows.push(rowData1);
+    const rowData2 = [item.totdesensolve, "TON DE DESENSOLVE PASARON A LAVAR A MESAS"];
+    tableRows.push(rowData2);
+
+    const rowData3 = [item.totcolas, "TON DE COLAS PASARON A LAVAR A MESAS"];
+    tableRows.push(rowData3);
+
+    const rowData4 = [item.totjigssec , "TON DE MEDIOS PASARON A LAVAR A JIGG´S SECUNDARIO"];
+    tableRows.push(rowData4);
+
+    const rowData5 = [item.comentario];
+    tableRows.push(rowData5);
   });
 
   // Agregar datos de la segunda tabla

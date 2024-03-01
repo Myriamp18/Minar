@@ -55,6 +55,10 @@ function Notas() {
 
                       <th>ID</th>
                       <th>Fecha</th>
+                      <th>Medios</th>
+                      <th>Desensolve</th>
+                      <th>Colas</th>
+                      <th>Jigsec</th>
                       <th>Notas</th>
 
                       
@@ -78,7 +82,11 @@ function Notas() {
                         </td>
                         <td>{d.id}</td>
                         <td>{d.fecha}</td>
-                        <td>{d.comentario}</td>
+                        <td>{typeof d.totmedios === 'number' ? d.totmedios.toFixed(3) : 'N/A' }</td>
+                        <td>{typeof d.totdesensolve === 'number' ? d.totdesensolve.toFixed(3) : 'N/A' }</td>
+                        <td>{typeof d.totcolas === 'number' ? d.totcolas.toFixed(3) : 'N/A' }</td>
+                        <td>{typeof d.totjigssec === 'number' ? d.totjigssec.toFixed(3) : 'N/A' }</td>
+                        <td>{ d.comentario  }</td>
                        
 
 

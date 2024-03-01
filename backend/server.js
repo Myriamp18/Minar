@@ -1180,21 +1180,8 @@ app.post('/createconcmesas', async (req, res) => {
 
 app.put('/updateconcmesas/:id', async (req, res) => {
     try {
-        //Obtener el total concentrado de las mesas para la fecha especificada
-        const totalConcentradoMesas = await new Promise((resolve, reject) => {
-            const query = "SELECT (SUM(conm12) + SUM(conm34) + SUM(conm5) + SUM(conm6)) AS total_concentrado FROM mesas WHERE fecha = ?;";
-            db.query(query, [req.body.fecha], (err, data) => {
-                if (err) reject(err);
-                else resolve(data[0].total_concentrado); // Obtenemos el total concentrado de la primera fila
-            });
-        });
-        const totalSalidasMesas = await new Promise((resolve, reject) => {
-            const query = "SELECT (SUM(concmesas)) AS total_salidas FROM molienda WHERE fecha = ?;";
-            db.query(query, [req.body.fecha], (err, data) => {
-                if (err) reject(err);
-                else resolve(data[0].total_salidas); // Obtenemos el total concentrado de la primera fila
-            });
-        });
+     
+      
 
         // Obtener el saldo anterior
         const saldoAnteriorData = await new Promise((resolve, reject) => {
@@ -1208,12 +1195,12 @@ app.put('/updateconcmesas/:id', async (req, res) => {
         const saldoAnterior = saldoAnteriorData.length > 0 ? saldoAnteriorData[0].saldo : 0;
 
         // Calcula el nuevo saldo sumando el saldo anterior a las entradas y restando las salidas
-        const nuevoSaldo = saldoAnterior + parseFloat(totalConcentradoMesas) - parseFloat(totalSalidasMesas);
+        const nuevoSaldo = saldoAnterior + parseFloat(req.body.entradas) - parseFloat(req.body.salidas);
         const sql = "UPDATE concmesas SET fecha=?, entradas=?, salidas=?, saldo=?, pe=? WHERE id = ?";
         const values = [
             req.body.fecha,
-            totalConcentradoMesas,
-            totalSalidasMesas,
+            req.body.entradas,
+            req.body.salidas,
             nuevoSaldo,
             req.body.pe,
         ];
@@ -1519,21 +1506,7 @@ app.post('/createconcjigssec', async (req, res) => {
 
 app.put('/updatenconcjigssec/:id', async (req, res) => {
     try {
-        const totalConcentradojigss = await new Promise((resolve, reject) => {
-            const query = "SELECT (SUM(concjsec	)) AS total_concjigs FROM jigschinos WHERE fecha = ?;";
-            db.query(query, [req.body.fecha], (err, data) => {
-                if (err) reject(err);
-                else resolve(data[0].total_concjigs); // Obtenemos el total concentrado de la primera fila
-            });
-        });
-        const totalSalidasConcjigs = await new Promise((resolve, reject) => {
-            const query = "SELECT (SUM(concjigs)) AS total_concjig FROM molienda WHERE fecha = ?;";
-            db.query(query, [req.body.fecha], (err, data) => {
-                if (err) reject(err);
-                else resolve(data[0].total_concjig); // Obtenemos el total concentrado de la primera fila
-            });
-        });
-
+     
         // Obtener el saldo anterior
         const saldoAnteriorData = await new Promise((resolve, reject) => {
             db.query("SELECT saldo FROM concjigssec ORDER BY id DESC LIMIT 1, 1", (err, data) => {
@@ -1546,13 +1519,13 @@ app.put('/updatenconcjigssec/:id', async (req, res) => {
         const saldoAnterior = saldoAnteriorData.length > 0 ? saldoAnteriorData[0].saldo : 0;
 
         // Calcula el nuevo saldo sumando el saldo anterior a las entradas y restando las salidas
-        const nuevoSaldo = saldoAnterior + parseFloat(totalSalidasConcjigs) - parseFloat(totalSalidasConcjigs);
+        const nuevoSaldo = saldoAnterior + parseFloat(req.body.entradas) - parseFloat( req.body.salidas,);
 
         const sql = "UPDATE concjigssec SET fecha=?, entradas=?, salidas=?, saldo=?, pe=? WHERE id = ?";
         const values = [
             req.body.fecha,
-            totalConcentradojigss,
-            totalSalidasConcjigs,
+            req.body.entradas,
+            req.body.salidas,
             nuevoSaldo,
             req.body.pe,
         ];
@@ -3887,13 +3860,45 @@ app.get('/notas', (req, res) => {
 app.post('/createnotas', async (req, res) => {
     try {
 
-    
+    //Obtener el total concentrado de las mesas para la fecha especificada
+    const totalmedios = await new Promise((resolve, reject) => {
+        const query ="SELECT (SUM(medio3y4)) AS total_medios FROM prodseleccion WHERE fecha = ?;";
+        db.query(query, [req.body.fecha], (err, data) => {
+            if (err) reject(err);
+            else resolve(data[0].total_medios); // Obtenemos el total concentrado de la primera fila
+        });
+    });
+    const totaldesensolve = await new Promise((resolve, reject) => {
+        const query = "SELECT (SUM(desensolve)) AS total_desensolve FROM prodseleccion WHERE fecha = ?;";
+        db.query(query, [req.body.fecha], (err, data) => {
+            if (err) reject(err);
+            else resolve(data[0].total_desensolve); // Obtenemos el total concentrado de la primera fila
+        });
+    });
+    const totalcolas = await new Promise((resolve, reject) => {
+        const query = "SELECT (SUM(colas)) AS total_colas FROM prodseleccion WHERE fecha = ?;";
+        db.query(query, [req.body.fecha], (err, data) => {
+            if (err) reject(err);
+            else resolve(data[0].total_colas); // Obtenemos el total concentrado de la primera fila
+        });
+    });
+    const totaljigssec = await new Promise((resolve, reject) => {
+        const query = "SELECT (SUM(alimjsec)) AS total_jigssec FROM jigschinos WHERE fecha = ?;";
+        db.query(query, [req.body.fecha], (err, data) => {
+            if (err) reject(err);
+            else resolve(data[0].total_jigssec); // Obtenemos el total concentrado de la primera fila
+        });
+    });
 
         // Realizar la inserción en la tabla concmesas
-        const sql = "INSERT INTO notas (fecha, comentario) VALUES (?, ?)";
+        const sql = "INSERT INTO notas (fecha, totmedios, totdesensolve, totcolas,comentario, totjigssec) VALUES (?, ?,?,?,?,?)";
         const values = [
             req.body.fecha,
+            totalmedios,
+            totaldesensolve,
+            totalcolas,
             req.body.comentario,
+            totaljigssec,
           
         ];
 
@@ -3911,9 +3916,13 @@ app.put('/updatenotas/:id', async (req, res) => {
 
 
   
-    const sql = "UPDATE notas SET fecha = ?, comentario = ? WHERE id = ?";
+    const sql = "UPDATE notas SET fecha = ?, totmedios =?, totdesensolve = ?, totcolas = ?, totjigssec = ?, comentario = ? WHERE id = ?";
     const values = [
         req.body.fecha,
+        req.body.totmedios,
+        req.body.totdesensolve,
+        req.body.totcolas,
+        req.body.totjigssec,
         req.body.comentario,
        
 
