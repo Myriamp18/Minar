@@ -113,6 +113,9 @@ import PdfExistencia from './Componentes/ReporteExistencia/PdfExistencia';
 import Notas from './Componentes/Notas/Notas';
 import FrmNotas from './Componentes/Notas/FrmNotas';
 import ModificarNotas from './Componentes/Notas/ModificarNotas';
+import Horometros from './Componentes/Horometros/Horometros';
+import HorometroJigs from './Componentes/Horometros/HorometroJigs';
+import FrmHorometroJigs from './Componentes/Horometros/FrmHorometroJigs';
 
 
 
@@ -282,6 +285,13 @@ function App() {
          <Route path="/notas" element={<Notas/>}/>
          <Route path="/createnotas" element={<FrmNotas/>}/>
          <Route path="/updatenotas/:id" element={<ModificarNotas/>}/>
+
+
+
+         /////////HOROMETROS//////////
+         <Route path="/horometros" element={<Horometros/>}/>
+         <Route path="/hjigs" element={<HorometroJigs/>}/>
+         <Route path="/createhjigs" element={<FrmHorometroJigs/>}/>
        </Routes>
        </Menu >
       </div>

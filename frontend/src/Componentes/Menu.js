@@ -37,7 +37,7 @@ function Menu({children}) {
             icon:<GiNotebook />
         },
         {
-            path:"/diario",
+            path:"/horometros",
             name:"Reporte Produccion",
             icon:<GiNotebook />
         },

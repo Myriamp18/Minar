@@ -1,0 +1,85 @@
+.horometros{
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    /* Centra verticalmente los elementos */
+    height: 150vh;
+
+}
+
+.h-container {
+    display: flex;
+    flex-direction:inherit;
+    margin-left:10px;
+    margin-top: 30px;
+    height: 100vh;
+}
+
+.buttonh-container {
+    display: flex ;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 5px;
+  }
+
+.iconnnesh {
+    /* Estilos para el icono */
+ position: absolute; /* Establece la posición absoluta para el icono */
+ top: 40%; /* Lo posiciona en la mitad superior del botón */
+ left: 5px; /* Lo posiciona 5px desde el borde izquierdo del botón */
+ transform: translateY(-50%); /* Centra verticalmente el icono */
+ font-size: 3em; /* Tamaño del icono relativo al tamaño del botón */
+  }
+  .btnh-large {
+    padding: 20px 50px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    border: none;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    position: relative;
+    background-color:#f1f0d7;
+    color: #03122b;
+  }
+  .btnh-large:hover {
+    background-color: #000000e8;
+    color: #f6f6f6;
+  }
+  .buttonh-text {
+    font-size: 15px;
+    margin-left:10px;
+    font-family: 'Verdana', sans-serif;
+  }
+  .buttonh-textss {
+    font-size: 12px;
+    margin-left:10px;
+    font-family: 'Verdana', sans-serif;
+  }
+  @media screen and (max-width: 600px) {
+    .btnh-large {
+      padding: 12px 8px;
+      font-size: 14px;
+    }
+
+    .iconnnesh {
+    /* Estilos para el icono */
+    position: absolute; /* Establece la posición absoluta para el icono */
+    top: 0; /* Posiciona el icono en la parte superior del contenedor */
+    left: 50%; /* Lo posiciona en el centro horizontal del contenedor */
+    transform: translate(-50%, -50%); /* Centra vertical y horizontalmente el icono */
+    font-size: 2em; /* Tamaño del icono */
+    z-index:1; /* Asegura que el icono esté por encima del texto */
+    gap: 2px;
+    }
+    .buttonh-text {
+      font-size: 15px;
+      margin-left:10px;
+      font-family: 'Verdana', sans-serif;
+      position: relative; /* Establece la posición relativa para el texto */
+      z-index: 0; /* Asegura que el texto esté detrás del icono */
+    }
+  }

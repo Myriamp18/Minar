@@ -1180,8 +1180,8 @@ app.post('/createconcmesas', async (req, res) => {
 
 app.put('/updateconcmesas/:id', async (req, res) => {
     try {
-     
-      
+
+
 
         // Obtener el saldo anterior
         const saldoAnteriorData = await new Promise((resolve, reject) => {
@@ -1506,7 +1506,7 @@ app.post('/createconcjigssec', async (req, res) => {
 
 app.put('/updatenconcjigssec/:id', async (req, res) => {
     try {
-     
+
         // Obtener el saldo anterior
         const saldoAnteriorData = await new Promise((resolve, reject) => {
             db.query("SELECT saldo FROM concjigssec ORDER BY id DESC LIMIT 1, 1", (err, data) => {
@@ -1519,7 +1519,7 @@ app.put('/updatenconcjigssec/:id', async (req, res) => {
         const saldoAnterior = saldoAnteriorData.length > 0 ? saldoAnteriorData[0].saldo : 0;
 
         // Calcula el nuevo saldo sumando el saldo anterior a las entradas y restando las salidas
-        const nuevoSaldo = saldoAnterior + parseFloat(req.body.entradas) - parseFloat( req.body.salidas,);
+        const nuevoSaldo = saldoAnterior + parseFloat(req.body.entradas) - parseFloat(req.body.salidas,);
 
         const sql = "UPDATE concjigssec SET fecha=?, entradas=?, salidas=?, saldo=?, pe=? WHERE id = ?";
         const values = [
@@ -3860,35 +3860,35 @@ app.get('/notas', (req, res) => {
 app.post('/createnotas', async (req, res) => {
     try {
 
-    //Obtener el total concentrado de las mesas para la fecha especificada
-    const totalmedios = await new Promise((resolve, reject) => {
-        const query ="SELECT (SUM(medio3y4)) AS total_medios FROM prodseleccion WHERE fecha = ?;";
-        db.query(query, [req.body.fecha], (err, data) => {
-            if (err) reject(err);
-            else resolve(data[0].total_medios); // Obtenemos el total concentrado de la primera fila
+        //Obtener el total concentrado de las mesas para la fecha especificada
+        const totalmedios = await new Promise((resolve, reject) => {
+            const query = "SELECT (SUM(medio3y4)) AS total_medios FROM prodseleccion WHERE fecha = ?;";
+            db.query(query, [req.body.fecha], (err, data) => {
+                if (err) reject(err);
+                else resolve(data[0].total_medios); // Obtenemos el total concentrado de la primera fila
+            });
         });
-    });
-    const totaldesensolve = await new Promise((resolve, reject) => {
-        const query = "SELECT (SUM(desensolve)) AS total_desensolve FROM prodseleccion WHERE fecha = ?;";
-        db.query(query, [req.body.fecha], (err, data) => {
-            if (err) reject(err);
-            else resolve(data[0].total_desensolve); // Obtenemos el total concentrado de la primera fila
+        const totaldesensolve = await new Promise((resolve, reject) => {
+            const query = "SELECT (SUM(desensolve)) AS total_desensolve FROM prodseleccion WHERE fecha = ?;";
+            db.query(query, [req.body.fecha], (err, data) => {
+                if (err) reject(err);
+                else resolve(data[0].total_desensolve); // Obtenemos el total concentrado de la primera fila
+            });
         });
-    });
-    const totalcolas = await new Promise((resolve, reject) => {
-        const query = "SELECT (SUM(colas)) AS total_colas FROM prodseleccion WHERE fecha = ?;";
-        db.query(query, [req.body.fecha], (err, data) => {
-            if (err) reject(err);
-            else resolve(data[0].total_colas); // Obtenemos el total concentrado de la primera fila
+        const totalcolas = await new Promise((resolve, reject) => {
+            const query = "SELECT (SUM(colas)) AS total_colas FROM prodseleccion WHERE fecha = ?;";
+            db.query(query, [req.body.fecha], (err, data) => {
+                if (err) reject(err);
+                else resolve(data[0].total_colas); // Obtenemos el total concentrado de la primera fila
+            });
         });
-    });
-    const totaljigssec = await new Promise((resolve, reject) => {
-        const query = "SELECT (SUM(alimjsec)) AS total_jigssec FROM jigschinos WHERE fecha = ?;";
-        db.query(query, [req.body.fecha], (err, data) => {
-            if (err) reject(err);
-            else resolve(data[0].total_jigssec); // Obtenemos el total concentrado de la primera fila
+        const totaljigssec = await new Promise((resolve, reject) => {
+            const query = "SELECT (SUM(alimjsec)) AS total_jigssec FROM jigschinos WHERE fecha = ?;";
+            db.query(query, [req.body.fecha], (err, data) => {
+                if (err) reject(err);
+                else resolve(data[0].total_jigssec); // Obtenemos el total concentrado de la primera fila
+            });
         });
-    });
 
         // Realizar la inserción en la tabla concmesas
         const sql = "INSERT INTO notas (fecha, totmedios, totdesensolve, totcolas,comentario, totjigssec) VALUES (?, ?,?,?,?,?)";
@@ -3899,7 +3899,7 @@ app.post('/createnotas', async (req, res) => {
             totalcolas,
             req.body.comentario,
             totaljigssec,
-          
+
         ];
 
         db.query(sql, values, (err, result) => {
@@ -3915,7 +3915,7 @@ app.post('/createnotas', async (req, res) => {
 app.put('/updatenotas/:id', async (req, res) => {
 
 
-  
+
     const sql = "UPDATE notas SET fecha = ?, totmedios =?, totdesensolve = ?, totcolas = ?, totjigssec = ?, comentario = ? WHERE id = ?";
     const values = [
         req.body.fecha,
@@ -3924,7 +3924,7 @@ app.put('/updatenotas/:id', async (req, res) => {
         req.body.totcolas,
         req.body.totjigssec,
         req.body.comentario,
-       
+
 
     ];
     const id = req.params.id;
@@ -3947,6 +3947,116 @@ app.get('/getrecordnotas/:id', (req, res) => {
 })
 app.delete('/deletenotas/:id', (req, res) => {
     const sql = "DELETE FROM notas WHERE id = ?";
+    const id = req.params.id;
+    db.query(sql, [id], (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+});
+
+////////////HOROMETROS///////////////////77
+app.get('/hjigs', (req, res) => {
+    const sql = "SELECT * FROM horojigss ORDER BY id DESC";
+    db.query(sql, (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+});
+app.post('/createhjigs', async (req, res) => {
+    try {
+        // Obtener el saldo anterior
+        const finalAnteriorData = await new Promise((resolve, reject) => {
+            db.query("SELECT final FROM horojigss ORDER BY id DESC LIMIT 1", (err, data) => {
+                if (err) reject(err);
+                else resolve(data);
+            });
+        });
+    
+        const finalAnteriorDataj2 = await new Promise((resolve, reject) => {
+            db.query("SELECT finalj2 FROM horojigss ORDER BY id DESC LIMIT 1", (err, data) => {
+                if (err) reject(err);
+                else resolve(data);
+            });
+        });
+    
+        // Si hay registros en la tabla, obtén el saldo anterior, de lo contrario, establece el saldo anterior en 0
+        const finalAnterior = finalAnteriorData.length > 0 ? finalAnteriorData[0].final : 0;
+    
+        // Obtener las décimas del valor actual
+        const finalActualDecimas = parseFloat(req.body.final) % 1;
+        // Multiplicar las décimas por 0.6 y sumar las horas anteriores
+        const nuevohrs = finalAnterior + (finalActualDecimas * 0.6);
+    
+        // Si hay registros en la tabla, obtén el saldo anterior, de lo contrario, establece el saldo anterior en 0
+        const finalAnteriorj2 = finalAnteriorDataj2.length > 0 ? finalAnteriorDataj2[0].finalj2 : 0;
+    
+        // Obtener las décimas del valor actual
+        const finalActualj2Decimas = parseFloat(req.body.finalj2) % 1;
+        // Multiplicar las décimas por 0.6 y sumar las horas anteriores
+        const nuevohrsj2 = finalAnteriorj2 + (finalActualj2Decimas * 0.6);
+    
+        // Realizar la inserción en la tabla concmesas
+        const sql = "INSERT INTO horojigss (fecha, inicio, final, hrs, inicioj2, finalj2, hrsj2, turno) VALUES (?, ?,?,?,?,?,?,?)";
+        const values = [
+            req.body.fecha,
+            finalAnterior, // Utilizamos el valor anterior como inicio
+            req.body.final,
+            nuevohrs,
+            finalAnteriorj2, // Utilizamos el valor anterior como inicio
+            req.body.finalj2,
+            nuevohrsj2,
+            req.body.turno,
+        ];
+    
+        db.query(sql, values, (err, result) => {
+            if (err) {
+                console.error("Error al crear el registro en notas:", error);
+                res.status(500).send("Error al crear el registro en notas.");
+            } else {
+                console.log("Registro insertado en notas con éxito.");
+                res.send("Registro insertado en notas con éxito.");
+            }
+        });
+    } catch (error) {
+        console.error("Error al obtener datos de la base de datos:", error);
+        res.status(500).send("Error al obtener datos de la base de datos.");
+    }
+})    
+app.put('/updatenotas/:id', async (req, res) => {
+
+
+
+    const sql = "UPDATE notas SET fecha = ?, totmedios =?, totdesensolve = ?, totcolas = ?, totjigssec = ?, comentario = ? WHERE id = ?";
+    const values = [
+        req.body.fecha,
+        req.body.totmedios,
+        req.body.totdesensolve,
+        req.body.totcolas,
+        req.body.totjigssec,
+        req.body.comentario,
+
+
+    ];
+    const id = req.params.id;
+    db.query(sql, [...values, id], (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+});
+
+app.get('/getrecordhjigs/:id', (req, res) => {
+    const id = req.params.id;
+    const sql = "SELECT * FROM horojigss WHERE id = ?"
+    db.query(sql, [id], (err, data) => {
+        if (err) {
+            return res.json({ Error: "Error" })
+        }
+
+        return res.json(data)
+    })
+})
+app.delete('/deletehjigs/:id', (req, res) => {
+    const sql = "DELETE FROM horojigss WHERE id = ?";
     const id = req.params.id;
     db.query(sql, [id], (err, data) => {
         if (err) return res.json(err);
