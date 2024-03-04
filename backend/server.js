@@ -3962,66 +3962,49 @@ app.get('/hjigs', (req, res) => {
         return res.json(data);
     });
 });
-app.post('/createhjigs', async (req, res) => {
-    try {
-        // Obtener el saldo anterior
-        const finalAnteriorData = await new Promise((resolve, reject) => {
-            db.query("SELECT final FROM horojigss ORDER BY id DESC LIMIT 1", (err, data) => {
-                if (err) reject(err);
-                else resolve(data);
-            });
+app.post('/createhjigs',async (req, res) => {
+   
+     // Obtener el saldo anterior
+     const finalAnteriorData = await new Promise((resolve, reject) => {
+        db.query("SELECT final FROM horojigss ORDER BY id DESC LIMIT 1", (err, data) => {
+            if (err) reject(err);
+            else resolve(data);
         });
-    
-        const finalAnteriorDataj2 = await new Promise((resolve, reject) => {
-            db.query("SELECT finalj2 FROM horojigss ORDER BY id DESC LIMIT 1", (err, data) => {
-                if (err) reject(err);
-                else resolve(data);
-            });
+    });
+    const finalAnteriorj2Data = await new Promise((resolve, reject) => {
+        db.query("SELECT finalj2 FROM horojigss ORDER BY id DESC LIMIT 1", (err, data) => {
+            if (err) reject(err);
+            else resolve(data);
         });
-    
-        // Si hay registros en la tabla, obtén el saldo anterior, de lo contrario, establece el saldo anterior en 0
-        const finalAnterior = finalAnteriorData.length > 0 ? finalAnteriorData[0].final : 0;
-    
-        // Obtener las décimas del valor actual
-        const finalActualDecimas = parseFloat(req.body.final) % 1;
-        // Multiplicar las décimas por 0.6 y sumar las horas anteriores
-        const nuevohrs = finalAnterior + (finalActualDecimas * 0.6);
-    
-        // Si hay registros en la tabla, obtén el saldo anterior, de lo contrario, establece el saldo anterior en 0
-        const finalAnteriorj2 = finalAnteriorDataj2.length > 0 ? finalAnteriorDataj2[0].finalj2 : 0;
-    
-        // Obtener las décimas del valor actual
-        const finalActualj2Decimas = parseFloat(req.body.finalj2) % 1;
-        // Multiplicar las décimas por 0.6 y sumar las horas anteriores
-        const nuevohrsj2 = finalAnteriorj2 + (finalActualj2Decimas * 0.6);
-    
-        // Realizar la inserción en la tabla concmesas
-        const sql = "INSERT INTO horojigss (fecha, inicio, final, hrs, inicioj2, finalj2, hrsj2, turno) VALUES (?, ?,?,?,?,?,?,?)";
-        const values = [
-            req.body.fecha,
-            finalAnterior, // Utilizamos el valor anterior como inicio
-            req.body.final,
-            nuevohrs,
-            finalAnteriorj2, // Utilizamos el valor anterior como inicio
-            req.body.finalj2,
-            nuevohrsj2,
-            req.body.turno,
-        ];
-    
-        db.query(sql, values, (err, result) => {
-            if (err) {
-                console.error("Error al crear el registro en notas:", error);
-                res.status(500).send("Error al crear el registro en notas.");
-            } else {
-                console.log("Registro insertado en notas con éxito.");
-                res.send("Registro insertado en notas con éxito.");
-            }
-        });
-    } catch (error) {
-        console.error("Error al obtener datos de la base de datos:", error);
-        res.status(500).send("Error al obtener datos de la base de datos.");
-    }
-})    
+    });
+
+    // Si hay registros en la tabla, obtén el saldo anterior, de lo contrario, establece el saldo anterior en 0
+    const finalAnterior = finalAnteriorData.length > 0 ? finalAnteriorData[0].final : 0;
+    const finalAnteriorj2 = finalAnteriorj2Data.length > 0 ? finalAnteriorj2Data[0].finalj2 : 0;
+
+    // Calcular las horas para final
+    const horas = parseFloat(req.body.final) - finalAnterior;
+    const horasj2 = parseFloat(req.body.finalj2) - finalAnteriorj2;
+
+  
+    // Ejemplo: Insertar datos en la tabla horometro_jigs
+    const sql = "INSERT INTO horojigss (fecha, turno, inicio,final, inicioj2,finalj2,hrs,hrsj2) VALUES (?, ?, ?, ?,?,?,?,?)";
+    const values = [fecha, turno,finalAnterior, finalAnteriorj2, final, finalj2, horas, horasj2];
+  
+    db.query(sql, values, (err, result) => {
+      if (err) {
+        console.error("Error al insertar en la base de datos:", err);
+        res.status(500).json({ error: "Error al insertar en la base de datos" });
+      } else {
+        console.log("Registro insertado en la base de datos con éxito.");
+        // Devolver los valores finales anteriores al cliente si es necesario
+        const finalAnterior = horas(); // Implementa esta función según la lógica de tu base de datos
+        const finalAnteriorj2 = horasj2(); // Implementa esta función según la lógica de tu base de datos
+        res.json({ finalAnterior, finalAnteriorj2 });
+      }
+    });
+  });
+
 app.put('/updatenotas/:id', async (req, res) => {
 
 
@@ -4063,3 +4046,53 @@ app.delete('/deletehjigs/:id', (req, res) => {
         return res.json(data);
     });
 });
+/////////////INICIO/77777777777
+app.get('/getsilosinicio/:fecha', (req, res) => {
+    const fecha = req.params.fecha;
+    const sql = "SELECT silo1, silo2, silo3, silo4, silo5 FROM silos WHERE fecha = ?"
+    db.query(sql, [fecha], (err, data) => {
+        if (err) {
+            console.error("Error en la consulta SQL:", err);
+            return res.status(500).json({ error: "Error en la consulta SQL. Por favor, inténtalo de nuevo más tarde." });
+        }
+
+        return res.json(data);
+    });
+})
+
+app.get('/getmpleinicio/:fecha', (req, res) => {
+    const fecha = req.params.fecha;
+    const sql = "SELECT saldo FROM mpmle WHERE fecha = ?"
+    db.query(sql, [fecha], (err, data) => {
+        if (err) {
+            console.error("Error en la consulta SQL:", err);
+            return res.status(500).json({ error: "Error en la consulta SQL. Por favor, inténtalo de nuevo más tarde." });
+        }
+
+        return res.json(data);
+    });
+})
+app.get('/getmpltinicio/:fecha', (req, res) => {
+    const fecha = req.params.fecha;
+    const sql = "SELECT saldo FROM mpmlt WHERE fecha = ?"
+    db.query(sql, [fecha], (err, data) => {
+        if (err) {
+            console.error("Error en la consulta SQL:", err);
+            return res.status(500).json({ error: "Error en la consulta SQL. Por favor, inténtalo de nuevo más tarde." });
+        }
+
+        return res.json(data);
+    });
+})
+app.get('/getsuma/:fecha', (req, res) => {
+    const fecha = req.params.fecha;
+    const sql = "SELECT saldo FROM mpmlt WHERE fecha = ?"
+    db.query(sql, [fecha], (err, data) => {
+        if (err) {
+            console.error("Error en la consulta SQL:", err);
+            return res.status(500).json({ error: "Error en la consulta SQL. Por favor, inténtalo de nuevo más tarde." });
+        }
+
+        return res.json(data);
+    });
+})

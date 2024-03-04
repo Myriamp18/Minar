@@ -59,9 +59,11 @@ function HorometroJigs() {
                         <th>Inicio</th>
                         <th>Final</th>
                         <th>Horas</th>
+                        <th>TotalHoras</th>
                         <th>InicioJ2</th>
                         <th>FinalJ2</th>
                         <th>HorasJ2</th>
+                        <th>TotalHorasJ2</th>
 
 
                         
@@ -89,9 +91,11 @@ function HorometroJigs() {
                           <td>{d.inicio}</td>
                           <td>{d.final}</td>
                           <td>{d.hrs}</td>
+                          <td>{d.totalhrs}</td>
                           <td>{d.inicioj2}</td>
                           <td>{d.finalj2}</td>
                           <td>{d.hrsj2}</td>
+                          <td>{d.totalhrsj2}</td>
 
 
                         </tr>
