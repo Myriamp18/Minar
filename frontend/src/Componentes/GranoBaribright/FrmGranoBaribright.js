@@ -55,6 +55,7 @@ function FrmGranoBaribright() {
                   type="date"  
                   class="form-control"
                   id='date'
+                  required
                   placeholder='Insertar Cantidad'
                   name='fecha'
                   onChange={(e) => setValues({...values, fecha: e.target.value})}
@@ -69,6 +70,7 @@ function FrmGranoBaribright() {
                  id='entradas'
                  placeholder='Insertar Cantidad'  
                  name='entradas'
+                 required
                  onChange={(e) => setValues({...values, entradas: e.target.value})}/>
               </div>
     
@@ -81,6 +83,7 @@ function FrmGranoBaribright() {
                  id='salidas'
                  placeholder='Insertar Cantidad'  
                  name='salidas'
+                 required
                  onChange={(e) => setValues({...values, salidas: e.target.value})}/>
               </div>
     
@@ -90,6 +93,7 @@ function FrmGranoBaribright() {
                  type="text"  
                  class="form-control"
                  id='pe'
+                 required
                  placeholder='Insertar Peso'  
                  name='pe'
                  onChange={(e) => setValues({...values, pe: e.target.value})}/>

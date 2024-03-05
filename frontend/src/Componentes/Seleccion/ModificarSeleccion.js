@@ -62,6 +62,7 @@ function ModificarSeleccion() {
               type="date"  
               class="form-control"
               id='date'
+              required
               placeholder='Insertar Cantidad'
               name='fecha'
               value={values.fecha}
@@ -75,6 +76,7 @@ function ModificarSeleccion() {
              type="text"  
              class="form-control"
              id='entradas'
+             required
              placeholder='Insertar Cantidad'  
              name='entradas'
              value={values.entrada}
@@ -88,6 +90,7 @@ function ModificarSeleccion() {
              type="text"  
              class="form-control"
              id='salidas'
+             required
              placeholder='Insertar Cantidad'  
              name='salida'
              value={values.salida}
@@ -100,6 +103,7 @@ function ModificarSeleccion() {
              type="text"  
              class="form-control"
              id='pesp'
+             required
              placeholder='Insertar Peso'  
              name='pesp'
              value={values.pesp}

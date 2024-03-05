@@ -51,6 +51,7 @@ function FrmPMoler() {
               id='date'
               placeholder='Insertar Cantidad'
               name='fecha'
+              required
               onChange={(e) => setValues({...values, fecha: e.target.value})}
             />
           </div>
@@ -61,6 +62,7 @@ function FrmPMoler() {
              type="text"  
              class="form-control"
              id='entradas'
+             required
              placeholder='Insertar Cantidad'  
              name='entradas'
              onChange={(e) => setValues({...values, entrada: e.target.value})}/>
@@ -71,6 +73,7 @@ function FrmPMoler() {
             <label form='text' class="form-label"> Salidas:</label>
             <input
              type="text"  
+             required
              class="form-control"
              id='salidas'
              placeholder='Insertar Cantidad'  
@@ -82,6 +85,7 @@ function FrmPMoler() {
             <label form='text' class="form-label"> P.ESP:</label>
             <input
              type="text"  
+             required
              class="form-control"
              id='pesp'
              placeholder='Insertar Peso'  

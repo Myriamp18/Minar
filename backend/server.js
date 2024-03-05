@@ -40,19 +40,26 @@ app.post('/createusuarios', (req, res) => {
 });
 
 app.post('/login', (req, res) => {
-    // Consulta SQL
-    const sql = "SELECT * FROM usuarios WHERE nombreusuario = ? AND contra = ?";
-    db.query(sql, [req.body.nombreusuario, req.body.contra], (err, data) => {
-        if (err) return res.json("Error")
-        if (data.length > 0) {
-            return res.json("Loadin Successfuly")
-        } else {
-            return res.json("No Record")
-        }
-    })
-
-
-});
+    const { nombreusuario, contra } = req.body;
+  
+    // Consultar la base de datos para verificar las credenciales
+    const sql = 'SELECT * FROM login WHERE nombreusuario = ? AND contra = ?';
+    db.query(sql, [nombreusuario, contra], (err, result) => {
+      if (err) {
+        console.error('Error en la consulta de inicio de sesión:', err);
+        res.status(500).json({ success: false, message: 'Error en la base de datos' });
+        return;
+      }
+  
+      if (result.length > 0) {
+        // Credenciales correctas
+        res.json({ success: true, message: 'Inicio de sesión exitoso', nombreusuario: nombreusuario });
+      } else {
+        // Credenciales incorrectas
+        res.status(401).json({ success: false, message: 'Credenciales incorrectas' });
+      }
+    });
+  });
 
 /////////////SILOS//////////
 app.get('/silos', (req, res) => {
@@ -1038,14 +1045,12 @@ app.put('/updateconcentradobaribaright/:id', async (req, res) => {
             });
         });
 
-        // Obtener el saldo anterior antes de realizar la actualización
-
-
-        // Verificar si se encontró el saldo anterior
-
+       // Verificar si se encontró el saldo anterior
+       if (saldoAnteriorData.length > 0) {
+        const saldoAnterior = saldoAnteriorData[0].saldo;
 
         // Calcula el nuevo saldo utilizando el saldo anterior
-        const nuevoSaldo = saldoAnteriorData + parseFloat(req.body.entradas) - parseFloat(req.body.salidas);
+        const nuevoSaldo = saldoAnterior + parseFloat(req.body.entradas) - parseFloat(req.body.salidas);
 
         // Realiza la actualización en la base de datos utilizando el nuevo saldo
         const sql = "UPDATE concentradobaribaright SET fecha = ?, entradas = ?, salidas = ?, pe = ?, saldo = ? WHERE id = ?";
@@ -1067,11 +1072,14 @@ app.put('/updateconcentradobaribaright/:id', async (req, res) => {
             console.log('Datos actualizados correctamente.');
             return res.json(data);
         });
-
-    } catch (error) {
-        console.error('Error al obtener el saldo anterior:', error);
-        return res.status(500).json({ error: "Error al obtener el saldo anterior" });
+    } else {
+        console.error('No se encontró el saldo anterior.');
+        return res
     }
+} catch (error) {
+    console.error('Error al obtener el saldo anterior:', error);
+    return res.status(500).json({ error: "Error al obtener el saldo anterior" });
+}
 
 
 });

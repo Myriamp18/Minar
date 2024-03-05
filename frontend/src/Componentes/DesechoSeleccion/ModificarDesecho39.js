@@ -53,6 +53,7 @@ useEffect(() => {
               type="date"  
               class="form-control"
               id='date'
+              required
               placeholder='Insertar Cantidad'
               name='fecha'
               value={values.fecha}
@@ -68,6 +69,7 @@ useEffect(() => {
              id='salidas'
              placeholder='Insertar Cantidad'  
              name='entradas'
+             required
              value={values.entradas}
              onChange={(e) => setValues({...values, entradas: e.target.value})}/>
           </div>
@@ -80,6 +82,7 @@ useEffect(() => {
              id='salidas'
              placeholder='Insertar Cantidad'  
              name='salidas'
+             required
              value={values.salidas}
              onChange={(e) => setValues({...values, salidas: e.target.value})}/>
           </div>
@@ -90,6 +93,7 @@ useEffect(() => {
              type="text"  
              class="form-control"
              id='pe'
+             required
              placeholder='Insertar Peso'  
              name='pe'
              value={values.pe}

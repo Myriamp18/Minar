@@ -1,99 +1,155 @@
 .App {
-    background-image: url('../assest/inicio.jpg'); 
-    background-size: cover; /* Ajusta el tamaño de la imagen para cubrir todo el contenedor */
-    background-position: center; /* Centra la imagen */
-    height: 100vh; /* Asigna la altura del 100% del viewport */
-    padding: 20px;
-    text-align: center;
-  }
-  .App h1{
-    font-size: 35px;
-    color: #efe9e9;
-    margin-top: 10px;
-  }
-  .contenedor-silos {
-    display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
-  }
-  
+  background-image: url('../assest/inicio.png');
+  background-size: cover;
+  /* Ajusta el tamaño de la imagen para cubrir todo el contenedor */
+  background-position: center;
+  /* Centra la imagen */
+  background-repeat: no-repeat;
+  /* Evita que la imagen se repita */
+  max-width: 100%;
+  height: 100vh;
+  /* Asigna la altura del 100% del viewport */
+  padding: 20px;
+  text-align: center;
+}
+
+
+.App h1 {
+  font-size: 35px;
+  color: #efe9e9;
+  margin-top: 10px;
+}
+
+.contenedor-silos {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.silo {
+  width: 100px;
+  height: 100px;
+  margin-top: 65px;
+  padding: 5px;
+  border: none;
+  border-radius: 5px;
+
+
+}
+
+.porcentaje {
+  position: absolute;
+  width: 100%;
+  margin-top: 100px;
+  height: 100%;
+  border-radius: 50%;
+  transform-origin: center;
+
+}
+
+.texto-porcentaje {
+  position: flex;
+
+  top: 50%;
+  left: 50%;
+  transform: translate(-45%, -45%);
+  font-size: 20px;
+  color: #121010;
+}
+
+
+.fecha-hora {
+  font-size: 25px;
+  color: #e8dcdc;
+  margin-top: 15px;
+
+}
+
+.mineral-patio {
+  margin-top: 50px;
+  padding: 5px;
+  background-color: #16151578;
+  border-radius: 8px;
+}
+
+.mineral-patio p {
+  font-size: 18px;
+  font-weight: bold;
+  color: #dad0d0;
+}
+
+.mineral-patio ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.mineral-patio li {
+  margin-bottom: 5px;
+  font-size: 40px;
+  color: #dad0d0;
+}
+
+
+@media screen and (max-width: 768px) {
   .silo {
-    width: 180px;
-    height: 180px;
-    margin-top: 10px;
-    padding: 10px;
-    border: 1px solid #dad0d0;
-    border-radius: 5px;
-    background-color:  #0b0b0b8d;
-    
+    width: 5vw;
+    height: 5vw;
+    margin-top: 5vw;
+    padding: 5vw;
+    border-radius: 5vw;
+
   }
 
- 
-  .rueda {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    border: 2px solid #0e0d0d;
-    position: relative;
-    margin: auto;
+  .silo {
+    width: 100px;
+    height: 100px;
+    margin-top: 10px;
+    padding: 5px;
+    border: none;
+    border-radius: 5px;
+    background-color: #ce7878c4;
   }
-  
-  
-  .porcentaje-fill {
-    background-color: rgba(194, 37, 13, 0.983); /* Cambia el color de fondo a azul */
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    transform-origin: center;
-  }
-  
+
   .porcentaje {
     position: absolute;
     width: 100%;
+    margin-top: 40px;
     height: 100%;
     border-radius: 50%;
     transform-origin: center;
+
+  }
+  .App h1 {
+      font-size: 22px;
+      color: #efe9e9;
+      margin-top: 5px;
+    } 
+    .fecha-hora {
+      font-size: 18px;
+      color: #e8dcdc;
+      margin-top: 5px;
     
-  }
-  
-  .texto-porcentaje {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 20px;
-    color: #f4e9e9;
-  }
-  
-  
-  .fecha-hora {
-    font-size: 25px;
-    color: #e8dcdc;
-    margin-top: 15px;
+    }
+    .mineral-patio {
+      margin-top: 5px;
+      padding: 5px;
+      background-color: #16151578;
+      border-radius: 8px;
+    }
+    .mineral-patio p {
+      font-size: 12px;
+      font-weight: bold;
+      color: #dad0d0;
+    }
+    .mineral-patio ul {
+      list-style-type: none;
+      padding: 0;
+    }
     
-  }
-  .mineral-patio {
-    margin-top: 20px;
-    padding: 20px;
-    background-color: #16151578;
-    border-radius: 8px;
-  }
-  
-  .mineral-patio p {
-    font-size: 18px;
-    font-weight: bold;
-    color: #dad0d0;
-  }
-  
-  .mineral-patio ul {
-    list-style-type: none;
-    padding: 0;
-  }
-  
-  .mineral-patio li {
-    margin-bottom: 10px;
-    font-size: 40px;
-    color: #dad0d0;
-  }
-  
+    .mineral-patio li {
+      margin-bottom: 5px;
+      font-size: 20px;
+      color: #dad0d0;
+      font-weight: bold;
+    }
+}

@@ -6,7 +6,7 @@ function Silos({ nombre, cantidad, texto }) {
   
     return (
       <div className="silo">
-        <h3 style={{ fontFamily: 'Arial, sans-serif', fontWeight: 'bold', fontSize: '1.2rem', color: '#fff' }}>{nombre}</h3>
+        <h3 style={{ fontFamily: 'Arial, sans-serif', fontWeight: 'bold', fontSize: '1.2rem', color: '#000' }}>{nombre}</h3>
         <div className="rueda">
           <div className="porcentaje-fill" style={{ transform: `rotate(${porcentajeLlenado * 3.6}deg)` }}></div>
           <div className="porcentaje">
@@ -14,7 +14,7 @@ function Silos({ nombre, cantidad, texto }) {
         </div>
         </div>
         </div>
-        <h3 style={{ fontFamily: 'Arial, sans-serif', fontWeight: 'bold', fontSize: '1.2rem', color: '#fff' }}>{texto}</h3>
+        <h3 style={{ fontFamily: 'Arial, sans-serif', fontWeight: 'bold', fontSize: '1.2rem', color: '#000' }}>{texto}</h3>
       </div>
     );
   }

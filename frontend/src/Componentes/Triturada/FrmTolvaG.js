@@ -55,6 +55,7 @@ const handleSubmit = (e) => {
               id='date'
               placeholder='Insertar Cantidad'
               name='fecha'
+              required
               onChange={(e) => setValues({...values, fecha: e.target.value})}
             />
           </div>
@@ -64,6 +65,7 @@ const handleSubmit = (e) => {
             <input
              type="text"  
              class="form-control"
+             required
              id='salidas'
              placeholder='Insertar Cantidad'  
              name='entradas'
@@ -77,6 +79,7 @@ const handleSubmit = (e) => {
             <input
              type="text"  
              class="form-control"
+             required
              id='salidas'
              placeholder='Insertar Cantidad'  
              name='salidas'
@@ -87,6 +90,7 @@ const handleSubmit = (e) => {
             <label form='text' class="form-label"> P.ESP:</label>
             <input
              type="text"  
+             required
              class="form-control"
              id='pe'
              placeholder='Insertar Peso'  

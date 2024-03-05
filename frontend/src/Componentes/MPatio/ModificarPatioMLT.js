@@ -55,6 +55,7 @@ useEffect(() => {
               id='date'
               placeholder='Insertar Cantidad'
               name='fecha'
+              required
               value={values.fecha}
               onChange={(e) => setValues({...values, fecha: e.target.value})}
             />
@@ -68,6 +69,7 @@ useEffect(() => {
              id='salidas'
              placeholder='Insertar Cantidad'  
              name='entradas'
+             required
              value={values.entradas}
              onChange={(e) => setValues({...values, entradas: e.target.value})}/>
           </div>
@@ -80,6 +82,7 @@ useEffect(() => {
              id='salidas'
              placeholder='Insertar Cantidad'  
              name='salidas'
+             required
              value={values.salidas}
              onChange={(e) => setValues({...values, salidas: e.target.value})}/>
           </div>
@@ -92,6 +95,7 @@ useEffect(() => {
              id='pe'
              placeholder='Insertar Peso'  
              name='pe'
+             required
              value={values.pe}
              onChange={(e) => setValues({...values, pe: e.target.value})}/>
           </div>

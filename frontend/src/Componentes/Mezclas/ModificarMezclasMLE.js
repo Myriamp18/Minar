@@ -53,6 +53,7 @@ function ModificarMezclasMLE() {
               type="date"  
               class="form-control"
               id='date'
+              required
               placeholder='Insertar Cantidad'
               name='fecha'
               value={values.fecha}
@@ -66,6 +67,7 @@ function ModificarMezclasMLE() {
              type="text"  
              class="form-control"
              id='salidas'
+             required
              placeholder='Insertar Cantidad'  
              name='entradas'
              value={values.entradas}
@@ -78,6 +80,7 @@ function ModificarMezclasMLE() {
              type="text"  
              class="form-control"
              id='salidas'
+             required
              placeholder='Insertar Cantidad'  
              name='salidas'
              value={values.salidas}
@@ -90,6 +93,7 @@ function ModificarMezclasMLE() {
              type="text"  
              class="form-control"
              id='pe'
+             required
              placeholder='Insertar Peso'  
              name='pe'
              value={values.pe}

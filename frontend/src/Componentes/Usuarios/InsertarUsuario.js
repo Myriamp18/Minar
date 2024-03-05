@@ -2,6 +2,9 @@ import React, { useState }  from 'react'
 import './InsertarUsuarios.css';
 import {useNavigate} from 'react-router-dom';
 import axios from 'axios'
+import Nombre from '../../assest/programador.png'
+import Telefono from '../../assest/telefono.png'
+import Ingeniero from '../../assest/ingeniero.png'
 import Usuario_M from '../../assest/minero.jpg'
 import Contra_L from '../../assest/candado.jpg'
 
@@ -20,6 +23,10 @@ function InsertarUsuario() {
 
       const handleSubmit =(e) => {
         e.preventDefault()
+        if (!validateInputs()) {
+            alert('Por favor, complete todos los campos.'); // Muestra un mensaje de error
+            return;
+        }
         axios.post('http://localhost:8081/createusuarios', values)
         .then(res => {
           console.log(res);
@@ -28,6 +35,17 @@ function InsertarUsuario() {
         })
         .catch(err => console.log(err));
     };
+
+    const validateInputs = () => {
+        // Verifica si algún campo está vacío
+        for (let value of Object.values(values)) {
+            if (value.trim() === '') {
+                return false;
+            }
+        }
+        return true;
+    };
+
     return (
 
         <div className="registrar-section">
@@ -40,29 +58,32 @@ function InsertarUsuario() {
                 <form >
                     <div className="pop">
                         <div className="inputregistro">
-
+                        <img src={Nombre} alt='programador' />
                             <input type="text" size="sm"
-                                placeholder='Nombre de Completo '
+                                placeholder='Nombre Completo '
                                 name='nombrecompleto'
+                                required
                                 onChange={(e) => setValues({...values, nombrecompleto: e.target.value})}
 
                             />
                         </div>
                         <div className="inputregistro">
-
+                        <img src={Telefono} alt='telefono' />
                             <input type="text" size="sm"
                                 placeholder='Numero Telefonico '
                                 name='telefono'
+                                required
                                 onChange={(e) => setValues({...values, telefono: e.target.value})}
 
                             />
                         </div>
                         
                         <div className="inputregistro">
-
+                        <img src={Ingeniero} alt='ingeniero' />
                             <input type="text" size="sm"
                                 placeholder='Cargo '
                                 name='cargo'
+                                required
                                 onChange={(e) => setValues({...values, cargo: e.target.value})}
 
                             />
@@ -72,6 +93,7 @@ function InsertarUsuario() {
                             <input type="text" size="sm"
                                 placeholder='Nombre de Usuario '
                                 name='nombreusuario'
+                                required
                                 onChange={(e) => setValues({...values, nombreusuario: e.target.value})}
 
                             />
@@ -81,6 +103,7 @@ function InsertarUsuario() {
                             <input type="password"
                                 placeholder='Contraseña'
                                 name='contra'
+                                required
                                 onChange={(e) => setValues({...values, contra: e.target.value})}
 
                             />
@@ -100,7 +123,7 @@ function InsertarUsuario() {
 
 
             </div>
-
+           
         </div>
     )
 }

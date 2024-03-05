@@ -57,6 +57,7 @@ function ModificarDesensolve() {
               id='date'
               placeholder='Insertar Cantidad'
               name='fecha'
+              required
               value={values.fecha}
               onChange={(e) => setValues({...values, fecha: e.target.value})}
             />
@@ -69,6 +70,7 @@ function ModificarDesensolve() {
              type="text"  
              class="form-control"
              id='salidas'
+             required
              placeholder='Insertar Cantidad'  
              name='salidas'
              value={values.salidas}
@@ -83,6 +85,7 @@ function ModificarDesensolve() {
              id='pe'
              placeholder='Insertar Peso'  
              name='pe'
+             required
              value={values.pe}
              onChange={(e) => setValues({...values, pe: e.target.value})}/>
           </div>

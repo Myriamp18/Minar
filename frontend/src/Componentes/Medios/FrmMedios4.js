@@ -51,6 +51,7 @@ function FrmMedios4() {
               type="date"  
               class="form-control"
               id='date'
+              required
               placeholder='Insertar Cantidad'
               name='fecha'
               onChange={(e) => setValues({...values, fecha: e.target.value})}
@@ -63,6 +64,7 @@ function FrmMedios4() {
              type="text"  
              class="form-control"
              id='entradas'
+             required
              placeholder='Insertar Cantidad'  
              name='entradas'
              onChange={(e) => setValues({...values, entradas: e.target.value})}/>
@@ -75,6 +77,7 @@ function FrmMedios4() {
              type="text"  
              class="form-control"
              id='salidas'
+             required
              placeholder='Insertar Cantidad'  
              name='salidas'
              onChange={(e) => setValues({...values, salidas: e.target.value})}/>
@@ -86,6 +89,7 @@ function FrmMedios4() {
              type="text"  
              class="form-control"
              id='salidas'
+             required
              placeholder='Insertar P.E'  
              name='pe'
              onChange={(e) => setValues({...values, pe: e.target.value})}/>

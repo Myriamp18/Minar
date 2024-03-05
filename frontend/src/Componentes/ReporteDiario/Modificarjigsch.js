@@ -91,6 +91,7 @@ function Modificarjigsch() {
                             id='date'
                             placeholder='Insertar Cantidad'
                             name='fecha'
+                            required
                             value={values.fecha}
                             onChange={(e) => setValues({ ...values, fecha: e.target.value })}
                         />
@@ -103,6 +104,7 @@ function Modificarjigsch() {
                             name="seleccion"
                             class="form-control"
                             value={values.turno}
+                            required
                             onChange={(e) => setValues({ ...values, turno: e.target.value })} >
                             <option value="1">1</option>
                             <option value="2">2</option>
@@ -124,6 +126,7 @@ function Modificarjigsch() {
                                 class="form-control"
                                 placeholder="Alim."
                                 name=' alimjch'
+                                required
                                 value={values.alimjch}
                                 onChange={(e) => setValues({ ...values, alimjch: e.target.value })} />
                         </div>
@@ -134,6 +137,7 @@ function Modificarjigsch() {
                                 class="form-control"
                                 placeholder="P.E"
                                 name=' peajch'
+                                required
                                 value={values.peajch}
                                 onChange={(e) => setValues({ ...values, peajch: e.target.value })} />
                         </div>
@@ -144,6 +148,7 @@ function Modificarjigsch() {
                                 class="form-control"
                                 placeholder="Grano"
                                 name='granojch'
+                                required
                                 value={values.granojch}
                                 onChange={(e) => setValues({ ...values, granojch: e.target.value })} />
                         </div>
@@ -154,6 +159,7 @@ function Modificarjigsch() {
                                 class="form-control"
                                 placeholder="P.E"
                                 name=' pegjch'
+                                required
                                 value={values.pegjch}
                                 onChange={(e) => setValues({ ...values, pegjch: e.target.value })} />
                         </div>
@@ -164,6 +170,7 @@ function Modificarjigsch() {
                                 class="form-control"
                                 placeholder="Desens."
                                 name=' desenjch'
+                                required
                                 value={values.desenjch}
                                 onChange={(e) => setValues({ ...values, desenjch: e.target.value })} />
                         </div>
@@ -173,6 +180,7 @@ function Modificarjigsch() {
                             <input
                                 class="form-control"
                                 placeholder="P.E"
+                                required
                                 name=' pedjch'
                                 value={values.pedjch}
                                 onChange={(e) => setValues({ ...values, pedjch: e.target.value })} />
@@ -184,6 +192,7 @@ function Modificarjigsch() {
                                 class="form-control"
                                 placeholder="Colas"
                                 name='colasjch'
+                                required
                                 value={values.colasjch}
                                 onChange={(e) => setValues({ ...values, colasjch: e.target.value })} />
                         </div>
@@ -194,6 +203,7 @@ function Modificarjigsch() {
                                 class="form-control"
                                 placeholder="P.E"
                                 name='pecjch'
+                                required
                                 value={values.pecjch}
                                 onChange={(e) => setValues({ ...values, pecjch: e.target.value })} />
                         </div>
@@ -213,6 +223,7 @@ function Modificarjigsch() {
                             class="form-control"
                             placeholder="Horas"
                             name='horasec'
+                            required
                             value={values.horasec}
                             onChange={(e) => setValues({ ...values, horasec: e.target.value })} />
                         </div>
@@ -223,6 +234,7 @@ function Modificarjigsch() {
                                 class="form-control"
                                 placeholder="Alim."
                                 name='alimjsec'
+                                required
                                 value={values.alimjsec}
                                 onChange={(e) => setValues({ ...values, alimjsec: e.target.value })} />
                         </div>
@@ -233,6 +245,7 @@ function Modificarjigsch() {
                                 class="form-control"
                                 placeholder="P.E"
                                 name='peajsec'
+                                required
                                 value={values.peajsec}
                                 onChange={(e) => setValues({ ...values, peajsec: e.target.value })} />
                         </div>
@@ -243,6 +256,7 @@ function Modificarjigsch() {
                                 class="form-control"
                                 placeholder="Conc."
                                 name=' concjsec'
+                                required
                                 value={values.concjsec}
                                 onChange={(e) => setValues({ ...values, concjsec: e.target.value })} />
                         </div>
@@ -253,6 +267,7 @@ function Modificarjigsch() {
                                 class="form-control"
                                 placeholder="P.E"
                                 name='pecojsec'
+                                required
                                 value={values.pecojsec}
                                 onChange={(e) => setValues({ ...values, pecojsec: e.target.value })} />
                         </div>
@@ -262,6 +277,7 @@ function Modificarjigsch() {
                             <input
                                 class="form-control"
                                 placeholder="Colas"
+                                required
                                 name='colasjsec'
                                 value={values.colasjsec}
                                 onChange={(e) => setValues({ ...values, colasjsec: e.target.value })} />
@@ -273,6 +289,7 @@ function Modificarjigsch() {
                                 class="form-control"
                                 placeholder="P.E"
                                 name='pecjsec'
+                                required
                                 value={values.pecjsec}
                                 onChange={(e) => setValues({ ...values, pecjsec: e.target.value })} />
                         </div>

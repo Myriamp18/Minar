@@ -2,35 +2,47 @@ import React, { useState } from 'react';
 import './Login.css';
 import Usuario_M from '../../assest/minero.jpg'
 import Contra_L from '../../assest/candado.jpg'
-import { useNavigate } from 'react-router-dom';
+
+import { Navigate } from 'react-router-dom';
 import axios from 'axios';
 
-const Login = () => {
 
-  const navigate = useNavigate();
-  const [nombreusuario, setNombreUsuario] = useState('')
-  const [contra, setContra] = useState('')
-
+  const Login = () => {
+    const [nombreusuario, setNombreUsuario] = useState('');
+    const [contra, setContra] = useState('');
+    const [error, setError] = useState('');
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
   
-  const onSubmit = (event) => {
-    event.preventDefault();
-    axios.post('http://localhost:8081/login', { nombreusuario, contra })
-      .then(res => {
-        // Assuming the server responds with a property like 'success' or 'error'
-        if (nombreusuario && contra) {
-          console.log(res);
-          navigate('/Inicio');
+    const onSubmit = async (e) => {
+      e.preventDefault();
+      if (!nombreusuario || !contra) {
+        setError('Por favor, completa todos los campos.');
+        return;
+      }
+  
+      try {
+        const response = await axios.post('http://localhost:8081/login', {
+          nombreusuario: nombreusuario,
+          contra: contra,
+        });
+  
+        const data = response.data;
+  
+        if (data.success) {
+          console.log('Inicio de sesión exitoso:', data.message);
+          setIsLoggedIn(true);
         } else {
-          console.log("Login failed");
-          // Handle login failure, show an error message, etc.
+          setError(data.message || 'Error al iniciar sesión. Por favor, inténtalo de nuevo.');
         }
-      })
-      .catch(err => console.log(err));
-  }
+      } catch (error) {
+        console.error('Error en la solicitud:', error);
+        setError('Error al iniciar sesión. Por favor, inténtalo de nuevo.');
+      }
+    };
   
-  const onRegistro = () =>{
-    navigate('/createusuario')
-  }
+    if (isLoggedIn) {
+      return <Navigate to="/Inicio" replace />;
+    }
   
 
   
@@ -49,6 +61,7 @@ const Login = () => {
               <img src={Usuario_M} alt='usuariologin' />
               <input type="usuario" size="sm"
                 placeholder='Nombre de Usuario '
+                required
                 onChange={e => setNombreUsuario(e.target.value)}
                 name='nombreusuario'
 
@@ -58,6 +71,7 @@ const Login = () => {
             <div className="inputlogin">
               <img src={Contra_L} alt='contraseñalogin' />
               <input type="password"
+              required
                 placeholder='Contraseña'
                 
                 onChange={e => setContra(e.target.value)}
@@ -71,10 +85,10 @@ const Login = () => {
           <div className="forgot-password">
             <div className="submit-container">
               <button className="submits" onClick={onSubmit} >Iniciar Sesion</button>
-              <button className="submits"  onClick={onRegistro}>Registarse</button>
+             
             </div>
           </div>
-
+          {error && <div className="error">{error}</div>}
         </form>
 
 

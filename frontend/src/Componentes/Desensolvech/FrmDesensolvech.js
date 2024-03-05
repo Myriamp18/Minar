@@ -52,6 +52,7 @@ function FrmDesensolvech() {
               type="date"  
               class="form-control"
               id='date'
+              required
               placeholder='Insertar Cantidad'
               name='fecha'
               onChange={(e) => setValues({...values, fecha: e.target.value})}
@@ -67,6 +68,7 @@ function FrmDesensolvech() {
              type="text"  
              class="form-control"
              id='salidas'
+             required
              placeholder='Insertar Cantidad'  
              name='salidas'
              onChange={(e) => setValues({...values, salidas: e.target.value})}/>
@@ -78,6 +80,7 @@ function FrmDesensolvech() {
              type="text"  
              class="form-control"
              id='pe'
+             required
              placeholder='Insertar Peso'  
              name='pe'
              onChange={(e) => setValues({...values, pe: e.target.value})}/>

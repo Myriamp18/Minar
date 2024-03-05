@@ -67,6 +67,7 @@ function ModificarAllMedios() {
             <label form='fecha' class="form-label"> Fecha:</label>
             <input
               type="date"  
+              required
               class="form-control"
               id='date'
               placeholder='Insertar Cantidad'
@@ -84,6 +85,7 @@ function ModificarAllMedios() {
              id='entradas'
              placeholder='Insertar Cantidad'  
              name='entradas'
+             required
              value={values.entradasm46}
              onChange={(e) => setValues({...values, entradasm46: e.target.value})}/>
           </div>
@@ -95,6 +97,7 @@ function ModificarAllMedios() {
              type="text"  
              class="form-control"
              id='salidas'
+             required
              placeholder='Insertar Cantidad'  
              name='salidas'
              value={values.salidasm46}
@@ -109,6 +112,7 @@ function ModificarAllMedios() {
              id='salidas'
              placeholder='Insertar P.E'  
              name='pe'
+             required
              value={values.pe46}
              onChange={(e) => setValues({...values, pe46: e.target.value})}/>
           </div>

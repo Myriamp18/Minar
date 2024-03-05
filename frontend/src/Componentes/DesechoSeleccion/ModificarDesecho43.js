@@ -52,6 +52,7 @@ useEffect(() => {
               type="date"  
               class="form-control"
               id='date'
+              required
               placeholder='Insertar Cantidad'
               name='fecha'
               value={values.fecha}
@@ -65,6 +66,7 @@ useEffect(() => {
              type="text"  
              class="form-control"
              id='salidas'
+             required
              placeholder='Insertar Cantidad'  
              name='entradas'
              value={values.entradas}
@@ -77,6 +79,7 @@ useEffect(() => {
              type="text"  
              class="form-control"
              id='salidas'
+             required
              placeholder='Insertar Cantidad'  
              name='salidas'
              value={values.salidas}
@@ -89,6 +92,7 @@ useEffect(() => {
              type="text"  
              class="form-control"
              id='pe'
+             required
              placeholder='Insertar Peso'  
              name='pe'
              value={values.pe}

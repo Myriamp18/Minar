@@ -50,6 +50,7 @@ function FrmTolvasMolinos() {
               type="date"  
               class="form-control"
               id='date'
+              required
               placeholder='Insertar Cantidad'
               name='fecha'
               onChange={(e) => setValues({...values, fecha: e.target.value})}
@@ -62,6 +63,7 @@ function FrmTolvasMolinos() {
              type="text"  
              class="form-control"
              id='salidas'
+             required
              placeholder='Insertar Cantidad'  
              name='tolvamolinos'
              onChange={(e) => setValues({...values, tolvamolinos: e.target.value})}/>
@@ -75,6 +77,7 @@ function FrmTolvasMolinos() {
              type="text"  
              class="form-control"
              id='salidas'
+             required
              placeholder='Insertar Cantidad'  
              name='petm'
              onChange={(e) => setValues({...values, petm: e.target.value})}/>
@@ -86,6 +89,7 @@ function FrmTolvasMolinos() {
              type="text"  
              class="form-control"
              id='pe'
+             required
              placeholder='Insertar Peso'  
              name='mezclasmoler'
              onChange={(e) => setValues({...values, mezclasmoler: e.target.value})}/>
@@ -97,6 +101,7 @@ function FrmTolvasMolinos() {
              type="text"  
              class="form-control"
              id='salidas'
+             required
              placeholder='Insertar Cantidad'  
              name='pememo'
              onChange={(e) => setValues({...values, pememo: e.target.value})}/>

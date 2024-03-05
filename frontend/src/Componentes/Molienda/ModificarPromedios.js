@@ -79,6 +79,7 @@ function ModificarPromedios() {
                                 id='date'
                                 placeholder='Insertar Cantidad'
                                 name='fecha'
+                                required
                                 value={values.fecha}
                                 onChange={(e) => setValues({ ...values, fecha: e.target.value })}
                             />
@@ -89,6 +90,7 @@ function ModificarPromedios() {
                                 id="seleccion"
                                 name="seleccion"
                                 class="form-control"
+                                required
                                 value={values.turno}
                                 onChange={(e) => setValues({ ...values, turno: e.target.value })} >
                                 <option value="1">1</option>
@@ -113,6 +115,7 @@ function ModificarPromedios() {
                                 placeholder="Insertar Promedio."
                                 class="form-control"
                                 name='pemolino1'
+                                required
                                 value={values.pemolino1}
                                 onChange={(e) => setValues({ ...values, pemolino1: e.target.value })} />
 
@@ -124,6 +127,7 @@ function ModificarPromedios() {
                                 placeholder="Insertar Promedio"
                                 class="form-control"
                                 name='malla200mo1'
+                                required
                                 value={values.malla200mo1}
                                 onChange={(e) => setValues({ ...values, malla200mo1: e.target.value })} />
                         </div>
@@ -134,6 +138,7 @@ function ModificarPromedios() {
                                 placeholder="Insertar Promedio"
                                 class="form-control"
                                 name=' malla325mo1'
+                                required
                                 value={values.malla325mo1}
                                 onChange={(e) => setValues({ ...values, malla325mo1: e.target.value })} />
                         </div>
@@ -144,6 +149,7 @@ function ModificarPromedios() {
                                 placeholder="Insertar Promedio"
                                 class="form-control"
                                 name='calciosmo1'
+                                required
                                 value={values.calciosmo1}
                                 onChange={(e) => setValues({ ...values, calciosmo1: e.target.value })} />
                         </div>
@@ -153,6 +159,7 @@ function ModificarPromedios() {
                             <input
                                 placeholder="Insertar Promedio"
                                 class="form-control"
+                                required
                                 name=' humedadmo1'
                                 value={values.humedadmo1}
                                 onChange={(e) => setValues({ ...values, humedadmo1: e.target.value })} />
@@ -175,6 +182,7 @@ function ModificarPromedios() {
                                 placeholder="Insertar Promedio."
                                 class="form-control"
                                 name='pemolino2'
+                                required
                                 value={values.pemolino2}
                                 onChange={(e) => setValues({ ...values, pemolino2: e.target.value })} />
 
@@ -186,6 +194,7 @@ function ModificarPromedios() {
                                 placeholder="Insertar Promedio"
                                 class="form-control"
                                 name='malla200mo2'
+                                required
                                 value={values.malla200mo2}
                                 onChange={(e) => setValues({ ...values, malla200mo2: e.target.value })} />
                         </div>
@@ -195,6 +204,7 @@ function ModificarPromedios() {
                             <input
                                 placeholder="Insertar Promedio"
                                 class="form-control"
+                                required
                                 name=' malla325mo2'
                                 value={values.malla325mo2}
                                 onChange={(e) => setValues({ ...values, malla325mo2: e.target.value })} />
@@ -205,6 +215,7 @@ function ModificarPromedios() {
                             <input
                                 placeholder="Insertar Promedio"
                                 class="form-control"
+                                required
                                 name='calciosmo2'
                                 value={values.calciosmo2}
                                 onChange={(e) => setValues({ ...values, calciosmo2: e.target.value })} />
@@ -216,6 +227,7 @@ function ModificarPromedios() {
                                 placeholder="Insertar Promedio"
                                 class="form-control"
                                 name=' humedadmo2'
+                                required
                                 value={values.humedadmo2}
                                 onChange={(e) => setValues({ ...values, humedadmo2: e.target.value })} />
                         </div>

@@ -76,7 +76,7 @@ function ConcBaribright() {
     
                         <td>
                           <div style={{ display: 'flex', alignItems: 'center' }}>
-                            <Link to={`/updategranobaribright/${d.id}`} className='btn btn-warning'>
+                            <Link to={`/updateconcentradobaribaright/${d.id}`} className='btn btn-warning'>
                               <i className='fa-solid fa-edit'></i>
                             </Link>
                             &nbsp;

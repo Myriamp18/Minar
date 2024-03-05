@@ -66,6 +66,7 @@ function ModificarGrano() {
               id='date'
               placeholder='Insertar Cantidad'
               name='fecha'
+              required
               value={values.fecha}
               onChange={(e) => setValues({...values, fecha: e.target.value})}
             />
@@ -77,6 +78,7 @@ function ModificarGrano() {
              type="text"  
              class="form-control"
              id='entradas'
+             required
              placeholder='Insertar Cantidad'  
              name='entradas'
              value={values.entrada}
@@ -90,6 +92,7 @@ function ModificarGrano() {
              type="text"  
              class="form-control"
              id='salidas'
+             required
              placeholder='Insertar Cantidad'  
              name='salidas'
              value={values.salidas}
@@ -104,6 +107,7 @@ function ModificarGrano() {
              id='pesp'
              placeholder='Insertar Peso'  
              name='pesp'
+             required
              value={values.pesp}
              onChange={(e) => setValues({...values, pesp: e.target.value})}/>
           </div>
@@ -112,7 +116,7 @@ function ModificarGrano() {
 
           
           <div className="btn-container">
-          <button type="submit" className="BTN"  >GUARDAR</button>
+          <button type="submit" className="BTN"  >MODIFICAR</button>
           </div>
 
 

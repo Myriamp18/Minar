@@ -61,6 +61,7 @@ function ModificarGranoPMoler() {
               type="date"  
               class="form-control"
               id='date'
+              required
               placeholder='Insertar Cantidad'
               name='fecha'
               value={values.fecha}
@@ -72,6 +73,7 @@ function ModificarGranoPMoler() {
             <label form='text' class="form-label"> Entradas:</label>
             <input
              type="text"  
+             required
              class="form-control"
              id='entradas'
              placeholder='Insertar Cantidad'  
@@ -85,6 +87,7 @@ function ModificarGranoPMoler() {
             <label form='text' class="form-label"> Salidas:</label>
             <input
              type="text"  
+             required
              class="form-control"
              id='salidas'
              placeholder='Insertar Cantidad'  
@@ -101,6 +104,7 @@ function ModificarGranoPMoler() {
              id='pesp'
              placeholder='Insertar Peso'  
              name='pesp'
+             required
              value={values.pe}
              onChange={(e) => setValues({...values, pe: e.target.value})}/>
           </div>

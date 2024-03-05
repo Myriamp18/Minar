@@ -53,6 +53,7 @@ function FrmSilos(){
           <label form='fecha' class="form-label"> Fecha:</label>
           <input
             type="date"
+            required
             class="form-control"
             id='date'
             placeholder='Insertar Cantidad'
@@ -65,6 +66,7 @@ function FrmSilos(){
           <label form='text' class="form-label"> Silo 1:</label>
           <input
             type="text"
+            required
             class="form-control"
             id='silo1'
             placeholder='Insertar Cantidad'
@@ -75,6 +77,7 @@ function FrmSilos(){
           <label form='text' class="form-label"> P.ESP:</label>
           <input
             type="text"
+            required
             class="form-control"
             id='pesilo1'
             placeholder='Insertar P.ESP'
@@ -87,6 +90,7 @@ function FrmSilos(){
           <label form='text' class="form-label"> Silo 2:</label>
           <input
             type="text"
+            required
             class="form-control"
             id='silo2'
             placeholder='Insertar Cantidad'
@@ -99,6 +103,7 @@ function FrmSilos(){
             type="text"
             class="form-control"
             id='pesilo2'
+            required
             placeholder='Insertar P.ESP'
             name='pes2'
             onChange={(e) => setValues({ ...values, pes2: e.target.value })} />
@@ -113,6 +118,7 @@ function FrmSilos(){
             id='silo3'
             placeholder='Insertar Cantidad'
             name='silo3'
+            required
             onChange={(e) => setValues({ ...values, silo3: e.target.value })} />
         </div>
         <div class="mb-3">
@@ -121,6 +127,7 @@ function FrmSilos(){
             type="text"
             class="form-control"
             id='pesilo3'
+            required
             placeholder='Insertar P.ESP'
             name='pes3'
             onChange={(e) => setValues({ ...values, pes3: e.target.value })} />
@@ -133,6 +140,7 @@ function FrmSilos(){
             type="text"
             class="form-control"
             id='silo4'
+            required
             placeholder='Insertar Cantidad'
             name='silo4'
             onChange={(e) => setValues({ ...values, silo4: e.target.value })} />
@@ -143,6 +151,7 @@ function FrmSilos(){
             type="text"
             class="form-control"
             id='pesilo4'
+            required
             placeholder='Insertar P.ESP'
             name='pes4'
             onChange={(e) => setValues({ ...values, pes4: e.target.value })} />
@@ -155,6 +164,7 @@ function FrmSilos(){
             type="text"
             class="form-control"
             id='silo5'
+            required
             placeholder='Insertar Cantidad'
             name='silo5'
             onChange={(e) => setValues({ ...values, silo5: e.target.value })} />
@@ -165,6 +175,7 @@ function FrmSilos(){
             type="text"
             class="form-control"
             id='pesilo5'
+            required
             placeholder='Insertar P.ESP'
             name='pes5'
             onChange={(e) => setValues({ ...values, pes5: e.target.value })} />

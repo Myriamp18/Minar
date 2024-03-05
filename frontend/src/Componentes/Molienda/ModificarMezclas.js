@@ -72,6 +72,7 @@ function ModificarMezclas() {
           <label form='fecha' class="form-label"> Fecha:</label>
           <input
             type="date"
+            required
             class="form-control"
             id='date'
             placeholder='Insertar Cantidad'
@@ -87,6 +88,7 @@ function ModificarMezclas() {
             id="seleccion"
             name="seleccion"
             class="form-control"
+            required
             value={values.turno}
             onChange={(e) => setValues({ ...values, turno: e.target.value })} >
             <option value="1">1</option>
@@ -105,6 +107,7 @@ function ModificarMezclas() {
               type="text"
               class="form-control"
               id='concmesas'
+              required
               placeholder='Insertar Cantidad'
               name='concmesas'
               value={values.concmesas}
@@ -116,6 +119,7 @@ function ModificarMezclas() {
               type="text"
               class="form-control"
               id='pecm'
+              required
               placeholder='Insertar P.ESP'
               name='pecm'
               value={values.pecm}
@@ -129,6 +133,7 @@ function ModificarMezclas() {
               type="text"
               class="form-control"
               id='medios'
+              required
               placeholder='Insertar Cantidad'
               name='medios'
               value={values.medios}
@@ -140,6 +145,7 @@ function ModificarMezclas() {
               type="text"
               class="form-control"
               id='pem'
+              required
               placeholder='Insertar P.ESP'
               name='pem'
               value={values.pem}
@@ -155,6 +161,7 @@ function ModificarMezclas() {
               id='concjigs'
               placeholder='Insertar Cantidad'
               name='concjigs'
+              required
               value={values.concjigs}
               onChange={(e) => setValues({ ...values, concjigs: e.target.value })} />
           </div>
@@ -166,6 +173,7 @@ function ModificarMezclas() {
               id='pejig'
               placeholder='Insertar P.ESP'
               name='pejig'
+              required
               value={values.pejig}
               onChange={(e) => setValues({ ...values, pejig: e.target.value })} />
           </div>
@@ -179,6 +187,7 @@ function ModificarMezclas() {
               id='desenslovez'
               placeholder='Insertar Cantidad'
               name='desenslovez'
+              required
               value={values.desenslovez}
               onChange={(e) => setValues({ ...values, desenslovez: e.target.value })} />
           </div>
@@ -190,6 +199,7 @@ function ModificarMezclas() {
               id='pedese'
               placeholder='Insertar P.ESP'
               name='pedese'
+              required
               value={values.pedese}
               onChange={(e) => setValues({ ...values, pedese: e.target.value })} />
           </div>
@@ -202,6 +212,7 @@ function ModificarMezclas() {
               type="text"
               class="form-control"
               id='pemt'
+              required
               placeholder='Insertar P.ESP'
               name='pemt'
               value={values.pemt}
@@ -212,6 +223,7 @@ function ModificarMezclas() {
             <input
               type="text"
               class="form-control"
+              required
               id='pemt'
               placeholder='Insertar Salidas'
               name='pemt'

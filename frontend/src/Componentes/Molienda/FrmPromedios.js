@@ -58,6 +58,7 @@ function FrmPromedios() {
                                 type="date"
                                 class="form-control"
                                 id='date'
+                                required
                                 placeholder='Insertar Cantidad'
                                 name='fecha'
                                 onChange={(e) => setValues({ ...values, fecha: e.target.value })}
@@ -69,6 +70,7 @@ function FrmPromedios() {
                             <select
                                 id="seleccion"
                                 name="seleccion"
+                                required
                                 class="form-control"
                                 value={values.turno}
                                 onChange={(e) => setValues({ ...values, turno: e.target.value })} >
@@ -92,6 +94,7 @@ function FrmPromedios() {
 
                             <input
                                 type="tolvagen"
+                                required
                                 placeholder="Insertar Promedio."
                                 class="form-control"
                                 name='pemolino1'
@@ -105,6 +108,7 @@ function FrmPromedios() {
                             <input
                                 placeholder="Insertar Promedio"
                                 class="form-control"
+                                required
                                 name='malla200mo1'
                                
                                 onChange={(e) => setValues({ ...values, malla200mo1: e.target.value })} />
@@ -115,6 +119,7 @@ function FrmPromedios() {
                             <input
                                 placeholder="Insertar Promedio"
                                 class="form-control"
+                                required
                                 name=' malla325mo1'
                                 
                                 onChange={(e) => setValues({ ...values, malla325mo1: e.target.value })} />
@@ -125,6 +130,7 @@ function FrmPromedios() {
                             <input
                                 placeholder="Insertar Promedio"
                                 class="form-control"
+                                required
                                 name='calciosmo1'
                                
                                 onChange={(e) => setValues({ ...values, calciosmo1: e.target.value })} />
@@ -136,6 +142,7 @@ function FrmPromedios() {
                                 placeholder="Insertar Promedio"
                                 class="form-control"
                                 name=' humedadmo1'
+                                required
                               
                                 onChange={(e) => setValues({ ...values, humedadmo1: e.target.value })} />
                         </div>
@@ -156,6 +163,7 @@ function FrmPromedios() {
                                 type="tolvagen"
                                 placeholder="Insertar Promedio."
                                 class="form-control"
+                                required
                                 name='pemolino2'
                                
                                 onChange={(e) => setValues({ ...values, pemolino2: e.target.value })} />
@@ -167,6 +175,7 @@ function FrmPromedios() {
                             <input
                                 placeholder="Insertar Promedio"
                                 class="form-control"
+                                required
                                 name='malla200mo2'
                                
                                 onChange={(e) => setValues({ ...values, malla200mo2: e.target.value })} />
@@ -177,6 +186,7 @@ function FrmPromedios() {
                             <input
                                 placeholder="Insertar Promedio"
                                 class="form-control"
+                                required
                                 name=' malla325mo2'
                                 
                                 onChange={(e) => setValues({ ...values, malla325mo2: e.target.value })} />
@@ -187,6 +197,7 @@ function FrmPromedios() {
                             <input
                                 placeholder="Insertar Promedio"
                                 class="form-control"
+                                required
                                 name='calciosmo2'
                                
                                 onChange={(e) => setValues({ ...values, calciosmo2: e.target.value })} />
@@ -197,6 +208,7 @@ function FrmPromedios() {
                             <input
                                 placeholder="Insertar Promedio"
                                 class="form-control"
+                                required
                                 name=' humedadmo2'
                               
                                 onChange={(e) => setValues({ ...values, humedadmo2: e.target.value })} />

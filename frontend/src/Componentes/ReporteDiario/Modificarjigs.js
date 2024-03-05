@@ -93,6 +93,7 @@ function Modificarjigs() {
                                 id='date'
                                 placeholder='Insertar Cantidad'
                                 name='fecha'
+                                required
                                 value={values.fecha}
                                 onChange={(e) => setValues({ ...values, fecha: e.target.value })}
                             />
@@ -103,6 +104,7 @@ function Modificarjigs() {
                             <select
                                 id="seleccion"
                                 name="seleccion"
+                                required
                                 class="form-control"
                                 value={values.turno}
                                 onChange={(e) => setValues({ ...values, turno: e.target.value })} >
@@ -127,6 +129,7 @@ function Modificarjigs() {
                                 placeholder="Alim."
                                 class="form-control"
                                 name='alimj1'
+                                required
                                 value={values.alimj1}
                                 onChange={(e) => setValues({ ...values, alimj1: e.target.value })} />
 
@@ -139,6 +142,7 @@ function Modificarjigs() {
                                 class="form-control"
                                 name='peaj1'
                                 value={values.peaj1}
+                                required
                                 onChange={(e) => setValues({ ...values, peaj1: e.target.value })} />
                         </div>
 
@@ -148,6 +152,7 @@ function Modificarjigs() {
                                 placeholder="Grano"
                                 class="form-control"
                                 name=' granoj1l'
+                                required
                                 value={values.granoj1}
                                 onChange={(e) => setValues({ ...values, granoj1: e.target.value })} />
                         </div>
@@ -158,6 +163,7 @@ function Modificarjigs() {
                                 placeholder="P.E"
                                 class="form-control"
                                 name='pegj1'
+                                required
                                 value={values.pegj1}
                                 onChange={(e) => setValues({ ...values, pegj1: e.target.value })} />
                         </div>
@@ -169,6 +175,7 @@ function Modificarjigs() {
                                 class="form-control"
                                 name=' desenj1'
                                 value={values.desenj1}
+                                required
                                 onChange={(e) => setValues({ ...values, desenj1: e.target.value })} />
                         </div>
                         <div className="JIGS1">
@@ -177,6 +184,7 @@ function Modificarjigs() {
                                 class="form-control"
                                 placeholder="P.E"
                                 name=' pedj1'
+                                required
                                 value={values.pedj1}
                                 onChange={(e) => setValues({ ...values, pedj1: e.target.value })} />
                         </div>
@@ -186,6 +194,7 @@ function Modificarjigs() {
                                 class="form-control"
                                 placeholder="Colas"
                                 name='colasj1'
+                                required
                                 value={values.colasj1}
                                 onChange={(e) => setValues({ ...values, colasj1: e.target.value })} />
                         </div>
@@ -195,6 +204,7 @@ function Modificarjigs() {
                                 placeholder="P.E"
                                 class="form-control"
                                 name='pecj1'
+                                required
                                 value={values.pecj1}
                                 onChange={(e) => setValues({ ...values, pecj1: e.target.value })} />
                         </div>
@@ -213,6 +223,7 @@ function Modificarjigs() {
                                 type="tolvagen"
                                 placeholder="Alim."
                                 class="form-control"
+                                required
                                 name='alimj2'
                                 value={values.alimj2}
                                 onChange={(e) => setValues({ ...values, alimj2: e.target.value })} />
@@ -225,6 +236,7 @@ function Modificarjigs() {
                                 placeholder="P.E"
                                 class="form-control"
                                 name='peaj2'
+                                required
                                 value={values.peaj2}
                                 onChange={(e) => setValues({ ...values, peaj2: e.target.value })} />
                         </div>
@@ -235,6 +247,7 @@ function Modificarjigs() {
                                 placeholder="Grano"
                                 class="form-control"
                                 name=' granoj2'
+                                required
                                 value={values.granoj2}
                                 onChange={(e) => setValues({ ...values, granoj2: e.target.value })} />
                         </div>
@@ -245,6 +258,7 @@ function Modificarjigs() {
                                 placeholder="P.E"
                                 class="form-control"
                                 name='pegj2'
+                                required
                                 value={values.pegj2}
                                 onChange={(e) => setValues({ ...values, pegj2: e.target.value })} />
                         </div>
@@ -255,6 +269,7 @@ function Modificarjigs() {
                                 placeholder="Desens"
                                 class="form-control"
                                 name=' desenj2'
+                                required
                                 value={values.desenj2}
                                 onChange={(e) => setValues({ ...values, desenj2: e.target.value })} />
                         </div>
@@ -265,6 +280,7 @@ function Modificarjigs() {
                                 placeholder="P.E"
                                 name=' pedj2'
                                 value={values.pedj2}
+                                required
                                 onChange={(e) => setValues({ ...values, pedj2: e.target.value })} />
                         </div>
                         <div className="JIGS1">
@@ -273,6 +289,7 @@ function Modificarjigs() {
                                 class="form-control"
                                 placeholder="Colas"
                                 name='colasj2'
+                                required
                                 value={values.colasj2}
                                 onChange={(e) => setValues({ ...values, colasj2: e.target.value })} />
                         </div>
@@ -282,6 +299,7 @@ function Modificarjigs() {
                                 placeholder="P.E"
                                 class="form-control"
                                 name='pecj2'
+                                required
                                 value={values.pecj2}
                                 onChange={(e) => setValues({ ...values, pecj2: e.target.value })} />
                         </div>

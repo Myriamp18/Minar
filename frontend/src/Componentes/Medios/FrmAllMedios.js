@@ -52,6 +52,7 @@ function FrmAllMedios() {
               type="date"  
               class="form-control"
               id='date'
+              required
               placeholder='Insertar Cantidad'
               name='fecha'
               onChange={(e) => setValues({...values, fecha: e.target.value})}
@@ -66,6 +67,7 @@ function FrmAllMedios() {
              id='entradas'
              placeholder='Insertar Cantidad'  
              name='entradas'
+             required
              onChange={(e) => setValues({...values, entradasm46: e.target.value})}/>
           </div>
 
@@ -78,6 +80,7 @@ function FrmAllMedios() {
              id='salidas'
              placeholder='Insertar Cantidad'  
              name='salidas'
+             required
              onChange={(e) => setValues({...values, salidasm46: e.target.value})}/>
           </div>
           
@@ -87,6 +90,7 @@ function FrmAllMedios() {
              type="text"  
              class="form-control"
              id='salidas'
+             required
              placeholder='Insertar P.E'  
              name='pe'
              onChange={(e) => setValues({...values, pe46: e.target.value})}/>

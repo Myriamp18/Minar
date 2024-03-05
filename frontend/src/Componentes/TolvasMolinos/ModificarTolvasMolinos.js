@@ -68,6 +68,7 @@ function ModificarTolvasMolinos() {
              type="text"  
              class="form-control"
              id='salidas'
+             required
              placeholder='Insertar Cantidad'  
              name='tolvamolinos'
              value={values.tolvamolinos}
@@ -82,6 +83,7 @@ function ModificarTolvasMolinos() {
              type="text"  
              class="form-control"
              id='salidas'
+             required
              placeholder='Insertar Cantidad'  
              name='petm'
              value={values.petm}
@@ -94,6 +96,7 @@ function ModificarTolvasMolinos() {
              type="text"  
              class="form-control"
              id='pe'
+             required
              placeholder='Insertar Peso'  
              name='mezclasmoler'
              value={values.mezclasmoler}
@@ -108,6 +111,7 @@ function ModificarTolvasMolinos() {
              id='salidas'
              placeholder='Insertar Cantidad'  
              name='pememo'
+             required
              value={values.pememo}
              onChange={(e) => setValues({...values, pememo: e.target.value})}/>
           </div>

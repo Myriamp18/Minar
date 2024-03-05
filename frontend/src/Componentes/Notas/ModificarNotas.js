@@ -69,6 +69,7 @@ function ModificarNotas() {
           type="date"
           class="form-control"
           id='date'
+          required
           placeholder='Insertar Cantidad'
           name='fecha'
           value={values.fecha}
@@ -82,6 +83,7 @@ function ModificarNotas() {
              type="text"  
              class="form-control"
              id='medios lavar'
+             required
              placeholder='Insertar Cantidad'  
              name='medios'
              value={values.totmedios}
@@ -95,6 +97,7 @@ function ModificarNotas() {
              class="form-control"
              id='desensolve lavar'
              placeholder='Insertar Cantidad'  
+             required
              name='desensolve'
              value={values.totdesensolve}
              onChange={(e) => setValues({...values, totdesensolve: e.target.value})}/>
@@ -105,7 +108,8 @@ function ModificarNotas() {
              type="text"  
              class="form-control"
              id='colas lavar'
-             placeholder='Insertar Cantidad'  
+             placeholder='Insertar Cantidad' 
+             required
              name='colas'
              value={values.totcolas}
              onChange={(e) => setValues({...values, totcolas: e.target.value})}/>
@@ -116,8 +120,10 @@ function ModificarNotas() {
              type="text"  
              class="form-control"
              id='jigssec lavar'
+             
              placeholder='Insertar Cantidad'  
              name='jigsec'
+             required
              value={values.totjigssec}
              onChange={(e) => setValues({...values, totjigssec: e.target.value})}/>
           </div>
@@ -137,7 +143,7 @@ function ModificarNotas() {
 
 
       <div className="btnmolino-container">
-        <button type="submit" className="BTNmolino"  >GUARDAR</button>
+        <button type="submit" className="BTNmolino"  >MODIFICAR</button>
       </div>
 
 

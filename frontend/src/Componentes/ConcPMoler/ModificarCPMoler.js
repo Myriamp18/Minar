@@ -35,7 +35,7 @@ function ModificarCPMoler() {
         axios.put(`http://localhost:8081/updateconcpmoler/${id}`, { ...values, saldo: nuevoSaldo })
           .then(res => {
             console.log(res);
-            navigate('/Inicio');
+            navigate('/concpmoler');
           })
           .catch(err => console.log(err));
       };
@@ -70,6 +70,7 @@ function ModificarCPMoler() {
               type="date"  
               class="form-control"
               id='date'
+              required
               placeholder='Insertar Cantidad'
               name='fecha'
               value={values.fecha}
@@ -85,6 +86,7 @@ function ModificarCPMoler() {
              id='entradas'
              placeholder='Insertar Cantidad'  
              name='entradas'
+             required
              value={values.entrada}
              onChange={(e) => setValues({...values, entrada: e.target.value})}/>
           </div>
@@ -96,6 +98,7 @@ function ModificarCPMoler() {
              type="text"  
              class="form-control"
              id='salidas'
+             required
              placeholder='Insertar Cantidad'  
              name='salidas'
              value={values.salida}
@@ -110,6 +113,7 @@ function ModificarCPMoler() {
              id='pesp'
              placeholder='Insertar Peso'  
              name='pesp'
+             required
              value={values.pesp}
              onChange={(e) => setValues({...values, pesp: e.target.value})}/>
           </div>

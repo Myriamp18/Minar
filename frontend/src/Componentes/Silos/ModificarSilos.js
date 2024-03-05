@@ -74,6 +74,7 @@ function ModificarSilos() {
                         type="date"
                         class="form-control"
                         id='date'
+                        required
                         placeholder='Insertar Cantidad'
                         name='fecha'
                         value={values.fecha}
@@ -87,6 +88,7 @@ function ModificarSilos() {
                             type="text"
                             class="form-control"
                             id='silo1'
+                            required
                             placeholder='Insertar Cantidad'
                             name='silo1'
                             value={values.silo1}
@@ -98,6 +100,7 @@ function ModificarSilos() {
                             type="text"
                             class="form-control"
                             id='pesilo1'
+                            required
                             placeholder='Insertar P.ESP'
                             name='pes1'
                             value={values.pes1}
@@ -113,6 +116,7 @@ function ModificarSilos() {
                             id='silo2'
                             placeholder='Insertar Cantidad'
                             name='silo2'
+                            required
                             value={values.silo2}
                             onChange={(e) => setValues({ ...values, silo2: e.target.value })} />
                     </div>
@@ -124,6 +128,7 @@ function ModificarSilos() {
                             id='pesilo2'
                             placeholder='Insertar P.ESP'
                             name='pes2'
+                            required
                             value={values.pes2}
                             onChange={(e) => setValues({ ...values, pes2: e.target.value })} />
                     </div>
@@ -137,6 +142,7 @@ function ModificarSilos() {
                             id='silo3'
                             placeholder='Insertar Cantidad'
                             name='silo3'
+                            required
                             value={values.silo3}
                             onChange={(e) => setValues({ ...values, silo3: e.target.value })} />
                     </div>
@@ -146,6 +152,7 @@ function ModificarSilos() {
                             type="text"
                             class="form-control"
                             id='pesilo3'
+                            required
                             placeholder='Insertar P.ESP'
                             name='pes3'
                             value={values.pes3}
@@ -162,6 +169,7 @@ function ModificarSilos() {
                             id='silo4'
                             placeholder='Insertar Cantidad'
                             name='silo4'
+                            required
                             value={values.silo4}
                             onChange={(e) => setValues({ ...values, silo4: e.target.value })} />
                     </div>
@@ -173,6 +181,7 @@ function ModificarSilos() {
                             id='pesilo4'
                             placeholder='Insertar P.ESP'
                             name='pes4'
+                            required
                             value={values.pes4}
                             onChange={(e) => setValues({ ...values, pes4: e.target.value })} />
                     </div>
@@ -184,6 +193,7 @@ function ModificarSilos() {
                             type="text"
                             class="form-control"
                             id='silo5'
+                            required
                             placeholder='Insertar Cantidad'
                             name='silo5'
                             value={values.silo5}
@@ -195,6 +205,7 @@ function ModificarSilos() {
                             type="text"
                             class="form-control"
                             id='pesilo5'
+                            required
                             placeholder='Insertar P.ESP'
                             name='pes5'
                             value={values.pes5}

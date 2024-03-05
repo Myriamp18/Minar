@@ -54,6 +54,7 @@ function FrmSeleccion() {
               type="date"  
               class="form-control"
               id='date'
+              required
               placeholder='Insertar Cantidad'
               name='fecha'
               onChange={(e) => setValues({...values, fecha: e.target.value})}
@@ -68,6 +69,7 @@ function FrmSeleccion() {
              type="text"  
              class="form-control"
              id='salidas'
+             required
              placeholder='Insertar Cantidad'  
              name='salida'
              onChange={(e) => setValues({...values, salida: e.target.value})}/>

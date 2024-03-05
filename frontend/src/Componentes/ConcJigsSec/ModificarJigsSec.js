@@ -68,6 +68,7 @@ function ModificarJigsSec() {
               type="date"  
               class="form-control"
               id='date'
+              required
               placeholder='Insertar Cantidad'
               name='fecha'
               value={values.fecha}
@@ -81,6 +82,7 @@ function ModificarJigsSec() {
              type="text"  
              class="form-control"
              id='entradas'
+             required
              placeholder='Insertar Cantidad'  
              name='entradas'
              value={values.entradas}
@@ -94,6 +96,7 @@ function ModificarJigsSec() {
              type="text"  
              class="form-control"
              id='salidas'
+             required
              placeholder='Insertar Cantidad'  
              name='salidas'
              value={values.salidas}
@@ -106,6 +109,7 @@ function ModificarJigsSec() {
              type="text"  
              class="form-control"
              id='pesp'
+             required
              placeholder='Insertar Peso'  
              name='pesp'
              value={values.pe}

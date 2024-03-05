@@ -53,6 +53,7 @@ function ModificarTolvaG() {
               type="date"  
               class="form-control"
               id='date'
+              required
               placeholder='Insertar Cantidad'
               name='fecha'
               value={values.fecha}
@@ -66,6 +67,7 @@ function ModificarTolvaG() {
              type="text"  
              class="form-control"
              id='salidas'
+             required
              placeholder='Insertar Cantidad'  
              name='entradas'
              value={values.entradas}
@@ -80,6 +82,7 @@ function ModificarTolvaG() {
              id='salidas'
              placeholder='Insertar Cantidad'  
              name='salidas'
+             required
              value={values.salidas}
              onChange={(e) => setValues({...values, salidas: e.target.value})}/>
           </div>
@@ -92,6 +95,7 @@ function ModificarTolvaG() {
              id='pe'
              placeholder='Insertar Peso'  
              name='pe'
+             required
              value={values.pe}
              onChange={(e) => setValues({...values, pe: e.target.value})}/>
           </div>

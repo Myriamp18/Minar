@@ -1,14 +1,12 @@
 import React,{useState, useEffect} from 'react'
 import {
-    FaTh,
+   
     FaBars,
     FaHome
 }
 from "react-icons/fa"
 import { GiNotebook } from "react-icons/gi";
-import { GiManualMeatGrinder } from "react-icons/gi";
-
-import { FaRoad } from "react-icons/fa";
+import { FaUserCircle } from "react-icons/fa";
 import { NavLink } from 'react-router-dom'
 import Logo from '../assest/logo.png'
 
@@ -40,6 +38,11 @@ function Menu({children}) {
             path:"/horometros",
             name:"Reporte Produccion",
             icon:<GiNotebook />
+        },
+        {
+            path:"/createusuario",
+            name:"Agregar Usuario",
+            icon:<FaUserCircle />
         },
       
       

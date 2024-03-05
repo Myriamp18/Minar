@@ -44,6 +44,7 @@ function FrmBandas() {
               type="date"  
               class="form-control"
               id='date'
+              required
               placeholder='Insertar Cantidad'
               name='fecha'
               onChange={(e) => setValues({...values, fecha: e.target.value})}
@@ -56,6 +57,7 @@ function FrmBandas() {
              type="text"  
              class="form-control"
              id='entradas'
+             required
              placeholder='Insertar Cantidad'  
              name='entradas'
              onChange={(e) => setValues({...values, entrada: e.target.value})}/>
@@ -68,6 +70,7 @@ function FrmBandas() {
              type="text"  
              class="form-control"
              id='salidas'
+             required
              placeholder='Insertar Cantidad'  
              name='salidas'
              onChange={(e) => setValues({...values, salidas: e.target.value})}/>
@@ -79,6 +82,7 @@ function FrmBandas() {
              type="text"  
              class="form-control"
              id='pesp'
+             required
              placeholder='Insertar Peso'  
              name='pesp'
              onChange={(e) => setValues({...values, pesp: e.target.value})}/>

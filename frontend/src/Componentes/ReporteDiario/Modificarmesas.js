@@ -130,6 +130,7 @@ function Modificarmesas() {
                             type="date"
                             class="form-control"
                             id='date'
+                            required
                             placeholder='Insertar Cantidad'
                             name='fecha'
                             value={values.fecha}
@@ -143,6 +144,7 @@ function Modificarmesas() {
                             id="seleccion"
                             name="seleccion"
                             class="form-control"
+                            required
                             value={values.turno}
                             onChange={(e) => setValues({ ...values, turno: e.target.value })} >
                             <option value="1">1</option>
@@ -165,6 +167,7 @@ function Modificarmesas() {
                                 class="form-control"
                                 placeholder="Alim."
                                 name=' alimm12'
+                                required
                                 value={values.alimm12}
                                 onChange={(e) => setValues({ ...values, alimm12: e.target.value })} />
 
@@ -176,6 +179,7 @@ function Modificarmesas() {
                                 class="form-control"
                                 placeholder="P.E"
                                 name=' peam12'
+                                required
                                 value={values.peam12}
                                 onChange={(e) => setValues({ ...values, peam12: e.target.value })} />
                         </div>
@@ -186,6 +190,7 @@ function Modificarmesas() {
                                 class="form-control"
                                 placeholder="Conc."
                                 name=' conm12'
+                                required
                                 value={values.conm12}
                                 onChange={(e) => setValues({ ...values, conm12: e.target.value })} />
                         </div>
@@ -195,6 +200,7 @@ function Modificarmesas() {
                             <input
                                 class="form-control"
                                 placeholder="P.E"
+                                required
                                 name='  pecnm12'
                                 value={values.pecnm12}
                                 onChange={(e) => setValues({ ...values, pecnm12: e.target.value })} />
@@ -205,6 +211,7 @@ function Modificarmesas() {
                             <input
                                 class="form-control"
                                 placeholder="Medios"
+                                required
                                 name='mediom12'
                                 value={values.mediom12}
                                 onChange={(e) => setValues({ ...values, mediom12: e.target.value })} />
@@ -215,6 +222,7 @@ function Modificarmesas() {
                                 class="form-control"
                                 placeholder="P.E"
                                 name='pemm12'
+                                required
                                 value={values.pemm12}
                                 onChange={(e) => setValues({ ...values, pemm12: e.target.value })} />
                         </div>
@@ -224,6 +232,7 @@ function Modificarmesas() {
                                 class="form-control"
                                 placeholder="Colas"
                                 name=' colasm12'
+                                required
                                 value={values.colasm12}
                                 onChange={(e) => setValues({ ...values, colasm12: e.target.value })} />
                         </div>
@@ -233,6 +242,7 @@ function Modificarmesas() {
                                 class="form-control"
                                 placeholder="P.E"
                                 name='pecm12'
+                                required
                                 value={values.pecm12}
                                 onChange={(e) => setValues({ ...values, pecm12: e.target.value })} />
                         </div>
@@ -251,6 +261,7 @@ function Modificarmesas() {
                                 class="form-control"
                                 placeholder="Alim."
                                 name=' alimm34'
+                                required
                                 value={values.alimm34}
                                 onChange={(e) => setValues({ ...values, alimm34: e.target.value })} />
 
@@ -262,6 +273,7 @@ function Modificarmesas() {
                                 class="form-control"
                                 placeholder="P.E"
                                 name='peam34'
+                                required
                                 value={values.peam34}
                                 onChange={(e) => setValues({ ...values, peam34: e.target.value })} />
                         </div>
@@ -272,6 +284,7 @@ function Modificarmesas() {
                                 class="form-control"
                                 placeholder="Conc."
                                 name='conm34'
+                                required
                                 value={values.conm34}
                                 onChange={(e) => setValues({ ...values, conm34: e.target.value })} />
                         </div>
@@ -282,6 +295,7 @@ function Modificarmesas() {
                                 class="form-control"
                                 placeholder="P.E"
                                 name='pecnm34'
+                                required
                                 value={values.pecnm34}
                                 onChange={(e) => setValues({ ...values, pecnm34: e.target.value })} />
                         </div>
@@ -292,6 +306,7 @@ function Modificarmesas() {
                                 class="form-control"
                                 placeholder="Medios"
                                 name=' mediosm34'
+                                required
                                 value={values.mediosm34}
                                 onChange={(e) => setValues({ ...values, mediosm34: e.target.value })} />
                         </div>
@@ -301,6 +316,7 @@ function Modificarmesas() {
                                 class="form-control"
                                 placeholder="P.E"
                                 name='pemm34'
+                                required
                                 value={values.pemm34}
                                 onChange={(e) => setValues({ ...values, pemm34: e.target.value })} />
                         </div>
@@ -310,6 +326,7 @@ function Modificarmesas() {
                                 class="form-control"
                                 placeholder="Colas"
                                 name=' colasm34'
+                                required
                                 value={values.colasm34}
                                 onChange={(e) => setValues({ ...values, colasm34: e.target.value })} />
                         </div>
@@ -319,6 +336,7 @@ function Modificarmesas() {
                                 class="form-control"
                                 placeholder="P.E"
                                 name=' pecm34'
+                                required
                                 value={values.pecm34}
                                 onChange={(e) => setValues({ ...values, pecm34: e.target.value })} />
                         </div>
@@ -335,6 +353,7 @@ function Modificarmesas() {
                             <input
                                 class="form-control"
                                 placeholder="Alim."
+                                required
                                 name=' alimm5'
                                 value={values.alimm5}
                                 onChange={(e) => setValues({ ...values, alimm5: e.target.value })} />
@@ -347,6 +366,7 @@ function Modificarmesas() {
                                 class="form-control"
                                 placeholder="P.E"
                                 name='peam5'
+                                required
                                 value={values.peam5}
                                 onChange={(e) => setValues({ ...values, peam5: e.target.value })} />
                         </div>
@@ -357,6 +377,7 @@ function Modificarmesas() {
                                 class="form-control"
                                 placeholder="Conc."
                                 name=' conm5'
+                                required
                                 value={values.conm5}
                                 onChange={(e) => setValues({ ...values, conm5: e.target.value })} />
                         </div>
@@ -367,6 +388,7 @@ function Modificarmesas() {
                                 class="form-control"
                                 placeholder="P.E"
                                 name='pecnm5'
+                                required
                                 value={values.pecnm5}
                                 onChange={(e) => setValues({ ...values, pecnm5: e.target.value })} />
                         </div>
@@ -377,6 +399,7 @@ function Modificarmesas() {
                                 class="form-control"
                                 placeholder="Medios"
                                 name='mediosm5'
+                                required
                                 value={values.mediosm5}
                                 onChange={(e) => setValues({ ...values, mediosm5: e.target.value })} />
                         </div>
@@ -386,6 +409,7 @@ function Modificarmesas() {
                                 class="form-control"
                                 placeholder="P.E"
                                 name='pemm5'
+                                required
                                 value={values.pemm5}
                                 onChange={(e) => setValues({ ...values, pemm5: e.target.value })} />
                         </div>
@@ -395,6 +419,7 @@ function Modificarmesas() {
                                 class="form-control"
                                 placeholder="Colas"
                                 name=' colasm5'
+                                required
                                 value={values.colasm5}
                                 onChange={(e) => setValues({ ...values, colasm5: e.target.value })} />
                         </div>
@@ -403,6 +428,7 @@ function Modificarmesas() {
                             <input
                                 class="form-control"
                                 placeholder="P.E"
+                                required
                                 name=' pecm5'
                                 value={values.pecm5}
                                 onChange={(e) => setValues({ ...values, pecm5: e.target.value })} />
@@ -418,6 +444,7 @@ function Modificarmesas() {
                             <input
                                 class="form-control"
                                 placeholder="Alim."
+                                required
                                 name=' alimm6'
                                 value={values.alimm6}
                                 onChange={(e) => setValues({ ...values, alimm6: e.target.value })} />
@@ -429,6 +456,7 @@ function Modificarmesas() {
                                 class="form-control"
                                 placeholder="P.E"
                                 name='peam6'
+                                required
                                 value={values.peam6}
                                 onChange={(e) => setValues({ ...values, peam6: e.target.value })} />
                         </div>
@@ -439,6 +467,7 @@ function Modificarmesas() {
                                 class="form-control"
                                 placeholder="Conc."
                                 name=' conm6'
+                                required
                                 value={values.conm6}
                                 onChange={(e) => setValues({ ...values, conm6: e.target.value })} />
                         </div>
@@ -448,6 +477,7 @@ function Modificarmesas() {
                             <input
                                 class="form-control"
                                 placeholder="P.E"
+                                required
                                 name='pecnm6'
                                 value={values.pecnm6}
                                 onChange={(e) => setValues({ ...values, pecnm6: e.target.value })} />
@@ -458,6 +488,7 @@ function Modificarmesas() {
                             <input
                                 class="form-control"
                                 placeholder="Medios"
+                                required
                                 name='mediom6'
                                 value={values.mediom6}
                                 onChange={(e) => setValues({ ...values, mediom6: e.target.value })} />
@@ -467,6 +498,7 @@ function Modificarmesas() {
                             <input
                                 class="form-control"
                                 placeholder="P.E"
+                                required
                                 name='pemm6'
                                 value={values.pemm6}
                                 onChange={(e) => setValues({ ...values, pemm6: e.target.value })} />
@@ -476,6 +508,7 @@ function Modificarmesas() {
                             <input
                                 class="form-control"
                                 placeholder="Colas"
+                                required
                                 name=' colasm6'
                                 value={values.colasm6}
                                 onChange={(e) => setValues({ ...values, colasm6: e.target.value })} />
@@ -485,6 +518,7 @@ function Modificarmesas() {
                             <input
                                 class="form-control"
                                 placeholder="P.E"
+                                required
                                 name=' pecm6'
                                 value={values.pecm6}
                                 onChange={(e) => setValues({ ...values, pecm6: e.target.value })} />

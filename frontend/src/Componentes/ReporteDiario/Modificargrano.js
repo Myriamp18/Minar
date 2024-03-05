@@ -120,6 +120,7 @@ function Modificargrano() {
                             id='date'
                             placeholder='Insertar Cantidad'
                             name='fecha'
+                            required
                             value={values.fecha}
                             onChange={(e) => setValues({ ...values, fecha: e.target.value })}
                         />
@@ -130,6 +131,7 @@ function Modificargrano() {
                         <select
                             id="seleccion"
                             name="seleccion"
+                            required
                             class="form-control"
                             value={values.turno}
                             onChange={(e) => setValues({ ...values, turno: e.target.value })} >
@@ -153,6 +155,7 @@ function Modificargrano() {
                                 class="form-control"
                                 placeholder="Alim."
                                 name=' alimgrano'
+                                required
                                 value={values.alimgrano}
                                 onChange={(e) => setValues({ ...values, alimgrano: e.target.value })} />
 
@@ -165,6 +168,7 @@ function Modificargrano() {
                                 placeholder="P.E"
                                 name=' peag'
                                 value={values.peag}
+                                required
                                 onChange={(e) => setValues({ ...values, peag: e.target.value })} />
                         </div>
 
@@ -174,6 +178,7 @@ function Modificargrano() {
                                 class="form-control"
                                 placeholder="Conc."
                                 name=' concgrano'
+                                required
                                 value={values.concgrano}
                                 onChange={(e) => setValues({ ...values, concgrano: e.target.value })} />
                         </div>
@@ -184,6 +189,7 @@ function Modificargrano() {
                                 class="form-control"
                                 placeholder="P.E"
                                 name='pecng'
+                                required
                                 value={values.pecng}
                                 onChange={(e) => setValues({ ...values, pecng: e.target.value })} />
                         </div>
@@ -194,6 +200,7 @@ function Modificargrano() {
                                 class="form-control"
                                 placeholder="Colas"
                                 name=' colasgrano'
+                                required
                                 value={values.colasgrano}
                                 onChange={(e) => setValues({ ...values, colasgrano: e.target.value })} />
                         </div>
@@ -203,6 +210,7 @@ function Modificargrano() {
                                 class="form-control"
                                 placeholder="P.E"
                                 name='pecg'
+                                required
                                 value={values.pecg}
                                 onChange={(e) => setValues({ ...values, pecg: e.target.value })} />
                         </div>
@@ -222,6 +230,7 @@ function Modificargrano() {
                                 class="form-control"
                                 placeholder="TON"
                                 name=' tonpiedra'
+                                required
                                 value={values.tonpiedra}
                                 onChange={(e) => setValues({ ...values, tonpiedra: e.target.value })} />
 
@@ -233,6 +242,7 @@ function Modificargrano() {
                                 class="form-control"
                                 placeholder="P.E"
                                 name='  petp'
+                                required
                                 value={values.petp}
                                 onChange={(e) => setValues({ ...values, petp: e.target.value })} />
                         </div>
@@ -251,6 +261,7 @@ function Modificargrano() {
                                 class="form-control"
                                 placeholder="A"
                                 name='	aminale	'
+                                required
                                 value={values.aminale}
                                 onChange={(e) => setValues({ ...values, aminale: e.target.value })} />
 
@@ -262,6 +273,7 @@ function Modificargrano() {
                                 class="form-control"
                                 placeholder="Mina LE"
                                 name='	minale	'
+                                required
                                 value={values.minale}
                                 onChange={(e) => setValues({ ...values, minale: e.target.value })} />
                         </div>
@@ -272,6 +284,7 @@ function Modificargrano() {
                                 class="form-control"
                                 placeholder="P.E"
                                 name='pemle'
+                                required
                                 value={values.pemle}
                                 onChange={(e) => setValues({ ...values, pemle: e.target.value })} />
                         </div>
@@ -288,6 +301,7 @@ function Modificargrano() {
                                 class="form-control"
                                 placeholder="A"
                                 name='aminals'
+                                required
                                 value={values.aminals}
                                 onChange={(e) => setValues({ ...values, aminals: e.target.value })} />
 
@@ -299,6 +313,7 @@ function Modificargrano() {
                                 class="form-control"
                                 placeholder="Mina LS"
                                 name='minals'
+                                required
                                 value={values.minals}
                                 onChange={(e) => setValues({ ...values, minals: e.target.value })} />
                         </div>
@@ -309,6 +324,7 @@ function Modificargrano() {
                                 class="form-control"
                                 placeholder="P.E"
                                 name='pemls	'
+                                required
                                 value={values.pemls}
                                 onChange={(e) => setValues({ ...values, pemls: e.target.value })} />
                         </div>
@@ -325,6 +341,7 @@ function Modificargrano() {
                                 class="form-control"
                                 placeholder="A"
                                 name='apatiole	'
+                                required
                                 value={values.apatiole}
                                 onChange={(e) => setValues({ ...values, apatiole: e.target.value })} />
 
@@ -336,6 +353,7 @@ function Modificargrano() {
                                 class="form-control"
                                 placeholder="Patio LE"
                                 name='patiols	'
+                                required
                                 value={values.patiols}
                                 onChange={(e) => setValues({ ...values, patiols: e.target.value })} />
                         </div>
@@ -346,6 +364,7 @@ function Modificargrano() {
                                 class="form-control"
                                 placeholder="P.E"
                                 name='peple	'
+                                required
                                 value={values.peple}
                                 onChange={(e) => setValues({ ...values, peple: e.target.value })} />
                         </div>
@@ -362,6 +381,7 @@ function Modificargrano() {
                                 class="form-control"
                                 placeholder="A"
                                 name='apatiols'
+                                required
                                 value={values.apatiols}
                                 onChange={(e) => setValues({ ...values, apatiols: e.target.value })} />
 
@@ -373,6 +393,7 @@ function Modificargrano() {
                                 class="form-control"
                                 placeholder="Patio LS"
                                 name='tolvageneral	'
+                                required
                                 value={values.tolvageneral}
                                 onChange={(e) => setValues({ ...values, tolvageneral: e.target.value })} />
                         </div>
@@ -383,6 +404,7 @@ function Modificargrano() {
                                 class="form-control"
                                 placeholder="P.E"
                                 name='pepls	'
+                                required
                                 value={values.pepls}
                                 onChange={(e) => setValues({ ...values, pepls: e.target.value })} />
                         </div>
@@ -399,6 +421,7 @@ function Modificargrano() {
                             <input
                                 class="form-control"
                                 placeholder="A"
+                                required
                                 name='amedio34'
                                 value={values.amedio34}
                                 onChange={(e) => setValues({ ...values, amedio34: e.target.value })} />
@@ -411,6 +434,7 @@ function Modificargrano() {
                                 class="form-control"
                                 placeholder="Medios 3 y 4"
                                 name='medio3y4'
+                                required
                                 value={values.medio3y4}
                                 onChange={(e) => setValues({ ...values, medio3y4: e.target.value })} />
                         </div>
@@ -421,6 +445,7 @@ function Modificargrano() {
                                 class="form-control"
                                 placeholder="P.E"
                                 name='psm34	'
+                                required
                                 value={values.psm34}
                                 onChange={(e) => setValues({ ...values, psm34: e.target.value })} />
                         </div>
@@ -436,6 +461,7 @@ function Modificargrano() {
                             <input
                                 class="form-control"
                                 placeholder="A"
+                                required
                                 name='adesensolve'
                                 value={values.adesensolve}
                                 onChange={(e) => setValues({ ...values, adesensolve: e.target.value })} />
@@ -448,6 +474,7 @@ function Modificargrano() {
                                 class="form-control"
                                 placeholder="Desensolve"
                                 name='desensolve'
+                                required
                                 value={values.desensolve}
                                 onChange={(e) => setValues({ ...values, desensolve: e.target.value })} />
                         </div>
@@ -458,6 +485,7 @@ function Modificargrano() {
                                 class="form-control"
                                 placeholder="P.E"
                                 name='pedese	'
+                                required
                                 value={values.pedese}
                                 onChange={(e) => setValues({ ...values, pedese: e.target.value })} />
                         </div>
@@ -474,6 +502,7 @@ function Modificargrano() {
                                 class="form-control"
                                 placeholder="A"
                                 name='acolas'
+                                required
                                 value={values.acolas}
                                 onChange={(e) => setValues({ ...values, acolas: e.target.value })} />
 
@@ -485,6 +514,7 @@ function Modificargrano() {
                                 class="form-control"
                                 placeholder="Colas"
                                 name='colas'
+                                required
                                 value={values.colas}
                                 onChange={(e) => setValues({ ...values, colas: e.target.value })} />
                         </div>
@@ -495,6 +525,7 @@ function Modificargrano() {
                                 class="form-control"
                                 placeholder="P.E"
                                 name='pecolas'
+                                required
                                 value={values.pecolas}
                                 onChange={(e) => setValues({ ...values, pecolas: e.target.value })} />
                         </div>

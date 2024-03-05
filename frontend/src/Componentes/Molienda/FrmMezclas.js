@@ -61,6 +61,7 @@ function FrmMezclas() {
         id='date'
         placeholder='Insertar Cantidad'
         name='fecha'
+        required
         value={values.fecha}
         onChange={(e) => setValues({ ...values, fecha: e.target.value })}
     />
@@ -71,6 +72,7 @@ function FrmMezclas() {
         id="seleccion"
         name="seleccion"
         class="form-control"
+        required
         value={values.turno}
         onChange={(e) => setValues({ ...values, turno: e.target.value })} >
         <option value="1">1</option>
@@ -89,6 +91,7 @@ function FrmMezclas() {
               type="text"
               class="form-control"
               id='concmesas'
+              required
               placeholder='Insertar Cantidad'
               name='concmesas'
               onChange={(e) => setValues({ ...values, concmesas: e.target.value })} />
@@ -100,6 +103,7 @@ function FrmMezclas() {
               class="form-control"
               id='pecm'
               placeholder='De'
+              required
               name='pecm'
               onChange={(e) => setValues({ ...values, pecm: e.target.value })} />
           </div>
@@ -111,6 +115,7 @@ function FrmMezclas() {
               type="text"
               class="form-control"
               id='medios'
+              required
               placeholder='Insertar Cantidad'
               name='medios'
               onChange={(e) => setValues({ ...values, medios: e.target.value })} />
@@ -121,6 +126,7 @@ function FrmMezclas() {
               type="text"
               class="form-control"
               id='pem'
+              required
               placeholder='De'
               name='pem'
               onChange={(e) => setValues({ ...values, pem: e.target.value })} />
@@ -132,6 +138,7 @@ function FrmMezclas() {
             <input
               type="text"
               class="form-control"
+              required
               id='concjigs'
               placeholder='Insertar Cantidad'
               name='concjigs'
@@ -142,6 +149,7 @@ function FrmMezclas() {
             <input
               type="text"
               class="form-control"
+              required
               id='pejig'
               placeholder='De'
               name='pejig'
@@ -154,6 +162,7 @@ function FrmMezclas() {
             <input
               type="text"
               class="form-control"
+              required
               id='desenslovez'
               placeholder='Insertar Cantidad'
               name='desenslovez'
@@ -164,6 +173,7 @@ function FrmMezclas() {
             <input
               type="text"
               class="form-control"
+              required
               id='pedese'
               placeholder='De'
               name='pedese'
@@ -177,6 +187,7 @@ function FrmMezclas() {
             <input
               type="text"
               class="form-control"
+              required
               id='pemt'
               placeholder='P.ESP de Mezcla Total'
               name='pemt'
@@ -189,6 +200,7 @@ function FrmMezclas() {
               type="text"
               class="form-control"
               id='pemt'
+              required
               placeholder='Inserta Salidas Especifica de que son'
               name='otrassalidas'
               onChange={(e) => setValues({ ...values, otrassalidas: e.target.value })} />
@@ -200,6 +212,7 @@ function FrmMezclas() {
          <label form='text' class="form-label"> Patio MLT:</label>
          <input
            type="text"
+           required
            class="form-control"
            id='pemt'
            placeholder='Insertar Cantidad'
@@ -212,6 +225,7 @@ function FrmMezclas() {
          <input
            type="text"
            class="form-control"
+           required
            id='pemt'
            placeholder='Insertar Cantidad'
            name='pmle'

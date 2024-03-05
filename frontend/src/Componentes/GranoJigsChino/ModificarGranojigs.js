@@ -54,6 +54,7 @@ function ModificarGranojigs() {
               type="date"  
               class="form-control"
               id='date'
+              required
               placeholder='Insertar Cantidad'
               name='fecha'
               value={values.fecha}
@@ -70,6 +71,7 @@ function ModificarGranojigs() {
              id='salidas'
              placeholder='Insertar Cantidad'  
              name='salidas'
+             required
              value={values.salidas}
              onChange={(e) => setValues({...values, salidas: e.target.value})}/>
           </div>
@@ -80,6 +82,7 @@ function ModificarGranojigs() {
              type="text"  
              class="form-control"
              id='pe'
+             required
              placeholder='Insertar Peso'  
              name='pe'
              value={values.pe}

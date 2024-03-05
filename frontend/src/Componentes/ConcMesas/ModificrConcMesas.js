@@ -72,6 +72,7 @@ function ModificrConcMesas() {
               id='date'
               placeholder='Insertar Cantidad'
               name='fecha'
+              required
               value={values.fecha}
               onChange={(e) => setValues({...values, fecha: e.target.value})}
             />
@@ -85,6 +86,7 @@ function ModificrConcMesas() {
              id='entradas'
              placeholder='Insertar Cantidad'  
              name='entradas'
+             required
              value={values.entradas}
              onChange={(e) => setValues({...values, entradas: e.target.value})}/>
           </div>
@@ -98,6 +100,7 @@ function ModificrConcMesas() {
              id='salidas'
              placeholder='Insertar Cantidad'  
              name='salidas'
+             required
              value={values.salidas}
              onChange={(e) => setValues({...values, salidas: e.target.value})}/>
           </div>
@@ -108,6 +111,7 @@ function ModificrConcMesas() {
              type="text"  
              class="form-control"
              id='pesp'
+             required
              placeholder='Insertar Peso'  
              name='pesp'
              value={values.pe}
