@@ -43,7 +43,7 @@ app.post('/login', (req, res) => {
     const { nombreusuario, contra } = req.body;
   
     // Consultar la base de datos para verificar las credenciales
-    const sql = 'SELECT * FROM login WHERE nombreusuario = ? AND contra = ?';
+    const sql = 'SELECT * FROM usuarios WHERE nombreusuario = ? AND contra = ?';
     db.query(sql, [nombreusuario, contra], (err, result) => {
       if (err) {
         console.error('Error en la consulta de inicio de sesión:', err);
