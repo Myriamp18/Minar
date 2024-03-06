@@ -41,25 +41,25 @@ app.post('/createusuarios', (req, res) => {
 
 app.post('/login', (req, res) => {
     const { nombreusuario, contra } = req.body;
-  
+
     // Consultar la base de datos para verificar las credenciales
     const sql = 'SELECT * FROM usuarios WHERE nombreusuario = ? AND contra = ?';
     db.query(sql, [nombreusuario, contra], (err, result) => {
-      if (err) {
-        console.error('Error en la consulta de inicio de sesión:', err);
-        res.status(500).json({ success: false, message: 'Error en la base de datos' });
-        return;
-      }
-  
-      if (result.length > 0) {
-        // Credenciales correctas
-        res.json({ success: true, message: 'Inicio de sesión exitoso', nombreusuario: nombreusuario });
-      } else {
-        // Credenciales incorrectas
-        res.status(401).json({ success: false, message: 'Credenciales incorrectas' });
-      }
+        if (err) {
+            console.error('Error en la consulta de inicio de sesión:', err);
+            res.status(500).json({ success: false, message: 'Error en la base de datos' });
+            return;
+        }
+
+        if (result.length > 0) {
+            // Credenciales correctas
+            res.json({ success: true, message: 'Inicio de sesión exitoso', nombreusuario: nombreusuario });
+        } else {
+            // Credenciales incorrectas
+            res.status(401).json({ success: false, message: 'Credenciales incorrectas' });
+        }
     });
-  });
+});
 
 /////////////SILOS//////////
 app.get('/silos', (req, res) => {
@@ -1045,41 +1045,41 @@ app.put('/updateconcentradobaribaright/:id', async (req, res) => {
             });
         });
 
-       // Verificar si se encontró el saldo anterior
-       if (saldoAnteriorData.length > 0) {
-        const saldoAnterior = saldoAnteriorData[0].saldo;
+        // Verificar si se encontró el saldo anterior
+        if (saldoAnteriorData.length > 0) {
+            const saldoAnterior = saldoAnteriorData[0].saldo;
 
-        // Calcula el nuevo saldo utilizando el saldo anterior
-        const nuevoSaldo = saldoAnterior + parseFloat(req.body.entradas) - parseFloat(req.body.salidas);
+            // Calcula el nuevo saldo utilizando el saldo anterior
+            const nuevoSaldo = saldoAnterior + parseFloat(req.body.entradas) - parseFloat(req.body.salidas);
 
-        // Realiza la actualización en la base de datos utilizando el nuevo saldo
-        const sql = "UPDATE concentradobaribaright SET fecha = ?, entradas = ?, salidas = ?, pe = ?, saldo = ? WHERE id = ?";
-        const values = [
-            req.body.fecha,
-            req.body.entradas,
-            req.body.salidas,
-            req.body.pe,
-            nuevoSaldo,
-            req.params.id
-        ];
+            // Realiza la actualización en la base de datos utilizando el nuevo saldo
+            const sql = "UPDATE concentradobaribaright SET fecha = ?, entradas = ?, salidas = ?, pe = ?, saldo = ? WHERE id = ?";
+            const values = [
+                req.body.fecha,
+                req.body.entradas,
+                req.body.salidas,
+                req.body.pe,
+                nuevoSaldo,
+                req.params.id
+            ];
 
-        db.query(sql, values, (err, data) => {
-            if (err) {
-                console.error('Error al actualizar los datos:', err);
-                return res.status(500).json({ error: "Error al actualizar los datos" });
-            }
+            db.query(sql, values, (err, data) => {
+                if (err) {
+                    console.error('Error al actualizar los datos:', err);
+                    return res.status(500).json({ error: "Error al actualizar los datos" });
+                }
 
-            console.log('Datos actualizados correctamente.');
-            return res.json(data);
-        });
-    } else {
-        console.error('No se encontró el saldo anterior.');
-        return res
+                console.log('Datos actualizados correctamente.');
+                return res.json(data);
+            });
+        } else {
+            console.error('No se encontró el saldo anterior.');
+            return res
+        }
+    } catch (error) {
+        console.error('Error al obtener el saldo anterior:', error);
+        return res.status(500).json({ error: "Error al obtener el saldo anterior" });
     }
-} catch (error) {
-    console.error('Error al obtener el saldo anterior:', error);
-    return res.status(500).json({ error: "Error al obtener el saldo anterior" });
-}
 
 
 });
@@ -3970,48 +3970,82 @@ app.get('/hjigs', (req, res) => {
         return res.json(data);
     });
 });
-app.post('/createhjigs',async (req, res) => {
-   
-     // Obtener el saldo anterior
-     const finalAnteriorData = await new Promise((resolve, reject) => {
-        db.query("SELECT final FROM horojigss ORDER BY id DESC LIMIT 1", (err, data) => {
-            if (err) reject(err);
-            else resolve(data);
+app.post('/createhjigs', async (req, res) => {
+    try {
+
+        // Obtener el saldo anterior
+        const finalAnteriorData = await new Promise((resolve, reject) => {
+            db.query("SELECT final FROM horojigss ORDER BY id DESC LIMIT 1", (err, data) => {
+                if (err) reject(err);
+                else resolve(data);
+            });
         });
-    });
-    const finalAnteriorj2Data = await new Promise((resolve, reject) => {
-        db.query("SELECT finalj2 FROM horojigss ORDER BY id DESC LIMIT 1", (err, data) => {
-            if (err) reject(err);
-            else resolve(data);
+        const finalAnteriorj2Data = await new Promise((resolve, reject) => {
+            db.query("SELECT finalj2 FROM horojigss ORDER BY id DESC LIMIT 1", (err, data) => {
+                if (err) reject(err);
+                else resolve(data);
+            });
         });
-    });
 
-    // Si hay registros en la tabla, obtén el saldo anterior, de lo contrario, establece el saldo anterior en 0
-    const finalAnterior = finalAnteriorData.length > 0 ? finalAnteriorData[0].final : 0;
-    const finalAnteriorj2 = finalAnteriorj2Data.length > 0 ? finalAnteriorj2Data[0].finalj2 : 0;
+        // Si hay registros en la tabla, obtén el saldo anterior, de lo contrario, establece el saldo anterior en 0
+        const finalAnterior = finalAnteriorData.length > 0 ? finalAnteriorData[0].final : 0;
+        const finalAnteriorj2 = finalAnteriorj2Data.length > 0 ? finalAnteriorj2Data[0].finalj2 : 0;
+        // Calcula el nuevo saldo sumando el saldo anterior a las entradas y restando las salidas
+        const horas = parseFloat(req.body.final) - finalAnterior;
+        const horasj2 = parseFloat(req.body.finalj2) - finalAnteriorj2;
 
-    // Calcular las horas para final
-    const horas = parseFloat(req.body.final) - finalAnterior;
-    const horasj2 = parseFloat(req.body.finalj2) - finalAnteriorj2;
 
-  
-    // Ejemplo: Insertar datos en la tabla horometro_jigs
-    const sql = "INSERT INTO horojigss (fecha, turno, inicio,final, inicioj2,finalj2,hrs,hrsj2) VALUES (?, ?, ?, ?,?,?,?,?)";
-    const values = [fecha, turno,finalAnterior, finalAnteriorj2, final, finalj2, horas, horasj2];
-  
-    db.query(sql, values, (err, result) => {
-      if (err) {
-        console.error("Error al insertar en la base de datos:", err);
-        res.status(500).json({ error: "Error al insertar en la base de datos" });
-      } else {
-        console.log("Registro insertado en la base de datos con éxito.");
-        // Devolver los valores finales anteriores al cliente si es necesario
-        const finalAnterior = horas(); // Implementa esta función según la lógica de tu base de datos
-        const finalAnteriorj2 = horasj2(); // Implementa esta función según la lógica de tu base de datos
-        res.json({ finalAnterior, finalAnteriorj2 });
-      }
-    });
-  });
+        // Separar las decenas y unidades
+        // Separar las decenas y unidades
+        const unidades = horas % 10; // Obtener las unidades (en este caso, 7)
+        const decenas = Math.floor(horas / 10) * 10; // Obtener las decenas (en este caso, 960)
+
+        // Multiplicar las unidades por 0.6
+        const resultadoUnidades = (unidades > 0) ? unidades * 0.6 : 0; // Multiplicar solo si las unidades son mayores que cero
+
+        // Combinar las decenas con el resultado de las unidades
+        const totalhrs = decenas + resultadoUnidades;
+
+        console.log(totalhrs); // Debería imprimir 940
+
+        
+        const unidadesj2 = horas % 10;
+        const decenasj2 = Math.floor(horas / 10) * 10; // Mantener las decenas
+
+        // Multiplicar las unidades por 0.6
+        const resultadoUnidadesj2 = unidadesj2 * 0.6;
+
+        // Combinar las decenas con el resultado de las unidades multiplicadas por 0.6
+        const totalhrsj2 = decenasj2 + resultadoUnidadesj2;
+
+        console.log(totalhrsj2);
+
+
+        // Realizar la inserción en la tabla concmesas
+        const sql = "INSERT INTO horojigss (fecha, turno, inicio, final, hrs,totalhrs,inicioj2, finalj2, hrsj2,totalhrsj2) VALUES (?, ?,?, ?, ?, ?,?,?,?,?)";
+        const values = [
+            req.body.fecha,
+            req.body.turno,
+            finalAnterior,
+            req.body.final,
+            horas,
+            totalhrs,
+            finalAnteriorj2,
+            req.body.finalj2,
+            horasj2,
+            totalhrsj2,
+        ];
+
+        db.query(sql, values, (err, result) => {
+            if (err) throw err;
+            console.log("Registro insertado en concmesas con éxito.");
+            res.send("Registro insertado en concmesas con éxito.");
+        });
+    } catch (error) {
+        console.error("Error al crear el registro en concmesas:", error);
+        res.status(500).send("Error al crear el registro en concmesas.");
+    }
+});
 
 app.put('/updatenotas/:id', async (req, res) => {
 

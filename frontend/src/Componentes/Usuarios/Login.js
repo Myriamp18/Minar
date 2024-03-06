@@ -2,53 +2,46 @@ import React, { useState } from 'react';
 import './Login.css';
 import Usuario_M from '../../assest/minero.jpg'
 import Contra_L from '../../assest/candado.jpg'
-
-import { Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 
-  const Login = () => {
-    const [nombreusuario, setNombreUsuario] = useState('');
-    const [contra, setContra] = useState('');
-    const [error, setError] = useState('');
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-  
-    const onSubmit = async (e) => {
-      e.preventDefault();
-      if (!nombreusuario || !contra) {
-        setError('Por favor, completa todos los campos.');
-        return;
-      }
-  
-      try {
-        const response = await axios.post('http://localhost:8081/login', {
-          nombreusuario: nombreusuario,
-          contra: contra,
-        });
-  
-        const data = response.data;
-  
-        if (data.success) {
-          console.log('Inicio de sesión exitoso:', data.message);
-          setIsLoggedIn(true);
-        } else {
-          setError(data.message || 'Error al iniciar sesión. Por favor, inténtalo de nuevo.');
-        }
-      } catch (error) {
-        console.error('Error en la solicitud:', error);
-        setError('Error al iniciar sesión. Por favor, inténtalo de nuevo.');
-      }
-    };
-  
-    if (isLoggedIn) {
-      return <Navigate to="/Inicio" replace />;
-    }
-  
+const Login =() => {
+  const navigate = useNavigate();
+  const [nombreusuario, setNombreUsuario] = useState('');
+  const [contra, setContra] = useState('');
+  const [error, setError] = useState('');
 
-  
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    if (!nombreusuario || !contra) {
+      setError('Por favor, completa todos los campos.');
+      return;
+    }
+
+    try {
+      const response = await axios.post('http://localhost:8081/login', {
+        nombreusuario: nombreusuario,
+        contra: contra,
+      });
+
+      const data = response.data;
+
+      if (data.success) {
+        console.log('Inicio de sesión exitoso:', data.message);
+        navigate('/Inicio'); // Redirige al usuario a la ruta privada
+      } else {
+        setError(data.message || 'Error al iniciar sesión. Por favor, inténtalo de nuevo.');
+      }
+    } catch (error) {
+      console.error('Error en la solicitud:', error);
+      setError('Error al iniciar sesión. Por favor, inténtalo de nuevo.');
+    }
+  };
+
 
   return (
-    
+
     <div className="login-section">
       <div className='containerlogin'>
         <div className="headerlogin">
@@ -71,9 +64,9 @@ import axios from 'axios';
             <div className="inputlogin">
               <img src={Contra_L} alt='contraseñalogin' />
               <input type="password"
-              required
+                required
                 placeholder='Contraseña'
-                
+
                 onChange={e => setContra(e.target.value)}
                 name='contra'
 
@@ -81,14 +74,14 @@ import axios from 'axios';
             </div>
           </div>
           <br />
-
+          {error && <div className="error">{error}</div>}
           <div className="forgot-password">
             <div className="submit-container">
               <button className="submits" onClick={onSubmit} >Iniciar Sesion</button>
-             
+
             </div>
           </div>
-          {error && <div className="error">{error}</div>}
+
         </form>
 
 

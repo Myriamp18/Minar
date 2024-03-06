@@ -26,17 +26,18 @@ function FrmHorometroJigs() {
       const navigate = useNavigate()
     
       const handleSubmit = (e) => {
-        e.preventDefault()
-        axios.post('http://localhost:8081/createhjigs', values)
-          .then(res => {
+        e.preventDefault();
+    
+        // Realiza la inserción con el nuevo saldo
+        axios.post('http://localhost:8081/createhjigs',values )
+        .then(res => {
             console.log(res);
-    
-            // Optionally, you can navigate to a different page or update the UI
-            navigate('/hjigs'); // Example: Navigate to the home page
-          })
-          .catch(err => console.log(err));
-    
-      };
+            navigate('/hjigs');
+        })
+        .catch(err => {
+            console.error('Error inserting data:', err);
+        });
+    };
       
   return (
     <div className="d-flex align-items-center flex-column mt-2">
@@ -106,29 +107,7 @@ function FrmHorometroJigs() {
             onChange={(e) => setValues({ ...values, finalj2: e.target.value })} required/>
         </div>
       </div>
-      <div className='silos'>
-        <div class="mb-2">
-          <label form='text' class="form-label"> TotalHoras J1:</label>
-          <input
-            type="text"
-            class="form-control"
-            id='hrs'
-            placeholder='Insertar Horas'
-            name='hrs'
-            onChange={(e) => setValues({ ...values, totalhrs: e.target.value })} />
-        </div>
-        <div class="mb-2">
-          <label form='text' class="form-label"> TotalHoras J2:</label>
-          <input
-            type="text"
-            class="form-control"
-            id='hrsj2'
-            placeholder='Insertar Horas'
-            name='hrsj2'
-            onChange={(e) => setValues({ ...values, totalhrsj2: e.target.value })} />
-        </div>
-      </div>
-      
+     
      
        
      
