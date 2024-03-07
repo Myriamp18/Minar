@@ -3993,32 +3993,48 @@ app.post('/createhjigs', async (req, res) => {
         // Calcula el nuevo saldo sumando el saldo anterior a las entradas y restando las salidas
         const horas = parseFloat(req.body.final) - finalAnterior;
         const horasj2 = parseFloat(req.body.finalj2) - finalAnteriorj2;
+        // Suponiendo que "horas" contiene el número total de horas
+
+        // Suponiendo que "horas" contiene el número total de horas
+
+        // Suponiendo que "horas" contiene el número total de horas
+
+        // Separar las centenas
+        const centenas = Math.floor(horas / 100) * 100; // Obtener las centenas
+
+        // Obtener las decenas y unidades juntas
+        const decenasYUnidades = horas % 100; // Obtener las decenas y unidades juntas
+
+        // Multiplicar las decenas y unidades juntas por 0.6
+        const resultado = (decenasYUnidades > 0) ? decenasYUnidades * 0.6 : 0; // Multiplicar solo si las decenas y unidades juntas son mayores que cero
+
+        // Calcular el resultado total
+        const totalhoras = centenas + resultado;
+
+        // Formar el total en un string con ':' entre las centenas y las decenas
+        const totalhrs = `${Math.floor(totalhoras / 100)}:${Math.floor(resultado) < 10 ? '0' + Math.floor(resultado) : Math.floor(resultado)}`;
+
+        console.log(totalhrs); // Esto imprimirá el resultado final con la separación
 
 
-        // Separar las decenas y unidades
-        // Separar las decenas y unidades
-        const unidades = horas % 10; // Obtener las unidades (en este caso, 7)
-        const decenas = Math.floor(horas / 10) * 10; // Obtener las decenas (en este caso, 960)
+        const centenasj2 = Math.floor(horasj2 / 100) * 100; // Obtener las centenas
 
-        // Multiplicar las unidades por 0.6
-        const resultadoUnidades = (unidades > 0) ? unidades * 0.6 : 0; // Multiplicar solo si las unidades son mayores que cero
+        // Obtener las decenas y unidades juntas
+        const decenasYUnidadesj2 = horasj2 % 100; // Obtener las decenas y unidades juntas
 
-        // Combinar las decenas con el resultado de las unidades
-        const totalhrs = decenas + resultadoUnidades;
+        // Multiplicar las decenas y unidades juntas por 0.6
+        const resultadoj2 = (decenasYUnidadesj2 > 0) ? decenasYUnidadesj2 * 0.6 : 0; // Multiplicar solo si las decenas y unidades juntas son mayores que cero
 
-        console.log(totalhrs); // Debería imprimir 940
+        // Calcular el resultado total
+        const totalhorasj2 = centenasj2 + resultadoj2;
 
-        
-        const unidadesj2 = horas % 10;
-        const decenasj2 = Math.floor(horas / 10) * 10; // Mantener las decenas
+        // Formar el total en un string con ':' entre las centenas y las decenas
+        const totalhrsj2  = `${Math.floor(totalhorasj2 / 100)}:${Math.floor(resultadoj2) < 10 ? '0' + Math.floor(resultadoj2) : Math.floor(resultadoj2)}`;
 
-        // Multiplicar las unidades por 0.6
-        const resultadoUnidadesj2 = unidadesj2 * 0.6;
+        console.log(totalhrsj2); // Esto imprimirá el resultado final con la separación
 
-        // Combinar las decenas con el resultado de las unidades multiplicadas por 0.6
-        const totalhrsj2 = decenasj2 + resultadoUnidadesj2;
 
-        console.log(totalhrsj2);
+       
 
 
         // Realizar la inserción en la tabla concmesas
@@ -4047,19 +4063,58 @@ app.post('/createhjigs', async (req, res) => {
     }
 });
 
-app.put('/updatenotas/:id', async (req, res) => {
+app.put('/updatehjigs/:id', async (req, res) => {
+    try {
+
+        const horas = parseFloat(req.body.final) -  parseFloat(req.body.inicial) 
+        const horasj2 = parseFloat(req.body.finalj2) - parseFloat(req.body.inicialj2) 
+        // Separar las centenas
+        const centenas = Math.floor(horas / 100) * 100; // Obtener las centenas
+
+        // Obtener las decenas y unidades juntas
+        const decenasYUnidades = horas % 100; // Obtener las decenas y unidades juntas
+
+        // Multiplicar las decenas y unidades juntas por 0.6
+        const resultado = (decenasYUnidades > 0) ? decenasYUnidades * 0.6 : 0; // Multiplicar solo si las decenas y unidades juntas son mayores que cero
+
+        // Calcular el resultado total
+        const totalhoras = centenas + resultado;
+
+        // Formar el total en un string con ':' entre las centenas y las decenas
+        const totalhrs = `${Math.floor(totalhoras / 100)}:${Math.floor(resultado) < 10 ? '0' + Math.floor(resultado) : Math.floor(resultado)}`;
+
+        console.log(totalhrs); // Esto imprimirá el resultado final con la separación
 
 
+        const centenasj2 = Math.floor(horasj2 / 100) * 100; // Obtener las centenas
 
-    const sql = "UPDATE notas SET fecha = ?, totmedios =?, totdesensolve = ?, totcolas = ?, totjigssec = ?, comentario = ? WHERE id = ?";
+        // Obtener las decenas y unidades juntas
+        const decenasYUnidadesj2 = horasj2 % 100; // Obtener las decenas y unidades juntas
+
+        // Multiplicar las decenas y unidades juntas por 0.6
+        const resultadoj2 = (decenasYUnidadesj2 > 0) ? decenasYUnidadesj2 * 0.6 : 0; // Multiplicar solo si las decenas y unidades juntas son mayores que cero
+
+        // Calcular el resultado total
+        const totalhorasj2 = centenasj2 + resultadoj2;
+
+        // Formar el total en un string con ':' entre las centenas y las decenas
+        const totalhrsj2  = `${Math.floor(totalhorasj2 / 100)}:${Math.floor(resultadoj2) < 10 ? '0' + Math.floor(resultadoj2) : Math.floor(resultadoj2)}`;
+
+        console.log(totalhrsj2); // Esto imprimirá el resultado final con la separación
+
+
+    const sql = "UPDATE horojigss SET fecha = ?, turno =?, inicio = ?, final = ?, hrs = ?, totalhrs = ?, inicioj2 =?, finalj2=?, hrsj2=?, totalhrsj2=?  WHERE id = ?";
     const values = [
         req.body.fecha,
-        req.body.totmedios,
-        req.body.totdesensolve,
-        req.body.totcolas,
-        req.body.totjigssec,
-        req.body.comentario,
-
+        req.body.turno,
+        req.body.inicio,
+        req.body.final,
+        horas,
+        totalhrs,
+        req.body.inicioj2,
+        req.body.finalj2,
+        horasj2,
+        totalhrsj2,
 
     ];
     const id = req.params.id;
@@ -4067,6 +4122,10 @@ app.put('/updatenotas/:id', async (req, res) => {
         if (err) return res.json(err);
         return res.json(data);
     });
+} catch (error) {
+    console.error("Error al crear el registro en concmesas:", error);
+    res.status(500).send("Error al crear el registro en concmesas.");
+}
 });
 
 app.get('/getrecordhjigs/:id', (req, res) => {
@@ -4082,6 +4141,542 @@ app.get('/getrecordhjigs/:id', (req, res) => {
 })
 app.delete('/deletehjigs/:id', (req, res) => {
     const sql = "DELETE FROM horojigss WHERE id = ?";
+    const id = req.params.id;
+    db.query(sql, [id], (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+});
+
+////////////HOROMETRO MESA 1 Y 2//////////7
+app.get('/hmesa12', (req, res) => {
+    const sql = "SELECT * FROM hmesa12 ORDER BY id DESC";
+    db.query(sql, (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+});
+app.delete('/deletehmesa12/:id', (req, res) => {
+    const sql = "DELETE FROM hmesa12 WHERE id = ?";
+    const id = req.params.id;
+    db.query(sql, [id], (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+});
+app.post('/createhmesa12', async (req, res) => {
+    try {
+
+        // Obtener el saldo anterior
+        const finalAnteriorData = await new Promise((resolve, reject) => {
+            db.query("SELECT final FROM hmesa12 ORDER BY id DESC LIMIT 1", (err, data) => {
+                if (err) reject(err);
+                else resolve(data);
+            });
+        });
+      
+        // Si hay registros en la tabla, obtén el saldo anterior, de lo contrario, establece el saldo anterior en 0
+        const finalAnterior = finalAnteriorData.length > 0 ? finalAnteriorData[0].final : 0;
+       
+        // Calcula el nuevo saldo sumando el saldo anterior a las entradas y restando las salidas
+        const horas = parseFloat(req.body.final) - finalAnterior;
+       
+       
+        // Separar las centenas
+        const centenas = Math.floor(horas / 100) * 100; // Obtener las centenas
+
+        // Obtener las decenas y unidades juntas
+        const decenasYUnidades = horas % 100; // Obtener las decenas y unidades juntas
+
+        // Multiplicar las decenas y unidades juntas por 0.6
+        const resultado = (decenasYUnidades > 0) ? decenasYUnidades * 0.6 : 0; // Multiplicar solo si las decenas y unidades juntas son mayores que cero
+
+        // Calcular el resultado total
+        const totalhoras = centenas + resultado;
+
+        // Formar el total en un string con ':' entre las centenas y las decenas
+        const totalhrs = `${Math.floor(totalhoras / 100)}:${Math.floor(resultado) < 10 ? '0' + Math.floor(resultado) : Math.floor(resultado)}`;
+
+        console.log(totalhrs); // Esto imprimirá el resultado final con la separación
+
+
+     
+        // Realizar la inserción en la tabla concmesas
+        const sql = "INSERT INTO hmesa12 (fecha, turno, inicio, final, hrs,totalhrs) VALUES (?, ?,?, ?, ?, ?)";
+        const values = [
+            req.body.fecha,
+            req.body.turno,
+            finalAnterior,
+            req.body.final,
+            horas,
+            totalhrs,
+            
+        ];
+
+        db.query(sql, values, (err, result) => {
+            if (err) throw err;
+            console.log("Registro insertado en concmesas con éxito.");
+            res.send("Registro insertado en concmesas con éxito.");
+        });
+    } catch (error) {
+        console.error("Error al crear el registro en concmesas:", error);
+        res.status(500).send("Error al crear el registro en concmesas.");
+    }
+});
+app.put('/updatehmesa12/:id', async (req, res) => {
+    try {
+
+        const horas = parseFloat(req.body.final) -  parseFloat(req.body.inicio) 
+         
+        // Separar las centenas
+        const centenas = Math.floor(horas / 100) * 100; // Obtener las centenas
+
+        // Obtener las decenas y unidades juntas
+        const decenasYUnidades = horas % 100; // Obtener las decenas y unidades juntas
+
+        // Multiplicar las decenas y unidades juntas por 0.6
+        const resultado = (decenasYUnidades > 0) ? decenasYUnidades * 0.6 : 0; // Multiplicar solo si las decenas y unidades juntas son mayores que cero
+
+        // Calcular el resultado total
+        const totalhoras = centenas + resultado;
+
+        // Formar el total en un string con ':' entre las centenas y las decenas
+        const totalhrs = `${Math.floor(totalhoras / 100)}:${Math.floor(resultado) < 10 ? '0' + Math.floor(resultado) : Math.floor(resultado)}`;
+
+        console.log(totalhrs); // Esto imprimirá el resultado final con la separación
+
+
+    const sql = "UPDATE hmesa12 SET fecha = ?, turno =?, inicio = ?, final = ?, hrs = ?, totalhrs = ? WHERE id = ?";
+    const values = [
+        req.body.fecha,
+        req.body.turno,
+        req.body.inicio,
+        req.body.final,
+        horas,
+        totalhrs,
+
+    ];
+    const id = req.params.id;
+    db.query(sql, [...values, id], (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+} catch (error) {
+    console.error("Error al crear el registro en concmesas:", error);
+    res.status(500).send("Error al crear el registro en concmesas.");
+}
+});
+app.get('/getrecordhmesa12/:id', (req, res) => {
+    const id = req.params.id;
+    const sql = "SELECT * FROM hmesa12 WHERE id = ?"
+    db.query(sql, [id], (err, data) => {
+        if (err) {
+            return res.json({ Error: "Error" })
+        }
+
+        return res.json(data)
+    })
+})
+
+
+//////////HOROMETRO MESA 34/////////////7
+app.get('/hmesa34', (req, res) => {
+    const sql = "SELECT * FROM hmesa34 ORDER BY id DESC";
+    db.query(sql, (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+});
+app.delete('/deletehmesa34/:id', (req, res) => {
+    const sql = "DELETE FROM hmesa34 WHERE id = ?";
+    const id = req.params.id;
+    db.query(sql, [id], (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+});
+app.post('/createhmesa34', async (req, res) => {
+    try {
+
+        // Obtener el saldo anterior
+        const finalAnteriorData = await new Promise((resolve, reject) => {
+            db.query("SELECT final FROM hmesa34 ORDER BY id DESC LIMIT 1", (err, data) => {
+                if (err) reject(err);
+                else resolve(data);
+            });
+        });
+      
+        // Si hay registros en la tabla, obtén el saldo anterior, de lo contrario, establece el saldo anterior en 0
+        const finalAnterior = finalAnteriorData.length > 0 ? finalAnteriorData[0].final : 0;
+       
+        // Calcula el nuevo saldo sumando el saldo anterior a las entradas y restando las salidas
+        const horas = parseFloat(req.body.final) - finalAnterior;
+       
+       
+        // Separar las centenas
+        const centenas = Math.floor(horas / 100) * 100; // Obtener las centenas
+
+        // Obtener las decenas y unidades juntas
+        const decenasYUnidades = horas % 100; // Obtener las decenas y unidades juntas
+
+        // Multiplicar las decenas y unidades juntas por 0.6
+        const resultado = (decenasYUnidades > 0) ? decenasYUnidades * 0.6 : 0; // Multiplicar solo si las decenas y unidades juntas son mayores que cero
+
+        // Calcular el resultado total
+        const totalhoras = centenas + resultado;
+
+        // Formar el total en un string con ':' entre las centenas y las decenas
+        const totalhrs = `${Math.floor(totalhoras / 100)}:${Math.floor(resultado) < 10 ? '0' + Math.floor(resultado) : Math.floor(resultado)}`;
+
+        console.log(totalhrs); // Esto imprimirá el resultado final con la separación
+
+
+     
+        // Realizar la inserción en la tabla concmesas
+        const sql = "INSERT INTO hmesa34 (fecha, turno, inicio, final, hrs,totalhrs) VALUES (?, ?,?, ?, ?, ?)";
+        const values = [
+            req.body.fecha,
+            req.body.turno,
+            finalAnterior,
+            req.body.final,
+            horas,
+            totalhrs,
+            
+        ];
+
+        db.query(sql, values, (err, result) => {
+            if (err) throw err;
+            console.log("Registro insertado en concmesas con éxito.");
+            res.send("Registro insertado en concmesas con éxito.");
+        });
+    } catch (error) {
+        console.error("Error al crear el registro en concmesas:", error);
+        res.status(500).send("Error al crear el registro en concmesas.");
+    }
+});
+app.put('/updatehmesa34/:id', async (req, res) => {
+    try {
+
+        const horas = parseFloat(req.body.final) -  parseFloat(req.body.inicio) 
+         
+        // Separar las centenas
+        const centenas = Math.floor(horas / 100) * 100; // Obtener las centenas
+
+        // Obtener las decenas y unidades juntas
+        const decenasYUnidades = horas % 100; // Obtener las decenas y unidades juntas
+
+        // Multiplicar las decenas y unidades juntas por 0.6
+        const resultado = (decenasYUnidades > 0) ? decenasYUnidades * 0.6 : 0; // Multiplicar solo si las decenas y unidades juntas son mayores que cero
+
+        // Calcular el resultado total
+        const totalhoras = centenas + resultado;
+
+        // Formar el total en un string con ':' entre las centenas y las decenas
+        const totalhrs = `${Math.floor(totalhoras / 100)}:${Math.floor(resultado) < 10 ? '0' + Math.floor(resultado) : Math.floor(resultado)}`;
+
+        console.log(totalhrs); // Esto imprimirá el resultado final con la separación
+
+
+    const sql = "UPDATE hmesa34 SET fecha = ?, turno =?, inicio = ?, final = ?, hrs = ?, totalhrs = ? WHERE id = ?";
+    const values = [
+        req.body.fecha,
+        req.body.turno,
+        req.body.inicio,
+        req.body.final,
+        horas,
+        totalhrs,
+
+    ];
+    const id = req.params.id;
+    db.query(sql, [...values, id], (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+} catch (error) {
+    console.error("Error al crear el registro en concmesas:", error);
+    res.status(500).send("Error al crear el registro en concmesas.");
+}
+});
+app.get('/getrecordhmesa34/:id', (req, res) => {
+    const id = req.params.id;
+    const sql = "SELECT * FROM hmesa34 WHERE id = ?"
+    db.query(sql, [id], (err, data) => {
+        if (err) {
+            return res.json({ Error: "Error" })
+        }
+
+        return res.json(data)
+    })
+})
+////////////HOROMETRO MESA 5/////////////
+app.get('/hmesa5', (req, res) => {
+    const sql = "SELECT * FROM hmesa5 ORDER BY id DESC";
+    db.query(sql, (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+});
+app.delete('/deletehmesa5/:id', (req, res) => {
+    const sql = "DELETE FROM hmesa5 WHERE id = ?";
+    const id = req.params.id;
+    db.query(sql, [id], (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+});
+app.post('/createhmesa5', async (req, res) => {
+    try {
+
+        // Obtener el saldo anterior
+        const finalAnteriorData = await new Promise((resolve, reject) => {
+            db.query("SELECT final FROM hmesa5 ORDER BY id DESC LIMIT 1", (err, data) => {
+                if (err) reject(err);
+                else resolve(data);
+            });
+        });
+      
+        // Si hay registros en la tabla, obtén el saldo anterior, de lo contrario, establece el saldo anterior en 0
+        const finalAnterior = finalAnteriorData.length > 0 ? finalAnteriorData[0].final : 0;
+       
+        // Calcula el nuevo saldo sumando el saldo anterior a las entradas y restando las salidas
+        const horas = parseFloat(req.body.final) - finalAnterior;
+       
+       
+        // Separar las centenas
+        const centenas = Math.floor(horas / 100) * 100; // Obtener las centenas
+
+        // Obtener las decenas y unidades juntas
+        const decenasYUnidades = horas % 100; // Obtener las decenas y unidades juntas
+
+        // Multiplicar las decenas y unidades juntas por 0.6
+        const resultado = (decenasYUnidades > 0) ? decenasYUnidades * 0.6 : 0; // Multiplicar solo si las decenas y unidades juntas son mayores que cero
+
+        // Calcular el resultado total
+        const totalhoras = centenas + resultado;
+
+        // Formar el total en un string con ':' entre las centenas y las decenas
+        const totalhrs = `${Math.floor(totalhoras / 100)}:${Math.floor(resultado) < 10 ? '0' + Math.floor(resultado) : Math.floor(resultado)}`;
+
+        console.log(totalhrs); // Esto imprimirá el resultado final con la separación
+
+
+     
+        // Realizar la inserción en la tabla concmesas
+        const sql = "INSERT INTO hmesa5 (fecha, turno, inicio, final, hrs,totalhrs) VALUES (?, ?,?, ?, ?, ?)";
+        const values = [
+            req.body.fecha,
+            req.body.turno,
+            finalAnterior,
+            req.body.final,
+            horas,
+            totalhrs,
+            
+        ];
+
+        db.query(sql, values, (err, result) => {
+            if (err) throw err;
+            console.log("Registro insertado en concmesas con éxito.");
+            res.send("Registro insertado en concmesas con éxito.");
+        });
+    } catch (error) {
+        console.error("Error al crear el registro en concmesas:", error);
+        res.status(500).send("Error al crear el registro en concmesas.");
+    }
+});
+app.put('/updatehmesa5/:id', async (req, res) => {
+    try {
+
+        const horas = parseFloat(req.body.final) -  parseFloat(req.body.inicio) 
+         
+        // Separar las centenas
+        const centenas = Math.floor(horas / 100) * 100; // Obtener las centenas
+
+        // Obtener las decenas y unidades juntas
+        const decenasYUnidades = horas % 100; // Obtener las decenas y unidades juntas
+
+        // Multiplicar las decenas y unidades juntas por 0.6
+        const resultado = (decenasYUnidades > 0) ? decenasYUnidades * 0.6 : 0; // Multiplicar solo si las decenas y unidades juntas son mayores que cero
+
+        // Calcular el resultado total
+        const totalhoras = centenas + resultado;
+
+        // Formar el total en un string con ':' entre las centenas y las decenas
+        const totalhrs = `${Math.floor(totalhoras / 100)}:${Math.floor(resultado) < 10 ? '0' + Math.floor(resultado) : Math.floor(resultado)}`;
+
+        console.log(totalhrs); // Esto imprimirá el resultado final con la separación
+
+
+    const sql = "UPDATE hmesa5 SET fecha = ?, turno =?, inicio = ?, final = ?, hrs = ?, totalhrs = ? WHERE id = ?";
+    const values = [
+        req.body.fecha,
+        req.body.turno,
+        req.body.inicio,
+        req.body.final,
+        horas,
+        totalhrs,
+
+    ];
+    const id = req.params.id;
+    db.query(sql, [...values, id], (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+} catch (error) {
+    console.error("Error al crear el registro en concmesas:", error);
+    res.status(500).send("Error al crear el registro en concmesas.");
+}
+});
+app.get('/getrecordhmesa5/:id', (req, res) => {
+    const id = req.params.id;
+    const sql = "SELECT * FROM hmesa5 WHERE id = ?"
+    db.query(sql, [id], (err, data) => {
+        if (err) {
+            return res.json({ Error: "Error" })
+        }
+
+        return res.json(data)
+    })
+})
+
+////////HOROMETRO MESA 6//////////////
+app.get('/hmesa6', (req, res) => {
+    const sql = "SELECT * FROM hmesa6 ORDER BY id DESC";
+    db.query(sql, (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+});
+app.delete('/deletehmesa6/:id', (req, res) => {
+    const sql = "DELETE FROM hmesa6 WHERE id = ?";
+    const id = req.params.id;
+    db.query(sql, [id], (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+});
+app.post('/createhmesa6', async (req, res) => {
+    try {
+
+        // Obtener el saldo anterior
+        const finalAnteriorData = await new Promise((resolve, reject) => {
+            db.query("SELECT final FROM hmesa6 ORDER BY id DESC LIMIT 1", (err, data) => {
+                if (err) reject(err);
+                else resolve(data);
+            });
+        });
+      
+        // Si hay registros en la tabla, obtén el saldo anterior, de lo contrario, establece el saldo anterior en 0
+        const finalAnterior = finalAnteriorData.length > 0 ? finalAnteriorData[0].final : 0;
+       
+        // Calcula el nuevo saldo sumando el saldo anterior a las entradas y restando las salidas
+        const horas = parseFloat(req.body.final) - finalAnterior;
+       
+       
+        // Separar las centenas
+        const centenas = Math.floor(horas / 100) * 100; // Obtener las centenas
+
+        // Obtener las decenas y unidades juntas
+        const decenasYUnidades = horas % 100; // Obtener las decenas y unidades juntas
+
+        // Multiplicar las decenas y unidades juntas por 0.6
+        const resultado = (decenasYUnidades > 0) ? decenasYUnidades * 0.6 : 0; // Multiplicar solo si las decenas y unidades juntas son mayores que cero
+
+        // Calcular el resultado total
+        const totalhoras = centenas + resultado;
+
+        // Formar el total en un string con ':' entre las centenas y las decenas
+        const totalhrs = `${Math.floor(totalhoras / 100)}:${Math.floor(resultado) < 10 ? '0' + Math.floor(resultado) : Math.floor(resultado)}`;
+
+        console.log(totalhrs); // Esto imprimirá el resultado final con la separación
+
+
+     
+        // Realizar la inserción en la tabla concmesas
+        const sql = "INSERT INTO hmesa6 (fecha, turno, inicio, final, hrs,totalhrs) VALUES (?, ?,?, ?, ?, ?)";
+        const values = [
+            req.body.fecha,
+            req.body.turno,
+            finalAnterior,
+            req.body.final,
+            horas,
+            totalhrs,
+            
+        ];
+
+        db.query(sql, values, (err, result) => {
+            if (err) throw err;
+            console.log("Registro insertado en concmesas con éxito.");
+            res.send("Registro insertado en concmesas con éxito.");
+        });
+    } catch (error) {
+        console.error("Error al crear el registro en concmesas:", error);
+        res.status(500).send("Error al crear el registro en concmesas.");
+    }
+});
+app.put('/updatehmesa6/:id', async (req, res) => {
+    try {
+
+        const horas = parseFloat(req.body.final) -  parseFloat(req.body.inicio) 
+         
+        // Separar las centenas
+        const centenas = Math.floor(horas / 100) * 100; // Obtener las centenas
+
+        // Obtener las decenas y unidades juntas
+        const decenasYUnidades = horas % 100; // Obtener las decenas y unidades juntas
+
+        // Multiplicar las decenas y unidades juntas por 0.6
+        const resultado = (decenasYUnidades > 0) ? decenasYUnidades * 0.6 : 0; // Multiplicar solo si las decenas y unidades juntas son mayores que cero
+
+        // Calcular el resultado total
+        const totalhoras = centenas + resultado;
+
+        // Formar el total en un string con ':' entre las centenas y las decenas
+        const totalhrs = `${Math.floor(totalhoras / 100)}:${Math.floor(resultado) < 10 ? '0' + Math.floor(resultado) : Math.floor(resultado)}`;
+
+        console.log(totalhrs); // Esto imprimirá el resultado final con la separación
+
+
+    const sql = "UPDATE hmesa6 SET fecha = ?, turno =?, inicio = ?, final = ?, hrs = ?, totalhrs = ? WHERE id = ?";
+    const values = [
+        req.body.fecha,
+        req.body.turno,
+        req.body.inicio,
+        req.body.final,
+        horas,
+        totalhrs,
+
+    ];
+    const id = req.params.id;
+    db.query(sql, [...values, id], (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+} catch (error) {
+    console.error("Error al crear el registro en concmesas:", error);
+    res.status(500).send("Error al crear el registro en concmesas.");
+}
+});
+app.get('/getrecordhmesa6/:id', (req, res) => {
+    const id = req.params.id;
+    const sql = "SELECT * FROM hmesa6 WHERE id = ?"
+    db.query(sql, [id], (err, data) => {
+        if (err) {
+            return res.json({ Error: "Error" })
+        }
+
+        return res.json(data)
+    })
+})
+////////////HOROMETROS MOLINOS///////////////
+app.get('/hmolinos', (req, res) => {
+    const sql = "SELECT * FROM hmolinos ORDER BY id DESC";
+    db.query(sql, (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+});
+app.delete('/deletehmolinos/:id', (req, res) => {
+    const sql = "DELETE FROM hmolinos WHERE id = ?";
     const id = req.params.id;
     db.query(sql, [id], (err, data) => {
         if (err) return res.json(err);
@@ -4138,3 +4733,4 @@ app.get('/getsuma/:fecha', (req, res) => {
         return res.json(data);
     });
 })
+

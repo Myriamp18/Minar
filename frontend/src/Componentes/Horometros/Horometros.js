@@ -16,13 +16,16 @@ function Horometros() {
       navigate('/hjigs')
   }
   const onH12= () =>{
-   navigate('/h12')
+   navigate('/hmesa12')
 }
   const onH34= () =>{
-      navigate('/h34')
+      navigate('/hmesa34')
   }
-  const onH56= () =>{
-    navigate('/h56')
+  const onH5= () =>{
+    navigate('/hmesa5')
+}
+const onH6= () =>{
+  navigate('/hmesa6')
 }
 const onHMolinos= () =>{ 
   navigate('/hmolinos')
@@ -79,10 +82,21 @@ const onHcriva= () =>{
              
           </span>
           </button>
-          <button className="btnh-large btnh-bs" onClick={onH56}>
+          <button className="btnh-large btnh-bs" onClick={onH5}>
           <span className="iconnnesh"><IoMdClock /></span>
           <span className="buttonh-text">
-             Horometro Mesa 5y6
+             Horometro Mesa 5
+          </span>
+          <span className="buttonh-textss">
+           Pendiente
+             
+          </span>
+           
+          </button>
+          <button className="btnh-large btnh-bs" onClick={onH6}>
+          <span className="iconnnesh"><FaHourglassHalf /></span>
+          <span className="buttonh-text">
+             Horometro Mesa 6
           </span>
           <span className="buttonh-textss">
            Pendiente

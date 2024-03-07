@@ -34,7 +34,7 @@ function HorometroJigs() {
     <>
 
       <h1>Horomero JIG´SS 1Y2:</h1>
-      <div className="close-button" onClick={() => navigate('/molienda')}>
+      <div className="close-button" onClick={() => navigate('/horometros')}>
           <FontAwesomeIcon icon={faTimes} />
           </div>
       <div className="text-center">
@@ -74,7 +74,7 @@ function HorometroJigs() {
                         <tr key={i}>
                           <td>
                             <div style={{ display: 'flex', alignItems: 'center' }}>
-                              <Link to={`/updatemehjigs/${d.id}`} className='btn btn-warning'>
+                              <Link to={`/updatehjigs/${d.id}`} className='btn btn-warning'>
                                 <i className='fa-solid fa-edit'></i>
                               </Link>
                               &nbsp;

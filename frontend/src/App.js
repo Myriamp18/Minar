@@ -118,6 +118,19 @@ import HorometroJigs from './Componentes/Horometros/HorometroJigs';
 import FrmHorometroJigs from './Componentes/Horometros/FrmHorometroJigs';
 import ModificarConcBaribrigjt from './Componentes/ConcBaribright/ModificarConcBaribrigjt';
 import Excel from './Componentes/ReporteDiario/Excel';
+import MofificarHJigs from './Componentes/Horometros/MofificarHJigs';
+import FrmHorometroM12 from './Componentes/Horometros/FrmHorometroM12';
+import HorometrosM12 from './Componentes/Horometros/HorometrosM12';
+import ModificarHM12 from './Componentes/Horometros/ModificarHM12';
+import HorometroM34 from './Componentes/Horometros/HorometroM34';
+import FrmHorometroM34 from './Componentes/Horometros/FrmHorometroM34';
+import FrmHorometroM5 from './Componentes/Horometros/FrmHorometroM5';
+import HorometroM5 from './Componentes/Horometros/HorometroM5';
+import ModificarHM34 from './Componentes/Horometros/ModificarHM34';
+import ModifcarHM5 from './Componentes/Horometros/ModifcarHM5';
+import FrmHorometroM6 from './Componentes/Horometros/FrmHorometroM6';
+import HorometroM6 from './Componentes/Horometros/HorometroM6';
+import ModificarHM6 from './Componentes/Horometros/ModificarHM6';
 
 function App() {
   
@@ -292,8 +305,19 @@ function App() {
                <Route path="/horometros" element={<Horometros />} />
                <Route path="/hjigs" element={<HorometroJigs />} />
                <Route path="/createhjigs" element={<FrmHorometroJigs />} />
-           
-            
+               <Route path="/updatehjigs/:id" element={<MofificarHJigs />} />
+               <Route path="/hmesa12" element={<HorometrosM12 />} />
+               <Route path="/createhmesa12" element={<FrmHorometroM12 />} />
+               <Route path="/updatehmesa12/:id" element={<ModificarHM12 />} />
+               <Route path="/hmesa34" element={<HorometroM34 />} />
+               <Route path="/createhmesa34" element={<FrmHorometroM34 />} />
+               <Route path="/updatehmesa34/:id" element={<ModificarHM34 />} />
+               <Route path="/hmesa5" element={<HorometroM5/>} />
+               <Route path="/createhmesa5" element={<FrmHorometroM5 />} />
+               <Route path="/updatehmesa5/:id" element={<ModifcarHM5/>} />
+               <Route path="/hmesa6" element={<HorometroM6/>} />
+               <Route path="/createhmesa6" element={<FrmHorometroM6 />} />
+               <Route path="/updatehmesa6/:id" element={<ModificarHM6/>} />
          </Routes>
          </Menu>
       </Router>
