@@ -5082,3 +5082,88 @@ app.get('/getrecordcriva/:id', (req, res) => {
         return res.json(data)
     })
 })
+
+///////////////HORNO ROTATORIO////////////7
+app.get('/horno', (req, res) => {
+    const sql = "SELECT * FROM horno ORDER BY id DESC";
+    db.query(sql, (err, data) => {
+        if (err) {
+            console.error('Error al obtener datos de la base de datos:', err);
+            return res.status(500).json({ error: 'Error interno del servidor' });
+        }
+        return res.json(data);
+    });
+});
+app.delete('/deletehorno/:id', (req, res) => {
+    const sql = "DELETE FROM horno WHERE id = ?";
+    const id = req.params.id;
+    db.query(sql, [id], (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+});
+app.post('/createhorno', (req, res) => {
+  
+
+    const sql = "INSERT INTO horno (fecha, turno, quebradora, hrotatorio, elvmolinos, colectoresp,ensacadora,elvsilos,gusanof1,gusanof5,quebradorapr,notas) VALUES (?, ?, ?, ?, ?, ?,?,?,?,?,?,?)";
+    const values = [
+        req.body.fecha,
+        req.body.turno,
+        req.body.quebradora, 
+        req.body.hrotatorio, 
+        req.body.elvmolinos, 
+        req.body.colectoresp, 
+        req.body.ensacadora, 
+        req.body.elvsilos,
+        req.body.gusanof1, 
+        req.body.gusanof5, 
+        req.body.quebradorapr, 
+        req.body.notas, 
+    ];
+
+    db.query(sql, values, (err, data) => {
+        if (err) {
+            console.error('Error al insertar datos en la base de datos:', err);
+            return res.status(500).json({ error: 'Error interno del servidor' });
+        }
+        return res.json(data);
+    });
+});
+app.put('/updatehorno/:id', (req, res) => {
+    const sql = "UPDATE horno SET fecha=?, turno=?, quebradora=?, hrotatorio=?, elvmolinos=?, colectoresp=?,ensacadora=?,elvsilos=?,gusanof1=?,gusanof5=?,quebradorapr=?,notas=? WHERE id=?";
+    const values = [
+        req.body.fecha,
+        req.body.turno,
+        req.body.quebradora, 
+        req.body.hrotatorio, 
+        req.body.elvmolinos, 
+        req.body.colectoresp, 
+        req.body.ensacadora, 
+        req.body.elvsilos,
+        req.body.gusanof1, 
+        req.body.gusanof5, 
+        req.body.quebradorapr, 
+        req.body.notas, 
+        req.params.id // Agregar el id del registro a actualizar
+    ];
+
+    db.query(sql, values, (err, data) => {
+        if (err) {
+            console.error('Error al actualizar datos en la base de datos:', err);
+            return res.status(500).json({ error: 'Error interno del servidor' });
+        }
+        return res.json(data);
+    });
+});
+
+app.get('/getrecordhorno/:id', (req, res) => {
+    const id = req.params.id;
+    const sql = "SELECT * FROM horno WHERE id = ?"
+    db.query(sql, [id], (err, data) => {
+        if (err) {
+            return res.json({ Error: "Error" })
+        }
+
+        return res.json(data)
+    })
+})
