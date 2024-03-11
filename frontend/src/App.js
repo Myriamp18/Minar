@@ -131,6 +131,16 @@ import ModifcarHM5 from './Componentes/Horometros/ModifcarHM5';
 import FrmHorometroM6 from './Componentes/Horometros/FrmHorometroM6';
 import HorometroM6 from './Componentes/Horometros/HorometroM6';
 import ModificarHM6 from './Componentes/Horometros/ModificarHM6';
+import Molinos from './Componentes/Horometros/Molinos';
+import HorometroMolinos from './Componentes/Horometros/HorometroMolinos';
+import FrmHMolinos from './Componentes/Horometros/FrmHMolinos';
+import ModificarHMolinos from './Componentes/Horometros/ModificarHMolinos';
+import ProdMolinos from './Componentes/Horometros/ProdMolinos';
+import FrmPMolinos from './Componentes/Horometros/FrmPMolinos';
+import ModificarPMolinos from './Componentes/Horometros/ModificarPMolinos';
+import Criva from './Componentes/Horometros/Criva';
+import FrmCrivas from './Componentes/Horometros/FrmCrivas';
+import ModificarCrivas from './Componentes/Horometros/ModificarCrivas';
 
 function App() {
   
@@ -318,7 +328,18 @@ function App() {
                <Route path="/hmesa6" element={<HorometroM6/>} />
                <Route path="/createhmesa6" element={<FrmHorometroM6 />} />
                <Route path="/updatehmesa6/:id" element={<ModificarHM6/>} />
+               <Route path="/hmolinos" element={<Molinos/>} />
+               <Route path="/Horomolinos" element={<HorometroMolinos/>} />
+               <Route path="/createhmolinos" element={<FrmHMolinos />} />
+               <Route path="/updatehmolinos/:id" element={<ModificarHMolinos/>} />
+               <Route path="/molinos" element={<ProdMolinos/>} />
+               <Route path="/createhrsmolinos" element={<FrmPMolinos />} />
+               <Route path="/updatehrsmolinos/:id" element={<ModificarPMolinos/>} />
+               <Route path="/crivas" element={<Criva/>} />
+               <Route path="/createcrivas" element={<FrmCrivas />} />
+               <Route path="/updatecrivas/:id" element={<ModificarCrivas/>} />
          </Routes>
+      
          </Menu>
       </Router>
    );

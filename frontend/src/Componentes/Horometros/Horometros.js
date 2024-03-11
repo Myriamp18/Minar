@@ -31,7 +31,7 @@ const onHMolinos= () =>{
   navigate('/hmolinos')
 }
 const onHcriva= () =>{ 
-   navigate('/hcriva')
+   navigate('/crivas')
  }
  const onHhorno= () =>{ 
    navigate('/hhorno')

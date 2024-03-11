@@ -5,16 +5,15 @@ import axios from 'axios'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
-function ModificarHM6() {
+function ModificarPMolinos() {
     const { id } = useParams()
     const [values, setValues] = useState({
         fecha: '',
         turno: "",
-        inicio: "",
-        final: "",
-        hrs: "",
-       totalhrs:"",
-    
+        hrsm1: "",
+        prodm1: "",
+        hrsm2: "",
+        prodm2:"",
     
     
     
@@ -23,28 +22,28 @@ function ModificarHM6() {
 
       const handleSubmit = (e) => {
           e.preventDefault()
-          axios.put(`http://localhost:8081/updatehmesa6/${id}`, values)
+          axios.put(`http://localhost:8081/updatehrsmolinos/${id}`, values)
   
               .then(res => {
                   console.log(res);
                   // Optionally, you can navigate to a different page or update the UI
-                  navigate('/hmesa6'); // Example: Navigate to the home page
+                  navigate('/molinos'); // Example: Navigate to the home page
               })
               .catch(err => console.log(err));
       };
       useEffect(() => {
-        axios.get(`http://localhost:8081/getrecordhmesa6/${id}`)
+        axios.get(`http://localhost:8081/getrecordhrsmolinos/${id}`)
             .then((res) => {
                 
                     setValues({
                         ...values,
                         fecha: res.data[0].fecha,
                         turno: res.data[0].turno,
-                        inicio: res.data[0].inicio,
-                        final: res.data[0].final,
-                        hrs: res.data[0].hrs,
-                        totalhrs: res.data[0].totalhrs,
-                        
+                        hrsm1: res.data[0].hrsm1,
+                        prodm1: res.data[0].prodm1,
+                        hrsm2: res.data[0].hrsm2,
+                        prodm2: res.data[0].prodm2,
+                       
                        
                       
                     });
@@ -54,8 +53,8 @@ function ModificarHM6() {
     }, []);
   return (
     <div className="d-flex align-items-center flex-column mt-2">
-    <h1>Modificar Horometro Mesa 6</h1>
-    <div className="close-button" onClick={() => navigate('/hmesa6')}>
+    <h1>Modificar Horas Molinos</h1>
+    <div className="close-button" onClick={() => navigate('/molinos')}>
       <FontAwesomeIcon icon={faTimes} />
     </div>
 
@@ -94,35 +93,37 @@ function ModificarHM6() {
 </div>
 
 </div>
-      <div className=''>
-      <div class="mb-2">
-          <label form='text' class="form-label"> Inicio Mesa 6:</label>
-          <input
-            type="text"
-            class="form-control"
-            id='final'
-            placeholder='Insertar Cantidad'
-            name='inicio'
-            value={values.inicio}
-            onChange={(e) => setValues({ ...values, inicio: e.target.value })} required/>
-        </div>
+      <div className='silos'>
         
+       
       </div>
-      <div className=''>
+      <div className='silos'>
         <div class="mb-2">
-          <label form='text' class="form-label"> Final Mesa 5:</label>
+          <label form='text' class="form-label"> Horas Mo.1:</label>
           <input
             type="text"
             class="form-control"
             id='final'
             placeholder='Insertar Cantidad'
             name='final'
-            value={values.final}
-            onChange={(e) => setValues({ ...values, final: e.target.value })} required/>
+            value={values.hrsm1}
+            onChange={(e) => setValues({ ...values, hrsm1: e.target.value })} required/>
         </div>
-       
+
+        <div class="mb-2">
+          <label form='text' class="form-label"> Horas Mo.2:</label>
+          <input
+            type="text"
+            class="form-control"
+            id='final'
+            placeholder='Insertar Cantidad'
+            name='final'
+            value={values.hrsm2}
+            onChange={(e) => setValues({ ...values, hrsm2: e.target.value })} required/>
+        </div>
       </div>
      
+      
      
        
      
@@ -143,4 +144,4 @@ function ModificarHM6() {
   )
 }
 
-export default ModificarHM6
+export default ModificarPMolinos

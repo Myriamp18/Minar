@@ -4066,8 +4066,8 @@ app.post('/createhjigs', async (req, res) => {
 app.put('/updatehjigs/:id', async (req, res) => {
     try {
 
-        const horas = parseFloat(req.body.final) -  parseFloat(req.body.inicial) 
-        const horasj2 = parseFloat(req.body.finalj2) - parseFloat(req.body.inicialj2) 
+        const horas = parseFloat(req.body.final) -  parseFloat(req.body.inicio) 
+        const horasj2 = parseFloat(req.body.finalj2) - parseFloat(req.body.inicioj2) 
         // Separar las centenas
         const centenas = Math.floor(horas / 100) * 100; // Obtener las centenas
 
@@ -4683,6 +4683,174 @@ app.delete('/deletehmolinos/:id', (req, res) => {
         return res.json(data);
     });
 });
+app.post('/createhmolinos', async (req, res) => {
+    try {
+
+        // Obtener el saldo anterior
+        const finalAnteriorData = await new Promise((resolve, reject) => {
+            db.query("SELECT final FROM hmolinos ORDER BY id DESC LIMIT 1", (err, data) => {
+                if (err) reject(err);
+                else resolve(data);
+            });
+        });
+        const finalAnteriorm2Data = await new Promise((resolve, reject) => {
+            db.query("SELECT finalm2 FROM hmolinos ORDER BY id DESC LIMIT 1", (err, data) => {
+                if (err) reject(err);
+                else resolve(data);
+            });
+        });
+
+        // Si hay registros en la tabla, obtén el saldo anterior, de lo contrario, establece el saldo anterior en 0
+        const finalAnterior = finalAnteriorData.length > 0 ? finalAnteriorData[0].final : 0;
+        const finalAnteriorm2 = finalAnteriorm2Data.length > 0 ? finalAnteriorm2Data[0].finalm2 : 0;
+        // Calcula el nuevo saldo sumando el saldo anterior a las entradas y restando las salidas
+        const horas = parseFloat(req.body.final) - finalAnterior;
+        const horasm2 = parseFloat(req.body.finalm2) - finalAnteriorm2;
+        // Suponiendo que "horas" contiene el número total de horas
+
+        // Suponiendo que "horas" contiene el número total de horas
+
+        // Suponiendo que "horas" contiene el número total de horas
+
+        // Separar las centenas
+        const centenas = Math.floor(horas / 100) * 100; // Obtener las centenas
+
+        // Obtener las decenas y unidades juntas
+        const decenasYUnidades = horas % 100; // Obtener las decenas y unidades juntas
+
+        // Multiplicar las decenas y unidades juntas por 0.6
+        const resultado = (decenasYUnidades > 0) ? decenasYUnidades * 0.6 : 0; // Multiplicar solo si las decenas y unidades juntas son mayores que cero
+
+        // Calcular el resultado total
+        const totalhoras = centenas + resultado;
+
+        // Formar el total en un string con ':' entre las centenas y las decenas
+        const totalhrs = `${Math.floor(totalhoras / 100)}:${Math.floor(resultado) < 10 ? '0' + Math.floor(resultado) : Math.floor(resultado)}`;
+
+        console.log(totalhrs); // Esto imprimirá el resultado final con la separación
+
+
+        const centenasm2 = Math.floor(horasm2 / 100) * 100; // Obtener las centenas
+
+        // Obtener las decenas y unidades juntas
+        const decenasYUnidadesm2 = horasm2 % 100; // Obtener las decenas y unidades juntas
+
+        // Multiplicar las decenas y unidades juntas por 0.6
+        const resultadom2 = (decenasYUnidadesm2 > 0) ? decenasYUnidadesm2 * 0.6 : 0; // Multiplicar solo si las decenas y unidades juntas son mayores que cero
+
+        // Calcular el resultado total
+        const totalhorasm2 = centenasm2 + resultadom2;
+
+        // Formar el total en un string con ':' entre las centenas y las decenas
+        const totalhrsm2  = `${Math.floor(totalhorasm2 / 100)}:${Math.floor(resultadom2) < 10 ? '0' + Math.floor(resultadom2) : Math.floor(resultadom2)}`;
+
+        console.log(totalhrsm2); // Esto imprimirá el resultado final con la separación
+
+
+       
+
+
+        // Realizar la inserción en la tabla concmesas
+        const sql = "INSERT INTO hmolinos (fecha, turno, inicio, final, hrs,totalhrs,iniciom2, finalm2, hrsm2,totalhrsm2) VALUES (?, ?,?, ?, ?, ?,?,?,?,?)";
+        const values = [
+            req.body.fecha,
+            req.body.turno,
+            finalAnterior,
+            req.body.final,
+            horas,
+            totalhrs,
+            finalAnteriorm2,
+            req.body.finalm2,
+            horasm2,
+            totalhrsm2,
+        ];
+
+        db.query(sql, values, (err, result) => {
+            if (err) throw err;
+            console.log("Registro insertado en concmesas con éxito.");
+            res.send("Registro insertado en concmesas con éxito.");
+        });
+    } catch (error) {
+        console.error("Error al crear el registro en concmesas:", error);
+        res.status(500).send("Error al crear el registro en concmesas.");
+    }
+});
+app.put('/updatehmolinos/:id', async (req, res) => {
+    try {
+
+        const horas = parseFloat(req.body.final) -  parseFloat(req.body.inicio) 
+        const horasm2 = parseFloat(req.body.finalm2) - parseFloat(req.body.iniciom2) 
+        // Separar las centenas
+        const centenas = Math.floor(horas / 100) * 100; // Obtener las centenas
+
+        // Obtener las decenas y unidades juntas
+        const decenasYUnidades = horas % 100; // Obtener las decenas y unidades juntas
+
+        // Multiplicar las decenas y unidades juntas por 0.6
+        const resultado = (decenasYUnidades > 0) ? decenasYUnidades * 0.6 : 0; // Multiplicar solo si las decenas y unidades juntas son mayores que cero
+
+        // Calcular el resultado total
+        const totalhoras = centenas + resultado;
+
+        // Formar el total en un string con ':' entre las centenas y las decenas
+        const totalhrs = `${Math.floor(totalhoras / 100)}:${Math.floor(resultado) < 10 ? '0' + Math.floor(resultado) : Math.floor(resultado)}`;
+
+        console.log(totalhrs); // Esto imprimirá el resultado final con la separación
+
+
+        const centenasm2 = Math.floor(horasm2 / 100) * 100; // Obtener las centenas
+
+        // Obtener las decenas y unidades juntas
+        const decenasYUnidadesm2 = horasm2 % 100; // Obtener las decenas y unidades juntas
+
+        // Multiplicar las decenas y unidades juntas por 0.6
+        const resultadom2 = (decenasYUnidadesm2 > 0) ? decenasYUnidadesm2 * 0.6 : 0; // Multiplicar solo si las decenas y unidades juntas son mayores que cero
+
+        // Calcular el resultado total
+        const totalhorasm2 = centenasm2 + resultadom2;
+
+        // Formar el total en un string con ':' entre las centenas y las decenas
+        const totalhrsm2  = `${Math.floor(totalhorasm2 / 100)}:${Math.floor(resultadom2) < 10 ? '0' + Math.floor(resultadom2) : Math.floor(resultadom2)}`;
+
+        console.log(totalhrsm2); // Esto imprimirá el resultado final con la separación
+
+
+    const sql = "UPDATE hmolinos SET fecha = ?, turno =?, inicio = ?, final = ?, hrs = ?, totalhrs = ?, iniciom2 =?, finalm2=?, hrsm2=?, totalhrsm2=?  WHERE id = ?";
+    const values = [
+        req.body.fecha,
+        req.body.turno,
+        req.body.inicio,
+        req.body.final,
+        horas,
+        totalhrs,
+        req.body.iniciom2,
+        req.body.finalm2,
+        horasm2,
+        totalhrsm2,
+
+    ];
+    const id = req.params.id;
+    db.query(sql, [...values, id], (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+} catch (error) {
+    console.error("Error al crear el registro en concmesas:", error);
+    res.status(500).send("Error al crear el registro en concmesas.");
+}
+});
+app.get('/getrecordhmolinos/:id', (req, res) => {
+    const id = req.params.id;
+    const sql = "SELECT * FROM hmolinos WHERE id = ?"
+    db.query(sql, [id], (err, data) => {
+        if (err) {
+            return res.json({ Error: "Error" })
+        }
+
+        return res.json(data)
+    })
+})
+
 /////////////INICIO/77777777777
 app.get('/getsilosinicio/:fecha', (req, res) => {
     const fecha = req.params.fecha;
@@ -4696,7 +4864,6 @@ app.get('/getsilosinicio/:fecha', (req, res) => {
         return res.json(data);
     });
 })
-
 app.get('/getmpleinicio/:fecha', (req, res) => {
     const fecha = req.params.fecha;
     const sql = "SELECT saldo FROM mpmle WHERE fecha = ?"
@@ -4734,3 +4901,184 @@ app.get('/getsuma/:fecha', (req, res) => {
     });
 })
 
+//////PROD.MOLINOS///////
+app.get('/hrsmolinos', (req, res) => {
+    const sql = "SELECT * FROM hrsmolinos ORDER BY id DESC";
+    db.query(sql, (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+});
+app.delete('/deletehrsmolinos/:id', (req, res) => {
+    const sql = "DELETE FROM hrsmolinos WHERE id = ?";
+    const id = req.params.id;
+    db.query(sql, [id], (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+});
+app.post('/createhrsmolinos', (req, res) => {
+    // Función para convertir el formato de "2:30" a "2.30"
+    const convertirFormatoDecimal = (hora) => {
+        // Reemplazar el ":" con "."
+        return hora.replace(':', '.');
+    };
+
+    // Convertir hrsm1 y hrsm2 al formato decimal
+    const hrsm1Decimal = convertirFormatoDecimal(req.body.hrsm1);
+    const hrsm2Decimal = convertirFormatoDecimal(req.body.hrsm2);
+
+    // Verificar si la conversión fue exitosa
+    if (isNaN(hrsm1Decimal) || isNaN(hrsm2Decimal)) {
+        console.error('Error al convertir la hora a formato decimal');
+        return res.status(400).json({ error: 'Error en el formato de hora' });
+    }
+
+    // Calcular prodm1 y prodm2
+    const prodm1 = hrsm1Decimal * 8.5;
+    const prodm2 = hrsm2Decimal * 5.0;
+
+    const sql = "INSERT INTO hrsmolinos (fecha, turno, hrsm1, prodm1, hrsm2, prodm2) VALUES (?, ?, ?, ?, ?, ?)";
+    const values = [
+        req.body.fecha,
+        req.body.turno,
+        req.body.hrsm1, // Mantener el formato original en la base de datos
+        prodm1,
+        req.body.hrsm2, // Mantener el formato original en la base de datos
+        prodm2,
+    ];
+
+    db.query(sql, values, (err, data) => {
+        if (err) {
+            console.error('Error al insertar datos en la base de datos:', err);
+            return res.status(500).json({ error: 'Error interno del servidor' });
+        }
+        return res.json(data);
+    });
+});
+app.put('/updatehrsmolinos/:id', (req, res) => {
+    // Función para convertir el formato de "2:30" a "2.30"
+    const convertirFormatoDecimal = (hora) => {
+        // Reemplazar el ":" con "."
+        return hora.replace(':', '.');
+    };
+
+    // Convertir hrsm1 y hrsm2 al formato decimal
+    const hrsm1Decimal = convertirFormatoDecimal(req.body.hrsm1);
+    const hrsm2Decimal = convertirFormatoDecimal(req.body.hrsm2);
+
+    // Verificar si la conversión fue exitosa
+    if (isNaN(hrsm1Decimal) || isNaN(hrsm2Decimal)) {
+        console.error('Error al convertir la hora a formato decimal');
+        return res.status(400).json({ error: 'Error en el formato de hora' });
+    }
+
+    // Calcular prodm1 y prodm2
+    const prodm1 = hrsm1Decimal * 8.5;
+    const prodm2 = hrsm2Decimal * 5.0;
+
+    const sql = "UPDATE hrsmolinos SET fecha=?, turno=?, hrsm1=?, prodm1=?, hrsm2=?, prodm2=? WHERE id=?";
+    const values = [
+        req.body.fecha,
+        req.body.turno,
+        req.body.hrsm1, // Mantener el formato original en la base de datos
+        prodm1,
+        req.body.hrsm2, // Mantener el formato original en la base de datos
+        prodm2,
+        req.params.id // Agregar id del registro a actualizar
+    ];
+
+    db.query(sql, values, (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+});
+app.get('/getrecordhrsmolinos/:id', (req, res) => {
+    const id = req.params.id;
+    const sql = "SELECT * FROM hrsmolinos WHERE id = ?"
+    db.query(sql, [id], (err, data) => {
+        if (err) {
+            return res.json({ Error: "Error" })
+        }
+
+        return res.json(data)
+    })
+})
+
+
+///////////CRIVA VIBRATORIA////
+app.get('/criva', (req, res) => {
+    const sql = "SELECT * FROM criba ORDER BY id DESC";
+    db.query(sql, (err, data) => {
+        if (err) {
+            console.error('Error al obtener datos de la base de datos:', err);
+            return res.status(500).json({ error: 'Error interno del servidor' });
+        }
+        return res.json(data);
+    });
+});
+app.delete('/deletecriva/:id', (req, res) => {
+    const sql = "DELETE FROM criba WHERE id = ?";
+    const id = req.params.id;
+    db.query(sql, [id], (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+});
+app.post('/createcrivas', (req, res) => {
+  
+
+    const sql = "INSERT INTO criba (fecha, turno, tolvageneral, cribav, mesaswi, bombafinsa,bombasmca,notas) VALUES (?, ?, ?, ?, ?, ?,?,?)";
+    const values = [
+        req.body.fecha,
+        req.body.turno,
+        req.body.tolvageneral, 
+        req.body.cribav, 
+        req.body.mesaswi, 
+        req.body.bombafinsa, 
+        req.body.bombasmca, 
+        req.body.notas, 
+    ];
+
+    db.query(sql, values, (err, data) => {
+        if (err) {
+            console.error('Error al insertar datos en la base de datos:', err);
+            return res.status(500).json({ error: 'Error interno del servidor' });
+        }
+        return res.json(data);
+    });
+});
+app.put('/updatecrivas/:id', (req, res) => {
+    const sql = "UPDATE criba SET fecha=?, turno=?, tolvageneral=?, cribav=?, mesaswi=?, bombafinsa=?, bombasmca=?, notas=? WHERE id=?";
+    const values = [
+        req.body.fecha,
+        req.body.turno,
+        req.body.tolvageneral, 
+        req.body.cribav, 
+        req.body.mesaswi, 
+        req.body.bombafinsa, 
+        req.body.bombasmca, 
+        req.body.notas, 
+        req.params.id // Agregar el id del registro a actualizar
+    ];
+
+    db.query(sql, values, (err, data) => {
+        if (err) {
+            console.error('Error al actualizar datos en la base de datos:', err);
+            return res.status(500).json({ error: 'Error interno del servidor' });
+        }
+        return res.json(data);
+    });
+});
+
+app.get('/getrecordcriva/:id', (req, res) => {
+    const id = req.params.id;
+    const sql = "SELECT * FROM criba WHERE id = ?"
+    db.query(sql, [id], (err, data) => {
+        if (err) {
+            return res.json({ Error: "Error" })
+        }
+
+        return res.json(data)
+    })
+})

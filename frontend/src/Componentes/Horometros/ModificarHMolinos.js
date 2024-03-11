@@ -5,16 +5,19 @@ import axios from 'axios'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
-function ModificarHM6() {
+function ModificarHMolinos() {
     const { id } = useParams()
     const [values, setValues] = useState({
         fecha: '',
-        turno: "",
+        turno: "1",
         inicio: "",
         final: "",
         hrs: "",
-       totalhrs:"",
-    
+        totalhrs:"",
+        iniciom2: "",
+        finalm2: "",
+        hrsm2: "",
+        totalhrsm2:"",
     
     
     
@@ -23,17 +26,17 @@ function ModificarHM6() {
 
       const handleSubmit = (e) => {
           e.preventDefault()
-          axios.put(`http://localhost:8081/updatehmesa6/${id}`, values)
+          axios.put(`http://localhost:8081/updatehmolinos/${id}`, values)
   
               .then(res => {
                   console.log(res);
                   // Optionally, you can navigate to a different page or update the UI
-                  navigate('/hmesa6'); // Example: Navigate to the home page
+                  navigate('/horomolinos'); // Example: Navigate to the home page
               })
               .catch(err => console.log(err));
       };
       useEffect(() => {
-        axios.get(`http://localhost:8081/getrecordhmesa6/${id}`)
+        axios.get(`http://localhost:8081/getrecordhmolinos/${id}`)
             .then((res) => {
                 
                     setValues({
@@ -44,7 +47,10 @@ function ModificarHM6() {
                         final: res.data[0].final,
                         hrs: res.data[0].hrs,
                         totalhrs: res.data[0].totalhrs,
-                        
+                        iniciom2: res.data[0].iniciom2,
+                        finalm2: res.data[0].finalm2,
+                        hrsm2: res.data[0].hrsm2,
+                        totalhrsm2: res.data[0].totalhrsm2,
                        
                       
                     });
@@ -54,8 +60,8 @@ function ModificarHM6() {
     }, []);
   return (
     <div className="d-flex align-items-center flex-column mt-2">
-    <h1>Modificar Horometro Mesa 6</h1>
-    <div className="close-button" onClick={() => navigate('/hmesa6')}>
+    <h1>Modificar Horometro Molinos</h1>
+    <div className="close-button" onClick={() => navigate('/horomolinos')}>
       <FontAwesomeIcon icon={faTimes} />
     </div>
 
@@ -94,9 +100,9 @@ function ModificarHM6() {
 </div>
 
 </div>
-      <div className=''>
+      <div className='silos'>
       <div class="mb-2">
-          <label form='text' class="form-label"> Inicio Mesa 6:</label>
+          <label form='text' class="form-label"> Inicio Mo.1:</label>
           <input
             type="text"
             class="form-control"
@@ -106,11 +112,22 @@ function ModificarHM6() {
             value={values.inicio}
             onChange={(e) => setValues({ ...values, inicio: e.target.value })} required/>
         </div>
-        
-      </div>
-      <div className=''>
         <div class="mb-2">
-          <label form='text' class="form-label"> Final Mesa 5:</label>
+          <label form='text' class="form-label"> Inicio Mo.2:</label>
+          <input
+            type="text"
+            class="form-control"
+            id='finalj2'
+            placeholder='Insertar Horometro'
+            name='icicioj2'
+            value={values.iniciom2}
+            onChange={(e) => setValues({ ...values, iniciom2: e.target.value })} required/>
+        </div>
+       
+      </div>
+      <div className='silos'>
+        <div class="mb-2">
+          <label form='text' class="form-label"> Final Mo.1:</label>
           <input
             type="text"
             class="form-control"
@@ -120,7 +137,17 @@ function ModificarHM6() {
             value={values.final}
             onChange={(e) => setValues({ ...values, final: e.target.value })} required/>
         </div>
-       
+        <div class="mb-2">
+          <label form='text' class="form-label"> Final Mo.2:</label>
+          <input
+            type="text"
+            class="form-control"
+            id='finalj2'
+            placeholder='Insertar Horometro'
+            name='finalj2'
+            value={values.finalm2}
+            onChange={(e) => setValues({ ...values, finalm2: e.target.value })} required/>
+        </div>
       </div>
      
      
@@ -143,4 +170,4 @@ function ModificarHM6() {
   )
 }
 
-export default ModificarHM6
+export default ModificarHMolinos
