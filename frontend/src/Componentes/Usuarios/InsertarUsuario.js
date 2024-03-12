@@ -31,7 +31,7 @@ function InsertarUsuario() {
         .then(res => {
           console.log(res);
           // Optionally, you can navigate to a different page or update the UI
-          navigate('/'); // Example: Navigate to the home page
+          navigate('/usuarios'); // Example: Navigate to the home page
         })
         .catch(err => console.log(err));
     };

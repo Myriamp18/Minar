@@ -5105,7 +5105,7 @@ app.delete('/deletehorno/:id', (req, res) => {
 app.post('/createhorno', (req, res) => {
   
 
-    const sql = "INSERT INTO horno (fecha, turno, quebradora, hrotatorio, elvmolinos, colectoresp,ensacadora,elvsilos,gusanof1,gusanof5,quebradorapr,notas) VALUES (?, ?, ?, ?, ?, ?,?,?,?,?,?,?)";
+    const sql = "INSERT INTO horno (fecha, turno, quebradora, hrotatorio, elvmolinos, colectoresp,ensacadora,ensacadora1,elvsilos,gusanof1,gusanof5,quebradorapr,notas) VALUES (?, ?, ?, ?, ?, ?,?,?,?,?,?,?,?)";
     const values = [
         req.body.fecha,
         req.body.turno,
@@ -5114,6 +5114,7 @@ app.post('/createhorno', (req, res) => {
         req.body.elvmolinos, 
         req.body.colectoresp, 
         req.body.ensacadora, 
+        req.body.ensacadora1, 
         req.body.elvsilos,
         req.body.gusanof1, 
         req.body.gusanof5, 
@@ -5130,7 +5131,7 @@ app.post('/createhorno', (req, res) => {
     });
 });
 app.put('/updatehorno/:id', (req, res) => {
-    const sql = "UPDATE horno SET fecha=?, turno=?, quebradora=?, hrotatorio=?, elvmolinos=?, colectoresp=?,ensacadora=?,elvsilos=?,gusanof1=?,gusanof5=?,quebradorapr=?,notas=? WHERE id=?";
+    const sql = "UPDATE horno SET fecha=?, turno=?, quebradora=?, hrotatorio=?, elvmolinos=?, colectoresp=?,ensacadora=?,ensacadora1=?,elvsilos=?,gusanof1=?,gusanof5=?,quebradorapr=?,notas=? WHERE id=?";
     const values = [
         req.body.fecha,
         req.body.turno,
@@ -5139,6 +5140,7 @@ app.put('/updatehorno/:id', (req, res) => {
         req.body.elvmolinos, 
         req.body.colectoresp, 
         req.body.ensacadora, 
+        req.body.ensacadora1, 
         req.body.elvsilos,
         req.body.gusanof1, 
         req.body.gusanof5, 
@@ -5166,4 +5168,102 @@ app.get('/getrecordhorno/:id', (req, res) => {
 
         return res.json(data)
     })
+})
+
+////////HOROMETROS PDF////////////
+app.get('/getcriba/:fecha', (req, res) => {
+    const fecha = req.params.fecha;
+    const sql = "SELECT * FROM criba WHERE fecha = ?"
+    db.query(sql, [fecha], (err, data) => {
+        if (err) {
+            console.error("Error en la consulta SQL:", err);
+            return res.status(500).json({ error: "Error en la consulta SQL. Por favor, inténtalo de nuevo más tarde." });
+        }
+
+        return res.json(data);
+    });
+})
+app.get('/gethjigs/:fecha', (req, res) => {
+    const fecha = req.params.fecha;
+    const sql = "SELECT * FROM horojigss WHERE fecha = ?"
+    db.query(sql, [fecha], (err, data) => {
+        if (err) {
+            console.error("Error en la consulta SQL:", err);
+            return res.status(500).json({ error: "Error en la consulta SQL. Por favor, inténtalo de nuevo más tarde." });
+        }
+
+        return res.json(data);
+    });
+})
+app.get('/gethmesa12/:fecha', (req, res) => {
+    const fecha = req.params.fecha;
+    const sql = "SELECT * FROM hmesa12 WHERE fecha = ?"
+    db.query(sql, [fecha], (err, data) => {
+        if (err) {
+            console.error("Error en la consulta SQL:", err);
+            return res.status(500).json({ error: "Error en la consulta SQL. Por favor, inténtalo de nuevo más tarde." });
+        }
+
+        return res.json(data);
+    });
+})
+app.get('/gethmesa34/:fecha', (req, res) => {
+    const fecha = req.params.fecha;
+    const sql = "SELECT * FROM hmesa34 WHERE fecha = ?"
+    db.query(sql, [fecha], (err, data) => {
+        if (err) {
+            console.error("Error en la consulta SQL:", err);
+            return res.status(500).json({ error: "Error en la consulta SQL. Por favor, inténtalo de nuevo más tarde." });
+        }
+
+        return res.json(data);
+    });
+})
+app.get('/gethmesa5/:fecha', (req, res) => {
+    const fecha = req.params.fecha;
+    const sql = "SELECT * FROM hmesa5 WHERE fecha = ?"
+    db.query(sql, [fecha], (err, data) => {
+        if (err) {
+            console.error("Error en la consulta SQL:", err);
+            return res.status(500).json({ error: "Error en la consulta SQL. Por favor, inténtalo de nuevo más tarde." });
+        }
+
+        return res.json(data);
+    });
+})
+app.get('/gethmesa6/:fecha', (req, res) => {
+    const fecha = req.params.fecha;
+    const sql = "SELECT * FROM hmesa6 WHERE fecha = ?"
+    db.query(sql, [fecha], (err, data) => {
+        if (err) {
+            console.error("Error en la consulta SQL:", err);
+            return res.status(500).json({ error: "Error en la consulta SQL. Por favor, inténtalo de nuevo más tarde." });
+        }
+
+        return res.json(data);
+    });
+})
+app.get('/gethorno/:fecha', (req, res) => {
+    const fecha = req.params.fecha;
+    const sql = "SELECT * FROM horno WHERE fecha = ?"
+    db.query(sql, [fecha], (err, data) => {
+        if (err) {
+            console.error("Error en la consulta SQL:", err);
+            return res.status(500).json({ error: "Error en la consulta SQL. Por favor, inténtalo de nuevo más tarde." });
+        }
+
+        return res.json(data);
+    });
+})
+app.get('/gethrsmolinos/:fecha', (req, res) => {
+    const fecha = req.params.fecha;
+    const sql = "SELECT * FROM hrsmolinos WHERE fecha = ?"
+    db.query(sql, [fecha], (err, data) => {
+        if (err) {
+            console.error("Error en la consulta SQL:", err);
+            return res.status(500).json({ error: "Error en la consulta SQL. Por favor, inténtalo de nuevo más tarde." });
+        }
+
+        return res.json(data);
+    });
 })

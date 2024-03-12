@@ -141,6 +141,10 @@ import ModificarPMolinos from './Componentes/Horometros/ModificarPMolinos';
 import Criva from './Componentes/Horometros/Criva';
 import FrmCrivas from './Componentes/Horometros/FrmCrivas';
 import ModificarCrivas from './Componentes/Horometros/ModificarCrivas';
+import Horno from './Componentes/Horometros/Horno';
+import FrmHorno from './Componentes/Horometros/FrmHorno';
+import ModificarHorno from './Componentes/Horometros/ModificarHorno';
+import PdfHorometro from './Componentes/Horometros/PdfHorometro';
 
 function App() {
   
@@ -338,6 +342,14 @@ function App() {
                <Route path="/crivas" element={<Criva/>} />
                <Route path="/createcrivas" element={<FrmCrivas />} />
                <Route path="/updatecrivas/:id" element={<ModificarCrivas/>} />
+        
+
+               <Route path="/horno" element={<Horno/>} />
+               <Route path="/createhorno" element={<FrmHorno />} />
+               <Route path="/updatehorno/:id" element={<ModificarHorno/>} />
+               <Route path="/pdfhorometro" element={<PdfHorometro/>} />
+        
+        
          </Routes>
       
          </Menu>

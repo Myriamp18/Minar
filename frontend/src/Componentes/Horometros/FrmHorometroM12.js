@@ -40,7 +40,7 @@ function FrmHorometroM12() {
     };
   return (
     <div className="d-flex align-items-center flex-column mt-2">
-    <h1>Insertar Horometro JIGS</h1>
+    <h1>Insertar Horometro Mesa 1y2</h1>
     <div className="close-button" onClick={() => navigate('/hmesa12')}>
       <FontAwesomeIcon icon={faTimes} />
     </div>

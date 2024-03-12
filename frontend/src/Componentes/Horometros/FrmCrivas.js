@@ -39,7 +39,7 @@ function FrmCrivas() {
     return (
         <div className="d-flex align-items-center flex-column mt-2">
             <h1>Insertar Con.Barita</h1>
-            <div className="close-button" onClick={() => navigate('/Horomolinos')}>
+            <div className="close-button" onClick={() => navigate('/crivas')}>
                 <FontAwesomeIcon icon={faTimes} />
             </div>
 

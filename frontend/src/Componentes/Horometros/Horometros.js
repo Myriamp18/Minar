@@ -34,11 +34,11 @@ const onHcriva= () =>{
    navigate('/crivas')
  }
  const onHhorno= () =>{ 
-   navigate('/hhorno')
+   navigate('/horno')
  }
  
  const handelePDF = () =>{
-    navigate('/pdfexistencia')
+    navigate('/pdfhorometro')
   }
       
   return (
