@@ -11,6 +11,7 @@ function Modificarjigsch() {
     const [values, setValues] = useState({
         fecha: "",
         turno: "",
+        horasjch:"",
         alimjch: "",
         peajch: "",
         granojch: "",
@@ -39,7 +40,7 @@ function Modificarjigsch() {
             .then(res => {
                 console.log(res);
                 // Optionally, you can navigate to a different page or update the UI
-                navigate('/diario'); // Example: Navigate to the home page
+                navigate('/djigsch'); // Example: Navigate to the home page
             })
             .catch(err => console.log(err));
     };
@@ -51,6 +52,7 @@ function Modificarjigsch() {
                     ...values,
                     fecha: res.data[0].fecha,
                     turno: res.data[0].turno,
+                    horasjch: res.data[0].horasjch,
                     alimjch: res.data[0].alimjch,
                     peajch: res.data[0].peajch,
                     granojch: res.data[0].granojch,
@@ -75,7 +77,7 @@ function Modificarjigsch() {
     return (
         <div className="d-flex align-items-center flex-column mt-3" >
             <h1>Modificar JIGG´S Chinos</h1>
-            <div className="close-button" onClick={() => navigate('/diario')}>
+            <div className="close-button" onClick={() => navigate('/djigsch')}>
                 <FontAwesomeIcon icon={faTimes} />
             </div>
             <form className="w-50" onSubmit={handleSubmit} >
@@ -119,7 +121,17 @@ function Modificarjigsch() {
                 <div className="columns">
                     <div className="columna">
                         <center>  <label form='text'> JIGG´S Primario</label></center>
+                        <label form='text'> Horas:</label>
+                        <div className="JIGS1">
+                            <input
 
+                                class="form-control"
+                                placeholder="Horas"
+                                name='horasec'
+                                required
+                                value={values.horasjch}
+                                onChange={(e) => setValues({ ...values, horasjch: e.target.value })} />
+                        </div>
                         <label form='text'> Alimentacion:</label>
                         <div className="JIGS1">
                             <input
@@ -219,13 +231,13 @@ function Modificarjigsch() {
                         <label form='text'> Horas:</label>
                         <div className="JIGS1">
                             <input
-                           
-                            class="form-control"
-                            placeholder="Horas"
-                            name='horasec'
-                            required
-                            value={values.horasec}
-                            onChange={(e) => setValues({ ...values, horasec: e.target.value })} />
+
+                                class="form-control"
+                                placeholder="Horas"
+                                name='horasec'
+                                required
+                                value={values.horasec}
+                                onChange={(e) => setValues({ ...values, horasec: e.target.value })} />
                         </div>
                         <div className="JIGS1">
 
@@ -302,7 +314,7 @@ function Modificarjigsch() {
                 </div>
 
 
-                <div className="btn-container">
+                <div className="btn-containerjs">
                     <button type="submit" className="BTN"  >MODIFICAR</button>
                 </div>
 

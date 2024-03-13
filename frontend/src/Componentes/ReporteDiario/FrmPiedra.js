@@ -1,13 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios'
 import './FrmReporte.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
-function Modificargrano() {
-    const { id } = useParams()
+function FrmPiedra() {
     const [values, setValues] = useState({
         fecha: "",
         turno: "",
@@ -40,70 +39,28 @@ function Modificargrano() {
         amedio34: "",
         adesensolve: "",
         acolas: "",
+
+
+
     })
 
     const navigate = useNavigate()
 
-
-
     const handleSubmit = (e) => {
         e.preventDefault()
-        axios.put(`http://localhost:8081/updategranoseleccion/${id}`, values)
-
+        axios.post('http://localhost:8081/createrreportegrano', values)
             .then(res => {
                 console.log(res);
+
                 // Optionally, you can navigate to a different page or update the UI
                 navigate('/dseleccion'); // Example: Navigate to the home page
             })
             .catch(err => console.log(err));
+
     };
-    useEffect(() => {
-        axios.get(`http://localhost:8081/getrecorgrano/` + id)
-            .then((res) => {
-
-                setValues({
-                    ...values,
-                    fecha: res.data[0].fecha,
-                    turno: res.data[0].turno,
-                    alimgrano: res.data[0].alimgrano,
-                    peag: res.data[0].peag,
-                    concgrano: res.data[0].concgrano,
-                    pecng: res.data[0].pecng,
-                    colasgrano: res.data[0].colasgrano,
-                    pecg: res.data[0].pecg,
-                    tonpiedra: res.data[0].tonpiedra,
-                    petp: res.data[0].petp,
-                    tolvageneral: res.data[0].tolvageneral,
-                    medio3y4: res.data[0].medio3y4,
-                    minale: res.data[0].minale,
-                    minals: res.data[0].minals,
-                    patiols: res.data[0].patiols,
-                    desensolve: res.data[0].desensolve,
-                    colas: res.data[0].colas,
-                    pemle: res.data[0].pemle,
-                    pemls: res.data[0].pemls,
-                    peple: res.data[0].peple,
-                    pepls: res.data[0].pepls,
-                    psm34: res.data[0].psm34,
-                    pedese: res.data[0].pedese,
-                    pecolas: res.data[0].pecolas,
-                    aminale: res.data[0].aminale,
-                    aminals: res.data[0].aminals,
-                    apatiole: res.data[0].apatiole,
-                    apatiols: res.data[0].apatiols,
-                    amedio34: res.data[0].amedio34,
-                    adesensolve: res.data[0].adesensolve,
-                    acolas: res.data[0].acolas,
-                });
-
-            })
-            .catch(err => console.log(err));
-    }, []);
-
-
-    return (
-        <div className="d-flex align-items-center flex-column mt-3" >
-            <center><h1>Modificar Seleccion</h1></center>
+  return (
+    <div className="d-flex align-items-center flex-column mt-3" >
+            <center><h1>Insertar Seleccion</h1></center>
             <div className="close-button" onClick={() => navigate('/dseleccion')}>
             <FontAwesomeIcon icon={faTimes} />
             </div>
@@ -547,7 +504,7 @@ function Modificargrano() {
 
 
                 <div className="btn-container">
-                    <button type="submit" className="BTN"  >MODIFICAR</button>
+                    <button type="submit" className="BTN"  >GUARDAR</button>
                 </div>
 
 
@@ -559,7 +516,7 @@ function Modificargrano() {
 
 
         </div>
-    )
+  )
 }
 
-export default Modificargrano
+export default FrmPiedra

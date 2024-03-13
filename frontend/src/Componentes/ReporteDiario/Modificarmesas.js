@@ -11,6 +11,7 @@ function Modificarmesas() {
     const [values, setValues] = useState({
         fecha: "",
         turno: "",
+        seleccion:"",
         //////Mesas///
         alimm12: "",
         peam12: "",
@@ -60,7 +61,7 @@ function Modificarmesas() {
             .then(res => {
                 console.log(res);
                 // Optionally, you can navigate to a different page or update the UI
-                navigate('/diario'); // Example: Navigate to the home page
+                navigate('/dmesas'); // Example: Navigate to the home page
             })
             .catch(err => console.log(err));
     };
@@ -72,6 +73,7 @@ function Modificarmesas() {
                     ...values,
                     fecha: res.data[0].fecha,
                     turno: res.data[0].turno,
+                    seleccion: res.data[0].seleccion,
                     //////Mesas///
                     alimm12: res.data[0].alimm12,
                     peam12: res.data[0].peam12,
@@ -116,8 +118,8 @@ function Modificarmesas() {
     return (
         <div className="d-flex align-items-center flex-column mt-3" >
             <center><h1>Modificar Mesas</h1></center>
-            <div className="close-button" onClick={() => navigate('/diario')}>
-            <FontAwesomeIcon icon={faTimes} />
+            <div className="close-button" onClick={() => navigate('/dmesas')}>
+                <FontAwesomeIcon icon={faTimes} />
             </div>
             <form className="w-50" onSubmit={handleSubmit} >
 
@@ -136,6 +138,23 @@ function Modificarmesas() {
                             value={values.fecha}
                             onChange={(e) => setValues({ ...values, fecha: e.target.value })}
                         />
+                    </div>
+
+                    <div className="JIGS1">
+                        <label>Seleccion:</label>
+                        <select
+                            id="seleccion"
+                            name="seleccion"
+                            class="form-control"
+                            required
+                            value={values.seleccion}
+                            onChange={(e) => setValues({ ...values, seleccion: e.target.value })} >
+                            <option value="1">si</option>
+                            <option value="2">no</option>
+
+
+                        </select>
+
                     </div>
 
                     <div className="JIGS1">

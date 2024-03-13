@@ -1,30 +1,29 @@
+/* Common styles */
 .columns {
   display: flex;
   justify-content: space-between;
   margin-bottom: 5px;
   overflow-x: auto;
-  
 }
-.JIGS input{
+
+.JIGS input {
   width: 100%;
   padding: 2px;
   box-sizing: border-box;
   border: 1px solid #141313;
   border-radius: 4px;
- 
 }
 
 .JIGS1 {
-  
   margin-bottom: 2px;
- 
 }
 
-.mmm{
+.mmm {
   display: flex;
   justify-content: space-between;
 }
-.mmm input{
+
+.mmm input {
   width: 100%;
   padding: 2px;
   box-sizing: border-box;
@@ -32,19 +31,18 @@
   border-radius: 4px;
   margin-bottom: 5px;
 }
+
 .columna {
-  flex:1;
   margin-right: 10px;
 }
-.columnas{
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 5px;
-}
-
 
 .btn-container {
   margin-top: -5px;
+}
+
+.btn-containerjs {
+  margin-top: -50px;
+  margin-left: 63%;
 }
 
 .BTN {
@@ -56,7 +54,6 @@
   font-size: 16px;
 }
 
-/* Additional styling for form elements */
 form {
   display: flex;
   flex-direction: column;
@@ -74,17 +71,17 @@ label {
   font-weight: bold;
   color: #f80505;
 }
-.columna input{
+
+.columna input {
   width: auto;
   padding: 2px;
   box-sizing: border-box;
   border: 1px solid #251f8c;
   border-radius: 4px;
-    
   margin-bottom: 5px;
-
 }
-.medios{
+
+.medios {
   display: flex;
   justify-content: space-between;
   margin-bottom: 5px;
@@ -96,7 +93,6 @@ label {
   box-sizing: border-box;
   border: 1px solid #bd3131;
   border-radius: 4px;
-    
 }
 
 .close-button {
@@ -104,13 +100,26 @@ label {
   top: 10px;
   right: 18%;
   cursor: pointer;
-  color: #333; /* color del ícono */
-  font-size: 1.5rem; /* tamaño del ícono */
+  color: #333;
+  font-size: 1.5rem;
 }
 
 .close-button:hover {
-  color: red; /* color del ícono al pasar el mouse sobre él */
+  color: red;
 }
-/* Add more specific styles for different input types if needed */
 
-/* You may also add more specific styles for different sections, labels, and inputs as needed. */
+/* Responsive Styles */
+@media screen and (max-width: 768px) {
+  .btn-containerjs {
+    margin-left: 50%;
+  }
+  h1{
+    margin-left: 5px;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .close-button {
+    right: 10px;
+  }
+}

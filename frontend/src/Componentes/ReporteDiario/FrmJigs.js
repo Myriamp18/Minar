@@ -1,16 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios'
-import './FrmReporte.css'
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
-function Modificarjigs() {
-    const { id } = useParams()
+function FrmJigs() {
     const [values, setValues] = useState({
         fecha: "",
-        turno: "",
+        turno: "1",
         alimj1: "",
         peaj1: "",
         granoj1: "",
@@ -27,98 +26,70 @@ function Modificarjigs() {
         pecj2: "",
         desenj2: "",
         pedj2: "",
+
+
+
     })
 
     const navigate = useNavigate()
 
-
-
     const handleSubmit = (e) => {
         e.preventDefault()
-        axios.put(`http://localhost:8081/updatejigs/${id}`, values)
-
+        axios.post('http://localhost:8081/createrreportejigs', values)
             .then(res => {
                 console.log(res);
+
                 // Optionally, you can navigate to a different page or update the UI
                 navigate('/djigss'); // Example: Navigate to the home page
             })
             .catch(err => console.log(err));
+
     };
-    useEffect(() => {
-        axios.get(`http://localhost:8081/getrecorjigs/` + id)
-            .then((res) => {
-
-                setValues({
-                    ...values,
-                    fecha: res.data[0].fecha,
-                    turno: res.data[0].turno,
-                    alimj1: res.data[0].alimj1,
-                    peaj1: res.data[0].peaj1,
-                    granoj1: res.data[0].granoj1,
-                    pegj1: res.data[0].peaj1,
-                    colasj1: res.data[0].colasj1,
-                    pecj1: res.data[0].pecj1,
-                    desenj1: res.data[0].desenj1,
-                    pedj1: res.data[0].pedj1,
-                    alimj2: res.data[0].alimj2,
-                    peaj2: res.data[0].peaj2,
-                    granoj2: res.data[0].granoj2,
-                    pegj2: res.data[0].peaj2,
-                    colasj2: res.data[0].colasj2,
-                    pecj2: res.data[0].pecj2,
-                    desenj2: res.data[0].desenj2,
-                    pedj2: res.data[0].pedj2,
-                });
-
-            })
-            .catch(err => console.log(err));
-    }, []);
-
     return (
         <div className="d-flex align-items-center flex-column mt-3" >
-            <h1>Modificar JIGG´S</h1>
+            <h1>Insertar JIGG´S</h1>
             <div className="close-button" onClick={() => navigate('/djigss')}>
-            <FontAwesomeIcon icon={faTimes} />
+                <FontAwesomeIcon icon={faTimes} />
             </div>
             <form className="w-50" onSubmit={handleSubmit} >
 
-            <div className='mmm'>
+                <div className='mmm'>
 
-                        <div className="JIGS1">
+                    <div className="JIGS1">
 
-                            <label form='fecha' > Fecha:</label>
-                            <input
-                                type="date"
-                                class="form-control"
-                                id='date'
-                                placeholder='Insertar Cantidad'
-                                name='fecha'
-                                required
-                                value={values.fecha}
-                                onChange={(e) => setValues({ ...values, fecha: e.target.value })}
-                            />
-                        </div>
+                        <label form='fecha' > Fecha:</label>
+                        <input
+                            type="date"
+                            class="form-control"
+                            id='date'
+                            placeholder='Insertar Cantidad'
+                            name='fecha'
+                            required
+                            value={values.fecha}
+                            onChange={(e) => setValues({ ...values, fecha: e.target.value })}
+                        />
+                    </div>
 
-                        <div className="JIGS1">
-                            <label>Turno:</label>
-                            <select
-                                id="seleccion"
-                                name="seleccion"
-                                required
-                                class="form-control"
-                                value={values.turno}
-                                onChange={(e) => setValues({ ...values, turno: e.target.value })} >
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
+                    <div className="JIGS1">
+                        <label>Turno:</label>
+                        <select
+                            id="seleccion"
+                            name="seleccion"
+                            required
+                            class="form-control"
+                            value={values.turno}
+                            onChange={(e) => setValues({ ...values, turno: e.target.value })} >
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
 
-                            </select>
+                        </select>
 
-                        </div>
-                        </div>
-                        <div className="columns">
+                    </div>
+                </div>
+                <div className="columns">
                     <div className="columna">
-                  <center>  <label form='text'> JIGG´S1</label></center>
+                        <center>  <label form='text'> JIGG´S1</label></center>
 
 
                         <div className="JIGS1">
@@ -215,7 +186,7 @@ function Modificarjigs() {
 
 
                     <div className="columna">
-                    <center>  <label form='text'> JIGG´S2</label></center>
+                        <center>  <label form='text'> JIGG´S2</label></center>
                         <div className="JIGS1">
                             <label form='text' > Alimentacion</label>
 
@@ -326,8 +297,6 @@ function Modificarjigs() {
 
         </div>
     )
-
-
 }
 
-export default Modificarjigs
+export default FrmJigs

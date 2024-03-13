@@ -390,21 +390,21 @@ app.get('/reportediario', (req, res) => {
     });
 });
 app.get('/reportediariojch', (req, res) => {
-    const sql = "SELECT * FROM jigschinos ORDER BY id DESC LIMIT 3;";
+    const sql = "SELECT * FROM jigschinos ORDER BY id DESC;";
     db.query(sql, (err, data) => {
         if (err) return res.json(err);
         return res.json(data);
     });
 });
 app.get('/reportediariomesas', (req, res) => {
-    const sql = "SELECT * FROM mesas ORDER BY id DESC LIMIT 3";
+    const sql = "SELECT * FROM mesas ORDER BY id DESC";
     db.query(sql, (err, data) => {
         if (err) return res.json(err);
         return res.json(data);
     });
 });
 app.get('/reportediariograno', (req, res) => {
-    const sql = "SELECT * FROM prodseleccion ORDER BY id DESC LIMIT 3";
+    const sql = "SELECT * FROM prodseleccion ORDER BY id DESC";
     db.query(sql, (err, data) => {
         if (err) return res.json(err);
         return res.json(data);
@@ -454,10 +454,11 @@ app.post('/createrreportejigsch', (req, res) => {
     req.body.colasjsec = req.body.colasjsec - (req.body.colasjsec * 0.109);
     req.body.desenjch = req.body.desenjch - (req.body.desenjch * 0.108);
     req.body.concjsec = req.body.concjsec - (req.body.concjsec * 0.14);
-    const sql = "INSERT INTO jigschinos (fecha, turno, alimjch, peajch, granojch, pegjch, colasjch, pecjch, desenjch, pedjch, horasec, alimjsec, peajsec, concjsec, pecojsec, colasjsec, pecjsec) VALUES (?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?)";
+    const sql = "INSERT INTO jigschinos (fecha, turno,horasjch, alimjch, peajch, granojch, pegjch, colasjch, pecjch, desenjch, pedjch, horasec, alimjsec, peajsec, concjsec, pecojsec, colasjsec, pecjsec) VALUES (?,?, ?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?)";
     const values = [
         req.body.fecha,
         req.body.turno,
+        req.body.horasjch,
         req.body.alimjch,
         req.body.peajch,
         req.body.granojch,
@@ -486,7 +487,7 @@ app.post('/createrreportemesas', (req, res) => {
     req.body.conm5 = req.body.conm5 - (req.body.conm5 * 0.14);
     req.body.conm6 = req.body.conm6 - (req.body.conm6 * 0.14);
 
-    req.body.mediom12 = req.body.medio3y4 - (req.body.medio3y4 * 0.089);
+    req.body.mediom12 = req.body.mediom12- (req.body.mediom12 * 0.089);
     req.body.mediosm34 = req.body.mediosm34 - (req.body.mediosm34 * 0.089);
     req.body.mediosm5 = req.body.mediosm5 - (req.body.mediosm5 * 0.089);
     req.body.mediosm6 = req.body.mediosm6 - (req.body.mediosm6 * 0.089);
@@ -497,10 +498,11 @@ app.post('/createrreportemesas', (req, res) => {
     req.body.colasm6 = req.body.colasm6 - (req.body.colasm6 * 0.109);
 
 
-    const sql = "INSERT INTO mesas (fecha, turno, alimm12, peam12, conm12, pecnm12, mediom12, pemm12, colasm12, pecm12, alimm34, peam34, conm34, pecnm34, mediosm34, pemm34, colasm34, pecm34, alimm5, peam5, conm5, pecnm5, mediosm5, pemm5, colasm5, pecm5, alimm6, peam6, conm6, pecnm6, mediom6, pemm6, colasm6, pecm6) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?,?)";
+    const sql = "INSERT INTO mesas (fecha, turno, seleccion,alimm12, peam12, conm12, pecnm12, mediom12, pemm12, colasm12, pecm12, alimm34, peam34, conm34, pecnm34, mediosm34, pemm34, colasm34, pecm34, alimm5, peam5, conm5, pecnm5, mediosm5, pemm5, colasm5, pecm5, alimm6, peam6, conm6, pecnm6, mediom6, pemm6, colasm6, pecm6) VALUES (?, ?, ?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?,?)";
     const values = [
         req.body.fecha,
         req.body.turno,
+        req.body.seleccion,
         req.body.alimm12,
         req.body.peam12,
         req.body.conm12,
@@ -700,10 +702,11 @@ app.put('/updatejigs/:id', (req, res) => {
     });
 });
 app.put('/updatejigsch/:id', (req, res) => {
-    const sql = "UPDATE jigschinos  SET fecha = ?, turno = ?, alimjch = ?, peajch =?, granojch =?, pegjch=?, colasjch=?, pecjch=?, desenjch=?, pedjch=?, horasec = ?,alimjsec=?, peajsec=?, concjsec=?, pecojsec=?, colasjsec=?, pecjsec=? WHERE id = ?";
+    const sql = "UPDATE jigschinos  SET fecha = ?, turno = ?, horasjch=?,alimjch = ?, peajch =?, granojch =?, pegjch=?, colasjch=?, pecjch=?, desenjch=?, pedjch=?, horasec = ?,alimjsec=?, peajsec=?, concjsec=?, pecojsec=?, colasjsec=?, pecjsec=? WHERE id = ?";
     const values = [
         req.body.fecha,
         req.body.turno,
+        req.body.horasjch,
         req.body.alimjch,
         req.body.peajch,
         req.body.granojch,
@@ -728,10 +731,11 @@ app.put('/updatejigsch/:id', (req, res) => {
     });
 });
 app.put('/updatemesas/:id', (req, res) => {
-    const sql = "UPDATE mesas SET fecha=?, turno=?, alimm12=?, peam12=?, conm12=?, pecnm12=?, mediom12=?, pemm12=?, colasm12=?, pecm12=?, alimm34=?, peam34=?, conm34=?, pecnm34=?, mediosm34=?, pemm34=?, colasm34=?, pecm34=?, alimm5=?, peam5=?, conm5=?, pecnm5=?, mediosm5=?, pemm5=?, colasm5=?, pecm5=?, alimm6=?, peam6=?, conm6=?, pecnm6=?, mediom6=?, pemm6=?, colasm6=?, pecm6=? WHERE id = ?";
+    const sql = "UPDATE mesas SET fecha=?, turno=?,seleccion=?, alimm12=?, peam12=?, conm12=?, pecnm12=?, mediom12=?, pemm12=?, colasm12=?, pecm12=?, alimm34=?, peam34=?, conm34=?, pecnm34=?, mediosm34=?, pemm34=?, colasm34=?, pecm34=?, alimm5=?, peam5=?, conm5=?, pecnm5=?, mediosm5=?, pemm5=?, colasm5=?, pecm5=?, alimm6=?, peam6=?, conm6=?, pecnm6=?, mediom6=?, pemm6=?, colasm6=?, pecm6=? WHERE id = ?";
     const values = [
         req.body.fecha,
         req.body.turno,
+        req.body.seleccion,
         req.body.alimm12,
         req.body.peam12,
         req.body.conm12,

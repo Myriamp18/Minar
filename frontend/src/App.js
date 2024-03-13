@@ -18,8 +18,7 @@ import Menu from './Componentes/Menu'
 import Silos from './Componentes/Silos/Silos';
 import Seleccion from './Componentes/Seleccion/Seleccion';
 import GranoBandas from './Componentes/GranoBandas/GranoBandas';
-import ReporteDiario from './Componentes/ReporteDiario/ReporteDiario'
-import FrmReporte from './Componentes/ReporteDiario/FrmReporte'
+
 import ReporteExistencia from './Componentes/ReporteExistencia/ReporteExistencia ';
 import Pdf from './Componentes/ReporteDiario/Pdf';
 import Modificarjigs from './Componentes/ReporteDiario/Modificarjigs';
@@ -145,6 +144,15 @@ import Horno from './Componentes/Horometros/Horno';
 import FrmHorno from './Componentes/Horometros/FrmHorno';
 import ModificarHorno from './Componentes/Horometros/ModificarHorno';
 import PdfHorometro from './Componentes/Horometros/PdfHorometro';
+import Diario from './Componentes/ReporteDiario/Diario';
+import Jigs from './Componentes/ReporteDiario/Jigs';
+import FrmJigs from './Componentes/ReporteDiario/FrmJigs';
+import JigsCh from './Componentes/ReporteDiario/JigsCh';
+import FrmJigsch from './Componentes/ReporteDiario/FrmJigsch';
+import Mesas from './Componentes/ReporteDiario/Mesas';
+import FrmMesas from './Componentes/ReporteDiario/FrmMesas';
+import Piedra from './Componentes/ReporteDiario/Piedra';
+import FrmPiedra from './Componentes/ReporteDiario/FrmPiedra';
 
 function App() {
   
@@ -157,7 +165,15 @@ function App() {
             
            
                <Route path="/Inicio" element={<Inicio />} />
-               <Route path="/diario" element={<ReporteDiario />} />
+               <Route path="/diario" element={<Diario />} />
+               <Route path="/djigss" element={<Jigs />} />
+               <Route path="/createdjigss" element={<FrmJigs />} />
+               <Route path="/djigsch" element={<JigsCh />} />
+               <Route path="/createdjigsch" element={<FrmJigsch />} />
+               <Route path="/dmesas" element={<Mesas />} />
+               <Route path="/createdmesas" element={<FrmMesas />} />
+               <Route path="/dseleccion" element={<Piedra/>} />
+               <Route path="/createdseleccion" element={<FrmPiedra/>} />
                <Route path="/pdfdiario" element={<Pdf />} />
                <Route path="/excel" element={<Excel />} />
             /////////SILOS///////
@@ -184,7 +200,7 @@ function App() {
                <Route path="/concpmoler" element={<ConcPMoler />} />
 
        //////////REPORTESDIARIOS//////////7
-               <Route path="/createreportediario" element={<FrmReporte />} />
+              
                <Route path="/updatejigs/:id" element={<Modificarjigs />} />
                <Route path="/updatejigsch/:id" element={<Modificarjigsch />} />
                <Route path="/updatemesas/:id" element={<Modificarmesas />} />
