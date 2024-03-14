@@ -39,11 +39,13 @@ function Menu({children}) {
             name:"Reporte Produccion",
             icon:<GiNotebook />
         },
+       
         {
-            path:"/createusuario",
-            name:"Agregar Usuario",
+            path:"/usuarios",
+            name:"Usuarios",
             icon:<FaUserCircle />
         },
+      
       
       
        

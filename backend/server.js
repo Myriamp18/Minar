@@ -23,14 +23,22 @@ app.listen(8081, () => {
 });
 
 ////////////USUARIOs////////////////////////
+app.get('/usuarios', (req, res) => {
+    const sql = "SELECT * FROM usuarios ORDER BY id_usuarios DESC";
+    db.query(sql, (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+});
 app.post('/createusuarios', (req, res) => {
-    const sql = "INSERT INTO usuarios (nombrecompleto, telefono, cargo, nombreusuario, contra) VALUES (?, ?, ?, ?, ?)";
+    const sql = "INSERT INTO usuarios (nombrecompleto, telefono, cargo, nombreusuario, contra,codif) VALUES (?, ?, ?, ?, ?,?)";
     const values = [
         req.body.nombrecompleto,
         req.body.telefono,
         req.body.cargo,
         req.body.nombreusuario,
-        req.body.contra
+        req.body.contra,
+        req.body.codif
 
     ];
     db.query(sql, values, (err, data) => {
@@ -38,7 +46,14 @@ app.post('/createusuarios', (req, res) => {
         return res.json(data);
     });
 });
-
+app.delete('/deleteusuarios/:id', (req, res) => {
+    const sql = "DELETE FROM usuarios WHERE id_usuarios = ?";
+    const id = req.params.id;
+    db.query(sql, [id], (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+});
 app.post('/login', (req, res) => {
     const { nombreusuario, contra } = req.body;
 

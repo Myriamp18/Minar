@@ -153,6 +153,7 @@ import Mesas from './Componentes/ReporteDiario/Mesas';
 import FrmMesas from './Componentes/ReporteDiario/FrmMesas';
 import Piedra from './Componentes/ReporteDiario/Piedra';
 import FrmPiedra from './Componentes/ReporteDiario/FrmPiedra';
+import Usuarios from './Componentes/Usuarios/Usuarios';
 
 function App() {
   
@@ -183,6 +184,7 @@ function App() {
 
               ////USUARIO/////////
                <Route path="/createusuario" element={<InsertarUsuario />} />
+               <Route path="/usuarios" element={<Usuarios />} />
 
        /////////GRANOBANDAS/////
                <Route path="/creategrano" element={<FrmBandas />} />

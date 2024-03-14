@@ -15,7 +15,8 @@ function InsertarUsuario() {
         telefono: "",
         cargo: "",
         nombreusuario: "",
-        contra: ""
+        contra: "",
+        codif:""
     
       })
 
@@ -105,6 +106,16 @@ function InsertarUsuario() {
                                 name='contra'
                                 required
                                 onChange={(e) => setValues({...values, contra: e.target.value})}
+
+                            />
+                        </div>
+                        <div className="inputregistro">
+                        <img src={Contra_L} alt='contraseñalogin' />
+                            <input type="password"
+                                placeholder='Codif'
+                                name='contra'
+                                required
+                                onChange={(e) => setValues({...values, codif: e.target.value})}
 
                             />
                         </div>
