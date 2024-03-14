@@ -993,6 +993,15 @@ app.get('/concentradobaribaright', (req, res) => {
 });
 app.post('/createconcentradobaribaright', async (req, res) => {
     try {
+
+        const totalConcentradoBari = await new Promise((resolve, reject) => {
+            const query = "SELECT SUM(COALESCE(conm12, 0)) + SUM(COALESCE(conm34, 0)) + SUM(COALESCE(conm5, 0)) + SUM(COALESCE(conm6, 0)) AS total_concentrado FROM mesas WHERE fecha = ? AND seleccion = '1';";
+            db.query(query, [req.body.fecha], (err, data) => {
+                if (err) reject(err);
+                else resolve(data[0].total_concentrado || 0); // Si no se encuentra ningún valor, devuelve 0
+            });
+        });
+        
         // Obtener el saldo anterior
         const saldoAnteriorData = await new Promise((resolve, reject) => {
             db.query("SELECT saldo FROM concentradobaribaright ORDER BY id DESC LIMIT 1", (err, data) => {
@@ -1005,13 +1014,13 @@ app.post('/createconcentradobaribaright', async (req, res) => {
         const saldoAnterior = saldoAnteriorData.length > 0 ? saldoAnteriorData[0].saldo : 0;
 
         // Calcula el nuevo saldo sumando el saldo anterior a las entradas y restando las salidas
-        const nuevoSaldo = saldoAnterior + parseFloat(req.body.entradas) - parseFloat(req.body.salidas);
+        const nuevoSaldo = saldoAnterior + parseFloat(totalConcentradoBari) - parseFloat(req.body.salidas);
 
         // Realiza la inserción con el nuevo saldo
         const sql = "INSERT INTO concentradobaribaright (fecha, entradas, salidas, pe, saldo) VALUES (?, ?, ?, ?, ?)";
         const values = [
             req.body.fecha,
-            req.body.entradas,
+            totalConcentradoBari,
             req.body.salidas,
             req.body.pe,
             nuevoSaldo
@@ -1110,12 +1119,11 @@ app.get('/concmesas', (req, res) => {
 });
 app.post('/createconcmesas', async (req, res) => {
     try {
-        //Obtener el total concentrado de las mesas para la fecha especificada
         const totalConcentradoMesas = await new Promise((resolve, reject) => {
-            const query = "SELECT (SUM(conm12) + SUM(conm34) + SUM(conm5) + SUM(conm6)) AS total_concentrado FROM mesas WHERE fecha = ?;";
+            const query = "SELECT SUM(COALESCE(conm12, 0)) + SUM(COALESCE(conm34, 0)) + SUM(COALESCE(conm5, 0)) + SUM(COALESCE(conm6, 0)) AS total_concentrado FROM mesas WHERE fecha = ? AND seleccion = '2';";
             db.query(query, [req.body.fecha], (err, data) => {
                 if (err) reject(err);
-                else resolve(data[0].total_concentrado); // Obtenemos el total concentrado de la primera fila
+                else resolve(data[0].total_concentrado || 0); // Si no se encuentra ningún valor, devuelve 0
             });
         });
         const totalSalidasMesas = await new Promise((resolve, reject) => {

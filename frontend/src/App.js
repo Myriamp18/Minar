@@ -225,7 +225,7 @@ function App() {
          ///////////////////concentradobaribright///
                <Route path="/concentradobaribright" element={<ConcBaribright />} />
                <Route path="/createconcentradobaribaright" element={<FrmConcBaribright />} />
-               <Route path="/updateconcentradobaribright/:id" element={<ModificarConcBaribrigjt />} />
+               <Route path="/updateconcentradobaribaright/:id" element={<ModificarConcBaribrigjt />} />
 
           ////////////////////////////MOLIENDA//////
                <Route path="/molienda" element={<Molienda />} />
