@@ -40,9 +40,9 @@
     border: none;
     border-radius: 2px;
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: 0.3s;
     position: relative;
-    background-color:#f1f0d7;
+    background-color:#fff;
     color: #03122b;
   }
   .btnh-large:hover {
