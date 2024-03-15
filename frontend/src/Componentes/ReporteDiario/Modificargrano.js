@@ -10,7 +10,7 @@ function Modificargrano() {
     const { id } = useParams()
     const [values, setValues] = useState({
         fecha: "",
-        turno: "",
+        turno: "1",
         alimgrano: "",
         peag: "",
         concgrano: "",

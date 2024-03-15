@@ -9,7 +9,7 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons';
 function FrmPiedra() {
     const [values, setValues] = useState({
         fecha: "",
-        turno: "",
+        turno: "1",
         alimgrano: "",
         peag: "",
         concgrano: "",

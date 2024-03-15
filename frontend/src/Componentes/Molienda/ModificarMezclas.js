@@ -18,6 +18,8 @@ function ModificarMezclas() {
     pejig: "",
     desenslovez: "",
     pedese: "",
+    pmlt:"",
+    pmle:"",
     pemt: "",
     otrassalidas:"",
 
@@ -44,6 +46,7 @@ function ModificarMezclas() {
         setValues({
           ...values,
           fecha: res.data[0].fecha,
+          turno: res.data[0].turno,
           concmesas: res.data[0].concmesas,
           pecm: res.data[0].pecm,
           medios: res.data[0].medios,
@@ -52,7 +55,9 @@ function ModificarMezclas() {
           pejig: res.data[0].pejig,
           desenslovez: res.data[0].desenslovez,
           pedese: res.data[0].pedese,
+          pmle: res.data[0].pmle,
           pemt: res.data[0].pemt,
+          pmlt: res.data[0]. pmlt,
           otrassalidas: res.data[0].otrassalidas,
         });
 
@@ -101,33 +106,33 @@ function ModificarMezclas() {
         </div>
 
         <div className='silos'>
-          <div class="mb-3 ">
+          <div class="mb-2 ">
             <label form='text' class="form-label"> Con.Mesas:</label>
             <input
               type="text"
               class="form-control"
               id='concmesas'
               required
+              value={values.concmesas}
               placeholder='Insertar Cantidad'
               name='concmesas'
-              value={values.concmesas}
               onChange={(e) => setValues({ ...values, concmesas: e.target.value })} />
           </div>
-          <div class="mb-3">
-            <label form='text' class="form-label"> P.ESP:</label>
+          <div class="mb-2">
+            <label form='text' class="form-label"> DE:</label>
             <input
               type="text"
               class="form-control"
               id='pecm'
+              placeholder='De'
               required
-              placeholder='Insertar P.ESP'
               name='pecm'
               value={values.pecm}
               onChange={(e) => setValues({ ...values, pecm: e.target.value })} />
           </div>
         </div>
         <div className='silos'>
-          <div class="mb-3">
+          <div class="mb-2">
             <label form='text' class="form-label"> Medios:</label>
             <input
               type="text"
@@ -139,100 +144,130 @@ function ModificarMezclas() {
               value={values.medios}
               onChange={(e) => setValues({ ...values, medios: e.target.value })} />
           </div>
-          <div class="mb-3">
-            <label form='text' class="form-label"> P.ESP:</label>
+          <div class="mb-2">
+            <label form='text' class="form-label"> DE:</label>
             <input
               type="text"
               class="form-control"
               id='pem'
               required
-              placeholder='Insertar P.ESP'
+              placeholder='De'
               name='pem'
               value={values.pem}
               onChange={(e) => setValues({ ...values, pem: e.target.value })} />
           </div>
         </div>
         <div className='silos'>
-          <div class="mb-3">
+          <div class="mb-2">
             <label form='text' class="form-label"> Conc.Jigs:</label>
             <input
               type="text"
               class="form-control"
+              required
               id='concjigs'
               placeholder='Insertar Cantidad'
               name='concjigs'
-              required
               value={values.concjigs}
               onChange={(e) => setValues({ ...values, concjigs: e.target.value })} />
           </div>
-          <div class="mb-3">
-            <label form='text' class="form-label"> P.ESP:</label>
+          <div class="mb-2">
+            <label form='text' class="form-label"> DE:</label>
             <input
               type="text"
               class="form-control"
-              id='pejig'
-              placeholder='Insertar P.ESP'
-              name='pejig'
               required
+              id='pejig'
+              placeholder='De'
+              name='pejig'
               value={values.pejig}
               onChange={(e) => setValues({ ...values, pejig: e.target.value })} />
           </div>
         </div>
         <div className='silos'>
-          <div class="mb-3">
+          <div class="mb-2">
             <label form='text' class="form-label"> Desensolvez:</label>
             <input
               type="text"
               class="form-control"
+              required
               id='desenslovez'
               placeholder='Insertar Cantidad'
               name='desenslovez'
-              required
               value={values.desenslovez}
               onChange={(e) => setValues({ ...values, desenslovez: e.target.value })} />
           </div>
-          <div class="mb-3">
-            <label form='text' class="form-label"> P.ESP:</label>
+          <div class="mb-2">
+            <label form='text' class="form-label"> DE:</label>
             <input
               type="text"
               class="form-control"
-              id='pedese'
-              placeholder='Insertar P.ESP'
-              name='pedese'
               required
+              id='pedese'
+              placeholder='De'
+              name='pedese'
               value={values.pedese}
               onChange={(e) => setValues({ ...values, pedese: e.target.value })} />
           </div>
         </div>
         <div className='silos'>
-         
-          <div class="mb-3">
+       
+          <div class="mb-2">
             <label form='text' class="form-label"> P.ESP:</label>
             <input
               type="text"
               class="form-control"
-              id='pemt'
               required
-              placeholder='Insertar P.ESP'
+              id='pemt'
+              placeholder='P.ESP de Mezcla Total'
               name='pemt'
               value={values.pemt}
               onChange={(e) => setValues({ ...values, pemt: e.target.value })} />
           </div>
-          <div class="mb-3">
-            <label form='text' class="form-label"> Otras Salidas:</label>
+             
+          <div class="mb-2">
+            <label form='text' class="form-label">Otras Salidas:</label>
             <input
               type="text"
               class="form-control"
-              required
               id='pemt'
-              placeholder='Insertar Salidas'
-              name='pemt'
+              required
+              placeholder='Inserta Salidas Especifica de que son'
+              name='otrassalidas'
               value={values.otrassalidas}
               onChange={(e) => setValues({ ...values, otrassalidas: e.target.value })} />
           </div>
+          </div>
+          <div className='silos'>
+       
+       <div class="mb-2">
+         <label form='text' class="form-label"> Patio MLT:</label>
+         <input
+           type="text"
+           required
+           class="form-control"
+           id='pemt'
+           placeholder='Insertar Cantidad'
+           name='pmlt'
+           value={values.pmlt}
+           onChange={(e) => setValues({ ...values, pmlt: e.target.value })} />
+       </div>
+              
+       <div class="mb-2">
+         <label form='text' class="form-label">Patio MLE:</label>
+         <input
+           type="text"
+           class="form-control"
+           required
+           id='pemt'
+           placeholder='Insertar Cantidad'
+           name='pmle'
+           value={values.pmle}
+           onChange={(e) => setValues({ ...values, pmle: e.target.value })} />
+       </div>
+    
         </div>
         <div className="btn-container">
-          <button type="submit" className="BTN"  >MODIFICAR</button>
+          <button type="submit" className="BTN"  >GUARDAR</button>
         </div>
 
 

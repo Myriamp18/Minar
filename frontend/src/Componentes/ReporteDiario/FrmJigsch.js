@@ -40,7 +40,7 @@ function FrmJigsch() {
                 console.log(res);
 
                 // Optionally, you can navigate to a different page or update the UI
-                navigate('/djigss'); // Example: Navigate to the home page
+                navigate('/djigsch'); // Example: Navigate to the home page
             })
             .catch(err => console.log(err));
 

@@ -58,18 +58,7 @@ function FrmMedios3() {
             />
           </div>
 
-          <div class="mb-3">
-            <label form='text' class="form-label"> Entradas:</label>
-            <input
-             type="text"  
-             class="form-control"
-             id='entradas'
-             required
-             placeholder='Insertar Cantidad'  
-             name='entradas'
-             onChange={(e) => setValues({...values, entradas: e.target.value})}/>
-          </div>
-
+        
         
           <div class="mb-3">
             <label form='text' class="form-label"> Salidas:</label>

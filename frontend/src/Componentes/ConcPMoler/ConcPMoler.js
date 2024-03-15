@@ -4,11 +4,11 @@ import { Link } from 'react-router-dom';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios'
-
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
 function ConcPMoler() {
   const [data, setData] = useState([]);
-  
+  const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
     fetch('http://localhost:8081/concpmoler')
@@ -31,6 +31,9 @@ function ConcPMoler() {
   };
   
   
+  const handleSearch = (event) => {
+    setSearchTerm(event.target.value.toLowerCase());
+  };
 
  
 
@@ -49,6 +52,18 @@ function ConcPMoler() {
           <div className='table-container'> 
             <div className='table-top-scroll'> {/* Nuevo contenedor */}
               <div className='table-responsive'>
+              <div className="input-group">
+                  <input
+                    type='text'
+                    className='form-control'
+                    placeholder='Buscar...'
+                    value={searchTerm}
+                    onChange={handleSearch}
+                  />
+                  <span className="input-group-text">
+                    <FontAwesomeIcon icon={faSearch} />
+                  </span>
+                </div>
             <table className="table table-bordered">
               <thead>
                 <tr  >
@@ -63,7 +78,14 @@ function ConcPMoler() {
                 </tr>
               </thead>
               <tbody className='table-group-divider'>
-               {data.map((d, i) => (
+                    {data
+                      .filter(d => {
+                        // Filtra los datos según el término de búsqueda en cualquier columna
+                        return Object.values(d).some(value =>
+                          value.toString().toLowerCase().includes(searchTerm)
+                        );
+                      })
+                      .map((d, i) => (
                   <tr key={i}>
                     <td>{d.id}</td>
                     <td>{d.fecha}</td>

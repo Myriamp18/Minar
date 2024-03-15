@@ -7,8 +7,12 @@ import axios from 'axios'
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import {useNavigate} from 'react-router-dom'
 
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
+
 function Baritron() {
     const [data, setData] = useState([]);
+    const [searchTerm, setSearchTerm] = useState('');
+
     const navigate = useNavigate()
   
     useEffect(() => {
@@ -29,6 +33,10 @@ function Baritron() {
         })
         .catch(err => console.log(err));
     };
+    const handleSearch = (event) => {
+      setSearchTerm(event.target.value.toLowerCase());
+    };
+  
   return (
     <>
    
@@ -47,7 +55,18 @@ function Baritron() {
              <div className='table-container'>
               <div className='table-top-scroll'> {/* Nuevo contenedor */}
                 <div className='table-responsive'>
- 
+                <div className="input-group">
+                  <input
+                    type='text'
+                    className='form-control'
+                    placeholder='Buscar...'
+                    value={searchTerm}
+                    onChange={handleSearch}
+                  />
+                  <span className="input-group-text">
+                    <FontAwesomeIcon icon={faSearch} />
+                  </span>
+                </div>
                   <table class="table table-bordered">
               <thead>
                 <tr  >
@@ -62,7 +81,14 @@ function Baritron() {
                 </tr>
               </thead>
               <tbody className='table-group-divider'>
-               {data.map((d, i) => (
+                    {data
+                      .filter(d => {
+                        // Filtra los datos según el término de búsqueda en cualquier columna
+                        return Object.values(d).some(value =>
+                          value.toString().toLowerCase().includes(searchTerm)
+                        );
+                      })
+               .map((d, i) => (
                   <tr key={i}>
                     <td>{d.id}</td>
                     <td>{d.fecha}</td>

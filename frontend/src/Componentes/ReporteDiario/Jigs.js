@@ -106,10 +106,11 @@ function Jigs() {
                                                     <td>{typeof d.peaj2 === 'number' ? d.peaj2.toFixed(2) : 'N/A'}</td>
                                                     <td>{typeof d.granoj2 === 'number' ? d.granoj2.toFixed(3) : 'N/A'}</td>
                                                     <td>{typeof d.pegj2 === 'number' ? d.pegj2.toFixed(2) : 'N/A'}</td>
-                                                    <td>{typeof d.colasj2 === 'number' ? d.colasj2.toFixed(3) : 'N/A'}</td>
-                                                    <td>{typeof d.pecj2 === 'number' ? d.pecj2.toFixed(2) : 'N/A'}</td>
                                                     <td>{typeof d.desenj2 === 'number' ? d.desenj2.toFixed(3) : 'N/A'}</td>
                                                     <td>{typeof d.pedj2 === 'number' ? d.pedj2.toFixed(2) : 'N/A'}</td>
+                                                    <td>{typeof d.colasj2 === 'number' ? d.colasj2.toFixed(3) : 'N/A'}</td>
+                                                    <td>{typeof d.pecj2 === 'number' ? d.pecj2.toFixed(2) : 'N/A'}</td>
+                                                  
 
 
 

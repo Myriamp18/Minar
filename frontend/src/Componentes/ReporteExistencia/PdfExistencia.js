@@ -521,8 +521,7 @@ const generateCuartCombinedTable = (doc, notas, title, startY) => {
     const rowData3 = [item.totcolas, "TON DE COLAS PASARON A LAVAR A MESAS"];
     tableRows.push(rowData3);
 
-    const rowData4 = [item.totjigssec , "TON DE MEDIOS PASARON A LAVAR A JIGG´S SECUNDARIO"];
-    tableRows.push(rowData4);
+   
 
     const rowData5 = [item.comentario];
     tableRows.push(rowData5);

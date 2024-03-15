@@ -5,6 +5,10 @@ import {
     FaHome
 }
 from "react-icons/fa"
+import { FaPowerOff } from "react-icons/fa";
+import { MdLibraryBooks } from "react-icons/md";
+import { SlBookOpen } from "react-icons/sl";
+import { HiClipboardDocumentList } from "react-icons/hi2";
 import { GiNotebook } from "react-icons/gi";
 import { FaUserCircle } from "react-icons/fa";
 import { NavLink } from 'react-router-dom'
@@ -27,23 +31,29 @@ function Menu({children}) {
         {
             path:"/molienda",
             name:"Reporte Molienda",
-            icon:<GiNotebook />
+            icon:<HiClipboardDocumentList />
         },
         {
             path:"/existencia",
             name:"Reporte Existencia",
-            icon:<GiNotebook />
+            icon:<SlBookOpen />
         },
         {
             path:"/horometros",
             name:"Reporte Produccion",
-            icon:<GiNotebook />
+            icon:<MdLibraryBooks />
         },
        
         {
             path:"/usuarios",
             name:"Usuarios",
             icon:<FaUserCircle />
+        },
+
+        {
+            path:"/",
+            name:"Cerrar Sesion",
+            icon:<FaPowerOff />
         },
       
       

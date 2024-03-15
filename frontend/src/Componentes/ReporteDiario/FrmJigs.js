@@ -284,7 +284,7 @@ function FrmJigs() {
 
 
                 <div className="btn-container">
-                    <button type="submit" className="BTN"  >MODIFICAR</button>
+                    <button type="submit" className="BTN"  >GUARDAR</button>
                 </div>
 
 

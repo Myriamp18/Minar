@@ -10,7 +10,7 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons';
 function FrmMezclas() {
   const [values, setValues] = useState({
     fecha: '',
-    turno: "1",
+    turno: '1',
     concmesas: "",
     pecm: "",
     medios: "",

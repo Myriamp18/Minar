@@ -231,23 +231,15 @@ app.put('/updateseleccion/:id', async (req, res) => {
             });
         });
 
-        // Obtener el total de entradas para la fecha proporcionada
-        const totalEntradasSelecc = await new Promise((resolve, reject) => {
-            const query = "SELECT IFNULL(SUM(tonpiedra), 0) AS total_entradas FROM prodseleccion WHERE fecha = ?;";
-            db.query(query, [req.body.fecha], (err, data) => {
-                if (err) reject(err);
-                else resolve(data[0].total_entradas); // Si no hay entradas para la fecha, devolver 0
-            });
-        });
-
+        
         // Calcular el nuevo saldo
-        let nuevoSaldo = saldoAnteriorData + parseFloat(totalEntradasSelecc) - parseFloat(req.body.salida);
+        let nuevoSaldo = saldoAnteriorData + parseFloat(req.body.entrada) - parseFloat(req.body.salida);
 
         // Realizar la actualización con el nuevo saldo
         const sql = "UPDATE seleccion SET fecha = ?, entrada = ?, salida = ?, pesp = ?, saldo = ? WHERE id = ?";
         const values = [
             req.body.fecha,
-            totalEntradasSelecc,
+            req.body.entrada,
             req.body.salida,
             req.body.pesp,
             nuevoSaldo,
@@ -431,11 +423,11 @@ app.post('/createrreportejigs', (req, res) => {
     req.body.granoj1 = req.body.granoj1 - (req.body.granoj1 * 0.018);
     req.body.granoj2 = req.body.granoj2 - (req.body.granoj2 * 0.018);
 
-    req.body.colasj1 = req.body.colasj1 - (req.body.colasj1 * 0.109);
-    req.body.colasj2 = req.body.colasj2 - (req.body.colasj2 * 0.109);
+    req.body.colasj1 = req.body.colasj1 - (req.body.colasj1 * 0.108);
+    req.body.colasj2 = req.body.colasj2 - (req.body.colasj2 * 0.108);
 
-    req.body.desenj1 = req.body.desenj1 - (req.body.desenj1 * 0.108);
-    req.body.desenj2 = req.body.desenj2 - (req.body.desenj2 * 0.108);
+    req.body.desenj1 = req.body.desenj1 - (req.body.desenj1 * 0.109);
+    req.body.desenj2 = req.body.desenj2 - (req.body.desenj2 * 0.109);
     const sql = "INSERT INTO produccionjigs (fecha, turno, alimj1, peaj1, granoj1, pegj1, colasj1, pecj1, desenj1, pedj1, alimj2, peaj2, granoj2, pegj2, colasj2, pecj2, desenj2, pedj2) VALUES (?, ?, ?, ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
     const values = [
         req.body.fecha,
@@ -688,7 +680,8 @@ app.get('/getgrano/:fecha', (req, res) => {
 })
 //////////////////////////MODIFICACIONES/////////
 app.put('/updatejigs/:id', (req, res) => {
-    const sql = "UPDATE produccionjigs  SET fecha = ?, turno = ?, alimj1 = ?, peaj1= ?, granoj1 = ?, pegj1 = ?, colasj1 = ?, pecj1 = ?, desenj1 = ?, pedj1 = ?, alimj2 = ?, peaj2 = ?, granoj2 = ?, pegj2 = ?, colasj2 = ?, pecj2 = ?, desenj2 = ?, pedj2 = ? WHERE id = ?";
+     
+    const sql = "UPDATE produccionjigs  SET fecha = ?, turno = ?, alimj1 = ?, peaj1= ?, granoj1 = ?, pegj1 = ?, colasj1 = ?, pecj1 = ?, desenj1 = ?, pedj1 = ?, alimj2 = ?, peaj2 = ?, granoj2 = ?, pegj2 = ?,  desenj2 = ?, pedj2 = ?, colasj2 = ?, pecj2 = ? WHERE id = ?";
     const values = [
         req.body.fecha,
         req.body.turno,
@@ -704,10 +697,11 @@ app.put('/updatejigs/:id', (req, res) => {
         req.body.peaj2,
         req.body.granoj2,
         req.body.pegj2,
+        req.body.desenj2,
+        req.body.pedj2,
         req.body.colasj2,
         req.body.pecj2,
-        req.body.desenj2,
-        req.body.pedj2
+      
 
     ];
     const id = req.params.id;
@@ -1148,33 +1142,9 @@ app.post('/createconcmesas', async (req, res) => {
                 else resolve(data[0].total_salidas); // Obtenemos el total concentrado de la primera fila
             });
         });
-        const totalpe = await new Promise((resolve, reject) => {
-            const query = `
-        SELECT 
-            fecha, 
-            (SUM(pecnm12) + SUM(pecnm34) + SUM(pecnm5) + SUM(pecnm6)) / (COUNT(*) * 3) AS total_promedio
-        FROM 
-            mesas 
-        WHERE 
-            fecha = ? 
-        GROUP BY 
-            fecha;
-    `;
+      
 
-            db.query(query, [req.body.fecha], (err, data) => {
-                if (err) {
-                    reject(err);
-                } else {
-                    if (data.length > 0) {
-                        const totalPromedio = data[0].total_promedio;
-                        resolve(totalPromedio);
-                    } else {
-                        resolve(0); // Si no hay registros para esa fecha, el promedio es 0
-                    }
-                }
-            });
-        });
-
+           
 
 
         // Obtener el saldo anterior
@@ -1198,7 +1168,7 @@ app.post('/createconcmesas', async (req, res) => {
             totalConcentradoMesas,
             totalSalidasMesas,
             nuevoSaldo,
-            totalpe,
+            req.body.pe,
         ];
 
         db.query(sql, values, (err, result) => {
@@ -1605,8 +1575,29 @@ app.get('/medios46', (req, res) => {
 });
 app.post('/createmedios46', async (req, res) => {
     try {
-
-
+        const totalentradas = await new Promise((resolve, reject) => {
+            const query = `
+                SELECT 
+                    COALESCE(SUM(CASE WHEN pemm12 BETWEEN 4.06 AND 4.10 THEN mediom12 ELSE 0 END) +
+                             SUM(CASE WHEN pemm34 BETWEEN 4.06 AND 4.10 THEN mediosm34 ELSE 0 END) +
+                             SUM(CASE WHEN pemm5 BETWEEN 4.06 AND 4.10 THEN mediosm5 ELSE 0 END) +
+                             SUM(CASE WHEN pemm6 BETWEEN 4.06 AND 4.10 THEN mediom6 ELSE 0 END), 0) AS total_entradas
+                FROM mesas
+                WHERE fecha = ?;
+            `;
+        
+            db.query(query, [req.body.fecha], (err, data) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    const total = data[0].total_entradas;
+                    resolve(total);
+                }
+            });
+        });
+        
+        
+        
         // Obtener el saldo anterior
         const saldoAnteriorData = await new Promise((resolve, reject) => {
             db.query("SELECT saldo46 FROM medios46 ORDER BY id DESC LIMIT 1", (err, data) => {
@@ -1619,14 +1610,14 @@ app.post('/createmedios46', async (req, res) => {
         const saldoAnterior = saldoAnteriorData.length > 0 ? saldoAnteriorData[0].saldo46 : 0;
 
         // Calcula el nuevo saldo sumando el saldo anterior a las entradas y restando las salidas
-        const nuevoSaldo = saldoAnterior + parseFloat(req.body.entradasm46) - parseFloat(req.body.salidasm46);
+        const nuevoSaldo = saldoAnterior + parseFloat(totalentradas) - parseFloat(req.body.salidasm46);
 
 
         // Realizar la inserción en la tabla concmesas
         const sql = "INSERT INTO medios46 (fecha, entradasm46, salidasm46, saldo46, pe46) VALUES (?, ?, ?, ?, ?)";
         const values = [
             req.body.fecha,
-            req.body.entradasm46,
+            totalentradas,
             req.body.salidasm46,
             nuevoSaldo,
             req.body.pe46,
@@ -1710,6 +1701,26 @@ app.get('/medios4', (req, res) => {
 app.post('/createmedios4', async (req, res) => {
     try {
 
+        const totalentradas = await new Promise((resolve, reject) => {
+            const query = `
+                SELECT 
+                    COALESCE(SUM(CASE WHEN pemm12 BETWEEN 4.04 AND 4.00 THEN mediom12 ELSE 0 END) +
+                             SUM(CASE WHEN pemm34 BETWEEN 4.04 AND 4.00 THEN mediosm34 ELSE 0 END) +
+                             SUM(CASE WHEN pemm5 BETWEEN 4.04AND 4.00 THEN mediosm5 ELSE 0 END) +
+                             SUM(CASE WHEN pemm6 BETWEEN 4.04 AND 4.00 THEN mediom6 ELSE 0 END), 0) AS total_entradas
+                FROM mesas
+                WHERE fecha = ?;
+            `;
+        
+            db.query(query, [req.body.fecha], (err, data) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    const total = data[0].total_entradas;
+                    resolve(total);
+                }
+            });
+        });
 
         // Obtener el saldo anterior
         const saldoAnteriorData = await new Promise((resolve, reject) => {
@@ -1723,13 +1734,13 @@ app.post('/createmedios4', async (req, res) => {
         const saldoAnterior = saldoAnteriorData.length > 0 ? saldoAnteriorData[0].saldo : 0;
 
         // Calcula el nuevo saldo sumando el saldo anterior a las entradas y restando las salidas
-        const nuevoSaldo = saldoAnterior + parseFloat(req.body.entradas) - parseFloat(req.body.salidas);
+        const nuevoSaldo = saldoAnterior + parseFloat(totalentradas) - parseFloat(req.body.salidas);
 
         // Realizar la inserción en la tabla concmesas
         const sql = "INSERT INTO medios4 (fecha, entradas, salidas, saldo, pe) VALUES (?, ?, ?, ?, ?)";
         const values = [
             req.body.fecha,
-            req.body.entradas,
+            totalentradas,
             req.body.salidas,
             nuevoSaldo,
             req.body.pe,
@@ -1811,7 +1822,26 @@ app.get('/medios3', (req, res) => {
 });
 app.post('/createmedios3', async (req, res) => {
     try {
-
+        const totalentradas = await new Promise((resolve, reject) => {
+            const query = `
+                SELECT 
+                    COALESCE(SUM(CASE WHEN pemm12 BETWEEN 3.50 AND 3.98 THEN mediom12 ELSE 0 END) +
+                             SUM(CASE WHEN pemm34 BETWEEN 3.50 AND 3.98 THEN mediosm34 ELSE 0 END) +
+                             SUM(CASE WHEN pemm5 BETWEEN 3.50 AND 3.98 THEN mediosm5 ELSE 0 END) +
+                             SUM(CASE WHEN pemm6 BETWEEN 3.50 AND 3.98 THEN mediom6 ELSE 0 END), 0) AS total_entradas
+                FROM mesas
+                WHERE fecha = ?;
+            `;
+        
+            db.query(query, [req.body.fecha], (err, data) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    const total = data[0].total_entradas;
+                    resolve(total);
+                }
+            });
+        });
 
         // Obtener el saldo anterior
         const saldoAnteriorData = await new Promise((resolve, reject) => {
@@ -1825,13 +1855,13 @@ app.post('/createmedios3', async (req, res) => {
         const saldoAnterior = saldoAnteriorData.length > 0 ? saldoAnteriorData[0].saldo : 0;
 
         // Calcula el nuevo saldo sumando el saldo anterior a las entradas y restando las salidas
-        const nuevoSaldo = saldoAnterior + parseFloat(req.body.entradas) - parseFloat(req.body.salidas);
+        const nuevoSaldo = saldoAnterior + parseFloat(totalentradas) - parseFloat(req.body.salidas);
 
         // Realizar la inserción en la tabla concmesas
         const sql = "INSERT INTO medios3 (fecha, entradas, salidas, saldo, pe) VALUES (?, ?, ?, ?, ?)";
         const values = [
             req.body.fecha,
-            req.body.entradas,
+            totalentradas,
             req.body.salidas,
             nuevoSaldo,
             req.body.pe,
@@ -1922,7 +1952,7 @@ app.post('/creategranomoler', async (req, res) => {
             });
         });
         const totalsalidasgrano = await new Promise((resolve, reject) => {
-            const query = "SELECT (SUM(concjigs)) AS total_salidasgrano FROM molienda WHERE fecha = ?;";
+            const query = "SELECT (SUM(medios)) AS total_salidasgrano FROM molienda WHERE fecha = ?;";
             db.query(query, [req.body.fecha], (err, data) => {
                 if (err) reject(err);
                 else resolve(data[0].total_salidasgrano); // Obtenemos el total concentrado de la primera fila
@@ -3161,23 +3191,33 @@ app.post('/creatempmlt', async (req, res) => {
     try {
         const totalsalidas = await new Promise((resolve, reject) => {
             const query = `
-            SELECT 
-            COALESCE(SUM(ps.tolvageneral), 0) + COALESCE(SUM(pj.alimj2), 0) + COALESCE(SUM(m.pmlt), 0) AS total_salidas
-        FROM 
-            prodseleccion ps
-        LEFT JOIN 
-            produccionjigs pj ON ps.fecha = pj.fecha
-        LEFT JOIN 
-            molienda m ON ps.fecha = m.fecha
-        WHERE 
-            ps.fecha = ?;
-        ;
+                SELECT 
+                    COALESCE(ps_sum.tolvageneral, 0) + 
+                    COALESCE(pj_sum.alimj2, 0) + 
+                    COALESCE(m_sum.pmlt, 0) AS total_salidas
+                FROM 
+                    (
+                        SELECT COALESCE(SUM(tolvageneral), 0) AS tolvageneral
+                        FROM prodseleccion
+                        WHERE fecha = ?
+                    ) ps_sum,
+                    (
+                        SELECT COALESCE(SUM(alimj2), 0) AS alimj2
+                        FROM produccionjigs
+                        WHERE fecha = ?
+                    ) pj_sum,
+                    (
+                        SELECT COALESCE(SUM(pmlt), 0) AS pmlt
+                        FROM molienda
+                        WHERE fecha = ?
+                    ) m_sum;
             `; // Ajusta la condición de fecha según tus necesidades
-            db.query(query, [req.body.fecha], (err, data) => {
+            db.query(query, [req.body.fecha, req.body.fecha, req.body.fecha], (err, data) => {
                 if (err) reject(err);
                 else resolve(data[0].total_salidas); // Obtenemos el total de salidas combinadas
             });
         });
+        
 
 
 

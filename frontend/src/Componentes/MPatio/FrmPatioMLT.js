@@ -43,7 +43,7 @@ const handleSubmit = (e) => {
   return (
     <div className="d-flex align-items-center flex-column mt-3" >
     <h1 >Insertar Patio MLT:</h1>
-    <div className="close-button" onClick={() => navigate('/mpmle')}>
+    <div className="close-button" onClick={() => navigate('/mpmlt')}>
         <FontAwesomeIcon icon={faTimes} />
         </div>
       <form className="w-50" onSubmit={handleSubmit} >

@@ -162,7 +162,7 @@ function PdfMolienda() {
             ];
             tableRows.push(rowData);
             const rowData1 = [
-                'Medios',
+                'Grano',
                 item.turno,
                 item.medios,
                 item.pem,

@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import '../Silos/Silos.css'
-import {useNavigate} from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios'
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
-
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
 function GranoBandas() {
     const navigate = useNavigate();
-  
+    const [searchTerm, setSearchTerm] = useState('');
     const [data, setData] = useState([])
+
     useEffect(() => {
         fetch('http://localhost:8081/granobandas')
             .then(res => res.json())
@@ -21,17 +22,20 @@ function GranoBandas() {
 
     const handleDelete = (id) => {
         axios.delete(`http://localhost:8081/deletegranobandas/${id}`)
-          .then(res => {
-            // Actualiza la lista de datos excluyendo el registro eliminado
-            const updatedData = data.filter(item => item.id !== id);
-            setData(updatedData);
-      
-            // Recalcula el saldo total con la lista actualizada
-            calcularSaldoTotal(updatedData);
-          })
-          .catch(err => console.log(err));
-      };
+            .then(res => {
+                // Actualiza la lista de datos excluyendo el registro eliminado
+                const updatedData = data.filter(item => item.id !== id);
+                setData(updatedData);
 
+                // Recalcula el saldo total con la lista actualizada
+                calcularSaldoTotal(updatedData);
+            })
+            .catch(err => console.log(err));
+    };
+
+    const handleSearch = (event) => {
+        setSearchTerm(event.target.value.toLowerCase());
+    };
 
 
 
@@ -40,7 +44,7 @@ function GranoBandas() {
         <div>
             <h1>Grano Bandas:</h1>
             <div className="close-button" onClick={() => navigate('/pp')}>
-            <FontAwesomeIcon icon={faTimes} />
+                <FontAwesomeIcon icon={faTimes} />
             </div>
             <div className="text-center">
                 <Link to="/creategrano" className="btn btn-danger btn-lg font-weight-bold   text-lg" >
@@ -52,6 +56,18 @@ function GranoBandas() {
                         <div className='table-container'>
                             <div className='table-top-scroll'> {/* Nuevo contenedor */}
                                 <div className='table-responsive'>
+                                    <div className="input-group">
+                                        <input
+                                            type='text'
+                                            className='form-control'
+                                            placeholder='Buscar...'
+                                            value={searchTerm}
+                                            onChange={handleSearch}
+                                        />
+                                        <span className="input-group-text">
+                                            <FontAwesomeIcon icon={faSearch} />
+                                        </span>
+                                    </div>
                                     <table className="table table-bordered">
 
                                         <thead>
@@ -68,32 +84,39 @@ function GranoBandas() {
                                             </tr>
                                         </thead>
                                         <tbody className='table-group-divider'>
-                                            {data.map((d, i) => (
-                                                <tr key={i}>
-                                                    <td>{d.id}</td>
-                                                    <td>{d.fecha}</td>
-                                                    <td>{d.entrada.toFixed(3)}</td>
-                                                    <td>{d.salidas.toFixed(3)}</td>
-                                                    <td>{d.pesp.toFixed(2)}</td>
-                                                    <td>{d.saldo.toFixed(3)}</td>
+                                            {data
+                                                .filter(d => {
+                                                    // Filtra los datos según el término de búsqueda en cualquier columna
+                                                    return Object.values(d).some(value =>
+                                                        value.toString().toLowerCase().includes(searchTerm)
+                                                    );
+                                                })
+                                                .map((d, i) => (
+                                                    <tr key={i}>
+                                                        <td>{d.id}</td>
+                                                        <td>{d.fecha}</td>
+                                                        <td>{d.entrada.toFixed(3)}</td>
+                                                        <td>{d.salidas.toFixed(3)}</td>
+                                                        <td>{d.pesp.toFixed(2)}</td>
+                                                        <td>{d.saldo.toFixed(3)}</td>
 
 
 
-                                                    <td>
-                                                        <div style={{ display: 'flex', alignItems: 'center' }}>
-                                                            <Link to={`/updategrano/${d.id}`} className='btn btn-warning'>
-                                                                <i className='fa-solid fa-edit'></i>
-                                                            </Link>
-                                                            &nbsp;
+                                                        <td>
+                                                            <div style={{ display: 'flex', alignItems: 'center' }}>
+                                                                <Link to={`/updategrano/${d.id}`} className='btn btn-warning'>
+                                                                    <i className='fa-solid fa-edit'></i>
+                                                                </Link>
+                                                                &nbsp;
 
-                                                            <button className='btn btn-danger' onClick={() => handleDelete(d.id)}>
-                                                                <i className='fa-solid fa-trash'></i>
-                                                            </button>
-                                                        </div>
+                                                                <button className='btn btn-danger' onClick={() => handleDelete(d.id)}>
+                                                                    <i className='fa-solid fa-trash'></i>
+                                                                </button>
+                                                            </div>
 
-                                                    </td>
-                                                </tr>
-                                            ))}
+                                                        </td>
+                                                    </tr>
+                                                ))}
 
                                             {/* Puedes agregar más filas según sea necesario */}
                                         </tbody>

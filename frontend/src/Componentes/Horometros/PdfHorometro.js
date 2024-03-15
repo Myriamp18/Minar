@@ -494,7 +494,7 @@ function PdfHorometro() {
                 tableRows.push(rowData7);
                 const rowData8 = ['GUSANO DE FINOS SILO 5', item.turno, item.gusanof5];
                 tableRows.push(rowData8);
-                const rowData9 = ['QUEBRADORA', item.turno, item.quebradorapr];
+                const rowData9 = ['QUEBRADORA PRIMARIA', item.turno, item.quebradorapr];
                 tableRows.push(rowData9);
             });
         }
@@ -561,7 +561,7 @@ function PdfHorometro() {
                 tableRows.push(rowData7);
                 const rowData8 = ['GUSANO DE FINOS SILO 5', item.turno, item.gusanof5];
                 tableRows.push(rowData8);
-                const rowData9 = ['QUEBRADORA', item.turno, item.quebradorapr];
+                const rowData9 = ['QUEBRADORA PRIMARIA', item.turno, item.quebradorapr];
                 tableRows.push(rowData9);
             });
         }
@@ -627,7 +627,7 @@ function PdfHorometro() {
                 tableRows.push(rowData7);
                 const rowData8 = ['GUSANO DE FINOS SILO 5', item.turno, item.gusanof5];
                 tableRows.push(rowData8);
-                const rowData9 = ['QUEBRADORA', item.turno, item.quebradorapr];
+                const rowData9 = ['QUEBRADORA PRIMARIA', item.turno, item.quebradorapr];
                 tableRows.push(rowData9);
             });
         }

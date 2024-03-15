@@ -6,11 +6,15 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios'
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
+
 
 function HorometroMolinos() {
     const [data, setData] = useState([]);
     const navigate = useNavigate()
-  
+    const [searchTerm, setSearchTerm] = useState('');
+
+
     useEffect(() => {
       fetch('http://localhost:8081/hmolinos')
         .then(res => res.json())
@@ -30,6 +34,11 @@ function HorometroMolinos() {
         })
         .catch(err => console.log(err));
     };
+
+    const handleSearch = (event) => {
+      setSearchTerm(event.target.value.toLowerCase());
+    };
+  
   return (
     <>
 
@@ -48,6 +57,18 @@ function HorometroMolinos() {
           <div className='table-container'>
             <div className='table-top-scroll'> {/* Nuevo contenedor */}
               <div className='table-responsive'>
+              <div className="input-group">
+                  <input
+                    type='text'
+                    className='form-control'
+                    placeholder='Buscar...'
+                    value={searchTerm}
+                    onChange={handleSearch}
+                  />
+                  <span className="input-group-text">
+                    <FontAwesomeIcon icon={faSearch} />
+                  </span>
+                </div>
                 <table className="table table-bordered">
                   <thead>
                     <tr  >
@@ -70,7 +91,14 @@ function HorometroMolinos() {
                     </tr>
                   </thead>
                   <tbody className='table-group-divider'>
-                    {data.map((d, i) => (
+                    {data
+                      .filter(d => {
+                        // Filtra los datos según el término de búsqueda en cualquier columna
+                        return Object.values(d).some(value =>
+                          value.toString().toLowerCase().includes(searchTerm)
+                        );
+                      })
+                      .map((d, i) => (
                       <tr key={i}>
                         <td>
                           <div style={{ display: 'flex', alignItems: 'center' }}>

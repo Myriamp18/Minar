@@ -22,7 +22,7 @@ function ModificarDesecho43() {
         .then(res => {
             console.log(res);
             // Optionally, you can navigate to a different page or update the UI
-            navigate('/desensolve'); // Example: Navigate to the home page
+            navigate('/desecho43'); // Example: Navigate to the home page
         })
         .catch(err => console.log(err));
 };

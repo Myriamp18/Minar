@@ -59,18 +59,7 @@ function FrmAllMedios() {
             />
           </div>
 
-          <div class="mb-3">
-            <label form='text' class="form-label"> Entradas:</label>
-            <input
-             type="text"  
-             class="form-control"
-             id='entradas'
-             placeholder='Insertar Cantidad'  
-             name='entradas'
-             required
-             onChange={(e) => setValues({...values, entradasm46: e.target.value})}/>
-          </div>
-
+       
         
           <div class="mb-3">
             <label form='text' class="form-label"> Salidas:</label>
