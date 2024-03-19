@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Login.css';
 import Usuario_M from '../../assest/minero.jpg'
 import Contra_L from '../../assest/candado.jpg'
@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 
-const Login =() => {
+const Login = ({ onLogin }) => {
   const navigate = useNavigate();
   const [nombreusuario, setNombreUsuario] = useState('');
   const [contra, setContra] = useState('');
@@ -26,10 +26,16 @@ const Login =() => {
       });
 
       const data = response.data;
-
+      console.log('Respuesta del servidor:', data);
       if (data.success) {
         console.log('Inicio de sesión exitoso:', data.message);
-        navigate('/Inicio'); // Redirige al usuario a la ruta privada
+        // Llama a la función onLogin pasada como prop si está definida
+        if (onLogin) {
+          onLogin();
+        }
+        navigate('/Inicio');
+        const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+        localStorage.setItem('isLoggedIn', 'true');
       } else {
         setError(data.message || 'Error al iniciar sesión. Por favor, inténtalo de nuevo.');
       }
@@ -39,9 +45,7 @@ const Login =() => {
     }
   };
 
-
   return (
-
     <div className="login-section">
       <div className='containerlogin'>
         <div className="headerlogin">
@@ -55,6 +59,7 @@ const Login =() => {
               <input type="usuario" size="sm"
                 placeholder='Nombre de Usuario '
                 required
+                value={nombreusuario}
                 onChange={e => setNombreUsuario(e.target.value)}
                 name='nombreusuario'
 
@@ -66,7 +71,7 @@ const Login =() => {
               <input type="password"
                 required
                 placeholder='Contraseña'
-
+                value={contra}
                 onChange={e => setContra(e.target.value)}
                 name='contra'
 
@@ -77,20 +82,13 @@ const Login =() => {
           {error && <div className="error">{error}</div>}
           <div className="forgot-password">
             <div className="submit-container">
-              <button className="submits" onClick={onSubmit} >Iniciar Sesion</button>
-
+              <button className="submits" onClick={onSubmit}>Iniciar Sesion</button>
             </div>
           </div>
-
         </form>
-
-
-
       </div>
-
     </div>
   );
 };
-
 
 export default Login;

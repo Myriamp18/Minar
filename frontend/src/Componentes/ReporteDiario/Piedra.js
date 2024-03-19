@@ -6,10 +6,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios'
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
+
 
 function Piedra() {
     const [data, setData] = useState([]);
     const navigate = useNavigate()
+    const [searchTerm, setSearchTerm] = useState('');
 
     useEffect(() => {
         fetch('http://localhost:8081/reportediariograno')
@@ -30,6 +33,9 @@ function Piedra() {
             })
             .catch(err => console.log(err));
     };
+    const handleSearch = (event) => {
+        setSearchTerm(event.target.value.toLowerCase());
+    };
     return (
         <>
 
@@ -48,6 +54,18 @@ function Piedra() {
                         <div className='table-container'>
                             <div className='table-top-scroll'> {/* Nuevo contenedor */}
                                 <div className='table-responsive'>
+                                    <div className="input-group">
+                                        <input
+                                            type='text'
+                                            className='form-control'
+                                            placeholder='Buscar...'
+                                            value={searchTerm}
+                                            onChange={handleSearch}
+                                        />
+                                        <span className="input-group-text">
+                                            <FontAwesomeIcon icon={faSearch} />
+                                        </span>
+                                    </div>
                                     <table className="table table-bordered">
                                         <thead>
                                             <tr  >
@@ -89,58 +107,65 @@ function Piedra() {
                                             </tr>
                                         </thead>
                                         <tbody className='table-group-divider'>
-                                            {data.map((d, i) => (
-                                                <tr key={i}>
-                                                    <td>
-                                                        <div style={{ display: 'flex', alignItems: 'center' }}>
-                                                            <Link to={`/updategranoseleccion/${d.id}`} className='btn btn-warning'>
-                                                                <i className='fa-solid fa-edit'></i>
-                                                            </Link>
-                                                            &nbsp;
+                                            {data
+                                                .filter(d => {
+                                                    // Filtra los datos según el término de búsqueda en cualquier columna
+                                                    return Object.values(d).some(value =>
+                                                        value.toString().toLowerCase().includes(searchTerm)
+                                                    );
+                                                })
+                                                .map((d, i) => (
+                                                    <tr key={i}>
+                                                        <td>
+                                                            <div style={{ display: 'flex', alignItems: 'center' }}>
+                                                                <Link to={`/updategranoseleccion/${d.id}`} className='btn btn-warning'>
+                                                                    <i className='fa-solid fa-edit'></i>
+                                                                </Link>
+                                                                &nbsp;
 
-                                                            <button className='btn btn-danger' onClick={() => handleDelete(d.id)}>
-                                                                <i className='fa-solid fa-trash'></i>
-                                                            </button>
-                                                        </div>
+                                                                <button className='btn btn-danger' onClick={() => handleDelete(d.id)}>
+                                                                    <i className='fa-solid fa-trash'></i>
+                                                                </button>
+                                                            </div>
 
-                                                    </td>
-                                                    <td>{d.id}</td>
-                                                    <td>{d.fecha}</td>
-                                                    <td>{d.turno}</td>
-                                                    <td>{typeof d.alimgrano === 'number' ? d.alimgrano.toFixed(3) : 'N/A'}</td>
-                                                    <td>{typeof d.peag === 'number' ? d.peag.toFixed(2) : 'N/A'}</td>
-                                                    <td>{typeof d.concgrano === 'number' ? d.concgrano.toFixed(3) : 'N/A'}</td>
-                                                    <td>{typeof d.pecng === 'number' ? d.pecng.toFixed(2) : 'N/A'}</td>
-                                                    <td>{typeof d.colasgrano === 'number' ? d.colasgrano.toFixed(3) : 'N/A'}</td>
-                                                    <td>{typeof d.pecg === 'number' ? d.pecg.toFixed(2) : 'N/A'}</td>
-                                                    <td>{typeof d.tonpiedra === 'number' ? d.tonpiedra.toFixed(3) : 'N/A'}</td>
-                                                    <td>{typeof d.petp === 'number' ? d.petp.toFixed(2) : 'N/A'}</td>
-                                                    <td>{d.aminale}</td>
-                                                    <td>{typeof d.minale === 'number' ? d.minale.toFixed(3) : 'N/A'}</td>
-                                                    <td>{typeof d.pemle === 'number' ? d.pemle.toFixed(2) : 'N/A'}</td>
-                                                    <td>{d.aminals}</td>
-                                                    <td>{typeof d.minals === 'number' ? d.minals.toFixed(3) : 'N/A'}</td>
-                                                    <td>{typeof d.pemls === 'number' ? d.pemls.toFixed(2) : 'N/A'}</td>
-                                                    <td>{d.apatiole}</td>
-                                                    <td>{typeof d.patiols === 'number' ? d.patiols.toFixed(3) : 'N/A'}</td>
-                                                    <td>{typeof d.peple === 'number' ? d.peple.toFixed(2) : 'N/A'}</td>
-                                                    <td>{d.apatiols}</td>
-                                                    <td>{typeof d.tolvageneral === 'number' ? d.tolvageneral.toFixed(3) : 'N/A'}</td>
-                                                    <td>{typeof d.pepls === 'number' ? d.pepls.toFixed(2) : 'N/A'}</td>
-                                                    <td>{d.amedio34}</td>
-                                                    <td>{typeof d.medio3y4 === 'number' ? d.medio3y4.toFixed(3) : 'N/A'}</td>
-                                                    <td>{typeof d.psm34 === 'number' ? d.psm34.toFixed(2) : 'N/A'}</td>
-                                                    <td>{d.adesensolve}</td>
-                                                    <td>{typeof d.desensolve === 'number' ? d.desensolve.toFixed(3) : 'N/A'}</td>
-                                                    <td>{typeof d.pedese === 'number' ? d.pedese.toFixed(2) : 'N/A'}</td>
-                                                    <td>{d.acolas}</td>
-                                                    <td>{typeof d.colas === 'number' ? d.colas.toFixed(3) : 'N/A'}</td>
-                                                    <td>{typeof d.pecolas === 'number' ? d.pecolas.toFixed(2) : 'N/A'}</td>
+                                                        </td>
+                                                        <td>{d.id}</td>
+                                                        <td>{d.fecha}</td>
+                                                        <td>{d.turno}</td>
+                                                        <td>{typeof d.alimgrano === 'number' ? d.alimgrano.toFixed(3) : 'N/A'}</td>
+                                                        <td>{typeof d.peag === 'number' ? d.peag.toFixed(2) : 'N/A'}</td>
+                                                        <td>{typeof d.concgrano === 'number' ? d.concgrano.toFixed(3) : 'N/A'}</td>
+                                                        <td>{typeof d.pecng === 'number' ? d.pecng.toFixed(2) : 'N/A'}</td>
+                                                        <td>{typeof d.colasgrano === 'number' ? d.colasgrano.toFixed(3) : 'N/A'}</td>
+                                                        <td>{typeof d.pecg === 'number' ? d.pecg.toFixed(2) : 'N/A'}</td>
+                                                        <td>{typeof d.tonpiedra === 'number' ? d.tonpiedra.toFixed(3) : 'N/A'}</td>
+                                                        <td>{typeof d.petp === 'number' ? d.petp.toFixed(2) : 'N/A'}</td>
+                                                        <td>{d.aminale}</td>
+                                                        <td>{typeof d.minale === 'number' ? d.minale.toFixed(3) : 'N/A'}</td>
+                                                        <td>{typeof d.pemle === 'number' ? d.pemle.toFixed(2) : 'N/A'}</td>
+                                                        <td>{d.aminals}</td>
+                                                        <td>{typeof d.minals === 'number' ? d.minals.toFixed(3) : 'N/A'}</td>
+                                                        <td>{typeof d.pemls === 'number' ? d.pemls.toFixed(2) : 'N/A'}</td>
+                                                        <td>{d.apatiole}</td>
+                                                        <td>{typeof d.patiols === 'number' ? d.patiols.toFixed(3) : 'N/A'}</td>
+                                                        <td>{typeof d.peple === 'number' ? d.peple.toFixed(2) : 'N/A'}</td>
+                                                        <td>{d.apatiols}</td>
+                                                        <td>{typeof d.tolvageneral === 'number' ? d.tolvageneral.toFixed(3) : 'N/A'}</td>
+                                                        <td>{typeof d.pepls === 'number' ? d.pepls.toFixed(2) : 'N/A'}</td>
+                                                        <td>{d.amedio34}</td>
+                                                        <td>{typeof d.medio3y4 === 'number' ? d.medio3y4.toFixed(3) : 'N/A'}</td>
+                                                        <td>{typeof d.psm34 === 'number' ? d.psm34.toFixed(2) : 'N/A'}</td>
+                                                        <td>{d.adesensolve}</td>
+                                                        <td>{typeof d.desensolve === 'number' ? d.desensolve.toFixed(3) : 'N/A'}</td>
+                                                        <td>{typeof d.pedese === 'number' ? d.pedese.toFixed(2) : 'N/A'}</td>
+                                                        <td>{d.acolas}</td>
+                                                        <td>{typeof d.colas === 'number' ? d.colas.toFixed(3) : 'N/A'}</td>
+                                                        <td>{typeof d.pecolas === 'number' ? d.pecolas.toFixed(2) : 'N/A'}</td>
 
 
 
-                                                </tr>
-                                            ))}
+                                                    </tr>
+                                                ))}
 
                                             {/* Puedes agregar más filas según sea necesario */}
                                         </tbody>

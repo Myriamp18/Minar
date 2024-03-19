@@ -6,10 +6,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios'
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
 function JigsCh() {
     const [data, setData] = useState([]);
     const navigate = useNavigate()
+    const [searchTerm, setSearchTerm] = useState('');
 
     useEffect(() => {
         fetch('http://localhost:8081/reportediariojch')
@@ -30,6 +32,9 @@ function JigsCh() {
             })
             .catch(err => console.log(err));
     };
+    const handleSearch = (event) => {
+        setSearchTerm(event.target.value.toLowerCase());
+      };
     return (
         <>
 
@@ -48,6 +53,18 @@ function JigsCh() {
                         <div className='table-container'>
                             <div className='table-top-scroll'> {/* Nuevo contenedor */}
                                 <div className='table-responsive'>
+                                    <div className="input-group">
+                                        <input
+                                            type='text'
+                                            className='form-control'
+                                            placeholder='Buscar...'
+                                            value={searchTerm}
+                                            onChange={handleSearch}
+                                        />
+                                        <span className="input-group-text">
+                                            <FontAwesomeIcon icon={faSearch} />
+                                        </span>
+                                    </div>
                                     <table className="table table-bordered">
                                         <thead>
                                             <tr  >
@@ -76,45 +93,52 @@ function JigsCh() {
                                             </tr>
                                         </thead>
                                         <tbody className='table-group-divider'>
-                                            {data.map((d, i) => (
-                                                <tr key={i}>
-                                                    <td>
-                                                        <div style={{ display: 'flex', alignItems: 'center' }}>
-                                                            <Link to={`/updatejigsch/${d.id}`} className='btn btn-warning'>
-                                                                <i className='fa-solid fa-edit'></i>
-                                                            </Link>
-                                                            &nbsp;
+                                            {data
+                                                .filter(d => {
+                                                    // Filtra los datos según el término de búsqueda en cualquier columna
+                                                    return Object.values(d).some(value =>
+                                                        value.toString().toLowerCase().includes(searchTerm)
+                                                    );
+                                                })
+                                                .map((d, i) => (
+                                                    <tr key={i}>
+                                                        <td>
+                                                            <div style={{ display: 'flex', alignItems: 'center' }}>
+                                                                <Link to={`/updatejigsch/${d.id}`} className='btn btn-warning'>
+                                                                    <i className='fa-solid fa-edit'></i>
+                                                                </Link>
+                                                                &nbsp;
 
-                                                            <button className='btn btn-danger' onClick={() => handleDelete(d.id)}>
-                                                                <i className='fa-solid fa-trash'></i>
-                                                            </button>
-                                                        </div>
+                                                                <button className='btn btn-danger' onClick={() => handleDelete(d.id)}>
+                                                                    <i className='fa-solid fa-trash'></i>
+                                                                </button>
+                                                            </div>
 
-                                                    </td>
-                                                    <td>{d.id}</td>
-                                                    <td>{d.fecha}</td>
-                                                    <td>{d.turno}</td>
-                                                    <td>{d.horasjch}</td>
-                                                    <td>{typeof d.alimjch === 'number' ? d.alimjch.toFixed(3) : 'N/A'}</td>
-                                                    <td>{typeof d.peajch === 'number' ? d.peajch.toFixed(2) : 'N/A'}</td>
-                                                    <td>{typeof d.granojch === 'number' ? d.granojch.toFixed(3) : 'N/A'}</td>
-                                                    <td>{typeof d.pegjch === 'number' ? d.pegjch.toFixed(2) : 'N/A'}</td>
-                                                    <td>{typeof d.colasjch === 'number' ? d.colasjch.toFixed(3) : 'N/A'}</td>
-                                                    <td>{typeof d.pecjch === 'number' ? d.pecjch.toFixed(2) : 'N/A'}</td>
-                                                    <td>{typeof d.desenjch === 'number' ? d.desenjch.toFixed(3) : 'N/A'}</td>
-                                                    <td>{typeof d.pedjch === 'number' ? d.pedjch.toFixed(2) : 'N/A'}</td>
-                                                    <td>{d.horasec}</td>
-                                                    <td>{typeof d.alimjsec === 'number' ? d.alimjsec.toFixed(3) : 'N/A'}</td>
-                                                    <td>{typeof d.peajsec === 'number' ? d.peajsec.toFixed(2) : 'N/A'}</td>
-                                                    <td>{typeof d.concjsec === 'number' ? d.concjsec.toFixed(3) : 'N/A'}</td>
-                                                    <td>{typeof d.pecojsec === 'number' ? d.pecojsec.toFixed(2) : 'N/A'}</td>
-                                                    <td>{typeof d.colasjsec === 'number' ? d.colasjsec.toFixed(3) : 'N/A'}</td>
-                                                    <td>{typeof d.pecjsec === 'number' ? d.pecjsec.toFixed(2) : 'N/A'}</td>
+                                                        </td>
+                                                        <td>{d.id}</td>
+                                                        <td>{d.fecha}</td>
+                                                        <td>{d.turno}</td>
+                                                        <td>{d.horasjch}</td>
+                                                        <td>{typeof d.alimjch === 'number' ? d.alimjch.toFixed(3) : 'N/A'}</td>
+                                                        <td>{typeof d.peajch === 'number' ? d.peajch.toFixed(2) : 'N/A'}</td>
+                                                        <td>{typeof d.granojch === 'number' ? d.granojch.toFixed(3) : 'N/A'}</td>
+                                                        <td>{typeof d.pegjch === 'number' ? d.pegjch.toFixed(2) : 'N/A'}</td>
+                                                        <td>{typeof d.colasjch === 'number' ? d.colasjch.toFixed(3) : 'N/A'}</td>
+                                                        <td>{typeof d.pecjch === 'number' ? d.pecjch.toFixed(2) : 'N/A'}</td>
+                                                        <td>{typeof d.desenjch === 'number' ? d.desenjch.toFixed(3) : 'N/A'}</td>
+                                                        <td>{typeof d.pedjch === 'number' ? d.pedjch.toFixed(2) : 'N/A'}</td>
+                                                        <td>{d.horasec}</td>
+                                                        <td>{typeof d.alimjsec === 'number' ? d.alimjsec.toFixed(3) : 'N/A'}</td>
+                                                        <td>{typeof d.peajsec === 'number' ? d.peajsec.toFixed(2) : 'N/A'}</td>
+                                                        <td>{typeof d.concjsec === 'number' ? d.concjsec.toFixed(3) : 'N/A'}</td>
+                                                        <td>{typeof d.pecojsec === 'number' ? d.pecojsec.toFixed(2) : 'N/A'}</td>
+                                                        <td>{typeof d.colasjsec === 'number' ? d.colasjsec.toFixed(3) : 'N/A'}</td>
+                                                        <td>{typeof d.pecjsec === 'number' ? d.pecjsec.toFixed(2) : 'N/A'}</td>
 
 
 
-                                                </tr>
-                                            ))}
+                                                    </tr>
+                                                ))}
 
                                             {/* Puedes agregar más filas según sea necesario */}
                                         </tbody>

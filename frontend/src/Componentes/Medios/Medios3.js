@@ -6,12 +6,15 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios'
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
 
 function Medios3() {
     const [data, setData] = useState([]);
     const navigate = useNavigate();
-  
+    const [searchTerm, setSearchTerm] = useState('');
+
+
   useEffect(() => {
     fetch('http://localhost:8081/medios3')
       .then(res => res.json())
@@ -31,6 +34,11 @@ function Medios3() {
       })
       .catch(err => console.log(err));
   };
+
+  
+  const handleSearch = (event) => {
+    setSearchTerm(event.target.value.toLowerCase());
+  };
   return (
     <>
    
@@ -49,6 +57,18 @@ function Medios3() {
           <div className='table-container'> 
             <div className='table-top-scroll'> {/* Nuevo contenedor */}
               <div className='table-responsive'>
+              <div className="input-group">
+                  <input
+                    type='text'
+                    className='form-control'
+                    placeholder='Buscar...'
+                    value={searchTerm}
+                    onChange={handleSearch}
+                  />
+                  <span className="input-group-text">
+                    <FontAwesomeIcon icon={faSearch} />
+                  </span>
+                </div>
             <table className="table table-bordered">
               <thead>
                 <tr  >

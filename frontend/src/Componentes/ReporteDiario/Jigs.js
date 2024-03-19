@@ -6,10 +6,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios'
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
 function Jigs() {
     const [data, setData] = useState([]);
     const navigate = useNavigate()
+    const [searchTerm, setSearchTerm] = useState('');
 
     useEffect(() => {
         fetch('http://localhost:8081/reportediario')
@@ -30,6 +32,10 @@ function Jigs() {
             })
             .catch(err => console.log(err));
     };
+
+    const handleSearch = (event) => {
+        setSearchTerm(event.target.value.toLowerCase());
+      };
     return (
         <>
 
@@ -48,6 +54,18 @@ function Jigs() {
                         <div className='table-container'>
                             <div className='table-top-scroll'> {/* Nuevo contenedor */}
                                 <div className='table-responsive'>
+                                    <div className="input-group">
+                                        <input
+                                            type='text'
+                                            className='form-control'
+                                            placeholder='Buscar...'
+                                            value={searchTerm}
+                                            onChange={handleSearch}
+                                        />
+                                        <span className="input-group-text">
+                                            <FontAwesomeIcon icon={faSearch} />
+                                        </span>
+                                    </div>
                                     <table className="table table-bordered">
                                         <thead>
                                             <tr  >
@@ -76,47 +94,54 @@ function Jigs() {
                                             </tr>
                                         </thead>
                                         <tbody className='table-group-divider'>
-                                            {data.map((d, i) => (
-                                                <tr key={i}>
-                                                    <td>
-                                                        <div style={{ display: 'flex', alignItems: 'center' }}>
-                                                            <Link to={`/updatejigs/${d.id}`} className='btn btn-warning'>
-                                                                <i className='fa-solid fa-edit'></i>
-                                                            </Link>
-                                                            &nbsp;
+                                            {data
+                                                .filter(d => {
+                                                    // Filtra los datos según el término de búsqueda en cualquier columna
+                                                    return Object.values(d).some(value =>
+                                                        value.toString().toLowerCase().includes(searchTerm)
+                                                    );
+                                                })
+                                                .map((d, i) => (
+                                                    <tr key={i}>
+                                                        <td>
+                                                            <div style={{ display: 'flex', alignItems: 'center' }}>
+                                                                <Link to={`/updatejigs/${d.id}`} className='btn btn-warning'>
+                                                                    <i className='fa-solid fa-edit'></i>
+                                                                </Link>
+                                                                &nbsp;
 
-                                                            <button className='btn btn-danger' onClick={() => handleDelete(d.id)}>
-                                                                <i className='fa-solid fa-trash'></i>
-                                                            </button>
-                                                        </div>
+                                                                <button className='btn btn-danger' onClick={() => handleDelete(d.id)}>
+                                                                    <i className='fa-solid fa-trash'></i>
+                                                                </button>
+                                                            </div>
 
-                                                    </td>
-                                                    <td>{d.id}</td>
-                                                    <td>{d.fecha}</td>
-                                                    <td>{d.turno}</td>
-                                                    <td>{typeof d.alimj1 === 'number' ? d.alimj1.toFixed(3) : 'N/A'}</td>
-                                                    <td>{typeof d.peaj1 === 'number' ? d.peaj1.toFixed(2) : 'N/A'}</td>
-                                                    <td>{typeof d.granoj1 === 'number' ? d.granoj1.toFixed(3) : 'N/A'}</td>
-                                                    <td>{typeof d.pegj1 === 'number' ? d.pegj1.toFixed(2) : 'N/A'}</td>
-                                                    <td>{typeof d.desenj1 === 'number' ? d.desenj1.toFixed(3) : 'N/A'}</td>
-                                                    <td>{typeof d.pedj1 === 'number' ? d.pedj1.toFixed(2) : 'N/A'}</td>
-                                                    <td>{typeof d.colasj1 === 'number' ? d.colasj1.toFixed(3) : 'N/A'}</td>
-                                                    <td>{typeof d.pecj1 === 'number' ? d.pecj1.toFixed(2) : 'N/A'}</td>
-                                                    <td>{typeof d.alimj2 === 'number' ? d.alimj2.toFixed(3) : 'N/A'}</td>
-                                                    <td>{typeof d.peaj2 === 'number' ? d.peaj2.toFixed(2) : 'N/A'}</td>
-                                                    <td>{typeof d.granoj2 === 'number' ? d.granoj2.toFixed(3) : 'N/A'}</td>
-                                                    <td>{typeof d.pegj2 === 'number' ? d.pegj2.toFixed(2) : 'N/A'}</td>
-                                                    <td>{typeof d.desenj2 === 'number' ? d.desenj2.toFixed(3) : 'N/A'}</td>
-                                                    <td>{typeof d.pedj2 === 'number' ? d.pedj2.toFixed(2) : 'N/A'}</td>
-                                                    <td>{typeof d.colasj2 === 'number' ? d.colasj2.toFixed(3) : 'N/A'}</td>
-                                                    <td>{typeof d.pecj2 === 'number' ? d.pecj2.toFixed(2) : 'N/A'}</td>
-                                                  
-
+                                                        </td>
+                                                        <td>{d.id}</td>
+                                                        <td>{d.fecha}</td>
+                                                        <td>{d.turno}</td>
+                                                        <td>{typeof d.alimj1 === 'number' ? d.alimj1.toFixed(3) : 'N/A'}</td>
+                                                        <td>{typeof d.peaj1 === 'number' ? d.peaj1.toFixed(2) : 'N/A'}</td>
+                                                        <td>{typeof d.granoj1 === 'number' ? d.granoj1.toFixed(3) : 'N/A'}</td>
+                                                        <td>{typeof d.pegj1 === 'number' ? d.pegj1.toFixed(2) : 'N/A'}</td>
+                                                        <td>{typeof d.desenj1 === 'number' ? d.desenj1.toFixed(3) : 'N/A'}</td>
+                                                        <td>{typeof d.pedj1 === 'number' ? d.pedj1.toFixed(2) : 'N/A'}</td>
+                                                        <td>{typeof d.colasj1 === 'number' ? d.colasj1.toFixed(3) : 'N/A'}</td>
+                                                        <td>{typeof d.pecj1 === 'number' ? d.pecj1.toFixed(2) : 'N/A'}</td>
+                                                        <td>{typeof d.alimj2 === 'number' ? d.alimj2.toFixed(3) : 'N/A'}</td>
+                                                        <td>{typeof d.peaj2 === 'number' ? d.peaj2.toFixed(2) : 'N/A'}</td>
+                                                        <td>{typeof d.granoj2 === 'number' ? d.granoj2.toFixed(3) : 'N/A'}</td>
+                                                        <td>{typeof d.pegj2 === 'number' ? d.pegj2.toFixed(2) : 'N/A'}</td>
+                                                        <td>{typeof d.desenj2 === 'number' ? d.desenj2.toFixed(3) : 'N/A'}</td>
+                                                        <td>{typeof d.pedj2 === 'number' ? d.pedj2.toFixed(2) : 'N/A'}</td>
+                                                        <td>{typeof d.colasj2 === 'number' ? d.colasj2.toFixed(3) : 'N/A'}</td>
+                                                        <td>{typeof d.pecj2 === 'number' ? d.pecj2.toFixed(2) : 'N/A'}</td>
 
 
 
-                                                </tr>
-                                            ))}
+
+
+                                                    </tr>
+                                                ))}
 
                                             {/* Puedes agregar más filas según sea necesario */}
                                         </tbody>

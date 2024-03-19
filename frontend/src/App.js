@@ -154,225 +154,232 @@ import FrmMesas from './Componentes/ReporteDiario/FrmMesas';
 import Piedra from './Componentes/ReporteDiario/Piedra';
 import FrmPiedra from './Componentes/ReporteDiario/FrmPiedra';
 import Usuarios from './Componentes/Usuarios/Usuarios';
+import { RutasPrivadas } from './Componentes/RutasPrivadas';
 
 function App() {
-  
-   return (
-      <Router>
-       <Menu>
-         <Routes>
-          <Route path="/" element={<Login />} />
+      const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-            
-           
-               <Route path="/Inicio" element={<Inicio />} />
-               <Route path="/diario" element={<Diario />} />
-               <Route path="/djigss" element={<Jigs />} />
-               <Route path="/createdjigss" element={<FrmJigs />} />
-               <Route path="/djigsch" element={<JigsCh />} />
-               <Route path="/createdjigsch" element={<FrmJigsch />} />
-               <Route path="/dmesas" element={<Mesas />} />
-               <Route path="/createdmesas" element={<FrmMesas />} />
-               <Route path="/dseleccion" element={<Piedra/>} />
-               <Route path="/createdseleccion" element={<FrmPiedra/>} />
-               <Route path="/pdfdiario" element={<Pdf />} />
-               <Route path="/excel" element={<Excel />} />
+      return (
+            <Router>
+                 
+                  <Routes>
+                        {/* Ruta pública para el inicio de sesión */}
+                        <Route path="/" element={<Login onLogin={() => setIsLoggedIn(true)} />} /> 
+                 </Routes>
+                 {isLoggedIn && (
+                <>
+                 <Menu>
+                    <Routes> 
+                              <Route path="/Inicio" element={<Inicio />} />
+                              
+                              <Route path="/diario" element={<Diario />} />
+                              <Route path="/djigss" element={<Jigs />} />
+                              <Route path="/createdjigss" element={<FrmJigs />} />
+                              <Route path="/djigsch" element={<JigsCh />} />
+                              <Route path="/createdjigsch" element={<FrmJigsch />} />
+                              <Route path="/dmesas" element={<Mesas />} />
+                              <Route path="/createdmesas" element={<FrmMesas />} />
+                              <Route path="/dseleccion" element={<Piedra />} />
+                              <Route path="/createdseleccion" element={<FrmPiedra />} />
+                              <Route path="/pdfdiario" element={<Pdf />} />
+                              <Route path="/excel" element={<Excel />} />
             /////////SILOS///////
-               <Route path="/create" element={<FrmSilos />} />
-               <Route path="/update/:id" element={<ModificarSilos />} />
-               <Route path="/silos" element={<Silos />} />
+                              <Route path="/create" element={<FrmSilos />} />
+                              <Route path="/update/:id" element={<ModificarSilos />} />
+                              <Route path="/silos" element={<Silos />} />
 
               ////USUARIO/////////
-               <Route path="/createusuario" element={<InsertarUsuario />} />
-               <Route path="/usuarios" element={<Usuarios />} />
+                              <Route path="/createusuario" element={<InsertarUsuario />} />
+                              <Route path="/usuarios" element={<Usuarios />} />
 
        /////////GRANOBANDAS/////
-               <Route path="/creategrano" element={<FrmBandas />} />
-               <Route path="/updategrano/:id" element={<ModificarGrano />} />
-               <Route path="/granobandas" element={<GranoBandas />} />
+                              <Route path="/creategrano" element={<FrmBandas />} />
+                              <Route path="/updategrano/:id" element={<ModificarGrano />} />
+                              <Route path="/granobandas" element={<GranoBandas />} />
 
        ////////SELECCION/////
-               <Route path="/createseleccion" element={<FrmSeleccion />} />
-               <Route path="/updateseleccion/:id" element={<ModificarSeleccion />} />
-               <Route path="/seleccion" element={<Seleccion />} />
+                              <Route path="/createseleccion" element={<FrmSeleccion />} />
+                              <Route path="/updateseleccion/:id" element={<ModificarSeleccion />} />
+                              <Route path="/seleccion" element={<Seleccion />} />
 
        ///////////CONC.P/MOLER/////////7
-               <Route path="/createconcpmoler" element={<FrmPMoler />} />
-               <Route path="/updateconcpmoler/:id" element={<ModificarCPMoler />} />
-               <Route path="/concpmoler" element={<ConcPMoler />} />
+                              <Route path="/createconcpmoler" element={<FrmPMoler />} />
+                              <Route path="/updateconcpmoler/:id" element={<ModificarCPMoler />} />
+                              <Route path="/concpmoler" element={<ConcPMoler />} />
 
        //////////REPORTESDIARIOS//////////7
-              
-               <Route path="/updatejigs/:id" element={<Modificarjigs />} />
-               <Route path="/updatejigsch/:id" element={<Modificarjigsch />} />
-               <Route path="/updatemesas/:id" element={<Modificarmesas />} />
-               <Route path="/updategranoseleccion/:id" element={<Modificargrano />} />
-               <Route path="/reporteexistencia" element={<ReporteExistencia />} />
+
+                              <Route path="/updatejigs/:id" element={<Modificarjigs />} />
+                              <Route path="/updatejigsch/:id" element={<Modificarjigsch />} />
+                              <Route path="/updatemesas/:id" element={<Modificarmesas />} />
+                              <Route path="/updategranoseleccion/:id" element={<Modificargrano />} />
+                              <Route path="/reporteexistencia" element={<ReporteExistencia />} />
 
          ////////////REPORTEEXISTENCIA////////
-               <Route path="/existencia" element={<ReporteExistencia />} />
-               <Route path="/pp" element={<PP />} />
-               <Route path="/pt" element={<PT />} />
-               <Route path="/mp" element={<MP />} />
-               <Route path="/pdfexistencia" element={<PdfExistencia />} />
+                              <Route path="/existencia" element={<ReporteExistencia />} />
+                              <Route path="/pp" element={<PP />} />
+                              <Route path="/pt" element={<PT />} />
+                              <Route path="/mp" element={<MP />} />
+                              <Route path="/pdfexistencia" element={<PdfExistencia />} />
 
 
 
 
          ///////////////////granobaribright///
-               <Route path="/granobaribright" element={<GranoBaribright />} />
-               <Route path="/creategranobaribright" element={<FrmGranoBaribright />} />
-               <Route path="/updategranobaribright/:id" element={<ModificarGranoBaribrigth />} />
+                              <Route path="/granobaribright" element={<GranoBaribright />} />
+                              <Route path="/creategranobaribright" element={<FrmGranoBaribright />} />
+                              <Route path="/updategranobaribright/:id" element={<ModificarGranoBaribrigth />} />
 
          ///////////////////concentradobaribright///
-               <Route path="/concentradobaribright" element={<ConcBaribright />} />
-               <Route path="/createconcentradobaribaright" element={<FrmConcBaribright />} />
-               <Route path="/updateconcentradobaribaright/:id" element={<ModificarConcBaribrigjt />} />
+                              <Route path="/concentradobaribright" element={<ConcBaribright />} />
+                              <Route path="/createconcentradobaribaright" element={<FrmConcBaribright />} />
+                              <Route path="/updateconcentradobaribaright/:id" element={<ModificarConcBaribrigjt />} />
 
           ////////////////////////////MOLIENDA//////
-               <Route path="/molienda" element={<Molienda />} />
-               <Route path="/mezclas" element={<Mezclas />} />
-               <Route path="/createmezclasmolienda" element={<FrmMezclas />} />
-               <Route path="/updatemezclasmolienda/:id" element={<ModificarMezclas />} />
-               <Route path="/promedios" element={<Promedios />} />
-               <Route path="/createpromedios" element={<FrmPromedios />} />
-               <Route path="/updatepromedios/:id" element={<ModificarPromedios />} />
-               <Route path="/pdfmolienda" element={<PdfMolienda />} />
+                              <Route path="/molienda" element={<Molienda />} />
+                              <Route path="/mezclas" element={<Mezclas />} />
+                              <Route path="/createmezclasmolienda" element={<FrmMezclas />} />
+                              <Route path="/updatemezclasmolienda/:id" element={<ModificarMezclas />} />
+                              <Route path="/promedios" element={<Promedios />} />
+                              <Route path="/createpromedios" element={<FrmPromedios />} />
+                              <Route path="/updatepromedios/:id" element={<ModificarPromedios />} />
+                              <Route path="/pdfmolienda" element={<PdfMolienda />} />
          //////////conmesas////////////
-               <Route path="/concmesas" element={<ConcMesas />} />
-               <Route path="/createconcmesas" element={<FrmConcMesas />} />
-               <Route path="/updateconcmesas/:id" element={<ModificrConcMesas />} />
+                              <Route path="/concmesas" element={<ConcMesas />} />
+                              <Route path="/createconcmesas" element={<FrmConcMesas />} />
+                              <Route path="/updateconcmesas/:id" element={<ModificrConcMesas />} />
 
          ////////////CONCJIGSSEC/////////
-               <Route path="/concjigssec" element={<ConcJigsSec />} />
-               <Route path="/createconcjigssec" element={<FrmConcJigsSec />} />
-               <Route path="/updatenconcjigssec/:id" element={<ModificarJigsSec />} />
+                              <Route path="/concjigssec" element={<ConcJigsSec />} />
+                              <Route path="/createconcjigssec" element={<FrmConcJigsSec />} />
+                              <Route path="/updatenconcjigssec/:id" element={<ModificarJigsSec />} />
 
 
          /////////Medios//////////
-               <Route path="/medios" element={<Medios />} />
-               <Route path="/medios46" element={<AllMedios />} />
-               <Route path="/createmedios46" element={<FrmAllMedios />} />
-               <Route path="/updatemedios46/:id" element={<ModificarAllMedios />} />
-               <Route path="/medios4" element={<Medios4 />} />
-               <Route path="/createmedios4" element={<FrmMedios4 />} />
-               <Route path="/updatemedios4/:id" element={<ModificarMedios4 />} />
-               <Route path="/medios3" element={<Medios3 />} />
-               <Route path="/createmedios3" element={<FrmMedios3 />} />
-               <Route path="/updatemedios3/:id" element={<ModificarMedios3 />} />
+                              <Route path="/medios" element={<Medios />} />
+                              <Route path="/medios46" element={<AllMedios />} />
+                              <Route path="/createmedios46" element={<FrmAllMedios />} />
+                              <Route path="/updatemedios46/:id" element={<ModificarAllMedios />} />
+                              <Route path="/medios4" element={<Medios4 />} />
+                              <Route path="/createmedios4" element={<FrmMedios4 />} />
+                              <Route path="/updatemedios4/:id" element={<ModificarMedios4 />} />
+                              <Route path="/medios3" element={<Medios3 />} />
+                              <Route path="/createmedios3" element={<FrmMedios3 />} />
+                              <Route path="/updatemedios3/:id" element={<ModificarMedios3 />} />
 
 
          ////////////GRANOP/MOLER////////////
-               <Route path="/granomoler" element={<GranoPMoler />} />
-               <Route path="/creategranomoler" element={<FrmGranoPMoler />} />
-               <Route path="/updategranomoler/:id" element={<ModificarGranoPMoler />} />
+                              <Route path="/granomoler" element={<GranoPMoler />} />
+                              <Route path="/creategranomoler" element={<FrmGranoPMoler />} />
+                              <Route path="/updategranomoler/:id" element={<ModificarGranoPMoler />} />
 
          /////////GRANOJIGS////////////
-               <Route path="/granojigs" element={<GranoJigsChino />} />
-               <Route path="/creategranojigs" element={<FrmGranoJigs />} />
-               <Route path="/updategranojigs/:id" element={<ModificarGranojigs />} />
+                              <Route path="/granojigs" element={<GranoJigsChino />} />
+                              <Route path="/creategranojigs" element={<FrmGranoJigs />} />
+                              <Route path="/updategranojigs/:id" element={<ModificarGranojigs />} />
 
          /////////DESENSOLVECH////////////
-               <Route path="/desensolvech" element={<Desensolvech />} />
-               <Route path="/createdesensolvech" element={<FrmDesensolvech />} />
-               <Route path="/updatedesensolvech/:id" element={<ModificarDesensolvech />} />
+                              <Route path="/desensolvech" element={<Desensolvech />} />
+                              <Route path="/createdesensolvech" element={<FrmDesensolvech />} />
+                              <Route path="/updatedesensolvech/:id" element={<ModificarDesensolvech />} />
          /////////DESENSOLVE////////////
-               <Route path="/desensolve" element={<Desensolve />} />
-               <Route path="/createdesensolve" element={<FrmDesensolve />} />
-               <Route path="/updatedesensolve/:id" element={<ModificarDesensolve />} />
+                              <Route path="/desensolve" element={<Desensolve />} />
+                              <Route path="/createdesensolve" element={<FrmDesensolve />} />
+                              <Route path="/updatedesensolve/:id" element={<ModificarDesensolve />} />
 
          /////DESECHOSELECCION//////
-               <Route path="/desechoseleccion" element={<DesechoSeleccion />} />
-               <Route path="/desecho43" element={<Desecho43 />} />
-               <Route path="/createdesecho43" element={<FrmDesecho43 />} />
-               <Route path="/updatedesecho43/:id" element={<ModificarDesecho43 />} />
-               <Route path="/desecho39" element={<Desecho39 />} />
-               <Route path="/createdesecho39" element={<FrmDesecho39 />} />
-               <Route path="/updatedesecho39/:id" element={<ModificarDesecho39 />} />
+                              <Route path="/desechoseleccion" element={<DesechoSeleccion />} />
+                              <Route path="/desecho43" element={<Desecho43 />} />
+                              <Route path="/createdesecho43" element={<FrmDesecho43 />} />
+                              <Route path="/updatedesecho43/:id" element={<ModificarDesecho43 />} />
+                              <Route path="/desecho39" element={<Desecho39 />} />
+                              <Route path="/createdesecho39" element={<FrmDesecho39 />} />
+                              <Route path="/updatedesecho39/:id" element={<ModificarDesecho39 />} />
 
          /////////BARITRON////////////
-               <Route path="/baritron" element={<Baritron />} />
-               <Route path="/createbaritron" element={<FrmBaritron />} />
-               <Route path="/updatebaritron/:id" element={<ModificarBaritron />} />
+                              <Route path="/baritron" element={<Baritron />} />
+                              <Route path="/createbaritron" element={<FrmBaritron />} />
+                              <Route path="/updatebaritron/:id" element={<ModificarBaritron />} />
 
          /////////TOLVAS MOLINOS////////////
-               <Route path="/tolvas" element={<TolvasMolinos />} />
-               <Route path="/createtolvas" element={<FrmTolvasMolinos />} />
-               <Route path="/updatetolvas/:id" element={<ModificarTolvasMolinos />} />
+                              <Route path="/tolvas" element={<TolvasMolinos />} />
+                              <Route path="/createtolvas" element={<FrmTolvasMolinos />} />
+                              <Route path="/updatetolvas/:id" element={<ModificarTolvasMolinos />} />
 
          ////////////////MP//////////
-               <Route path="/mineral" element={<MMezclas />} />
-               <Route path="/mmlt" element={<MezclasMLT />} />
-               <Route path="/createmmlt" element={<FrmMezclasMLT />} />
-               <Route path="/updatemmlt/:id" element={<ModificarMezclasMLT />} />
-               <Route path="/mmle" element={<MezclasMLE />} />
-               <Route path="/createmmle" element={<FrmMezclasMLE />} />
-               <Route path="/updatemmle/:id" element={<ModificarMezclasMLE />} />
+                              <Route path="/mineral" element={<MMezclas />} />
+                              <Route path="/mmlt" element={<MezclasMLT />} />
+                              <Route path="/createmmlt" element={<FrmMezclasMLT />} />
+                              <Route path="/updatemmlt/:id" element={<ModificarMezclasMLT />} />
+                              <Route path="/mmle" element={<MezclasMLE />} />
+                              <Route path="/createmmle" element={<FrmMezclasMLE />} />
+                              <Route path="/updatemmle/:id" element={<ModificarMezclasMLE />} />
 
-               <Route path="/patio" element={<MPatio />} />
-               <Route path="/mpmle" element={<PatioMLE />} />
-               <Route path="/creatempmle" element={<FrmPatioMLE />} />
-               <Route path="/updatempmle/:id" element={<ModificarPatioMLE />} />
-               <Route path="/mpmlt" element={<PatioMLT />} />
-               <Route path="/creatempmlt" element={<FrmPatioMLT />} />
-               <Route path="/updatempmlt/:id" element={<ModificarPatioMLT />} />
+                              <Route path="/patio" element={<MPatio />} />
+                              <Route path="/mpmle" element={<PatioMLE />} />
+                              <Route path="/creatempmle" element={<FrmPatioMLE />} />
+                              <Route path="/updatempmle/:id" element={<ModificarPatioMLE />} />
+                              <Route path="/mpmlt" element={<PatioMLT />} />
+                              <Route path="/creatempmlt" element={<FrmPatioMLT />} />
+                              <Route path="/updatempmlt/:id" element={<ModificarPatioMLT />} />
 
-               <Route path="/triturada" element={<Triturada />} />
-               <Route path="/tmle" element={<TrituradaMLE />} />
-               <Route path="/tmlt" element={<TrituradaMLT />} />
-               <Route path="/tolvag" element={<TolvaG />} />
-               <Route path="/createtmle" element={<FrmTrituradaMLE />} />
-               <Route path="/createtmlt" element={<FrmTrituradaMLT />} />
-               <Route path="/createtolvag" element={<FrmTolvaG />} />
-               <Route path="/updatetmle/:id" element={<ModificarTrituradaMLE />} />
-               <Route path="/updatetmlt/:id" element={<ModificarTrituradaMLT />} />
-               <Route path="/updatetolvag/:id" element={<ModificarTolvaG />} />
-               <Route path="/notas" element={<Notas />} />
-               <Route path="/createnotas" element={<FrmNotas />} />
-               <Route path="/updatenotas/:id" element={<ModificarNotas />} />
+                              <Route path="/triturada" element={<Triturada />} />
+                              <Route path="/tmle" element={<TrituradaMLE />} />
+                              <Route path="/tmlt" element={<TrituradaMLT />} />
+                              <Route path="/tolvag" element={<TolvaG />} />
+                              <Route path="/createtmle" element={<FrmTrituradaMLE />} />
+                              <Route path="/createtmlt" element={<FrmTrituradaMLT />} />
+                              <Route path="/createtolvag" element={<FrmTolvaG />} />
+                              <Route path="/updatetmle/:id" element={<ModificarTrituradaMLE />} />
+                              <Route path="/updatetmlt/:id" element={<ModificarTrituradaMLT />} />
+                              <Route path="/updatetolvag/:id" element={<ModificarTolvaG />} />
+                              <Route path="/notas" element={<Notas />} />
+                              <Route path="/createnotas" element={<FrmNotas />} />
+                              <Route path="/updatenotas/:id" element={<ModificarNotas />} />
 
 
 
          /////////HOROMETROS//////////
-               <Route path="/horometros" element={<Horometros />} />
-               <Route path="/hjigs" element={<HorometroJigs />} />
-               <Route path="/createhjigs" element={<FrmHorometroJigs />} />
-               <Route path="/updatehjigs/:id" element={<MofificarHJigs />} />
-               <Route path="/hmesa12" element={<HorometrosM12 />} />
-               <Route path="/createhmesa12" element={<FrmHorometroM12 />} />
-               <Route path="/updatehmesa12/:id" element={<ModificarHM12 />} />
-               <Route path="/hmesa34" element={<HorometroM34 />} />
-               <Route path="/createhmesa34" element={<FrmHorometroM34 />} />
-               <Route path="/updatehmesa34/:id" element={<ModificarHM34 />} />
-               <Route path="/hmesa5" element={<HorometroM5/>} />
-               <Route path="/createhmesa5" element={<FrmHorometroM5 />} />
-               <Route path="/updatehmesa5/:id" element={<ModifcarHM5/>} />
-               <Route path="/hmesa6" element={<HorometroM6/>} />
-               <Route path="/createhmesa6" element={<FrmHorometroM6 />} />
-               <Route path="/updatehmesa6/:id" element={<ModificarHM6/>} />
-               <Route path="/hmolinos" element={<Molinos/>} />
-               <Route path="/Horomolinos" element={<HorometroMolinos/>} />
-               <Route path="/createhmolinos" element={<FrmHMolinos />} />
-               <Route path="/updatehmolinos/:id" element={<ModificarHMolinos/>} />
-               <Route path="/molinos" element={<ProdMolinos/>} />
-               <Route path="/createhrsmolinos" element={<FrmPMolinos />} />
-               <Route path="/updatehrsmolinos/:id" element={<ModificarPMolinos/>} />
-               <Route path="/crivas" element={<Criva/>} />
-               <Route path="/createcrivas" element={<FrmCrivas />} />
-               <Route path="/updatecrivas/:id" element={<ModificarCrivas/>} />
-        
+                              <Route path="/horometros" element={<Horometros />} />
+                              <Route path="/hjigs" element={<HorometroJigs />} />
+                              <Route path="/createhjigs" element={<FrmHorometroJigs />} />
+                              <Route path="/updatehjigs/:id" element={<MofificarHJigs />} />
+                              <Route path="/hmesa12" element={<HorometrosM12 />} />
+                              <Route path="/createhmesa12" element={<FrmHorometroM12 />} />
+                              <Route path="/updatehmesa12/:id" element={<ModificarHM12 />} />
+                              <Route path="/hmesa34" element={<HorometroM34 />} />
+                              <Route path="/createhmesa34" element={<FrmHorometroM34 />} />
+                              <Route path="/updatehmesa34/:id" element={<ModificarHM34 />} />
+                              <Route path="/hmesa5" element={<HorometroM5 />} />
+                              <Route path="/createhmesa5" element={<FrmHorometroM5 />} />
+                              <Route path="/updatehmesa5/:id" element={<ModifcarHM5 />} />
+                              <Route path="/hmesa6" element={<HorometroM6 />} />
+                              <Route path="/createhmesa6" element={<FrmHorometroM6 />} />
+                              <Route path="/updatehmesa6/:id" element={<ModificarHM6 />} />
+                              <Route path="/hmolinos" element={<Molinos />} />
+                              <Route path="/Horomolinos" element={<HorometroMolinos />} />
+                              <Route path="/createhmolinos" element={<FrmHMolinos />} />
+                              <Route path="/updatehmolinos/:id" element={<ModificarHMolinos />} />
+                              <Route path="/molinos" element={<ProdMolinos />} />
+                              <Route path="/createhrsmolinos" element={<FrmPMolinos />} />
+                              <Route path="/updatehrsmolinos/:id" element={<ModificarPMolinos />} />
+                              <Route path="/crivas" element={<Criva />} />
+                              <Route path="/createcrivas" element={<FrmCrivas />} />
+                              <Route path="/updatecrivas/:id" element={<ModificarCrivas />} />
 
-               <Route path="/horno" element={<Horno/>} />
-               <Route path="/createhorno" element={<FrmHorno />} />
-               <Route path="/updatehorno/:id" element={<ModificarHorno/>} />
-               <Route path="/pdfhorometro" element={<PdfHorometro/>} />
-        
-        
-         </Routes>
-      
-         </Menu>
-      </Router>
-   );
+
+                              <Route path="/horno" element={<Horno />} />
+                              <Route path="/createhorno" element={<FrmHorno />} />
+                              <Route path="/updatehorno/:id" element={<ModificarHorno />} />
+                              <Route path="/pdfhorometro" element={<PdfHorometro />} />
+
+
+                  </Routes>
+                  </Menu>
+                  </>
+        )}
+            </Router>
+      );
 }
 
 

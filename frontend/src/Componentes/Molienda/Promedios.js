@@ -6,10 +6,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios'
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
+
 
 function Promedios() {
-    const [data, setData] = useState([]);
-   const navigate = useNavigate()
+  const [data, setData] = useState([]);
+  const navigate = useNavigate()
+  const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
     fetch('http://localhost:8081/promedios')
@@ -30,31 +33,45 @@ function Promedios() {
       })
       .catch(err => console.log(err));
   };
-
+  const handleSearch = (event) => {
+    setSearchTerm(event.target.value.toLowerCase());
+  };
   return (
     <>
 
-    <h1>Promedios:</h1>
-    <div className="close-button" onClick={() => navigate('/molienda')}>
+      <h1>Promedios:</h1>
+      <div className="close-button" onClick={() => navigate('/molienda')}>
         <FontAwesomeIcon icon={faTimes} />
-        </div>
-    <div className="text-center">
-      <Link to="/createpromedios" className="btn btn-danger btn-lg font-weight-bold   text-lg" >
-        <FontAwesomeIcon icon={faPlus} />Insertar</Link>
-    </div>
+      </div>
+      <div className="text-center">
+        <Link to="/createpromedios" className="btn btn-danger btn-lg font-weight-bold   text-lg" >
+          <FontAwesomeIcon icon={faPlus} />Insertar</Link>
+      </div>
 
-    <div className='row mt-3'>
-      {data.length !== 0 ?
-        <div className='col-11 col-lg-7 offset-0 offset-lg-2'>
-          <div className='table-container'>
-            <div className='table-top-scroll'> {/* Nuevo contenedor */}
-              <div className='table-responsive'>
-                <table className="table table-bordered">
-                  <thead>
-                    <tr  >
-                    <th></th>
+      <div className='row mt-3'>
+        {data.length !== 0 ?
+          <div className='col-11 col-lg-7 offset-0 offset-lg-2'>
+            <div className='table-container'>
+              <div className='table-top-scroll'> {/* Nuevo contenedor */}
+                <div className='table-responsive'>
+                <div className="input-group">
+                  <input
+                    type='text'
+                    className='form-control'
+                    placeholder='Buscar...'
+                    value={searchTerm}
+                    onChange={handleSearch}
+                  />
+                  <span className="input-group-text">
+                    <FontAwesomeIcon icon={faSearch} />
+                  </span>
+                </div>
+                  <table className="table table-bordered">
+                    <thead>
+                      <tr  >
+                        <th></th>
 
-                       <th>ID</th>
+                        <th>ID</th>
                         <th>Fecha</th>
                         <th>Turno</th>
                         <th>P.ESPmo1</th>
@@ -67,56 +84,63 @@ function Promedios() {
                         <th>Malla325mo2</th>
                         <th>Calciosmo2</th>
                         <th>Humedadmo2</th>
-                      
-                    </tr>
-                  </thead>
-                  <tbody className='table-group-divider'>
-                    {data.map((d, i) => (
-                      <tr key={i}>
-                        <td>
-                          <div style={{ display: 'flex', alignItems: 'center' }}>
-                            <Link to={`/updatepromedios/${d.id}`} className='btn btn-warning'>
-                              <i className='fa-solid fa-edit'></i>
-                            </Link>
-                            &nbsp;
 
-                            <button className='btn btn-danger' onClick={() => handleDelete(d.id)}>
-                              <i className='fa-solid fa-trash'></i>
-                            </button>
-                          </div>
+                      </tr>
+                    </thead>
+                    <tbody className='table-group-divider'>
+                    {data
+                      .filter(d => {
+                        // Filtra los datos según el término de búsqueda en cualquier columna
+                        return Object.values(d).some(value =>
+                          value.toString().toLowerCase().includes(searchTerm)
+                        );
+                      })
+                      .map((d, i) => (
+                        <tr key={i}>
+                          <td>
+                            <div style={{ display: 'flex', alignItems: 'center' }}>
+                              <Link to={`/updatepromedios/${d.id}`} className='btn btn-warning'>
+                                <i className='fa-solid fa-edit'></i>
+                              </Link>
+                              &nbsp;
 
-                        </td>
-                        <td>{d.id}</td>
+                              <button className='btn btn-danger' onClick={() => handleDelete(d.id)}>
+                                <i className='fa-solid fa-trash'></i>
+                              </button>
+                            </div>
+
+                          </td>
+                          <td>{d.id}</td>
                           <td>{d.fecha}</td>
                           <td>{d.turno}</td>
                           <td>{typeof d.pemolino1 === 'number' ? d.pemolino1.toFixed(2) : 'N/A'}</td>
-                          <td>{typeof d.malla200mo1  === 'number' ? d.malla200mo1.toFixed(2) : 'N/A'}</td>
+                          <td>{typeof d.malla200mo1 === 'number' ? d.malla200mo1.toFixed(2) : 'N/A'}</td>
                           <td>{typeof d.malla325mo1 === 'number' ? d.malla325mo1.toFixed(2) : 'N/A'}</td>
                           <td>{typeof d.calciosmo1 === 'number' ? d.calciosmo1.toFixed(2) : 'N/A'}</td>
                           <td>{typeof d.humedadmo1 === 'number' ? d.humedadmo1.toFixed(2) : 'N/A'}</td>
-                          <td>{typeof d.pemolino2  === 'number' ? d.pemolino2.toFixed(2) : 'N/A'}</td>
-                          <td>{typeof d.malla200mo2  === 'number' ? d.malla200mo2.toFixed(2) : 'N/A'}</td>
+                          <td>{typeof d.pemolino2 === 'number' ? d.pemolino2.toFixed(2) : 'N/A'}</td>
+                          <td>{typeof d.malla200mo2 === 'number' ? d.malla200mo2.toFixed(2) : 'N/A'}</td>
                           <td>{typeof d.malla325mo2 === 'number' ? d.malla325mo2.toFixed(2) : 'N/A'}</td>
-                          <td>{typeof d.calciosmo2  === 'number' ? d.calciosmo2.toFixed(2) : 'N/A'}</td>
-                          <td>{typeof d.humedadmo2  === 'number' ? d.humedadmo2.toFixed(2) : 'N/A'}</td>
+                          <td>{typeof d.calciosmo2 === 'number' ? d.calciosmo2.toFixed(2) : 'N/A'}</td>
+                          <td>{typeof d.humedadmo2 === 'number' ? d.humedadmo2.toFixed(2) : 'N/A'}</td>
 
 
-                      </tr>
-                    ))}
+                        </tr>
+                      ))}
 
-                    {/* Puedes agregar más filas según sea necesario */}
-                  </tbody>
-                </table>
+                      {/* Puedes agregar más filas según sea necesario */}
+                    </tbody>
+                  </table>
 
 
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        : <h2 className='aling-itemns-center'>Sin Datos</h2>
-      }
-    </div>
-  </>
+          : <h2 className='aling-itemns-center'>Sin Datos</h2>
+        }
+      </div>
+    </>
   )
 }
 
