@@ -93,7 +93,7 @@ function Usuarios() {
                           <td>{d.codif}</td>
                           <td>
                             <div style={{ display: 'flex', alignItems: 'center' }}>
-                              <Link to={`/updateusuario/${d.id_usuarios}`} className='btn btn-warning'>
+                              <Link to={`/updateusuarios/${d.id_usuarios}`} className='btn btn-warning'>
                                 <i className='fa-solid fa-edit'></i>
                               </Link>
                               &nbsp;

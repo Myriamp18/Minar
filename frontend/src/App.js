@@ -155,11 +155,14 @@ import Piedra from './Componentes/ReporteDiario/Piedra';
 import FrmPiedra from './Componentes/ReporteDiario/FrmPiedra';
 import Usuarios from './Componentes/Usuarios/Usuarios';
 import { RutasPrivadas } from './Componentes/RutasPrivadas';
+import ModificarUsuario from './Componentes/Usuarios/ModificarUsuario';
+
 
 function App() {
       const [isLoggedIn, setIsLoggedIn] = useState(false);
-
+    
       return (
+          
             <Router>
                  
                   <Routes>
@@ -190,6 +193,7 @@ function App() {
 
               ////USUARIO/////////
                               <Route path="/createusuario" element={<InsertarUsuario />} />
+                              <Route path="/updateusuarios/:id" element={<ModificarUsuario />} />
                               <Route path="/usuarios" element={<Usuarios />} />
 
        /////////GRANOBANDAS/////
@@ -373,7 +377,7 @@ function App() {
                               <Route path="/updatehorno/:id" element={<ModificarHorno />} />
                               <Route path="/pdfhorometro" element={<PdfHorometro />} />
 
-
+                              <Route path="/excel" element={<Excel />} />
                   </Routes>
                   </Menu>
                   </>

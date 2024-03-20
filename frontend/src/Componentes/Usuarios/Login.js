@@ -29,13 +29,14 @@ const Login = ({ onLogin }) => {
       console.log('Respuesta del servidor:', data);
       if (data.success) {
         console.log('Inicio de sesión exitoso:', data.message);
+        
         // Llama a la función onLogin pasada como prop si está definida
         if (onLogin) {
           onLogin();
         }
+       
         navigate('/Inicio');
-        const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
-        localStorage.setItem('isLoggedIn', 'true');
+       
       } else {
         setError(data.message || 'Error al iniciar sesión. Por favor, inténtalo de nuevo.');
       }

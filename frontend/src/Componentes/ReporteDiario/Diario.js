@@ -25,6 +25,9 @@ function Diario() {
   const handelePDF = () =>{
     navigate('/pdfdiario')
   }
+  const handeleEXCEL = () =>{
+    navigate('/excel')
+  }
   return (
     <div className="existencia-container">
       <h1>Reporte de Produccion Diaria:</h1>
@@ -72,6 +75,10 @@ function Diario() {
         </span>
         </button>
         <button className="btnmo btnmo-bs" onClick={handelePDF}>
+        <span className="iconnnespdf"><FaFilePdf /> </span>
+       
+        </button>
+        <button className="btnmo btnmo-bs" onClick={handeleEXCEL}>
         <span className="iconnnespdf"><FaFilePdf /> </span>
        
         </button>

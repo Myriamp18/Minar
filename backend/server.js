@@ -46,6 +46,22 @@ app.post('/createusuarios', (req, res) => {
         return res.json(data);
     });
 });
+app.put('/updateusuarios/:id', (req, res) => {
+    const sql = "UPDATE usuarios SET nombrecompleto=?, telefono=?, cargo=?, nombreusuario=?, contra=?,codif=? WHERE id_usuarios = ?";
+    const values = [
+        req.body.nombrecompleto,
+        req.body.telefono,
+        req.body.cargo,
+        req.body.nombreusuario,
+        req.body.contra,
+        req.body.codif
+    ];
+    const id = req.params.id;
+    db.query(sql, [...values, id], (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+});
 app.delete('/deleteusuarios/:id', (req, res) => {
     const sql = "DELETE FROM usuarios WHERE id_usuarios = ?";
     const id = req.params.id;
@@ -75,6 +91,18 @@ app.post('/login', (req, res) => {
         }
     });
 });
+app.get('/getrecordusuarios/:id', (req, res) => {
+    const id = req.params.id;
+    const sql = "SELECT * FROM usuarios WHERE id_usuarios = ?"
+    db.query(sql, [id], (err, data) => {
+        if (err) {
+            return res.json({ Error: "Error" })
+        }
+
+        return res.json(data)
+    })
+})
+
 
 /////////////SILOS//////////
 app.get('/silos', (req, res) => {
