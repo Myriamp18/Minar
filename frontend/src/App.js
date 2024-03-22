@@ -156,6 +156,8 @@ import FrmPiedra from './Componentes/ReporteDiario/FrmPiedra';
 import Usuarios from './Componentes/Usuarios/Usuarios';
 import { RutasPrivadas } from './Componentes/RutasPrivadas';
 import ModificarUsuario from './Componentes/Usuarios/ModificarUsuario';
+import Excelmolienda from './Componentes/Molienda/Excelmolienda';
+import Excelexistencias from './Componentes/ReporteExistencia/Excelexistencias';
 
 
 function App() {
@@ -378,6 +380,8 @@ function App() {
                               <Route path="/pdfhorometro" element={<PdfHorometro />} />
 
                               <Route path="/excel" element={<Excel />} />
+                              <Route path="/excelmolienda" element={<Excelmolienda />} />
+                              <Route path="/excelexistencias" element={<Excelexistencias />} />
                   </Routes>
                   </Menu>
                   </>

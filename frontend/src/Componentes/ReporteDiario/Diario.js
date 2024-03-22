@@ -5,7 +5,8 @@ import { MdOutlineTableRestaurant } from "react-icons/md";
 import { GiMineralPearls } from "react-icons/gi";
 import { useNavigate } from 'react-router-dom';
 import { FaFilePdf } from "react-icons/fa6";
-
+import { SiMicrosoftexcel } from "react-icons/si";
+import './Diario.css'
 
 function Diario() {
     const navigate = useNavigate();
@@ -29,8 +30,20 @@ function Diario() {
     navigate('/excel')
   }
   return (
-    <div className="existencia-container">
+    <div className="diario-container">
+      
       <h1>Reporte de Produccion Diaria:</h1>
+      <div className='exportaciones'>
+      <button className="btne btnmo-be" onClick={handelePDF}>
+        <span className="iconnnesex"><FaFilePdf /> </span>
+       
+        </button>
+        <button className="btne btnmo-bo" onClick={handeleEXCEL}>
+        <span className="iconnnesex"><SiMicrosoftexcel /> </span>
+       
+        </button>
+        </div>
+        <br></br>
       <div className="button-container">
         <button className="btn-large btn-pt" onClick={handeleJS}>
           <span className="iconnnes"><GiManualMeatGrinder /></span>
@@ -64,7 +77,7 @@ function Diario() {
            
         </span>
         </button>
-        <button className="btn-large btn-mp" onClick={handeleSELEC}>
+        <button className="btn-large btn-sss" onClick={handeleSELEC}>
         <span className="iconnnes"><GiMineralPearls /> </span>
           <span className="button-text">
            SELECCION
@@ -74,14 +87,7 @@ function Diario() {
            
         </span>
         </button>
-        <button className="btnmo btnmo-bs" onClick={handelePDF}>
-        <span className="iconnnespdf"><FaFilePdf /> </span>
        
-        </button>
-        <button className="btnmo btnmo-bs" onClick={handeleEXCEL}>
-        <span className="iconnnespdf"><FaFilePdf /> </span>
-       
-        </button>
       </div>
     </div>
   )

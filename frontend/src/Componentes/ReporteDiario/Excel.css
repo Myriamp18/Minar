@@ -1,37 +1,46 @@
-.table-responsive {
-    overflow-x: auto;
-  }
-
-  .container {
+.container {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    margin-top: 20px;
+    /* Centra verticalmente los elementos */
+    height: 70vh;
   }
-  
-  .table-container {
+  .excel {
+    background-color: #000000; /* Color de fondo del contenedor interno */
+    padding: 20px; /* Espacio alrededor del contenido */
+    border-radius: 10px; /* Bordes redondeados */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    text-align: center; /* Alineación del contenido */
+    width: 300px; /* Ancho máximo del contenedor */
+  }
+  .container h1 {
+    font-size: 24px;
     margin-bottom: 20px;
-  }
-  
+    color: #fff;
+}
   .date-picker-container {
     margin-bottom: 20px;
   }
   
   .export-button-container {
-    text-align: center;
+    display: flex;
+    justify-content: center;
   }
   
   .export-button {
     padding: 10px 20px;
-    background-color: #007bff;
-    color: #fff;
+    font-size: 16px;
+    background-color: #29a932;
+    color: #121010;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    transition: background-color 0.3s;
   }
   
-  .export-button:hover {
-    background-color: #0056b3;
+  .export-button:disabled {
+    background-color: #6c757d;
+    cursor: not-allowed;
   }
   
