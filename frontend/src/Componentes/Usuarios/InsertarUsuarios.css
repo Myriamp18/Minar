@@ -1,101 +1,99 @@
+/* Estilos generales */
 .registrar-section {
     padding: 20px;
-   
-    background-size:center; /* Ajusta el tamaño de la imagen para cubrir todo el contenedor */
-    background-position:center; /* Centra la imagen */
-    height: 100vh; /* Asigna la altura del 100% del viewport */
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.containerregistro{
+.containerregistro {
     display: flex;
     flex-direction: column;
-    margin-left: -30px;
     margin: auto;
-    margin-top: 5px;
-    height: 100%;
-    width: 500px;
+    margin-top: 20px; /* Ajusta el margen superior */
+    width: 90%; /* Utiliza un ancho relativo */
+    max-width: 500px; /* Establece un ancho máximo */
     background-color: #92929298;
-    padding-bottom: 0px;
+    padding: 20px;
     box-sizing: border-box;
- 
     
 }
-.headerregistro{
+
+.headerregistro {
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 100%;
-    margin-top: 5px;
-}
-.textregistro{
-    color: #020101da;
-    font-size: 48px;
-    font-weight: 700;
-}
-.underlineregistro{
-    width: 61px;
-    height: 6px;
-    background: #151212;
-    border-radius: 9px;
-}
-.forgot-registrar{
-    padding-left: 5px;
-    color: #000000;
-    font-size: 18px;
-   
+    margin-top: 20px; /* Ajusta el margen superior */
 }
 
-.inputregistro{
+.textregistro {
+    color: #020101da;
+    font-size: 36px; /* Reducción del tamaño de fuente para pantallas pequeñas */
+    font-weight: 700;
+}
+
+.underlineregistro {
+    width: 50px; /* Reducción del ancho */
+    height: 4px; /* Reducción de la altura */
+    background: #151212;
+    border-radius: 6px; /* Reducción del radio de borde */
+}
+
+.forgot-registrar {
+    padding-left: 5px;
+    color: #000000;
+    font-size: 16px; /* Reducción del tamaño de fuente para pantallas pequeñas */
+}
+
+.inputregistro {
     display: flex;
     align-items: center;
     margin: auto;
-    width: 450px;
-    height: 70px;
+    width: 90%; /* Utiliza un ancho relativo */
+    max-width: 450px; /* Establece un ancho máximo */
+    height: 50px; /* Reducción de la altura */
     background: #fffcfc;
     border-radius: 6px;
-    
 }
 
-.inputregistro input{
-    height: 40px;
-    width: 400px;
+.inputregistro input {
+    flex: 1;
+    height: 100%;
+    width: auto;
+    padding: 0 10px;
     background: transparent;
     border: none;
     outline: none;
     color: #020202;
-    font-size: 19px;
-}
-.input img{
-    margin: 0px 30px;
+    font-size: 16px; /* Reducción del tamaño de fuente para pantallas pequeñas */
 }
 
-.forgot-registrar span{
-    color: #e60c0c;
-    cursor: pointer;
-    
-}
-.submit-registrar{
+.submit-registrar {
     display: flex;
-    margin: 50px auto;
-    justify-content: center;
-    margin-top: -15px;
-}
-
-.registrarse{
-    display: flex;
+    margin: 30px auto; /* Ajuste del margen */
     justify-content: center;
     align-items: center;
-    width: 220px;
-    height: 59px;
+}
+
+.registrarse {
+    width: 100%; /* Utiliza el ancho completo */
+    max-width: 220px;
+    height: 50px; /* Reducción de la altura */
     color: #fff;
     background: #040404;
-    border-radius: 50px;
-    font-size: 25px;
+    border-radius: 25px; /* Mitad del alto */
+    font-size: 18px; /* Reducción del tamaño de fuente para pantallas pequeñas */
     font-weight: 300;
     cursor: pointer;
-    
-   
+}
+
+/* Media query para pantallas pequeñas */
+@media screen and (max-width: 767px) {
+    .textregistro {
+        font-size: 28px; /* Reducción adicional del tamaño de fuente */
+    }
 }
