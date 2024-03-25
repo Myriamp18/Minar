@@ -6,7 +6,9 @@ import { GiRailRoad } from "react-icons/gi";
 import { FaHourglassHalf } from "react-icons/fa";
 import { IoMdClock } from "react-icons/io";
 import { FaFilePdf } from "react-icons/fa6";
+import { SiMicrosoftexcel } from "react-icons/si";
 import './Horometro.css'
+import '../ReporteDiario/Diario.css'
 
 
 function Horometros() {
@@ -40,15 +42,28 @@ const onHcriva= () =>{
  const handelePDF = () =>{
     navigate('/pdfhorometro')
   }
+  const handeleExcel = () =>{
+    navigate('/excelhorometro')
+  }
       
   return (
   
       
        
       <div className='horometros'><h1>Horometros:</h1>
+      <div className='exportaciones'>
+              <button className="btne btnmo-be" onClick={handelePDF}>
+                <span className="iconnnesex"><FaFilePdf /> </span>
+
+              </button>
+              <button className="btne btnmo-bo" onClick={handeleExcel}>
+                <span className="iconnnesex"><SiMicrosoftexcel /> </span>
+
+              </button>
+            </div>
+            <br></br>
+
         <div className="h-container">
-      
-               
         <div className="buttonh-container">
           <button className="btnh-large btnh-pt"  onClick={onHjigs}>
             <span className="iconnnesh"><FaHourglassHalf /></span>
@@ -140,10 +155,7 @@ const onHcriva= () =>{
           </span>
            
           </button>
-          <button className="btnmo btnmo-bs" onClick={handelePDF}>
-        <span className="iconnnespdf"><FaFilePdf /> </span>
-       
-        </button>
+        
           
         </div>
         </div>

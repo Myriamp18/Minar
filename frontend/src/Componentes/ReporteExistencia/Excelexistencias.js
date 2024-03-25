@@ -9,7 +9,7 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
 
 function Excelexistencias() {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
   const [silos, setSilos] = useState([]);
   const [mesas, setMesas] = useState([]);
   const [sec, setSec] = useState([]);
@@ -180,9 +180,9 @@ const formatDate = (date) => {
     try {
       setExporting(true);
       const workbook = new ExcelJS.Workbook();
-      const worksheet = workbook.addWorksheet('Producción JIGG´S');
+      const worksheet = workbook.addWorksheet('Existencias');
 
-      navigate('/diario')
+      navigate('/existencia')
       // Insertar imagen
       const logoImage = workbook.addImage({
         base64: logoImageBase64, // Aquí debes colocar los datos de la imagen en formato base64
@@ -211,11 +211,11 @@ const formatDate = (date) => {
 
       // Datos de SELECCION
       silos.forEach(product => {
-        worksheet.addRow(['PT', 'SILO 1',product.silo1, product.pe1, ]);
-        worksheet.addRow(['PT', 'SILO 2',product.silo2, product.pe2, ]);
-        worksheet.addRow(['PT', 'SILO 3',product.silo3, product.pe3, ]);
-        worksheet.addRow(['PT', 'SILO 4',product.silo4, product.pe4, ]);
-        worksheet.addRow(['PT', 'SILO 5',product.silo5, product.pe5, ]);
+        worksheet.addRow(['PT', 'SILO 1',product.silo1, product.pes1, ]);
+        worksheet.addRow(['PT', 'SILO 2',product.silo2, product.pes2, ]);
+        worksheet.addRow(['PT', 'SILO 3',product.silo3, product.pes3, ]);
+        worksheet.addRow(['PT', 'SILO 4',product.silo4, product.pes4, ]);
+        worksheet.addRow(['PT', 'SILO 5',product.silo5, product.pes5, ]);
       
        
       });
@@ -223,27 +223,136 @@ const formatDate = (date) => {
       const textRow = worksheet.addRow([]);
 
       // Asignar texto a las celdas de la fila
-      textRow.getCell(6).value = 'REPORTE EXISTENCIAS';
+      textRow.getCell(6).value = '';
       // Encabezado de la tabla JIGS1
       const headerRow1 = worksheet.addRow(['','', 'TON', 'P.E']);
       applyHeaderStyle(headerRow1);
 
       // Datos de la tabla JIGS1
-      products.forEach(product => {
-        worksheet.addRow(['PT', 'SILO 1',product.silo1, product.pe1, ]);
-        worksheet.addRow(['PT', 'SILO 2',product.silo2, product.pe2, ]);
-        worksheet.addRow(['PT', 'SILO 3',product.silo3, product.pe3, ]);
-        worksheet.addRow(['PT', 'SILO 4',product.silo4, product.pe4, ]);
-        worksheet.addRow(['PT', 'SILO 5',product.silo5, product.pe5, ]);
+      mesas.forEach(product => {
+        worksheet.addRow(['PP', 'CONCENTRADO',product.saldo, product.pe]);
+        
       });
+
+        // Agregar datos de 'otra_tabla'
+      sec.forEach(item => {
+      // Suponiendo que 'campo1' y 'campo2' son los campos que quieres agregar
+      worksheet.addRow(['PP', 'CONCENTRADO JIG´SS CHINO SECUNDARIO', item.saldo, item.pe]);
+    });
+      medios46.forEach(item => {
+      // Suponiendo que 'campo1' y 'campo2' son los campos que quieres agregar
+      worksheet.addRow(['PP', 'MEDIOS DE CONCENTRADO 4.06-4.10', item.saldo46, item.pe46]);
+    });
+    medios4.forEach(item => {
+      // Suponiendo que 'campo1' y 'campo2' son los campos que quieres agregar
+      worksheet.addRow(['PP', 'MEDIOS DE CONCENTRADO 4.00-4.04', item.saldo, item.pe]);
+    });
+    medios3.forEach(item => {
+      // Suponiendo que 'campo1' y 'campo2' son los campos que quieres agregar
+      worksheet.addRow(['PP', 'MEDIOS DE CONCENTRADO 3.98', item.saldo, item.pe]);
+    });
+    granobandas.forEach(item => {
+      // Suponiendo que 'campo1' y 'campo2' son los campos que quieres agregar
+      worksheet.addRow(['PP', 'GRANO PARA BANDAS DE SELECCION', item.saldo, item.pesp]);
+    });
+    granopmoler.forEach(item => {
+      // Suponiendo que 'campo1' y 'campo2' son los campos que quieres agregar
+      worksheet.addRow(['PP', 'GRANO P/MOLIENDA', item.saldo, item.pe]);
+    });
+    granojigs.forEach(item => {
+      // Suponiendo que 'campo1' y 'campo2' son los campos que quieres agregar
+      worksheet.addRow(['PP', 'GRANO JIG´SS CHINO', item.saldo, item.pe]);
+    });
+    desensolvech.forEach(item => {
+      // Suponiendo que 'campo1' y 'campo2' son los campos que quieres agregar
+      worksheet.addRow(['PP', 'DESENSOLVE JIG´SS CHINO', item.saldo, item.pe]);
+    });
+    desensolve.forEach(item => {
+      // Suponiendo que 'campo1' y 'campo2' son los campos que quieres agregar
+      worksheet.addRow(['PP', 'DESENSOLVE 4.00-4.10', item.saldo, item.pe]);
+    });
+    desecho43.forEach(item => {
+      // Suponiendo que 'campo1' y 'campo2' son los campos que quieres agregar
+      worksheet.addRow(['PP', 'DESECHO GRANO DE SELECCION 4.30', item.saldo, item.pe]);
+    });
+    desecho39.forEach(item => {
+      // Suponiendo que 'campo1' y 'campo2' son los campos que quieres agregar
+      worksheet.addRow(['PP', 'DESECHO GRANO DE SELECCION 3.90-4.00', item.saldo, item.pe]);
+    });
+    baritron.forEach(item => {
+      // Suponiendo que 'campo1' y 'campo2' son los campos que quieres agregar
+      worksheet.addRow(['PP', 'BARITRON', item.saldo, item.pe]);
+    });
+    tolvasmolinos.forEach(item => {
+      // Suponiendo que 'campo1' y 'campo2' son los campos que quieres agregar
+      worksheet.addRow(['PP', 'TOLVAS DE MOLINOS', item.tolvamolinos, item.petm]);
+      worksheet.addRow(['PP', 'MEZCLAS PARA MOLER', item.mezclasmoler, item.pememo]);
+    });
+    
       // Ajustar el ancho de las columnas
       worksheet.columns.forEach(column => {
-        column.width = 13; // <-- Aquí puedes ajustar el ancho de las columnas
+        column.width = 40; // <-- Aquí puedes ajustar el ancho de las columnas
       });
-      // Fila en blanco entre JIGS1 y JIGS2
-      const textRow1 = worksheet.addRow([]);
-      textRow1.getCell(6).value = 'PRODUCCION DE JIGG´S';
+      worksheet.addRow([]);
 
+      // Encabezado de la tabla SELECCION
+      const headerRow2 = worksheet.addRow(['','', 'TON', 'P.E']);
+      applyHeaderStyle(headerRow2);
+
+      // Datos de SELECCION
+      mmlt.forEach(product => {
+        worksheet.addRow(['MP', 'MINERAL MLT PARA MEZCLAS',product.saldo, product.pe, ]);
+      });
+      mmle.forEach(item => {
+        worksheet.addRow(['MP', 'MINERAL MLE PARA MEZCLAS',item.saldo, item.pe, ]);
+      });
+      mpmlt.forEach(item => {
+        worksheet.addRow(['MP', 'MINERAL EN PATIO MLT',item.saldo, item.pe, ]);
+      });
+      mpmle.forEach(item => {
+        worksheet.addRow(['MP', 'MINERAL EN PATIO MLE',item.saldo, item.pe, ]);
+      });
+      tmlt.forEach(item => {
+        worksheet.addRow(['MP', 'MINERAL TRITURADO MLE',item.saldo, item.pe, ]);
+      });
+      tmle.forEach(item => {
+        worksheet.addRow(['MP', 'MINERAL TRITURADO MLT',item.saldo, item.pe, ]);
+      });
+      tolvag.forEach(item => {
+        worksheet.addRow(['MP', 'MINERAL TOLVA HENERAL MLE',item.saldo, item.pe, ]);
+      });
+
+      worksheet.addRow([]);
+
+      // Encabezado de la tabla SELECCION
+      const headerRow3 = worksheet.addRow(['','', 'TON', 'P.E']);
+      applyHeaderStyle(headerRow3);
+
+      // Datos de SELECCION
+      seleccion.forEach(product => {
+        worksheet.addRow(['BS', 'BARITA SELECCION',product.saldo, product.pesp, ]);
+      });
+      granobari.forEach(item => {
+        worksheet.addRow(['PT', 'GRANO PARA BARIBRIGHT',item.saldo, item.pe, ]);
+      });
+      concbari.forEach(item => {
+        worksheet.addRow(['PT', 'CONCENTRADO PARA BARIBRIGHT',item.saldo, item.pe, ]);
+      });
+      
+      worksheet.addRow([]);
+
+      // Encabezado de la tabla SELECCION
+      const headerRow4 = worksheet.addRow(['NOTAS','']);
+      applyHeaderStyle(headerRow4);
+
+      // Datos de SELECCION
+      notas.forEach(product => {
+        worksheet.addRow([product.totmedios, 'TONS DE MEDIOS PASARON A LAVAR A MESAS' ]);
+        worksheet.addRow([product.totjigssec, 'TONS DE MEDIOS PASARON A LAVAR A JIGG´S SECUNDARIO' ]);
+        worksheet.addRow([product.totdesensolve, 'TONS DE DESENSOLVE PASARON A LAVAR A MESAS' ]);
+        worksheet.addRow([product.totcolas, 'TONS DE COLAS PASARON A LAVAR A MESAS' ]);
+        worksheet.addRow([product.comentarios, '' ]);
+      });
       // Generar el archivo de Excel
       const buffer = await workbook.xlsx.writeBuffer();
 
@@ -254,7 +363,7 @@ const formatDate = (date) => {
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = 'Reporte_Diario_Planta.xlsx';
+      a.download = 'Reporte_Diario_Existencias.xlsx';
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
@@ -280,7 +389,7 @@ const formatDate = (date) => {
     <div className="container">
     <div className='excel'>
     <h1>Descargar Reporte</h1>
-    <div className="close-button" onClick={() => navigate('/diario')}>
+    <div className="close-button" onClick={() => navigate('/existencia')}>
                  <FontAwesomeIcon icon={faTimes} />
              </div>
  <div className="date-picker-container">

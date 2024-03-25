@@ -158,6 +158,7 @@ import { RutasPrivadas } from './Componentes/RutasPrivadas';
 import ModificarUsuario from './Componentes/Usuarios/ModificarUsuario';
 import Excelmolienda from './Componentes/Molienda/Excelmolienda';
 import Excelexistencias from './Componentes/ReporteExistencia/Excelexistencias';
+import ExcelHorometros from './Componentes/Horometros/ExcelHorometros';
 
 
 function App() {
@@ -382,6 +383,7 @@ function App() {
                               <Route path="/excel" element={<Excel />} />
                               <Route path="/excelmolienda" element={<Excelmolienda />} />
                               <Route path="/excelexistencias" element={<Excelexistencias />} />
+                              <Route path="/excelhorometro" element={<ExcelHorometros />} />
                   </Routes>
                   </Menu>
                   </>
