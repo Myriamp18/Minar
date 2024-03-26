@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 import Login from './Componentes/Usuarios/Login'
 import { BrowserRouter as Router, Routes, Route, BrowserRouter, Navigate } from 'react-router-dom'
@@ -154,28 +154,50 @@ import FrmMesas from './Componentes/ReporteDiario/FrmMesas';
 import Piedra from './Componentes/ReporteDiario/Piedra';
 import FrmPiedra from './Componentes/ReporteDiario/FrmPiedra';
 import Usuarios from './Componentes/Usuarios/Usuarios';
-import { RutasPrivadas } from './Componentes/RutasPrivadas';
 import ModificarUsuario from './Componentes/Usuarios/ModificarUsuario';
 import Excelmolienda from './Componentes/Molienda/Excelmolienda';
 import Excelexistencias from './Componentes/ReporteExistencia/Excelexistencias';
 import ExcelHorometros from './Componentes/Horometros/ExcelHorometros';
+import CerrarSesion from './Componentes/CerrarSesion';
+
 
 
 function App() {
-      const [isLoggedIn, setIsLoggedIn] = useState(false);
+      // Estado para manejar la autenticación del usuario
+      const [isAuthenticated, setIsAuthenticated] = useState(false);
     
+
+      useEffect(() => {
+            // Verificar si el usuario está autenticado al cargar la página
+            const loggedIn = localStorage.getItem('isAuthenticated');
+            if (loggedIn === 'true') {
+                  setIsAuthenticated(true);
+            }
+      }, []);
+
+      // Función para iniciar sesión
+      const login = () => {
+            // Realiza la lógica de autenticación aquí
+            // Por ejemplo, si el usuario se autentica exitosamente, establece isAuthenticated en true
+            setIsAuthenticated(true);
+            // Guarda el estado de autenticación en localStorage
+            localStorage.setItem('isAuthenticated', 'true');
+           
+      };
+
+      // Función para cerrar sesión
+     
+
       return (
-          
             <Router>
                  
-                  <Routes>
-                        {/* Ruta pública para el inicio de sesión */}
-                        <Route path="/" element={<Login onLogin={() => setIsLoggedIn(true)} />} /> 
-                 </Routes>
-                 {isLoggedIn && (
-                <>
-                 <Menu>
-                    <Routes> 
+                        <Routes>
+                              {/* Ruta pública para el inicio de sesión */}
+                              <Route path="/" element={<Login login={login} />} />
+                        </Routes>
+                        <Menu  isAuthenticated={isAuthenticated} login={login} >
+                        <Routes>
+
                               <Route path="/Inicio" element={<Inicio />} />
                               
                               <Route path="/diario" element={<Diario />} />
@@ -384,10 +406,9 @@ function App() {
                               <Route path="/excelmolienda" element={<Excelmolienda />} />
                               <Route path="/excelexistencias" element={<Excelexistencias />} />
                               <Route path="/excelhorometro" element={<ExcelHorometros />} />
-                  </Routes>
+                        </Routes>
+
                   </Menu>
-                  </>
-        )}
             </Router>
       );
 }

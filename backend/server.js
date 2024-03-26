@@ -1,11 +1,13 @@
 const express = require('express');
-
 const mysql = require('mysql');
 const cors = require('cors');
+const jwt = require("jsonwebtoken")
 
 const app = express();
 app.use(cors());
 app.use(express.json()); // Added to parse JSON in the request body
+
+
 
 const db = mysql.createConnection({
     host: "localhost",
@@ -15,15 +17,14 @@ const db = mysql.createConnection({
     dateStrings: 'date',
 });
 
-app.get('/', (req, res) => {
-    return res.json("from backend side");
-});
 
 app.listen(8081, () => {
     console.log("listening");
 });
 
 ////////////USUARIOs////////////////////////
+
+  
 app.get('/usuarios', (req, res) => {
     const sql = "SELECT * FROM usuarios ORDER BY id_usuarios DESC";
     db.query(sql, (err, data) => {
@@ -76,22 +77,19 @@ app.post('/login', (req, res) => {
 
     // Consultar la base de datos para verificar las credenciales
     const sql = 'SELECT * FROM usuarios WHERE nombreusuario = ? AND contra = ?';
-    db.query(sql, [nombreusuario, contra], (err, result) => {
-        if (err) {
-            console.error('Error en la consulta de inicio de sesión:', err);
-            res.status(500).json({ success: false, message: 'Error en la base de datos' });
-            return;
-        }
-
-        if (result.length > 0) {
-            // Credenciales correctas
-            res.json({ success: true, message: 'Inicio de sesión exitoso', nombreusuario: nombreusuario });
+    db.query(sql, [nombreusuario, contra], (err, results) => {
+        if (results.length > 0) {
+            // El usuario está autenticado correctamente
+            const usuario = results[0];
+            const token = jwt.sign({ id: usuario.id, nombreusuario: usuario.nombreusuario }, 'TuClaveSecreta', { expiresIn: '1h' });
+            res.json({ success: true, message: 'Inicio de sesión exitoso', token });
         } else {
             // Credenciales incorrectas
             res.status(401).json({ success: false, message: 'Credenciales incorrectas' });
         }
     });
 });
+
 app.get('/getrecordusuarios/:id', (req, res) => {
     const id = req.params.id;
     const sql = "SELECT * FROM usuarios WHERE id_usuarios = ?"

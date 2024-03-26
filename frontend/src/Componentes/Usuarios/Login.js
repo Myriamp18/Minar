@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import './Login.css';
-import Usuario_M from '../../assest/minero.jpg'
-import Contra_L from '../../assest/candado.jpg'
+import Usuario_M from '../../assest/minero.jpg';
+import Contra_L from '../../assest/candado.jpg';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-
-const Login = ({ onLogin }) => {
+const Login = () => {
   const navigate = useNavigate();
   const [nombreusuario, setNombreUsuario] = useState('');
   const [contra, setContra] = useState('');
   const [error, setError] = useState('');
+
+  
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -29,14 +30,12 @@ const Login = ({ onLogin }) => {
       console.log('Respuesta del servidor:', data);
       if (data.success) {
         console.log('Inicio de sesión exitoso:', data.message);
-        
-        // Llama a la función onLogin pasada como prop si está definida
-        if (onLogin) {
-          onLogin();
-        }
-       
+
+        // Establecer el estado de inicio de sesión y guardar en localStorage
+        localStorage.setItem('isLoggedIn', 'true');
+
+        // Redirigir al usuario a la página de inicio después del inicio de sesión
         navigate('/Inicio');
-       
       } else {
         setError(data.message || 'Error al iniciar sesión. Por favor, inténtalo de nuevo.');
       }
@@ -45,7 +44,7 @@ const Login = ({ onLogin }) => {
       setError('Error al iniciar sesión. Por favor, inténtalo de nuevo.');
     }
   };
-
+  
   return (
     <div className="login-section">
       <div className='containerlogin'>
@@ -63,7 +62,6 @@ const Login = ({ onLogin }) => {
                 value={nombreusuario}
                 onChange={e => setNombreUsuario(e.target.value)}
                 name='nombreusuario'
-
               />
             </div>
             <br />
@@ -75,7 +73,6 @@ const Login = ({ onLogin }) => {
                 value={contra}
                 onChange={e => setContra(e.target.value)}
                 name='contra'
-
               />
             </div>
           </div>

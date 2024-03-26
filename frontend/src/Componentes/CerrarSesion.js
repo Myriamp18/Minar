@@ -1,17 +1,11 @@
-import React from 'react'
-import { FaPowerOff } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom'
+import { useAuth } from './auth'
 
-function CerrarSesion({onClick}) {
-  return (
-    <div>
-  
-      <button onClick={onClick}>
-        <FaPowerOff />
-       
-      </button>
-   
-    </div>
-  )
+export const CerrarSesion = (logout) => {
+ 
+  return <div> 
+  <button onClick={logout}> Cerrar Sesion</button>
+  </div>
 }
 
 export default CerrarSesion

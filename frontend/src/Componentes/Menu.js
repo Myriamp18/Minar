@@ -13,18 +13,20 @@ import { GiNotebook } from "react-icons/gi";
 import { FaUserCircle } from "react-icons/fa";
 import { NavLink } from 'react-router-dom'
 import Logo from '../assest/logo.png'
-import CerrarSesion from './CerrarSesion';
+import { useNavigate } from 'react-router-dom';
 import { FaPowerOff } from 'react-icons/fa';
 
 function Menu({ children }) {
-    const handleLogout = () => {
-        // Aquí colocarías el código para cerrar la sesión del usuario
-        // Por ejemplo, podrías limpiar los datos de sesión o redirigir a la página de inicio de sesión
-        console.log("Sesión cerrada");
-      };
-
+    const navigate = useNavigate();
     const [isOpen, setIsOpen] = useState(true);
     const toggle = () => setIsOpen(!isOpen);
+
+    // Función para cerrar sesión
+    const handleLogout = () => {
+        // Lógica para cerrar sesión: limpiar datos de localStorage y redirigir a la página de inicio de sesión
+        localStorage.removeItem('isAuthenticated'); // Suponiendo que 'isAuthenticated' sea el indicador de autenticación
+        navigate('/diario');
+    };
     const menuItem = [
         {
             path: "/Inicio",
@@ -60,7 +62,8 @@ function Menu({ children }) {
         {
             path: "/",
             name: "Cerrar Sesión",
-            icon:  <FaPowerOff />,
+            icon: <FaPowerOff />,
+            onClick: handleLogout // Agregar onClick para manejar el cierre de sesión
         }
 
 
