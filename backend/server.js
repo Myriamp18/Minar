@@ -82,11 +82,24 @@ app.post('/login', (req, res) => {
             // El usuario está autenticado correctamente
             const usuario = results[0];
             const token = jwt.sign({ id: usuario.id, nombreusuario: usuario.nombreusuario }, 'TuClaveSecreta', { expiresIn: '1h' });
-            res.json({ success: true, message: 'Inicio de sesión exitoso', token });
+            res.json({ success: true, message: 'Inicio de sesión exitoso' });
         } else {
             // Credenciales incorrectas
             res.status(401).json({ success: false, message: 'Credenciales incorrectas' });
         }
+    });
+});
+
+app.get('/getusuarios/:nombreusuario', (req, res) => {
+    const nombreusuario = req.params.nombreusuario;
+    const sql = "SELECT nombrecompleto, cargo, telefono FROM usuarios WHERE nombreusuario = ?";
+    db.query(sql, [nombreusuario], (err, data) => {
+        if (err) {
+            console.error("Error en la consulta SQL:", err);
+            return res.status(500).json({ error: "Error en la consulta SQL. Por favor, inténtalo de nuevo más tarde." });
+        }
+
+        return res.json(data);
     });
 });
 

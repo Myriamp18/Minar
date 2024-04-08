@@ -16,6 +16,7 @@ import Logo from '../assest/logo.png'
 import { useNavigate } from 'react-router-dom';
 import { FaPowerOff } from 'react-icons/fa';
 
+
 function Menu({ children }) {
     const navigate = useNavigate();
     const [isOpen, setIsOpen] = useState(true);
@@ -60,10 +61,10 @@ function Menu({ children }) {
             icon: <FaUserCircle />
         },
         {
-            path: "/",
+            path: "/close",
             name: "Cerrar Sesión",
             icon: <FaPowerOff />,
-            onClick: handleLogout // Agregar onClick para manejar el cierre de sesión
+          
         }
 
 

@@ -33,6 +33,7 @@ const Login = () => {
 
         // Establecer el estado de inicio de sesión y guardar en localStorage
         localStorage.setItem('isLoggedIn', 'true');
+        localStorage.setItem('nombreusuario', nombreusuario);
 
         // Redirigir al usuario a la página de inicio después del inicio de sesión
         navigate('/Inicio');

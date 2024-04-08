@@ -157,49 +157,27 @@ import Usuarios from './Componentes/Usuarios/Usuarios';
 import ModificarUsuario from './Componentes/Usuarios/ModificarUsuario';
 import Excelmolienda from './Componentes/Molienda/Excelmolienda';
 import Excelexistencias from './Componentes/ReporteExistencia/Excelexistencias';
-import ExcelHorometros from './Componentes/Horometros/ExcelHorometros';
 import CerrarSesion from './Componentes/CerrarSesion';
+import ExcelHorometros from './Componentes/Horometros/ExcelHorometros';
+
 
 
 
 function App() {
       // Estado para manejar la autenticación del usuario
-      const [isAuthenticated, setIsAuthenticated] = useState(false);
-    
-
-      useEffect(() => {
-            // Verificar si el usuario está autenticado al cargar la página
-            const loggedIn = localStorage.getItem('isAuthenticated');
-            if (loggedIn === 'true') {
-                  setIsAuthenticated(true);
-            }
-      }, []);
-
-      // Función para iniciar sesión
-      const login = () => {
-            // Realiza la lógica de autenticación aquí
-            // Por ejemplo, si el usuario se autentica exitosamente, establece isAuthenticated en true
-            setIsAuthenticated(true);
-            // Guarda el estado de autenticación en localStorage
-            localStorage.setItem('isAuthenticated', 'true');
-           
-      };
-
-      // Función para cerrar sesión
+     
      
 
       return (
             <Router>
-                 
+                   <Menu >
                         <Routes>
                               {/* Ruta pública para el inicio de sesión */}
-                              <Route path="/" element={<Login login={login} />} />
-                        </Routes>
-                        <Menu  isAuthenticated={isAuthenticated} login={login} >
-                        <Routes>
+                              <Route path="/" element={<Login />} />
+                       
 
                               <Route path="/Inicio" element={<Inicio />} />
-                              
+                              <Route path="/close" element={<CerrarSesion />} />
                               <Route path="/diario" element={<Diario />} />
                               <Route path="/djigss" element={<Jigs />} />
                               <Route path="/createdjigss" element={<FrmJigs />} />
