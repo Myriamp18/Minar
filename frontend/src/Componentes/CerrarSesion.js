@@ -18,10 +18,7 @@ function CerrarSesion() {
         // Verifica la estructura de los datos en la consola
         console.log('Propiedades de los datos:', Object.keys(response.data[0]));
     
-        // Verifica si las propiedades específicas están presentes en el primer objeto del array
-        console.log('¿nombrecompleto está presente?', 'nombrecompleto' in response.data[0]);
-        console.log('¿telefono está presente?', 'telefono' in response.data[0]);
-        console.log('¿cargo está presente?', 'cargo' in response.data[0]);
+      
     
         // Establece los datos del usuario (primero, extrae el primer objeto del array)
         setUserData(response.data[0]);
@@ -38,16 +35,21 @@ function CerrarSesion() {
   const handleLogout = () => {
     localStorage.removeItem('isLoggedIn')
     localStorage.removeItem('nombreusuario');
+    window.location.reload();
     navigate('/');
+    
   };
 
   return (
-    <div className="container">
+    <div>
+    <h3>Configuración:</h3>
+    <div className="cerrarsesion">
 
       {userData ? (
         <div>
+          
             <img src={ Usuario_M} alt="Avatar" className="avatar" /> {/* Imagen del usuario o imagen por defecto */}
-          <h2 className="nombrecompleto">Nombre Completo: {userData.nombrecompleto}</h2>
+          <h2 className="nombrecompleto">{userData.nombrecompleto}</h2>
           <p className="telefono">Telefono: {userData.telefono}</p>
           <p className="cargo">Puesto: {userData.cargo}</p>
           <button className="button" onClick={handleLogout}>Cerrar Sesión</button>
@@ -55,6 +57,7 @@ function CerrarSesion() {
       ) : (
         <p>Cargando datos del usuario...</p>
       )}
+    </div>
     </div>
   );
 }

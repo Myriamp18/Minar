@@ -1,17 +1,17 @@
 
-.container {
+.cerrarsesion {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     padding: 20px;
-    border: 1px solid #ddd;
+    border: 1px solid #d05252;
     border-radius: 5px;
     background-color: #0d0c0c45;
     margin: 30px 30px;
     width: 600px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    margin-left:20%;
+    margin-left:22%;
 }
 
   .avatar {
@@ -54,7 +54,13 @@
     background-color: #0a0a0a;
     color: #e6dada;
   }
-  
+  h3{
+    font-size: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
   /* Media query para ajustar estilos en pantallas más pequeñas */
 @media screen and (max-width: 768px) {
     .container {
@@ -67,7 +73,7 @@
         border-radius: 5px;
         background-color: #0d0c0c45;
         margin: 5% 5%;
-        max-width: 600px; /* Establece un ancho máximo para el contenedor */
+        max-width:400px; /* Establece un ancho máximo para el contenedor */
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     }
   }

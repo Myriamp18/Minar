@@ -4,6 +4,7 @@ import Usuario_M from '../../assest/minero.jpg';
 import Contra_L from '../../assest/candado.jpg';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { Navigate } from 'react-router-dom';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -30,13 +31,11 @@ const Login = () => {
       console.log('Respuesta del servidor:', data);
       if (data.success) {
         console.log('Inicio de sesión exitoso:', data.message);
-
         // Establecer el estado de inicio de sesión y guardar en localStorage
         localStorage.setItem('isLoggedIn', 'true');
         localStorage.setItem('nombreusuario', nombreusuario);
-
-        // Redirigir al usuario a la página de inicio después del inicio de sesión
-        navigate('/Inicio');
+     navigate('/Inicio')
+        
       } else {
         setError(data.message || 'Error al iniciar sesión. Por favor, inténtalo de nuevo.');
       }

@@ -14,7 +14,7 @@ import { FaUserCircle } from "react-icons/fa";
 import { NavLink } from 'react-router-dom'
 import Logo from '../assest/logo.png'
 import { useNavigate } from 'react-router-dom';
-import { FaPowerOff } from 'react-icons/fa';
+import { IoSettings } from "react-icons/io5";
 
 
 function Menu({ children }) {
@@ -23,11 +23,7 @@ function Menu({ children }) {
     const toggle = () => setIsOpen(!isOpen);
 
     // Función para cerrar sesión
-    const handleLogout = () => {
-        // Lógica para cerrar sesión: limpiar datos de localStorage y redirigir a la página de inicio de sesión
-        localStorage.removeItem('isAuthenticated'); // Suponiendo que 'isAuthenticated' sea el indicador de autenticación
-        navigate('/diario');
-    };
+
     const menuItem = [
         {
             path: "/Inicio",
@@ -62,8 +58,8 @@ function Menu({ children }) {
         },
         {
             path: "/close",
-            name: "Cerrar Sesión",
-            icon: <FaPowerOff />,
+            name: "Configuracion",
+            icon: <IoSettings />
           
         }
 
