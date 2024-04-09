@@ -7,6 +7,9 @@ import './Excel.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
+import { registerLocale, setDefaultLocale } from  "react-datepicker";
+import { es } from 'date-fns/locale/es';
+registerLocale('es', es)
 
 const Excel = () => {
   const navigate = useNavigate();
@@ -49,9 +52,10 @@ const Excel = () => {
   };
 
   const handleDateChange = (date) => {
+    console.log('Fecha recibida en DatePicker:', date);
     const formattedDate = formatDate(date);
     setSelectedDate(formattedDate);
-  };
+};
 
   const formatDate = (date) => {
     const year = date.getFullYear();
@@ -236,7 +240,7 @@ const Excel = () => {
                     <FontAwesomeIcon icon={faTimes} />
                 </div>
     <div className="date-picker-container">
-      <DatePicker selected={selectedDate} onChange={handleDateChange} />
+      <DatePicker locale="es" timeZone="America/Mexico_City" selected={selectedDate} onChange={handleDateChange} />
     </div>
     <div className="export-button-container">
       <button className="export-button" onClick={exportToExcel} disabled={exporting}>
