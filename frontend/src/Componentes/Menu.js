@@ -19,7 +19,7 @@ import { IoSettings } from "react-icons/io5";
 
 function Menu({ children }) {
     const navigate = useNavigate();
-    const [isOpen, setIsOpen] = useState(true);
+    const [isOpen, setIsOpen] = useState(false);
     const toggle = () => setIsOpen(!isOpen);
 
     // Función para cerrar sesión

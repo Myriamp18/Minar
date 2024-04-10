@@ -41,12 +41,12 @@ function CerrarSesion() {
   };
 
   return (
-    <div>
+    <div className='none'>
     <h3>Configuración:</h3>
     <div className="cerrarsesion">
 
       {userData ? (
-        <div>
+        <div className='datos'>
           
             <img src={ Usuario_M} alt="Avatar" className="avatar" /> {/* Imagen del usuario o imagen por defecto */}
           <h2 className="nombrecompleto">{userData.nombrecompleto}</h2>

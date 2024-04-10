@@ -53,7 +53,9 @@ const Excel = () => {
 
   const handleDateChange = (date) => {
     console.log('Fecha recibida en DatePicker:', date);
-    const formattedDate = formatDate(date);
+    // Ajustar la fecha a la zona horaria local
+    const adjustedDate = new Date(date.getTime() + date.getTimezoneOffset() * 60000);
+    const formattedDate = formatDate(adjustedDate);
     setSelectedDate(formattedDate);
 };
 
@@ -240,7 +242,7 @@ const Excel = () => {
                     <FontAwesomeIcon icon={faTimes} />
                 </div>
     <div className="date-picker-container">
-      <DatePicker locale="es" timeZone="America/Mexico_City" selected={selectedDate} onChange={handleDateChange} />
+      <DatePicker locale="es" selected={selectedDate} onChange={handleDateChange} />
     </div>
     <div className="export-button-container">
       <button className="export-button" onClick={exportToExcel} disabled={exporting}>

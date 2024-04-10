@@ -176,9 +176,10 @@ function App() {
                               {/* Ruta pública para el inicio de sesión */}
                               
                               <Route path="/" element={<Login />} />
-
+                    
 
                               <Route element={<RutasPrivadas isLoggedIn={isLoggedIn} />}>
+                              
                                     <Route path="/Inicio" element={<Inicio />} />
                                     <Route path="/close" element={<CerrarSesion />} />
                                     <Route path="/diario" element={<Diario />} />

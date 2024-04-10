@@ -67,7 +67,7 @@
 
 .inputlogin input {
     height: 40px;
-    width: 400px;
+    width: 300px;
     background: transparent;
     border: none;
     outline: none;
@@ -134,24 +134,25 @@
 
 /* Media query para pantallas pequeñas */
 @media screen and (max-width: 767px) {
-    .containerlogin {
-        display: flex;
-        flex-direction: column;
-        margin: auto;
-        margin-top: 100px;
-        width: auto; /* Cambiado a ancho automático para adaptarse al contenido */
-        background-color: #1a19196c;
-        padding-bottom: 0px;
-        box-sizing: border-box;
-    }
+ 
 
     .inputlogin {
         display: flex;
         align-items: center;
         margin: auto;
-        width: auto; /* Cambiado a ancho automático para adaptarse al contenido */
+        width: 250px; /* Cambiado a ancho automático para adaptarse al contenido */
         height: 70px;
         background: #fffcfc;
         border-radius: 6px;
+    }
+
+    .inputlogin input {
+        height: 40px;
+        width: 200px;
+        background: transparent;
+        border: none;
+        outline: none;
+        color: #020202;
+        font-size: 19px;
     }
 }

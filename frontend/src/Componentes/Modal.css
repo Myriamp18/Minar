@@ -1,40 +1,124 @@
-
 .cerrarsesion {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-    border: 1px solid #d05252;
-    border-radius: 5px;
-    background-color: #0d0c0c45;
-    margin: 30px 30px;
-    width: 600px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    margin-left:22%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  border: 1px solid #d05252;
+  border-radius: 5px;
+  background-color: #0d0c0c45;
+  margin: 30px 30px;
+  width: 600px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  
+  margin: 30px auto; /* Cambia el margen superior e inferior a 30px y el margen izquierdo y derecho a auto */
 }
 
-  .avatar {
-    margin-left:40%; /* Mueve la imagen del avatar hacia la derecha */
-    margin-bottom: 10px; /* Espacio entre la imagen del avatar y el nombre completo */
-  }
-  .nombrecompleto {
-    margin-left:20%;
-    font-size: 20px;
+.avatar {
+
+  /* Mueve la imagen del avatar hacia la derecha */
+  margin-bottom: 10px;
+  /* Espacio entre la imagen del avatar y el nombre completo */
+}
+
+.nombrecompleto {
+  
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.telefono,
+.cargo {
+ 
+  font-size: 20px;
+  color: #000000;
+  margin-bottom: 5px;
+}
+
+.datos{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Botón de cierre de sesión */
+.button {
+  display: inline-block;
+    padding: 8px 16px;
+    font-size: 16px;
     font-weight: bold;
-    margin-bottom: 10px;
+    text-decoration: none;
+    background-color: #dc3545;
+    color: #090808;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 10px; /* Ajusta el margen superior del botón */
+    width: 100%; /* Ajusta el ancho del botón al 100% */
+    box-sizing: border-box; /* Incluye el padding y border en el ancho del botón */
+  
+}
+
+.button:hover {
+  background-color: #0a0a0a;
+  color: #e6dada;
+}
+
+h3 {
+  font-size: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+ 
+}
+
+/* Media query para ajustar estilos en pantallas más pequeñas */
+@media screen and (max-width: 768px) {
+  .cerrarsesion {
+    padding: 5%;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #0d0c0c45;
+    margin: 5% 5%;
+    max-width: auto;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex; /* Establece el contenedor como un flexbox */
+    flex-direction: column; /* Alinea los elementos en columna */
+    align-items: center; /* Centra los elementos horizontalmente */
   }
   
-  .telefono, .cargo {
-    margin-left:20%;
-    font-size: 20px;
+  .avatar {
+    margin-bottom: auto;
+  }
+  
+  .datos {
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    align-items: flex-start; /* Cambia la alineación a la izquierda */
+    width: 100%;
+    padding: 10px;
+  }
+  
+  
+  .nombrecompleto {
+    white-space: normal;
+    font-size: 17px;
+    font-weight: bold;
+    text-align: center; /* Centra el texto */
+    margin-bottom: 10px; /* Ajusta el margen inferior */
+  }
+  
+  .telefono,
+  .cargo {
+    font-size: 15px;
     color: #000000;
     margin-bottom: 5px;
   }
   
-  
-  
-  /* Botón de cierre de sesión */
   .button {
     display: inline-block;
     padding: 8px 16px;
@@ -47,33 +131,16 @@
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s;
-    margin-left:40%;
+    margin-top: 10px; /* Ajusta el margen superior del botón */
+    width: 70%; /* Ajusta el ancho del botón al 100% */
+    box-sizing: border-box; /* Incluye el padding y border en el ancho del botón */
   }
-  
-  .button:hover {
-    background-color: #0a0a0a;
-    color: #e6dada;
-  }
-  h3{
+  h3 {
     font-size: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
+    
   }
-
-  /* Media query para ajustar estilos en pantallas más pequeñas */
-@media screen and (max-width: 768px) {
-    .container {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        padding: 5%;
-        border: 1px solid #ddd;
-        border-radius: 5px;
-        background-color: #0d0c0c45;
-        margin: 5% 5%;
-        max-width:400px; /* Establece un ancho máximo para el contenedor */
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    }
-  }
+  
+}

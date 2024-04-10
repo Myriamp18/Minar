@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import '../ReporteDiario/Pdj.css';
-import Logo from'../../assest/logo.png'
+import Logo from '../../assest/logo.png'
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { useNavigate } from 'react-router-dom';
@@ -26,19 +26,19 @@ function PdfMolienda() {
         try {
             const responseProducts = await fetch(`http://localhost:8081/getmezclas/${fecha}`);
             const responseOtherTable = await fetch(`http://localhost:8081/getpromedios/${fecha}`);
-           
 
-            if ( !responseProducts.ok || !responseOtherTable.ok) {
+
+            if (!responseProducts.ok || !responseOtherTable.ok) {
                 throw new Error('Error al obtener los datos');
             }
 
             const dataProducts = await responseProducts.json();
             const dataOtherTable = await responseOtherTable.json();
-           
+
 
             setProducts(dataProducts);
             setOtherTableData(dataOtherTable);
-            
+
         } catch (error) {
             console.log('Error:', error);
         }
@@ -46,22 +46,28 @@ function PdfMolienda() {
     };
 
     const handleDateChange = (date) => {
-        console.log(date);
-        // Convertir la fecha al formato deseado antes de actualizar el estado
-        const formattedDate = formatDate(date);
+        console.log('Fecha recibida en DatePicker:', date);
+    
+        // Verificar si la hora es diferente de 00:00:00
+        const isDifferentHour = date.getHours() !== 0 || date.getMinutes() !== 0 || date.getSeconds() !== 0;
+    
+        // Ajustar la fecha a la zona horaria local solo si la hora es diferente
+        const adjustedDate = isDifferentHour ? new Date(date.getTime() + date.getTimezoneOffset() * 60000) : date;
+    
+        const formattedDate = formatDate(adjustedDate);
         setSelectedDate(formattedDate);
     };
-
+    
     // Función para convertir la fecha al formato deseado
     const formatDate = (date) => {
         // Obtener los componentes de la fecha
         const year = date.getFullYear();
         const month = date.getMonth() + 1; // Los meses van de 0 a 11
         const day = date.getDate();
-    
+
         // Formatear la fecha como desees (por ejemplo, YYYY-MM-DD)
         const formattedDate = `${year}-${month < 10 ? '0' + month : month}-${day < 10 ? '0' + day : day}`;
-    
+
         return formattedDate;
     };
     const generatePDF = async () => {
@@ -80,85 +86,85 @@ function PdfMolienda() {
                 left: 15,
                 right: 15
             }
-          
+
         });
 
-    // Configuración del título del documento
-    doc.setFont("fontName");
-    doc.setFontSize(18);
-    doc.text('MINERALES Y ARCILLAS, S.A. DE C.V', 60, 10);
-    doc.setFontSize(12);
-    doc.text(`Fecha: ${selectedDate}`, 170, 18); // Agrega el texto de la fecha en la posición deseada
+        // Configuración del título del documento
+        doc.setFont("fontName");
+        doc.setFontSize(18);
+        doc.text('MINERALES Y ARCILLAS, S.A. DE C.V', 60, 10);
+        doc.setFontSize(12);
+        doc.text(`Fecha: ${selectedDate}`, 170, 18); // Agrega el texto de la fecha en la posición deseada
 
-    const imgData = Logo; // Asigna la imagen importada a una variable
-    doc.addImage(imgData, 'PNG', 15, 5, 20, 15); // Agrega la imagen al PDF
-
-
-
-    generateprimTable(doc, products.filter(item => item.turno === 1), 'Turno 1', 50);
-
-    // Generar tabla para el turno 2
-    generatesecTable(doc, products.filter(item => item.turno === 2), 'Turno 2', 80);
-
-    generatetreTable(doc, products.filter(item => item.turno === 3), 'Turno 3', 110);
-
-    generatecuartTable(doc, products.filter(item => item.turno === 1), 'Turno 1', 50);
-
-    // Generar tabla para el turno 2
-    generatequinTable(doc, products.filter(item => item.turno === 2), 'Turno 2', 80);
-
-    generasexTable(doc, products.filter(item => item.turno === 3), 'Turno 3', 110);
+        const imgData = Logo; // Asigna la imagen importada a una variable
+        doc.addImage(imgData, 'PNG', 15, 5, 20, 15); // Agrega la imagen al PDF
 
 
 
-    generateprimOtherTable(doc, otherTableData.filter(item => item.turno === 1), 'Turno 1', 140);
-    generatesecOtherTable(doc, otherTableData.filter(item => item.turno === 2), 'Turno 2', 170);
-    generatetreOtherTable(doc, otherTableData.filter(item => item.turno === 3), 'Turno 3', 200);
+        generateprimTable(doc, products.filter(item => item.turno === 1), 'Turno 1', 50);
+
+        // Generar tabla para el turno 2
+        generatesecTable(doc, products.filter(item => item.turno === 2), 'Turno 2', 80);
+
+        generatetreTable(doc, products.filter(item => item.turno === 3), 'Turno 3', 110);
+
+        generatecuartTable(doc, products.filter(item => item.turno === 1), 'Turno 1', 50);
+
+        // Generar tabla para el turno 2
+        generatequinTable(doc, products.filter(item => item.turno === 2), 'Turno 2', 80);
+
+        generasexTable(doc, products.filter(item => item.turno === 3), 'Turno 3', 110);
 
 
-    // Generar otra tabla para los datos de la otra tabla
-   
-    let fileName = `Reporte_Molienda.pdf`;
+
+        generateprimOtherTable(doc, otherTableData.filter(item => item.turno === 1), 'Turno 1', 140);
+        generatesecOtherTable(doc, otherTableData.filter(item => item.turno === 2), 'Turno 2', 170);
+        generatetreOtherTable(doc, otherTableData.filter(item => item.turno === 3), 'Turno 3', 200);
 
 
-    // Descargar el PDF con el nombre de archivo generado
-    doc.save(fileName);
+        // Generar otra tabla para los datos de la otra tabla
 
-    // Actualizar el estado para indicar que el PDF ha sido generado
-    setPdfGenerated(true);
+        let fileName = `Reporte_Molienda.pdf`;
+
+
+        // Descargar el PDF con el nombre de archivo generado
+        doc.save(fileName);
+
+        // Actualizar el estado para indicar que el PDF ha sido generado
+        setPdfGenerated(true);
     }
 
     const styles = {
         tableHeader: {
-          fillColor:[255, 0, 0],
-          textColor:[255, 255, 255], // Color blanco para el texto del encabezado
-          fontStyle: 'bold', // Fuente en negrita para el encabezado
-          fontSize: 10
+            fillColor: [255, 0, 0],
+            textColor: [255, 255, 255], // Color blanco para el texto del encabezado
+            fontStyle: 'bold', // Fuente en negrita para el encabezado
+            fontSize: 10
         },
         tableRow: {
-          fillColor: [255, 255, 255], // Color blanco para las filas de la tabla
-          textColor: [0, 0, 0], // Color negro para el texto de las filas
-          fontSize: 8
+            fillColor: [255, 255, 255], // Color blanco para las filas de la tabla
+            textColor: [0, 0, 0], // Color negro para el texto de las filas
+            fontSize: 8
         }
-      };
+    };
 
-      const generateprimTable = (doc, data, title, startY) => {
+    const generateprimTable = (doc, data, title, startY) => {
         doc.setFontSize(14);
-        doc.text('Molienda', 95,18);
-    
-      
-    
+        doc.text('Molienda', 95, 18);
+
+
+
         // Crear tabla
-        const tableColumn = ['Mezclas', 'Turno',  'TON', 'P.Espc'];
+        const tableColumn = ['Mezclas', 'Turno', 'TON', 'P.Espc'];
         const tableRows = [];
-    
+
         data.forEach((item) => {
             const rowData = [
                 'Conc.Mesas',
                 item.turno,
-                item. concmesas,
+                item.concmesas,
                 item.pecm,
-               
+
             ];
             tableRows.push(rowData);
             const rowData1 = [
@@ -166,7 +172,7 @@ function PdfMolienda() {
                 item.turno,
                 item.medios,
                 item.pem,
-               
+
             ];
             tableRows.push(rowData1);
             const rowData2 = [
@@ -174,7 +180,7 @@ function PdfMolienda() {
                 item.turno,
                 item.concjigs,
                 item.pejig,
-               
+
             ];
             tableRows.push(rowData2);
             const rowData3 = [
@@ -182,7 +188,7 @@ function PdfMolienda() {
                 item.turno,
                 item.desenslovez,
                 item.pedese,
-                
+
             ];
             tableRows.push(rowData3);
             const rowData4 = [
@@ -190,11 +196,11 @@ function PdfMolienda() {
                 item.turno,
                 item.mezclatotal,
                 item.pemt,
-               
+
             ];
             tableRows.push(rowData4);
-         
-            
+
+
         });
         const firstTableHeight = doc.autoTable.previous.finalY || startY;
         const tablePropsTurnos = {
@@ -215,57 +221,57 @@ function PdfMolienda() {
             setFontSize: 10,
             headStyles: styles.tableHeader,
             bodyStyles: styles.tableRow,
-            
-    
+
+
         });
     };
     const generatesecTable = (doc, data, title, startY) => {
-       
-    
-    
+
+
+
         // Crear tabla
-      
+
         const tableColumn = ['Turno', 'TON', 'P.E'];
         const tableRows = [];
-    
+
         data.forEach((item) => {
             const rowData = [
-    
+
                 item.turno,
-                item. concmesas,
+                item.concmesas,
                 item.pecm,
             ];
             tableRows.push(rowData);
             const rowData1 = [
-    
+
                 item.turno,
                 item.medios,
                 item.pem,
             ];
             tableRows.push(rowData1);
             const rowData2 = [
-    
+
                 item.turno,
                 item.concjigs,
                 item.pejig,
             ];
             tableRows.push(rowData2);
             const rowData3 = [
-    
+
                 item.turno,
                 item.desenslovez,
                 item.pedese,
             ];
             tableRows.push(rowData3);
             const rowData4 = [
-    
+
                 item.turno,
                 item.mezclatotal,
                 item.pemt,
             ];
             tableRows.push(rowData4);
-       
-    
+
+
         });
         const firstTableHeight = doc.autoTable.previous.finalY || startY;
         const tablePropsOtraTabla = {
@@ -288,50 +294,50 @@ function PdfMolienda() {
         });
     };
     const generatetreTable = (doc, data, title, startY) => {
-    
-    
+
+
         // Crear tabla
         const tableColumn = ['Turno', 'TON', 'P.E'];
         const tableRows = [];
-    
+
         data.forEach((item) => {
             const rowData = [
-    
+
                 item.turno,
-                item. concmesas,
+                item.concmesas,
                 item.pecm,
             ];
             tableRows.push(rowData);
             const rowData1 = [
-    
+
                 item.turno,
                 item.medios,
                 item.pem,
             ];
             tableRows.push(rowData1);
             const rowData2 = [
-    
+
                 item.turno,
                 item.concjigs,
                 item.pejig,
             ];
             tableRows.push(rowData2);
             const rowData3 = [
-    
+
                 item.turno,
                 item.desenslovez,
                 item.pedese,
             ];
             tableRows.push(rowData3);
             const rowData4 = [
-    
+
                 item.turno,
                 item.mezclatotal,
                 item.pemt,
             ];
             tableRows.push(rowData4);
-          
-    
+
+
         });
         const firstTableHeight = doc.autoTable.previous.finalY || startY;
         const tablePropsOtraTabla = {
@@ -351,41 +357,41 @@ function PdfMolienda() {
             ...tablePropsOtraTabla,
             headStyles: styles.tableHeader,
             bodyStyles: styles.tableRow,
-        
-    
+
+
         });
     };
 
 
     const generatecuartTable = (doc, data, title, startY) => {
-    
-    
+
+
         // Crear tabla
-        const tableColumn = ['','Turno', 'Salidas'];
+        const tableColumn = ['', 'Turno', 'Salidas'];
         const tableRows = [];
-    
+
         data.forEach((item) => {
             const rowData = [
                 'PMLT',
                 item.turno,
                 item.pmlt,
-              
-             
+
+
             ];
             tableRows.push(rowData);
             const rowData1 = [
                 'PMLE',
                 item.turno,
                 item.pmle,
-                
-             
+
+
             ];
             tableRows.push(rowData1);
             const rowData2 = [
                 'Otras Salidas',
                 item.turno,
-                item. otrassalidas,
-             
+                item.otrassalidas,
+
             ];
             tableRows.push(rowData2);
         });
@@ -407,45 +413,45 @@ function PdfMolienda() {
             ...tablePropsOtraTabla,
             headStyles: styles.tableHeader,
             bodyStyles: styles.tableRow,
-        
-    
+
+
         });
     };
     const generatequinTable = (doc, data, title, startY) => {
-    
-    
+
+
         // Crear tabla
         const tableColumn = ['Turno', 'Salidas'];
         const tableRows = [];
-    
+
         data.forEach((item) => {
             const rowData = [
-    
+
                 item.turno,
                 item.pmlt,
-             
+
             ];
             tableRows.push(rowData);
             const rowData1 = [
-                
+
                 item.turno,
                 item.pmle,
-              
-             
+
+
             ];
             tableRows.push(rowData1);
             const rowData2 = [
-                
+
                 item.turno,
-                item. otrassalidas,
-             
+                item.otrassalidas,
+
             ];
             tableRows.push(rowData2);
         });
         const firstTableHeight = doc.autoTable.previous.finalY || startY;
         const tablePropsOtraTabla = {
             startY: 70,
-            margin: { horizontal: 84},
+            margin: { horizontal: 84 },
             tableWidth: 70
         };
         // Agregar tabla al documento
@@ -460,46 +466,46 @@ function PdfMolienda() {
             ...tablePropsOtraTabla,
             headStyles: styles.tableHeader,
             bodyStyles: styles.tableRow,
-        
-    
+
+
         });
     };
     const generasexTable = (doc, data, title, startY) => {
-    
-    
+
+
         // Crear tabla
         const tableColumn = ['Turno', 'Salidas'];
         const tableRows = [];
-    
+
         data.forEach((item) => {
             const rowData = [
-    
+
                 item.turno,
-                item. otrassalidas,
-             
+                item.otrassalidas,
+
             ];
             tableRows.push(rowData);
             const rowData1 = [
-                
+
                 item.turno,
                 item.pmle,
-              
-             
+
+
             ];
             tableRows.push(rowData1);
             const rowData2 = [
-                
+
                 item.turno,
-                item. otrassalidas,
-             
+                item.otrassalidas,
+
             ];
             tableRows.push(rowData2);
-          
+
         });
         const firstTableHeight = doc.autoTable.previous.finalY || startY;
         const tablePropsOtraTabla = {
             startY: 70,
-            margin: { horizontal: 154},
+            margin: { horizontal: 154 },
             tableWidth: 60
         };
         // Agregar tabla al documento
@@ -514,8 +520,8 @@ function PdfMolienda() {
             ...tablePropsOtraTabla,
             headStyles: styles.tableHeader,
             bodyStyles: styles.tableRow,
-        
-    
+
+
         });
     };
 
@@ -523,29 +529,29 @@ function PdfMolienda() {
 
     const generateprimOtherTable = (doc, data, title, startY) => {
         doc.setFontSize(14);
-        doc.text('Promedios', 95,108);
-    
-      
-    
+        doc.text('Promedios', 95, 108);
+
+
+
         // Crear tabla
-        const tableColumn = ['', 'Turno',  'Molino 1', 'Molino 2'];
+        const tableColumn = ['', 'Turno', 'Molino 1', 'Molino 2'];
         const tableRows = [];
-    
+
         data.forEach((item) => {
             const rowData = [
                 'P.Esp',
                 item.turno,
-                item. pemolino1,
+                item.pemolino1,
                 item.pemolino2,
-               
+
             ];
             tableRows.push(rowData);
             const rowData1 = [
                 '% Ret.Malla 200',
                 item.turno,
                 item.malla200mo1,
-                item. malla200mo2,
-               
+                item.malla200mo2,
+
             ];
             tableRows.push(rowData1);
             const rowData2 = [
@@ -553,7 +559,7 @@ function PdfMolienda() {
                 item.turno,
                 item.malla325mo1,
                 item.malla325mo2,
-               
+
             ];
             tableRows.push(rowData2);
             const rowData3 = [
@@ -561,19 +567,19 @@ function PdfMolienda() {
                 item.turno,
                 item.calciosmo1,
                 item.calciosmo2,
-                
+
             ];
             tableRows.push(rowData3);
             const rowData4 = [
                 '% Humedad',
                 item.turno,
                 item.humedadmo1,
-                item. humedadmo2,
-               
+                item.humedadmo2,
+
             ];
             tableRows.push(rowData4);
-          
-            
+
+
         });
         const firstTableHeight = doc.autoTable.previous.finalY || startY;
         const tablePropsTurnos = {
@@ -594,58 +600,58 @@ function PdfMolienda() {
             setFontSize: 10,
             headStyles: styles.tableHeader,
             bodyStyles: styles.tableRow,
-            
-    
+
+
         });
     };
 
     const generatesecOtherTable = (doc, data, title, startY) => {
-       
-    
-    
+
+
+
         // Crear tabla
-      
-        const tableColumn = ['Turno',  'Molino 1', 'Molino 2'];
+
+        const tableColumn = ['Turno', 'Molino 1', 'Molino 2'];
         const tableRows = [];
-    
+
         data.forEach((item) => {
             const rowData = [
-    
+
                 item.turno,
-                item. pemolino1,
+                item.pemolino1,
                 item.pemolino2,
             ];
             tableRows.push(rowData);
             const rowData1 = [
-    
+
                 item.turno,
                 item.malla200mo1,
-                item. malla200mo2,
+                item.malla200mo2,
             ];
             tableRows.push(rowData1);
             const rowData2 = [
-    
+
                 item.turno,
                 item.malla325mo1,
                 item.malla325mo2,
             ];
             tableRows.push(rowData2);
             const rowData3 = [
-    
+
                 item.turno,
                 item.calciosmo1,
                 item.calciosmo2,
             ];
             tableRows.push(rowData3);
             const rowData4 = [
-    
+
                 item.turno,
                 item.humedadmo1,
-                item. humedadmo2,
+                item.humedadmo2,
             ];
             tableRows.push(rowData4);
-           
-    
+
+
         });
         const firstTableHeight = doc.autoTable.previous.finalY || startY;
         const tablePropsOtraTabla = {
@@ -667,51 +673,51 @@ function PdfMolienda() {
             bodyStyles: styles.tableRow
         });
     };
-  
+
     const generatetreOtherTable = (doc, data, title, startY) => {
-    
-    
+
+
         // Crear tabla
-        const tableColumn = ['Turno',  'Molino 1', 'Molino 2'];
+        const tableColumn = ['Turno', 'Molino 1', 'Molino 2'];
         const tableRows = [];
-    
+
         data.forEach((item) => {
             const rowData = [
-    
+
                 item.turno,
-                item. pemolino1,
+                item.pemolino1,
                 item.pemolino2,
             ];
             tableRows.push(rowData);
             const rowData1 = [
-    
+
                 item.turno,
                 item.malla200mo1,
-                item. malla200mo2,
+                item.malla200mo2,
             ];
             tableRows.push(rowData1);
             const rowData2 = [
-    
+
                 item.turno,
                 item.malla325mo1,
                 item.malla325mo2,
             ];
             tableRows.push(rowData2);
             const rowData3 = [
-    
+
                 item.turno,
                 item.calciosmo1,
                 item.calciosmo2,
             ];
             tableRows.push(rowData3);
             const rowData4 = [
-    
+
                 item.turno,
                 item.humedadmo1,
-                item. humedadmo2,
+                item.humedadmo2,
             ];
             tableRows.push(rowData4)
-    
+
         });
         const firstTableHeight = doc.autoTable.previous.finalY || startY;
         const tablePropsOtraTabla = {
@@ -731,26 +737,26 @@ function PdfMolienda() {
             ...tablePropsOtraTabla,
             headStyles: styles.tableHeader,
             bodyStyles: styles.tableRow,
-        
-    
+
+
         });
     };
 
 
-    
-  return (
-    
-    <div className="pdf-container">
-        <div className='pdfs'>
-    <h1>Descargar Reporte</h1>
-    <div className="close-button" onClick={() => navigate('/molienda')}>
-        <FontAwesomeIcon icon={faTimes} />
-      </div>
-    <DatePicker selected={selectedDate} onChange={ handleDateChange} />
-    <button onClick={generatePDF}>Descargar PDF</button>
-</div>
-</div>
-  )
+
+    return (
+
+        <div className="pdf-container">
+            <div className='pdfs'>
+                <h1>Descargar Reporte</h1>
+                <div className="close-button" onClick={() => navigate('/molienda')}>
+                    <FontAwesomeIcon icon={faTimes} />
+                </div>
+                <DatePicker selected={selectedDate} onChange={handleDateChange} />
+                <button onClick={generatePDF}>Descargar PDF</button>
+            </div>
+        </div>
+    )
 }
 
 export default PdfMolienda
