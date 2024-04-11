@@ -66,10 +66,7 @@ return (
       Conc. Mesas
        
     </span>
-    <span className="buttonpp-textss">
-     Pendiente
-       
-    </span>
+   
 
     </button>
     <button className="btnpp-large btnpp-pp" onClick={onConcjigs}>
@@ -77,31 +74,21 @@ return (
       <span className="buttonpp-text">
        Conc. JIGG´S Secundario
     </span>
-    <span className="buttonpp-textss">
-     Pendiente
-       
-    </span>
+    
     </button>
     <button className="btnpp-large btnpp-mp" onClick={onMedios}>
     <span className="iconnnespp"> <GiStonePile /></span>
       <span className="buttonpp-text">
        Medios
     </span>
-    <span className="buttonpp-textss">
-     Pendiente
-       
-    </span>
+
     </button>
     <button className="btnpp-large btnpp-bs" onClick={onBandas}>
     <span className="iconnnespp"><FaRoad /></span>
     <span className="buttonpp-text">
        Grano Bandas Seleccion 4.25
     </span>
-    <span className="buttonpp-textss">
-     Pendiente
-       
-    </span>
-     
+ 
     </button>
 
     <button className="btnpp-large btnpp-bs" onClick={onGrano}>
@@ -109,10 +96,7 @@ return (
     <span className="buttonpp-text">
        Grano P/Molienda
     </span>
-    <span className="buttonpp-textss">
-     Pendiente
-       
-    </span>
+
      
     </button>
 
@@ -121,10 +105,7 @@ return (
     <span className="buttonpp-text">
        Grano JIG´SS Chino
     </span>
-    <span className="buttonpp-textss">
-     Pendiente
-       
-    </span>
+
      
     </button>
 
@@ -133,10 +114,7 @@ return (
     <span className="buttonpp-text">
        Desensolve JIG´SS Chino
     </span>
-    <span className="buttonpp-textss">
-     Pendiente
-       
-    </span>
+   
      
     </button>
 
@@ -145,11 +123,7 @@ return (
     <span className="buttonpp-text">
        Desensolve 4.00-4.10
     </span>
-    <span className="buttonpp-textss">
-     Pendiente
-       
-    </span>
-     
+   
     </button>
 
     <button className="btnpp-large btnpp-bs" onClick={onGranoSele}>
@@ -157,10 +131,7 @@ return (
     <span className="buttonpp-text">
      Desecho Grano Seleccion
     </span>
-    <span className="buttonpp-textss">
-     Pendiente
-       
-    </span>
+ 
      
     </button>
 
@@ -169,10 +140,7 @@ return (
     <span className="buttonpp-text">
        Baritron
     </span>
-    <span className="buttonpp-textss">
-     Pendiente
-       
-    </span>
+  
      
     </button>
 
@@ -181,10 +149,7 @@ return (
     <span className="buttonpp-text">
        Tolvas de Molinos
     </span>
-    <span className="buttonpp-textss">
-     Pendiente
-       
-    </span>
+   
      
     </button>
   </div>

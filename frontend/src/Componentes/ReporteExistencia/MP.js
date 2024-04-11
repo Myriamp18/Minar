@@ -41,10 +41,7 @@ function MP() {
         Mineral P/Mezclas
          
       </span>
-      <span className="button-textss">
-       Pendiente
-         
-      </span>
+     
 
       </button>
       <button className="btn-large btn-pp" onClick={onPatio}>
@@ -52,30 +49,21 @@ function MP() {
         <span className="button-text">
          Mineral en Patio
       </span>
-      <span className="button-textss">
-       Pendiente
-         
-      </span>
+      
       </button>
       <button className="btn-large btn-mp" onClick={onTriturada}>
       <span className="iconnnes"> <GiStonePile /></span>
         <span className="button-text">
          Mineral Triturado
       </span>
-      <span className="button-textss">
-       Pendiente
-         
-      </span>
+      
       </button>
       <button className="btn-large btn-nota" onClick={onNotas}>
       <span className="iconnnes"> <HiOutlineAnnotation /></span>
         <span className="button-text">
          Notas
       </span>
-      <span className="button-textss">
-       Pendiente
-         
-      </span>
+      
       </button>
     </div>
   </div>

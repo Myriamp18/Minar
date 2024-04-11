@@ -114,6 +114,22 @@ app.get('/getrecordusuarios/:id', (req, res) => {
         return res.json(data)
     })
 })
+app.get('/getrecordusuarioscontra/:codif', (req, res) => {
+    const codif = req.params.codif;
+    const sql = "SELECT contra FROM usuarios WHERE codif = ?";
+    db.query(sql, [codif], (err, data) => {
+        if (err) {
+            console.log('Error en la consulta SQL:', err);
+            return res.status(500).json({ error: 'Error en la consulta SQL' });
+        }
+
+        if (data.length === 0) {
+            return res.status(404).json({ error: 'No se encontraron registros para el código proporcionado' });
+        }
+
+        return res.json(data);
+    });
+});
 
 
 /////////////SILOS//////////

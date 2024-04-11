@@ -34,6 +34,7 @@ const Login = () => {
         // Establecer el estado de inicio de sesión y guardar en localStorage
         localStorage.setItem('isLoggedIn', 'true');
         localStorage.setItem('nombreusuario', nombreusuario);
+        
      navigate('/Inicio')
         
       } else {
@@ -45,6 +46,9 @@ const Login = () => {
     }
   };
   
+  const RecupContra =()=>{
+    navigate('/olvcontra')
+  }
   return (
     <div className="login-section">
       <div className='containerlogin'>
@@ -75,6 +79,7 @@ const Login = () => {
                 name='contra'
               />
             </div>
+            <button className='olvcontra' onClick={RecupContra}>Olvide Contraseña</button>
           </div>
           <br />
           {error && <div className="error">{error}</div>}

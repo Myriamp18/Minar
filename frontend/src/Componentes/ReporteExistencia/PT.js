@@ -39,10 +39,7 @@ function PT() {
         Silos
          
       </span>
-      <span className="button-textss">
-       Pendiente
-         
-      </span>
+      
 
       </button>
       <button className="btn-large btn-pp" onClick={onSeleccion}>
@@ -50,30 +47,21 @@ function PT() {
         <span className="button-text">
          Barita Seleccion
       </span>
-      <span className="button-textss">
-       Pendiente
-         
-      </span>
+     
       </button>
       <button className="btn-large btn-mp" onClick={onGrano}>
       <span className="iconnnes"> <GiStonePile /></span>
         <span className="button-text">
          Grano Baribright
       </span>
-      <span className="button-textss">
-       Pendiente
-         
-      </span>
+      
       </button>
       <button className="btn-large btn-bs" onClick={onConc}>
       <span className="iconnnes"><MdFrontLoader /> </span>
       <span className="button-text">
          Conc. Baribright
       </span>
-      <span className="button-textss">
-       Pendiente
-         
-      </span>
+     
        
       </button>
     </div>

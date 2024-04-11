@@ -1,0 +1,98 @@
+/* OlvContra.css */
+.reccontra{
+    background-image: url('../../assest/inicio.jpg ');
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.password-recovery-container {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    background-color: #f6f1f165;
+    border-radius: 5px;
+   
+}
+
+.inputloginrec {
+    display: flex;
+    align-items: center;
+    margin: auto;
+    width: 350px;
+    height: 50px;
+    background: #fffcfc;
+    border-radius: 6px;
+    margin-top: 2px;
+
+}
+
+form {
+    margin-bottom: 20px;
+}
+
+.inputloginrec input {
+    height: 40px;
+    width: 450px;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #020202;
+    font-size: 19px;
+    margin-bottom: 5px;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #2e8729;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 5px;
+}
+.textlogincontra {
+    color: #000000;
+    font-size:30px;
+    font-weight: 700;
+    margin-bottom: 15px;
+}
+.password-retrieved {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #efe9e9bc;
+    border: 1px solid #188732;
+    border-radius: 5px;
+}
+
+.error-message {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    border-radius: 5px;
+}
+
+.back-to-login-button {
+    background-color: #007bff00;
+    color: #0e0c0c;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center; /* Centra verticalmente el icono y el texto */
+    margin-top: 5px;
+}
+
+.back-to-login-button:hover {
+    background-color: #0057b300; /* Color de fondo al pasar el ratón */
+}
+
+.back-to-login-button svg {
+    margin-right: 5px; /* Espacio entre el icono y el texto */
+}

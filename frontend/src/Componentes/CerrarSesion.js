@@ -13,7 +13,7 @@ function CerrarSesion() {
     if (nombreusuario) {
       axios.get(`http://localhost:8081/getusuarios/${nombreusuario}`)
       .then(response => {
-        console.log('Datos recibidos:', response.data);
+        console.log('Datos recibidos:');
     
         // Verifica la estructura de los datos en la consola
         console.log('Propiedades de los datos:', Object.keys(response.data[0]));

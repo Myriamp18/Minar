@@ -47,10 +47,7 @@ const handeleEXCEL = () =>{
         Mezclas Molienda
          
       </span>
-      <span className="buttonmo-textss">
-       Pendiente
-         
-      </span>
+  
   
       </button>
       <button className="btnmo-large btnmo-pp" onClick={onPromedios}>
@@ -58,10 +55,7 @@ const handeleEXCEL = () =>{
         <span className="buttonmo-text">
        Promedios
       </span>
-      <span className="buttonmo-textss">
-       Pendiente
-         
-      </span>
+      
       </button>
       
     </div>

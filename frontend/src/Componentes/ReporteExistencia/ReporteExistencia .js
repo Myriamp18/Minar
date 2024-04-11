@@ -51,7 +51,7 @@ export default function ReporteExistencia() {
            
           </span>
           <span className="button-textss">
-            Pendiente
+            PT
 
           </span>
 
@@ -62,7 +62,7 @@ export default function ReporteExistencia() {
             Produccion Patio
           </span>
           <span className="button-textss">
-            Pendiente
+            PP
 
           </span>
         </button>
@@ -72,7 +72,7 @@ export default function ReporteExistencia() {
             Mineral Patio
           </span>
           <span className="button-textss">
-            Pendiente
+            MP
 
           </span>
         </button>

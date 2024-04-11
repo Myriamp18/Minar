@@ -160,6 +160,8 @@ import Excelexistencias from './Componentes/ReporteExistencia/Excelexistencias';
 import CerrarSesion from './Componentes/CerrarSesion';
 import ExcelHorometros from './Componentes/Horometros/ExcelHorometros';
 import { RutasPrivadas } from './Componentes/RutasPrivadas';
+import Modal from './Componentes/Usuarios/Modal';
+import OlvContra from './Componentes/Usuarios/OlvContra';
 
 
 
@@ -167,6 +169,7 @@ function App() {
 
       const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
 
+     
 
 
       return (
@@ -176,6 +179,7 @@ function App() {
                               {/* Ruta pública para el inicio de sesión */}
                               
                               <Route path="/" element={<Login />} />
+                              <Route path="/olvcontra" element={<OlvContra />}/>
                     
 
                               <Route element={<RutasPrivadas isLoggedIn={isLoggedIn} />}>
@@ -202,6 +206,10 @@ function App() {
                                     <Route path="/createusuario" element={<InsertarUsuario />} />
                                     <Route path="/updateusuarios/:id" element={<ModificarUsuario />} />
                                     <Route path="/usuarios" element={<Usuarios />} />
+                                    <Route path="/modal" element={<Modal />}/>
+
+
+
 
        /////////GRANOBANDAS/////
                                     <Route path="/creategrano" element={<FrmBandas />} />

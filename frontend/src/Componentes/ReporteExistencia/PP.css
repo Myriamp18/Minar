@@ -44,7 +44,7 @@
     cursor: pointer;
     transition: background-color 0.3s;
     position: relative;
- 
+   background-color:#f6f6f600 ;
     color: #03122b;
   }
   .btnpp-large:hover {
