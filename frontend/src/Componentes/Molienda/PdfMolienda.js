@@ -47,16 +47,12 @@ function PdfMolienda() {
 
     const handleDateChange = (date) => {
         console.log('Fecha recibida en DatePicker:', date);
-    
-        // Verificar si la hora es diferente de 00:00:00
-        const isDifferentHour = date.getHours() !== 0 || date.getMinutes() !== 0 || date.getSeconds() !== 0;
-    
-        // Ajustar la fecha a la zona horaria local solo si la hora es diferente
-        const adjustedDate = isDifferentHour ? new Date(date.getTime() + date.getTimezoneOffset() * 60000) : date;
-    
-        const formattedDate = formatDate(adjustedDate);
+        
+        // Ajustar la fecha a la zona horaria local
+        const formattedDate = formatDate(date);
+        
         setSelectedDate(formattedDate);
-    };
+      };
     
     // Función para convertir la fecha al formato deseado
     const formatDate = (date) => {

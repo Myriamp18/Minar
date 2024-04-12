@@ -48,11 +48,12 @@ function Excelmolienda() {
 
     const handleDateChange = (date) => {
         console.log('Fecha recibida en DatePicker:', date);
+        
         // Ajustar la fecha a la zona horaria local
-        const adjustedDate = new Date(date.getTime() + date.getTimezoneOffset() * 60000);
-        const formattedDate = formatDate(adjustedDate);
+        const formattedDate = formatDate(date);
+        
         setSelectedDate(formattedDate);
-    };
+      };
     // Función para convertir la fecha al formato deseado
     const formatDate = (date) => {
         // Obtener los componentes de la fecha

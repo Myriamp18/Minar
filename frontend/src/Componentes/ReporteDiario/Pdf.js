@@ -52,12 +52,12 @@ function Pdf() {
 
     const handleDateChange = (date) => {
         console.log('Fecha recibida en DatePicker:', date);
+        
         // Ajustar la fecha a la zona horaria local
-        const adjustedDate = new Date(date.getTime() + date.getTimezoneOffset() * 60000);
-        const formattedDate = formatDate(adjustedDate);
+        const formattedDate = formatDate(date);
+        
         setSelectedDate(formattedDate);
     };
-
     // Función para convertir la fecha al formato deseado
     const formatDate = (date) => {
         // Obtener los componentes de la fecha
@@ -77,7 +77,7 @@ function Pdf() {
         const doc = new jsPDF({
             orientation: 'p', // Orientación: 'p' para retrato, 'l' para paisaje
             unit: 'mm', // Unidad de medida: milímetros
-            format: [216, 356], // Tamaño del papel: 'a4', 'letter', 'legal', etc.
+            format: [216, 370], // Tamaño del papel: 'a4', 'letter', 'legal', etc.
             putOnlyUsedFonts: true,
             floatPrecision: 16,
             margins: { // Márgenes personalizados
@@ -122,7 +122,7 @@ function Pdf() {
         generateTridTableData(doc, tridTableData.filter(item => item.turno === 2), 'Turno 2', 170);
         generateTridTableData(doc, tridTableData.filter(item => item.turno === 3), 'Turno 3', 175);
 
-        generateCuartTableData(doc, cuartTableData.filter(item => item.turno === 1), 'Otra Tabla', 190);
+        generateCuartTableData(doc, cuartTableData, 'Otra Tabla', 190);
 
         let fileName = `reporte_diario.pdf`;
 

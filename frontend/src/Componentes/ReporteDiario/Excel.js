@@ -53,12 +53,12 @@ const Excel = () => {
 
   const handleDateChange = (date) => {
     console.log('Fecha recibida en DatePicker:', date);
+    
     // Ajustar la fecha a la zona horaria local
-    const adjustedDate = new Date(date.getTime() + date.getTimezoneOffset() * 60000);
-    const formattedDate = formatDate(adjustedDate);
+    const formattedDate = formatDate(date);
+    
     setSelectedDate(formattedDate);
 };
-
   const formatDate = (date) => {
     const year = date.getFullYear();
     const month = date.getMonth() + 1;
