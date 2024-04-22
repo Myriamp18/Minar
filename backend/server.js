@@ -222,24 +222,53 @@ app.post('/createseleccion', async (req, res) => { // Añade 'async' aquí
         // Obtener el saldo anterior
         const saldoAnteriorData = await new Promise((resolve, reject) => {
             db.query("SELECT saldo FROM seleccion ORDER BY id DESC LIMIT 1", (err, data) => {
-                if (err) reject(err);
-                else resolve(data);
+                if (err) {
+                    reject(err);
+                } else {
+                    // Verificamos si hay resultados
+                    if (data && data.length > 0 && data[0].saldo !== null) {
+                        // Si hay resultados y el saldo no es nulo, devolvemos el saldo
+                        resolve(data[0].saldo);
+                    } else {
+                        // Si no hay resultados o el saldo es nulo, devolvemos 0
+                        resolve(0);
+                    }
+                }
             });
         });
+        
         const totalEntradasSelecc = await new Promise((resolve, reject) => {
             const query = "SELECT (SUM(tonpiedra)) AS total_entradas FROM prodseleccion WHERE fecha = ?;";
             db.query(query, [req.body.fecha], (err, data) => {
-                if (err) reject(err);
-                else resolve(data[0].total_entradas); // Obtenemos el total concentrado de la primera fila
+                if (err) {
+                    reject(err);
+                } else {
+                    // Verificamos si hay resultados
+                    if (data && data.length > 0 && data[0].total_entradas !== null) {
+                        // Si hay resultados y la suma no es nula, devolvemos el total
+                        resolve(data[0].total_entradas);
+                    } else {
+                        // Si no hay resultados o la suma es nula, devolvemos 0
+                        resolve(0);
+                    }
+                }
             });
         });
+        
         const pe = await new Promise((resolve, reject) => {
             const query = "SELECT (SUM(petp)) AS total_PE FROM prodseleccion WHERE fecha = ?";
             db.query(query, [req.body.fecha], (err, data) => {
                 if (err) {
                     reject(err);
                 } else {
-                    resolve(data[0].total_PE);
+                    // Verificamos si hay resultados
+                    if (data && data.length > 0 && data[0].total_PE !== null) {
+                        // Si hay resultados y el total de PE no es nulo, devolvemos el total
+                        resolve(data[0].total_PE);
+                    } else {
+                        // Si no hay resultados o el total de PE es nulo, devolvemos 0
+                        resolve(0);
+                    }
                 }
             });
         });
@@ -1205,10 +1234,21 @@ app.post('/createconcmesas', async (req, res) => {
         const totalSalidasMesas = await new Promise((resolve, reject) => {
             const query = "SELECT (SUM(concmesas)) AS total_salidas FROM molienda WHERE fecha = ?;";
             db.query(query, [req.body.fecha], (err, data) => {
-                if (err) reject(err);
-                else resolve(data[0].total_salidas); // Obtenemos el total concentrado de la primera fila
+                if (err) {
+                    reject(err);
+                } else {
+                    // Verificamos si hay resultados
+                    if (data && data.length > 0 && data[0].total_salidas !== null) {
+                        // Si hay resultados y el total de salidas no es nulo, devolvemos el total
+                        resolve(data[0].total_salidas);
+                    } else {
+                        // Si no hay resultados o el total de salidas es nulo, devolvemos 0
+                        resolve(0);
+                    }
+                }
             });
         });
+        
       
         
         
@@ -1219,11 +1259,18 @@ app.post('/createconcmesas', async (req, res) => {
         // Obtener el saldo anterior
         const saldoAnteriorData = await new Promise((resolve, reject) => {
             db.query("SELECT saldo FROM concmesas ORDER BY id DESC LIMIT 1", (err, data) => {
-                if (err) reject(err);
-                else resolve(data[0].saldo || 0);
+                if (err) {
+                    reject(err);
+                } else {
+                    if (data && data.length > 0 && data[0].saldo !== null) {
+                        resolve(data[0].saldo);
+                    } else {
+                        resolve(0);
+                    }
+                }
             });
         });
-
+        
         // Si hay registros en la tabla, obtén el saldo anterior, de lo contrario, establece el saldo anterior en 0
 
 
@@ -1510,19 +1557,41 @@ app.post('/createconcjigssec', async (req, res) => {
     try {
         //Obtener el total concentrado de las mesas para la fecha especificada
         const totalConcentradojigss = await new Promise((resolve, reject) => {
-            const query = "SELECT (SUM(concjsec	)) AS total_concjigs FROM jigschinos WHERE fecha = ?;";
+            const query = "SELECT (SUM(concjsec)) AS total_concjigs FROM jigschinos WHERE fecha = ?;";
             db.query(query, [req.body.fecha], (err, data) => {
-                if (err) reject(err);
-                else resolve(data[0].total_concjigs); // Obtenemos el total concentrado de la primera fila
+                if (err) {
+                    reject(err);
+                } else {
+                    // Verificamos si hay resultados
+                    if (data && data.length > 0 && data[0].total_concjigs !== null) {
+                        // Si hay resultados y el total de concentrado de jigs no es nulo, devolvemos el total
+                        resolve(data[0].total_concjigs);
+                    } else {
+                        // Si no hay resultados o el total de concentrado de jigs es nulo, devolvemos 0
+                        resolve(0);
+                    }
+                }
             });
         });
+        
         const totalSalidasConcjigs = await new Promise((resolve, reject) => {
             const query = "SELECT (SUM(concjigs)) AS total_concjig FROM molienda WHERE fecha = ?;";
             db.query(query, [req.body.fecha], (err, data) => {
-                if (err) reject(err);
-                else resolve(data[0].total_concjig); // Obtenemos el total concentrado de la primera fila
+                if (err) {
+                    reject(err);
+                } else {
+                    // Verificamos si hay resultados
+                    if (data && data.length > 0 && data[0].total_concjig !== null) {
+                        // Si hay resultados y el total de salidas de concentrado de jigs no es nulo, devolvemos el total
+                        resolve(data[0].total_concjig);
+                    } else {
+                        // Si no hay resultados o el total de salidas de concentrado de jigs es nulo, devolvemos 0
+                        resolve(0);
+                    }
+                }
             });
         });
+        
         const totalpe = await new Promise((resolve, reject) => {
             const query = "SELECT pecojsec FROM jigschinos WHERE fecha = ?;";
             db.query(query, [req.body.fecha], (err, data) => {
@@ -2025,29 +2094,59 @@ app.get('/granomoler', (req, res) => {
 app.post('/creategranomoler', async (req, res) => {
     try {
         const totalgrano = await new Promise((resolve, reject) => {
-            const query = "SELECT (SUM(granoj1)+SUM(granoj2)) AS total_grano FROM produccionjigs WHERE fecha = ?;";
+            const query = "SELECT (SUM(granoj1) + SUM(granoj2)) AS total_grano FROM produccionjigs WHERE fecha = ?;";
             db.query(query, [req.body.fecha], (err, data) => {
-                if (err) reject(err);
-                else resolve(data[0].total_grano); // Obtenemos el total concentrado de la primera fila
+                if (err) {
+                    reject(err);
+                } else {
+                    // Verificamos si hay resultados
+                    if (data && data.length > 0 && data[0].total_grano !== null) {
+                        // Si hay resultados y el total de grano no es nulo, devolvemos el total
+                        resolve(data[0].total_grano);
+                    } else {
+                        // Si no hay resultados o el total de grano es nulo, devolvemos 0
+                        resolve(0);
+                    }
+                }
             });
         });
+        
         const totalsalidasgrano = await new Promise((resolve, reject) => {
             const query = "SELECT (SUM(medios)) AS total_salidasgrano FROM molienda WHERE fecha = ?;";
             db.query(query, [req.body.fecha], (err, data) => {
-                if (err) reject(err);
-                else resolve(data[0].total_salidasgrano); // Obtenemos el total concentrado de la primera fila
+                if (err) {
+                    reject(err);
+                } else {
+                    // Verificamos si hay resultados
+                    if (data && data.length > 0 && data[0].total_salidasgrano !== null) {
+                        // Si hay resultados y el total de salidas de grano no es nulo, devolvemos el total
+                        resolve(data[0].total_salidasgrano);
+                    } else {
+                        // Si no hay resultados o el total de salidas de grano es nulo, devolvemos 0
+                        resolve(0);
+                    }
+                }
             });
         });
+        
         const totalpesp = await new Promise((resolve, reject) => {
-    const query = "SELECT AVG((IF(pegj1 IS NOT NULL AND pegj1 != 0, pegj1, 0) + IF(pegj2 IS NOT NULL AND pegj2 != 0, pegj2, 0)) / (IF(peaj1 IS NOT NULL AND peaj1 != 0, 1, 0) + IF(pegj2 IS NOT NULL AND pegj2 != 0, 1, 0))) AS promedio_peso FROM produccionjigs WHERE fecha =?";
-    db.query(query, [req.body.fecha], (err, data) => {
-        if (err) {
-            reject(err);
-        } else {
-            resolve(data[0].promedio_peso); // Obtenemos el promedio de peso de la primera fila
-        }
-    });
-});
+            const query = "SELECT AVG((IF(pegj1 IS NOT NULL AND pegj1 != 0, pegj1, 0) + IF(pegj2 IS NOT NULL AND pegj2 != 0, pegj2, 0)) / (IF(peaj1 IS NOT NULL AND peaj1 != 0, 1, 0) + IF(peaj2 IS NOT NULL AND peaj2 != 0, 1, 0))) AS promedio_peso FROM produccionjigs WHERE fecha =?";
+            db.query(query, [req.body.fecha], (err, data) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    // Verificamos si hay resultados
+                    if (data && data.length > 0 && data[0].promedio_peso !== null) {
+                        // Si hay resultados y el promedio de peso no es nulo, devolvemos el promedio
+                        resolve(data[0].promedio_peso);
+                    } else {
+                        // Si no hay resultados o el promedio de peso es nulo, devolvemos 0
+                        resolve(0);
+                    }
+                }
+            });
+        });
+        
 
 
         // Obtener el saldo anterior
@@ -2263,12 +2362,23 @@ app.get('/granojigs', (req, res) => {
 app.post('/creategranojigs', async (req, res) => {
     try {
         const totalgranojigs = await new Promise((resolve, reject) => {
-            const query = "SELECT (SUM(granojch))AS total_granojigs FROM jigschinos WHERE fecha = ?;";
+            const query = "SELECT (SUM(granojch)) AS total_granojigs FROM jigschinos WHERE fecha = ?;";
             db.query(query, [req.body.fecha], (err, data) => {
-                if (err) reject(err);
-                else resolve(data[0].total_granojigs); // Obtenemos el total concentrado de la primera fila
+                if (err) {
+                    reject(err);
+                } else {
+                    // Verificamos si hay resultados
+                    if (data && data.length > 0 && data[0].total_granojigs !== null) {
+                        // Si hay resultados y el total de grano de jigs no es nulo, devolvemos el total
+                        resolve(data[0].total_granojigs);
+                    } else {
+                        // Si no hay resultados o el total de grano de jigs es nulo, devolvemos 0
+                        resolve(0);
+                    }
+                }
             });
         });
+        
         // Obtener el saldo anterior
         const saldoAnteriorData = await new Promise((resolve, reject) => {
             db.query("SELECT saldo FROM granojigs ORDER BY id DESC LIMIT 1", (err, data) => {
@@ -2376,12 +2486,23 @@ app.get('/desensolvech', (req, res) => {
 app.post('/createdesensolvech', async (req, res) => {
     try {
         const totaldesensolve = await new Promise((resolve, reject) => {
-            const query = "SELECT (SUM(desenjch))AS total_desensolvejigs FROM jigschinos WHERE fecha = ?;";
+            const query = "SELECT (SUM(desenjch)) AS total_desensolvejigs FROM jigschinos WHERE fecha = ?;";
             db.query(query, [req.body.fecha], (err, data) => {
-                if (err) reject(err);
-                else resolve(data[0].total_desensolvejigs); // Obtenemos el total concentrado de la primera fila
+                if (err) {
+                    reject(err);
+                } else {
+                    // Verificamos si hay resultados
+                    if (data && data.length > 0 && data[0].total_desensolvejigs !== null) {
+                        // Si hay resultados y el total de desensolve de jigs no es nulo, devolvemos el total
+                        resolve(data[0].total_desensolvejigs);
+                    } else {
+                        // Si no hay resultados o el total de desensolve de jigs es nulo, devolvemos 0
+                        resolve(0);
+                    }
+                }
             });
         });
+        
         // Obtener el saldo anterior
         const saldoAnteriorData = await new Promise((resolve, reject) => {
             db.query("SELECT saldo FROM desensolvech ORDER BY id DESC LIMIT 1", (err, data) => {

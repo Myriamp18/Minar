@@ -71,10 +71,7 @@ const onHcriva= () =>{
             Horometros Jigg´s
              
           </span>
-          <span className="buttonh-textss">
-           Pendiente
-             
-          </span>
+          
       
           </button>
           <button className="btnh-large btnh-pp" onClick={onH12}>
@@ -82,30 +79,21 @@ const onHcriva= () =>{
             <span className="buttonh-text">
              Horometro Mesa 1y2
           </span>
-          <span className="buttonh-textss">
-           Pendiente
-             
-          </span>
+          
           </button>
           <button className="btnh-large btnh-mp" onClick={onH34}>
           <span className="iconnnesh"><FaHourglassHalf /></span>
             <span className="buttonh-text">
              Horometros Mesa 3y4
           </span>
-          <span className="buttonh-textss">
-           Pendiente
-             
-          </span>
+          
           </button>
           <button className="btnh-large btnh-bs" onClick={onH5}>
           <span className="iconnnesh"><IoMdClock /></span>
           <span className="buttonh-text">
              Horometro Mesa 5
           </span>
-          <span className="buttonh-textss">
-           Pendiente
-             
-          </span>
+         
            
           </button>
           <button className="btnh-large btnh-bs" onClick={onH6}>
@@ -113,10 +101,7 @@ const onHcriva= () =>{
           <span className="buttonh-text">
              Horometro Mesa 6
           </span>
-          <span className="buttonh-textss">
-           Pendiente
-             
-          </span>
+          
            
           </button>
       
@@ -125,10 +110,7 @@ const onHcriva= () =>{
           <span className="buttonh-text">
              Molinos
           </span>
-          <span className="buttonh-textss">
-           Pendiente
-             
-          </span>
+          
            
           </button>
       
@@ -137,10 +119,7 @@ const onHcriva= () =>{
           <span className="buttonh-text">
              Crivada Vibratoria
           </span>
-          <span className="buttonh-textss">
-           Pendiente
-             
-          </span>
+          
            
           </button>
       
@@ -149,10 +128,7 @@ const onHcriva= () =>{
           <span className="buttonh-text">
              Horno Rotatorio
           </span>
-          <span className="buttonh-textss">
-           Pendiente
-             
-          </span>
+          
            
           </button>
         

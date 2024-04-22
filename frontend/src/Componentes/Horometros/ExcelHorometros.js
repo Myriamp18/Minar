@@ -77,13 +77,18 @@ function ExcelHorometros() {
     };
 
     const handleDateChange = (date) => {
-        console.log('Fecha recibida en DatePicker:', date);
-        
-        // Ajustar la fecha a la zona horaria local
-        const formattedDate = formatDate(date);
-        
-        setSelectedDate(formattedDate);
-      };
+        if (date) {
+            // Formatear la fecha
+            const formattedDate = formatDate(date);
+            
+            console.log('Fecha recibida en DatePicker:', date);
+            setSelectedDate(formattedDate);
+        }
+    };
+    
+    
+    
+    
     // Función para convertir la fecha al formato deseado
     const formatDate = (date) => {
         // Obtener los componentes de la fecha
@@ -292,7 +297,7 @@ function ExcelHorometros() {
                     <FontAwesomeIcon icon={faTimes} />
                 </div>
                 <div className="date-picker-container">
-                    <DatePicker selected={selectedDate} onChange={handleDateChange} />
+                    <DatePicker selected={selectedDate} onChange={handleDateChange}  />
                 </div>
                 <div className="export-button-container">
                     <button className="export-button" onClick={exportToExcel} disabled={exporting}>

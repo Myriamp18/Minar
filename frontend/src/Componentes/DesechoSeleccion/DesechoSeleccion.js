@@ -30,10 +30,7 @@ function DesechoSeleccion() {
         Grano Seleccion 4.30
          
       </span>
-      <span className="button-textss">
-       Pendiente
-         
-      </span>
+      
 
       </button>
       <button className="btn-large btn-pp" onClick={onDesecho39}>
@@ -41,10 +38,7 @@ function DesechoSeleccion() {
         <span className="button-text">
         Grano Seleccion 3.90
       </span>
-      <span className="button-textss">
-       Pendiente
-         
-      </span>
+      
       </button>
     
       
