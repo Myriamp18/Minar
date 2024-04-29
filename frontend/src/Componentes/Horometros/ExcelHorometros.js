@@ -7,7 +7,7 @@ import '../ReporteDiario/Excel.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
-
+import es from 'date-fns/locale/es';
 
 function ExcelHorometros() {
     const navigate = useNavigate();
@@ -77,18 +77,15 @@ function ExcelHorometros() {
     };
 
     const handleDateChange = (date) => {
-        if (date) {
-            // Formatear la fecha
-            const formattedDate = formatDate(date);
-            
-            console.log('Fecha recibida en DatePicker:', date);
-            setSelectedDate(formattedDate);
-        }
-    };
-    
-    
-    
-    
+        console.log('Fecha recibida en DatePicker:', date);
+        
+        // Ajustar la fecha a la zona horaria local
+        const formattedDate = formatDate(date);
+       
+        setSelectedDate(formattedDate);
+        
+      };
+
     // Función para convertir la fecha al formato deseado
     const formatDate = (date) => {
         // Obtener los componentes de la fecha
@@ -101,6 +98,7 @@ function ExcelHorometros() {
 
         return formattedDate;
     };
+
     const applyTitleStyle = (cell) => {
         // Aplicar estilos al texto del título
         cell.font = { bold: true, size: 14, color: { argb: '000000' } }; // Negrita, tamaño 14, color negro
@@ -297,7 +295,7 @@ function ExcelHorometros() {
                     <FontAwesomeIcon icon={faTimes} />
                 </div>
                 <div className="date-picker-container">
-                    <DatePicker selected={selectedDate} onChange={handleDateChange}  />
+                    <DatePicker selected={selectedDate} onChange={handleDateChange}   dateFormat="yyyy-MM-dd"  locale={es}  timeZone="America/Mexico_City"/>
                 </div>
                 <div className="export-button-container">
                     <button className="export-button" onClick={exportToExcel} disabled={exporting}>

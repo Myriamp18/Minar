@@ -88,7 +88,7 @@ function FrmPMolinos() {
             type="text"
             class="form-control"
             id='final'
-            placeholder='Insertar Cantidad'
+            placeholder='Insertar Horas'
             name='final'
             onChange={(e) => setValues({ ...values, hrsm1: e.target.value })} required/>
         </div>
@@ -99,7 +99,7 @@ function FrmPMolinos() {
             type="text"
             class="form-control"
             id='final'
-            placeholder='Insertar Cantidad'
+            placeholder='Insertar Horas'
             name='final'
             onChange={(e) => setValues({ ...values, hrsm2: e.target.value })} required/>
         </div>

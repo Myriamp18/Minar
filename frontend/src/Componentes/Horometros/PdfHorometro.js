@@ -81,8 +81,9 @@ function PdfHorometro() {
         
         // Ajustar la fecha a la zona horaria local
         const formattedDate = formatDate(date);
-        
+       
         setSelectedDate(formattedDate);
+        
       };
 
     // Función para convertir la fecha al formato deseado

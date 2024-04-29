@@ -197,7 +197,7 @@ function FrmHorno() {
                 <label form='text'> Observaciones:</label>
 
                 <textarea
-                    placeholder="Inserte los medios a lavar a mesas y a jigss ."
+                    placeholder="Inserte Observaciones ."
                     className="form-control"
                     name='descripcion'
                     style={{ height: '50px', width: '100%', whiteSpace: 'pre-wrap', wordWrap: 'break-word', overflowWrap: 'break-word' }}

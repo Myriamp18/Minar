@@ -91,7 +91,7 @@ function FrmHMolinos() {
             type="text"
             class="form-control"
             id='final'
-            placeholder='Insertar Cantidad'
+            placeholder='Insertar Horometro'
             name='final'
             onChange={(e) => setValues({ ...values, final: e.target.value })} required/>
         </div>

@@ -52,7 +52,7 @@ function Menu({ children }) {
         },
 
         {
-            path: "/usuarios",
+            path: "/modal",
             name: "Usuarios",
             icon: <FaUserCircle />
         },
