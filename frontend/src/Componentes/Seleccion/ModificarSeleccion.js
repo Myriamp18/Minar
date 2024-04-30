@@ -114,7 +114,7 @@ function ModificarSeleccion() {
 
           
           <div className="btn-container">
-          <button type="submit" className="BTN"  >GUARDAR</button>
+          <button type="submit" className="BTN"  >MODIFICAR</button>
           </div>
 
 

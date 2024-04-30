@@ -107,7 +107,7 @@ function ModificarConcBaribrigjt() {
 
           
           <div className="btn-container">
-          <button type="submit" className="BTN"  >MODIGICAR</button>
+          <button type="submit" className="BTN"  >MODIFICAR</button>
           </div>
 
 

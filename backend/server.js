@@ -3829,7 +3829,7 @@ app.get('/getsilos/:fecha', (req, res) => {
 })
 app.get('/getconcmesas/:fecha', (req, res) => {
     const fecha = req.params.fecha;
-    const sql = "SELECT * FROM concmesas WHERE fecha = ?"
+    const sql = "SELECT * FROM concmesas WHERE fecha <= ? ORDER BY fecha DESC LIMIT 1"
     db.query(sql, [fecha], (err, data) => {
         if (err) {
             console.error("Error en la consulta SQL:", err);
@@ -3841,7 +3841,7 @@ app.get('/getconcmesas/:fecha', (req, res) => {
 })
 app.get('/getconcjigssec/:fecha', (req, res) => {
     const fecha = req.params.fecha;
-    const sql = "SELECT * FROM concjigssec WHERE fecha = ?"
+    const sql = "SELECT * FROM concjigssec WHERE fecha <= ? ORDER BY fecha DESC LIMIT 1"
     db.query(sql, [fecha], (err, data) => {
         if (err) {
             console.error("Error en la consulta SQL:", err);
@@ -3853,7 +3853,7 @@ app.get('/getconcjigssec/:fecha', (req, res) => {
 })
 app.get('/getmedios46/:fecha', (req, res) => {
     const fecha = req.params.fecha;
-    const sql = "SELECT * FROM medios46 WHERE fecha = ?"
+    const sql = "SELECT * FROM medios46 WHERE fecha <= ? ORDER BY fecha DESC LIMIT 1"
     db.query(sql, [fecha], (err, data) => {
         if (err) {
             console.error("Error en la consulta SQL:", err);
@@ -3865,7 +3865,7 @@ app.get('/getmedios46/:fecha', (req, res) => {
 })
 app.get('/getmedios4/:fecha', (req, res) => {
     const fecha = req.params.fecha;
-    const sql = "SELECT * FROM medios4 WHERE fecha = ?"
+    const sql = "SELECT * FROM medios4 WHERE fecha <= ? ORDER BY fecha DESC LIMIT 1"
     db.query(sql, [fecha], (err, data) => {
         if (err) {
             console.error("Error en la consulta SQL:", err);
@@ -3877,7 +3877,7 @@ app.get('/getmedios4/:fecha', (req, res) => {
 })
 app.get('/getmedios3/:fecha', (req, res) => {
     const fecha = req.params.fecha;
-    const sql = "SELECT * FROM medios3 WHERE fecha = ?"
+    const sql = "SELECT * FROM medios3 WHERE fecha <= ? ORDER BY fecha DESC LIMIT 1"
     db.query(sql, [fecha], (err, data) => {
         if (err) {
             console.error("Error en la consulta SQL:", err);
@@ -3889,7 +3889,7 @@ app.get('/getmedios3/:fecha', (req, res) => {
 })
 app.get('/getgranobandas/:fecha', (req, res) => {
     const fecha = req.params.fecha;
-    const sql = "SELECT * FROM granobandas WHERE fecha = ?"
+    const sql = "SELECT * FROM granobandas WHERE fecha <= ? ORDER BY fecha DESC LIMIT 1"
     db.query(sql, [fecha], (err, data) => {
         if (err) {
             console.error("Error en la consulta SQL:", err);
@@ -3901,7 +3901,7 @@ app.get('/getgranobandas/:fecha', (req, res) => {
 })
 app.get('/getgranopmoler/:fecha', (req, res) => {
     const fecha = req.params.fecha;
-    const sql = "SELECT * FROM granopmoler WHERE fecha = ?"
+    const sql = "SELECT * FROM granopmoler WHERE fecha <= ? ORDER BY fecha DESC LIMIT 1"
     db.query(sql, [fecha], (err, data) => {
         if (err) {
             console.error("Error en la consulta SQL:", err);
@@ -3913,7 +3913,7 @@ app.get('/getgranopmoler/:fecha', (req, res) => {
 })
 app.get('/getgranojigs/:fecha', (req, res) => {
     const fecha = req.params.fecha;
-    const sql = "SELECT * FROM granojigs WHERE fecha = ?"
+    const sql = "SELECT * FROM granojigs WHERE fecha <= ? ORDER BY fecha DESC LIMIT 1"
     db.query(sql, [fecha], (err, data) => {
         if (err) {
             console.error("Error en la consulta SQL:", err);
@@ -3925,7 +3925,7 @@ app.get('/getgranojigs/:fecha', (req, res) => {
 })
 app.get('/getdesensolvech/:fecha', (req, res) => {
     const fecha = req.params.fecha;
-    const sql = "SELECT * FROM desensolvech WHERE fecha = ?"
+    const sql = "SELECT * FROM desensolvech WHERE fecha <= ? ORDER BY fecha DESC LIMIT 1"
     db.query(sql, [fecha], (err, data) => {
         if (err) {
             console.error("Error en la consulta SQL:", err);
@@ -3937,7 +3937,7 @@ app.get('/getdesensolvech/:fecha', (req, res) => {
 })
 app.get('/getdesensolve/:fecha', (req, res) => {
     const fecha = req.params.fecha;
-    const sql = "SELECT * FROM desensolve WHERE fecha = ?"
+    const sql = "SELECT * FROM desensolve WHERE fecha <= ? ORDER BY fecha DESC LIMIT 1"
     db.query(sql, [fecha], (err, data) => {
         if (err) {
             console.error("Error en la consulta SQL:", err);
@@ -3949,7 +3949,7 @@ app.get('/getdesensolve/:fecha', (req, res) => {
 })
 app.get('/getdesecho43/:fecha', (req, res) => {
     const fecha = req.params.fecha;
-    const sql = "SELECT * FROM desecho43 WHERE fecha = ?"
+    const sql = "SELECT * FROM desecho43 WHERE fecha <= ? ORDER BY fecha DESC LIMIT 1"
     db.query(sql, [fecha], (err, data) => {
         if (err) {
             console.error("Error en la consulta SQL:", err);
@@ -3961,7 +3961,7 @@ app.get('/getdesecho43/:fecha', (req, res) => {
 })
 app.get('/getdesecho39/:fecha', (req, res) => {
     const fecha = req.params.fecha;
-    const sql = "SELECT * FROM desecho39 WHERE fecha = ?"
+    const sql = "SELECT * FROM desecho39 WHERE fecha <= ? ORDER BY fecha DESC LIMIT 1"
     db.query(sql, [fecha], (err, data) => {
         if (err) {
             console.error("Error en la consulta SQL:", err);
@@ -3973,7 +3973,7 @@ app.get('/getdesecho39/:fecha', (req, res) => {
 })
 app.get('/getbaritron/:fecha', (req, res) => {
     const fecha = req.params.fecha;
-    const sql = "SELECT * FROM baritron WHERE fecha = ?"
+    const sql = "SELECT * FROM baritron WHERE fecha <= ? ORDER BY fecha DESC LIMIT 1";
     db.query(sql, [fecha], (err, data) => {
         if (err) {
             console.error("Error en la consulta SQL:", err);
@@ -3985,7 +3985,7 @@ app.get('/getbaritron/:fecha', (req, res) => {
 })
 app.get('/gettolvasmolinos/:fecha', (req, res) => {
     const fecha = req.params.fecha;
-    const sql = "SELECT * FROM tolvasmolinos WHERE fecha = ?"
+    const sql = "SELECT * FROM tolvasmolinos WHERE fecha <= ? ORDER BY fecha DESC LIMIT 1"
     db.query(sql, [fecha], (err, data) => {
         if (err) {
             console.error("Error en la consulta SQL:", err);
@@ -3997,7 +3997,7 @@ app.get('/gettolvasmolinos/:fecha', (req, res) => {
 })
 app.get('/getmmlt/:fecha', (req, res) => {
     const fecha = req.params.fecha;
-    const sql = "SELECT * FROM mmlt WHERE fecha = ?"
+    const sql = "SELECT * FROM mmlt WHERE fecha <= ? ORDER BY fecha DESC LIMIT 1"
     db.query(sql, [fecha], (err, data) => {
         if (err) {
             console.error("Error en la consulta SQL:", err);
@@ -4009,7 +4009,7 @@ app.get('/getmmlt/:fecha', (req, res) => {
 })
 app.get('/getmmle/:fecha', (req, res) => {
     const fecha = req.params.fecha;
-    const sql = "SELECT * FROM mmle WHERE fecha = ?"
+    const sql = "SELECT * FROM mmle WHERE fecha <= ? ORDER BY fecha DESC LIMIT 1"
     db.query(sql, [fecha], (err, data) => {
         if (err) {
             console.error("Error en la consulta SQL:", err);
@@ -4021,7 +4021,7 @@ app.get('/getmmle/:fecha', (req, res) => {
 })
 app.get('/getmpmlt/:fecha', (req, res) => {
     const fecha = req.params.fecha;
-    const sql = "SELECT * FROM mpmlt WHERE fecha = ?"
+    const sql = "SELECT * FROM mpmlt WHERE fecha <= ? ORDER BY fecha DESC LIMIT 1"
     db.query(sql, [fecha], (err, data) => {
         if (err) {
             console.error("Error en la consulta SQL:", err);
@@ -4033,7 +4033,7 @@ app.get('/getmpmlt/:fecha', (req, res) => {
 })
 app.get('/getmpmle/:fecha', (req, res) => {
     const fecha = req.params.fecha;
-    const sql = "SELECT * FROM mpmle WHERE fecha = ?"
+    const sql = "SELECT * FROM mpmle WHERE fecha <= ? ORDER BY fecha DESC LIMIT 1"
     db.query(sql, [fecha], (err, data) => {
         if (err) {
             console.error("Error en la consulta SQL:", err);
@@ -4045,7 +4045,7 @@ app.get('/getmpmle/:fecha', (req, res) => {
 })
 app.get('/gettmlt/:fecha', (req, res) => {
     const fecha = req.params.fecha;
-    const sql = "SELECT * FROM tmlt WHERE fecha = ?"
+    const sql = "SELECT * FROM tmlt WHERE fecha <= ? ORDER BY fecha DESC LIMIT 1"
     db.query(sql, [fecha], (err, data) => {
         if (err) {
             console.error("Error en la consulta SQL:", err);
@@ -4058,7 +4058,7 @@ app.get('/gettmlt/:fecha', (req, res) => {
 
 app.get('/gettmle/:fecha', (req, res) => {
     const fecha = req.params.fecha;
-    const sql = "SELECT * FROM tmle WHERE fecha = ?"
+    const sql = "SELECT * FROM tmle WHERE fecha <= ? ORDER BY fecha DESC LIMIT 1"
     db.query(sql, [fecha], (err, data) => {
         if (err) {
             console.error("Error en la consulta SQL:", err);
@@ -4070,7 +4070,7 @@ app.get('/gettmle/:fecha', (req, res) => {
 })
 app.get('/gettolvag/:fecha', (req, res) => {
     const fecha = req.params.fecha;
-    const sql = "SELECT * FROM tolvag WHERE fecha = ?"
+    const sql = "SELECT * FROM tolvag WHERE fecha <= ? ORDER BY fecha DESC LIMIT 1"
     db.query(sql, [fecha], (err, data) => {
         if (err) {
             console.error("Error en la consulta SQL:", err);
@@ -4082,7 +4082,7 @@ app.get('/gettolvag/:fecha', (req, res) => {
 })
 app.get('/getseleccion/:fecha', (req, res) => {
     const fecha = req.params.fecha;
-    const sql = "SELECT * FROM seleccion WHERE fecha = ?"
+    const sql = "SELECT * FROM seleccion WHERE fecha <= ? ORDER BY fecha DESC LIMIT 1"
     db.query(sql, [fecha], (err, data) => {
         if (err) {
             console.error("Error en la consulta SQL:", err);
@@ -4094,7 +4094,7 @@ app.get('/getseleccion/:fecha', (req, res) => {
 })
 app.get('/getgrabari/:fecha', (req, res) => {
     const fecha = req.params.fecha;
-    const sql = "SELECT * FROM granobaribright WHERE fecha = ?"
+    const sql = "SELECT * FROM granobaribright WHERE fecha <= ? ORDER BY fecha DESC LIMIT 1"
     db.query(sql, [fecha], (err, data) => {
         if (err) {
             console.error("Error en la consulta SQL:", err);
@@ -4106,7 +4106,7 @@ app.get('/getgrabari/:fecha', (req, res) => {
 })
 app.get('/getconcbari/:fecha', (req, res) => {
     const fecha = req.params.fecha;
-    const sql = "SELECT * FROM concentradobaribaright WHERE fecha = ?"
+    const sql = "SELECT * FROM concentradobaribaright WHERE fecha <= ? ORDER BY fecha DESC LIMIT 1"
     db.query(sql, [fecha], (err, data) => {
         if (err) {
             console.error("Error en la consulta SQL:", err);
