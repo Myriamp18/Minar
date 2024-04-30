@@ -185,8 +185,8 @@ const Excel = () => {
       // Datos de la tabla MESAS
       tridTableData.forEach(product => {
         worksheet.addRow(['Mesa 1y2', product.fecha, product.turno, product.alimm12, product.peam12, product.conm12, product.pecnm12, product.mediom12, product.pemm12, product.colasm12, product.pecm12]);
-        worksheet.addRow(['Mesa 3y4', product.fecha, product.turno, product.alimm34, product.peam34, product.conm34, product.pecnm34, product.mediom34, product.pemm34, product.colasm34, product.pecm34]);
-        worksheet.addRow(['Mesa 5', product.fecha, product.turno, product.alimm5, product.peam5, product.conm5, product.pecnm5, product.mediom5, product.pemm5, product.colasm5, product.pecm5]);
+        worksheet.addRow(['Mesa 3y4', product.fecha, product.turno, product.alimm34, product.peam34, product.conm34, product.pecnm34, product.mediosm34, product.pemm34, product.colasm34, product.pecm34]);
+        worksheet.addRow(['Mesa 5', product.fecha, product.turno, product.alimm5, product.peam5, product.conm5, product.pecnm5, product.mediosm5, product.pemm5, product.colasm5, product.pecm5]);
         worksheet.addRow(['Mesa 6', product.fecha, product.turno, product.alimm6, product.peam6, product.conm6, product.pecnm6, product.mediom6, product.pemm6, product.colasm6, product.pecm6]);
         worksheet.addRow([]);
       });
