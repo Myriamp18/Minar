@@ -113,6 +113,7 @@ function Excelmolienda() {
                 worksheet.addRow(['Mezcla Total', product.fecha, product.turno, product.mezclatotal, product.pemt]);
                 worksheet.addRow(['PMLT', product.fecha, product.turno, product.pmlt]);
                 worksheet.addRow(['PMLE', product.fecha, product.turno, product.pmle]);
+                worksheet.addRow(['Otras Salidas', product.fecha, product.turno, product.otrassalidas]);
                 worksheet.addRow([]);
             });
 
@@ -127,7 +128,7 @@ function Excelmolienda() {
             // Datos de la tabla JIGS1
             otherTableData.forEach(product => {
                 worksheet.addRow(['P.Esp', product.fecha, product.turno, product.pemolino1, product.pemolino2]);
-                worksheet.addRow(['% Ret.Malla 200', product.fecha, product.turno, product.malla200mo1, product.pemolino2]);
+                worksheet.addRow(['% Ret.Malla 200', product.fecha, product.turno, product.malla200mo1, product.malla200mo2]);
                 worksheet.addRow(['% Ret.Malla 325', product.fecha, product.turno, product.malla325mo1, product.malla325mo2]);
                 worksheet.addRow(['Calcios en P.P.M', product.fecha, product.turno, product.calciosmo1, product.calciosmo2]);
                 worksheet.addRow(['% Humedad', product.fecha, product.turno, product.humedadmo1, product.humedadmo2]);
