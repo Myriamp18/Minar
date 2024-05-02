@@ -24,7 +24,7 @@ app.listen(8081, () => {
 
 ////////////USUARIOs////////////////////////
 
-  
+
 app.get('/usuarios', (req, res) => {
     const sql = "SELECT * FROM usuarios ORDER BY id_usuarios DESC";
     db.query(sql, (err, data) => {
@@ -236,7 +236,7 @@ app.post('/createseleccion', async (req, res) => { // Añade 'async' aquí
                 }
             });
         });
-        
+
         const totalEntradasSelecc = await new Promise((resolve, reject) => {
             const query = "SELECT (SUM(tonpiedra)) AS total_entradas FROM prodseleccion WHERE fecha = ?;";
             db.query(query, [req.body.fecha], (err, data) => {
@@ -254,7 +254,7 @@ app.post('/createseleccion', async (req, res) => { // Añade 'async' aquí
                 }
             });
         });
-        
+
         const pe = await new Promise((resolve, reject) => {
             const query = "SELECT (SUM(petp)) AS total_PE FROM prodseleccion WHERE fecha = ?";
             db.query(query, [req.body.fecha], (err, data) => {
@@ -272,7 +272,7 @@ app.post('/createseleccion', async (req, res) => { // Añade 'async' aquí
                 }
             });
         });
-        
+
 
 
         // Si hay registros en la tabla, obtén el saldo anterior, de lo contrario, establece el saldo anterior en 0
@@ -327,7 +327,7 @@ app.put('/updateseleccion/:id', async (req, res) => {
             });
         });
 
-        
+
         // Calcular el nuevo saldo
         let nuevoSaldo = saldoAnteriorData + parseFloat(req.body.entrada) - parseFloat(req.body.salida);
 
@@ -590,7 +590,7 @@ app.post('/createrreportemesas', (req, res) => {
     req.body.conm5 = req.body.conm5 - (req.body.conm5 * 0.14);
     req.body.conm6 = req.body.conm6 - (req.body.conm6 * 0.14);
 
-    req.body.mediom12 = req.body.mediom12- (req.body.mediom12 * 0.089);
+    req.body.mediom12 = req.body.mediom12 - (req.body.mediom12 * 0.089);
     req.body.mediosm34 = req.body.mediosm34 - (req.body.mediosm34 * 0.089);
     req.body.mediosm5 = req.body.mediosm5 - (req.body.mediosm5 * 0.089);
     req.body.mediosm6 = req.body.mediosm6 - (req.body.mediosm6 * 0.089);
@@ -776,7 +776,7 @@ app.get('/getgrano/:fecha', (req, res) => {
 })
 //////////////////////////MODIFICACIONES/////////
 app.put('/updatejigs/:id', (req, res) => {
-     
+
     const sql = "UPDATE produccionjigs  SET fecha = ?, turno = ?, alimj1 = ?, peaj1= ?, granoj1 = ?, pegj1 = ?, colasj1 = ?, pecj1 = ?, desenj1 = ?, pedj1 = ?, alimj2 = ?, peaj2 = ?, granoj2 = ?, pegj2 = ?,  desenj2 = ?, pedj2 = ?, colasj2 = ?, pecj2 = ? WHERE id = ?";
     const values = [
         req.body.fecha,
@@ -797,7 +797,7 @@ app.put('/updatejigs/:id', (req, res) => {
         req.body.pedj2,
         req.body.colasj2,
         req.body.pecj2,
-      
+
 
     ];
     const id = req.params.id;
@@ -1106,7 +1106,7 @@ app.post('/createconcentradobaribaright', async (req, res) => {
                 else resolve(data[0].total_concentrado || 0); // Si no se encuentra ningún valor, devuelve 0
             });
         });
-        
+
         // Obtener el saldo anterior
         const saldoAnteriorData = await new Promise((resolve, reject) => {
             db.query("SELECT saldo FROM concentradobaribaright ORDER BY id DESC LIMIT 1", (err, data) => {
@@ -1248,12 +1248,12 @@ app.post('/createconcmesas', async (req, res) => {
                 }
             });
         });
-        
-      
-        
-        
 
-           
+
+
+
+
+
 
 
         // Obtener el saldo anterior
@@ -1270,7 +1270,7 @@ app.post('/createconcmesas', async (req, res) => {
                 }
             });
         });
-        
+
         // Si hay registros en la tabla, obtén el saldo anterior, de lo contrario, establece el saldo anterior en 0
 
 
@@ -1573,7 +1573,7 @@ app.post('/createconcjigssec', async (req, res) => {
                 }
             });
         });
-        
+
         const totalSalidasConcjigs = await new Promise((resolve, reject) => {
             const query = "SELECT (SUM(concjigs)) AS total_concjig FROM molienda WHERE fecha = ?;";
             db.query(query, [req.body.fecha], (err, data) => {
@@ -1591,7 +1591,7 @@ app.post('/createconcjigssec', async (req, res) => {
                 }
             });
         });
-        
+
         const totalpe = await new Promise((resolve, reject) => {
             const query = "SELECT pecojsec FROM jigschinos WHERE fecha = ?;";
             db.query(query, [req.body.fecha], (err, data) => {
@@ -1600,21 +1600,21 @@ app.post('/createconcjigssec', async (req, res) => {
                 } else {
                     const nonZeroValues = data.filter(value => value.pecojsec !== 0);
                     const totalCount = nonZeroValues.length;
-        
+
                     let totalConcjig = 0;
                     nonZeroValues.forEach(value => totalConcjig += value.pecojsec);
-        
+
                     let average = 0;
                     if (totalCount > 0) {
                         average = totalConcjig / totalCount;
                     }
-        
+
                     resolve(average);
                 }
             });
         });
-        
-        
+
+
 
         // Obtener el saldo anterior
         const saldoAnteriorData = await new Promise((resolve, reject) => {
@@ -1728,7 +1728,7 @@ app.post('/createmedios46', async (req, res) => {
                 FROM mesas
                 WHERE fecha = ?;
             `;
-        
+
             db.query(query, [req.body.fecha], (err, data) => {
                 if (err) {
                     reject(err);
@@ -1738,9 +1738,9 @@ app.post('/createmedios46', async (req, res) => {
                 }
             });
         });
-        
-        
-        
+
+
+
         // Obtener el saldo anterior
         const saldoAnteriorData = await new Promise((resolve, reject) => {
             db.query("SELECT saldo46 FROM medios46 ORDER BY id DESC LIMIT 1", (err, data) => {
@@ -1857,7 +1857,7 @@ app.post('/createmedios4', async (req, res) => {
                         0
                     ) AS total_entradas;
             `;
-        
+
             db.query(query, [req.body.fecha], (err, data) => {
                 if (err) {
                     reject(err);
@@ -1867,7 +1867,7 @@ app.post('/createmedios4', async (req, res) => {
                 }
             });
         });
-        
+
 
         // Obtener el saldo anterior
         const saldoAnteriorData = await new Promise((resolve, reject) => {
@@ -1979,7 +1979,7 @@ app.post('/createmedios3', async (req, res) => {
                 FROM mesas
                 WHERE fecha = ?;
             `;
-        
+
             db.query(query, [req.body.fecha], (err, data) => {
                 if (err) {
                     reject(err);
@@ -2110,7 +2110,7 @@ app.post('/creategranomoler', async (req, res) => {
                 }
             });
         });
-        
+
         const totalsalidasgrano = await new Promise((resolve, reject) => {
             const query = "SELECT (SUM(medios)) AS total_salidasgrano FROM molienda WHERE fecha = ?;";
             db.query(query, [req.body.fecha], (err, data) => {
@@ -2128,7 +2128,7 @@ app.post('/creategranomoler', async (req, res) => {
                 }
             });
         });
-        
+
         const totalpesp = await new Promise((resolve, reject) => {
             const query = "SELECT AVG((IF(pegj1 IS NOT NULL AND pegj1 != 0, pegj1, 0) + IF(pegj2 IS NOT NULL AND pegj2 != 0, pegj2, 0)) / (IF(peaj1 IS NOT NULL AND peaj1 != 0, 1, 0) + IF(peaj2 IS NOT NULL AND peaj2 != 0, 1, 0))) AS promedio_peso FROM produccionjigs WHERE fecha =?";
             db.query(query, [req.body.fecha], (err, data) => {
@@ -2146,7 +2146,7 @@ app.post('/creategranomoler', async (req, res) => {
                 }
             });
         });
-        
+
 
 
         // Obtener el saldo anterior
@@ -2378,7 +2378,7 @@ app.post('/creategranojigs', async (req, res) => {
                 }
             });
         });
-        
+
         // Obtener el saldo anterior
         const saldoAnteriorData = await new Promise((resolve, reject) => {
             db.query("SELECT saldo FROM granojigs ORDER BY id DESC LIMIT 1", (err, data) => {
@@ -2502,7 +2502,7 @@ app.post('/createdesensolvech', async (req, res) => {
                 }
             });
         });
-        
+
         // Obtener el saldo anterior
         const saldoAnteriorData = await new Promise((resolve, reject) => {
             db.query("SELECT saldo FROM desensolvech ORDER BY id DESC LIMIT 1", (err, data) => {
@@ -3422,7 +3422,7 @@ app.post('/creatempmlt', async (req, res) => {
                 else resolve(data[0].total_salidas); // Obtenemos el total de salidas combinadas
             });
         });
-        
+
 
 
 
@@ -4165,10 +4165,18 @@ app.post('/createnotas', async (req, res) => {
         const totaljigssec = await new Promise((resolve, reject) => {
             const query = "SELECT (SUM(alimjsec)) AS total_jigssec FROM jigschinos WHERE fecha = ?;";
             db.query(query, [req.body.fecha], (err, data) => {
-                if (err) reject(err);
-                else resolve(data[0].total_jigssec); // Obtenemos el total concentrado de la primera fila
+                if (err) {
+                    reject(err);
+                } else {
+                    if (data.length === 0 || data[0].total_jigssec === null) {
+                        resolve(0); // Devolver cero si no hay datos que sumar
+                    } else {
+                        resolve(data[0].total_jigssec); // Obtenemos el total concentrado de la primera fila
+                    }
+                }
             });
         });
+
 
         // Realizar la inserción en la tabla concmesas
         const sql = "INSERT INTO notas (fecha, totmedios, totdesensolve, totcolas,comentario, totjigssec) VALUES (?, ?,?,?,?,?)";
@@ -4301,12 +4309,12 @@ app.post('/createhjigs', async (req, res) => {
         const totalhorasj2 = centenasj2 + resultadoj2;
 
         // Formar el total en un string con ':' entre las centenas y las decenas
-        const totalhrsj2  = `${Math.floor(totalhorasj2 / 100)}:${Math.floor(resultadoj2) < 10 ? '0' + Math.floor(resultadoj2) : Math.floor(resultadoj2)}`;
+        const totalhrsj2 = `${Math.floor(totalhorasj2 / 100)}:${Math.floor(resultadoj2) < 10 ? '0' + Math.floor(resultadoj2) : Math.floor(resultadoj2)}`;
 
         console.log(totalhrsj2); // Esto imprimirá el resultado final con la separación
 
 
-       
+
 
 
         // Realizar la inserción en la tabla concmesas
@@ -4338,8 +4346,8 @@ app.post('/createhjigs', async (req, res) => {
 app.put('/updatehjigs/:id', async (req, res) => {
     try {
 
-        const horas = parseFloat(req.body.final) -  parseFloat(req.body.inicio) 
-        const horasj2 = parseFloat(req.body.finalj2) - parseFloat(req.body.inicioj2) 
+        const horas = parseFloat(req.body.final) - parseFloat(req.body.inicio)
+        const horasj2 = parseFloat(req.body.finalj2) - parseFloat(req.body.inicioj2)
         // Separar las centenas
         const centenas = Math.floor(horas / 100) * 100; // Obtener las centenas
 
@@ -4370,34 +4378,34 @@ app.put('/updatehjigs/:id', async (req, res) => {
         const totalhorasj2 = centenasj2 + resultadoj2;
 
         // Formar el total en un string con ':' entre las centenas y las decenas
-        const totalhrsj2  = `${Math.floor(totalhorasj2 / 100)}:${Math.floor(resultadoj2) < 10 ? '0' + Math.floor(resultadoj2) : Math.floor(resultadoj2)}`;
+        const totalhrsj2 = `${Math.floor(totalhorasj2 / 100)}:${Math.floor(resultadoj2) < 10 ? '0' + Math.floor(resultadoj2) : Math.floor(resultadoj2)}`;
 
         console.log(totalhrsj2); // Esto imprimirá el resultado final con la separación
 
 
-    const sql = "UPDATE horojigss SET fecha = ?, turno =?, inicio = ?, final = ?, hrs = ?, totalhrs = ?, inicioj2 =?, finalj2=?, hrsj2=?, totalhrsj2=?  WHERE id = ?";
-    const values = [
-        req.body.fecha,
-        req.body.turno,
-        req.body.inicio,
-        req.body.final,
-        horas,
-        totalhrs,
-        req.body.inicioj2,
-        req.body.finalj2,
-        horasj2,
-        totalhrsj2,
+        const sql = "UPDATE horojigss SET fecha = ?, turno =?, inicio = ?, final = ?, hrs = ?, totalhrs = ?, inicioj2 =?, finalj2=?, hrsj2=?, totalhrsj2=?  WHERE id = ?";
+        const values = [
+            req.body.fecha,
+            req.body.turno,
+            req.body.inicio,
+            req.body.final,
+            horas,
+            totalhrs,
+            req.body.inicioj2,
+            req.body.finalj2,
+            horasj2,
+            totalhrsj2,
 
-    ];
-    const id = req.params.id;
-    db.query(sql, [...values, id], (err, data) => {
-        if (err) return res.json(err);
-        return res.json(data);
-    });
-} catch (error) {
-    console.error("Error al crear el registro en concmesas:", error);
-    res.status(500).send("Error al crear el registro en concmesas.");
-}
+        ];
+        const id = req.params.id;
+        db.query(sql, [...values, id], (err, data) => {
+            if (err) return res.json(err);
+            return res.json(data);
+        });
+    } catch (error) {
+        console.error("Error al crear el registro en concmesas:", error);
+        res.status(500).send("Error al crear el registro en concmesas.");
+    }
 });
 
 app.get('/getrecordhjigs/:id', (req, res) => {
@@ -4446,14 +4454,14 @@ app.post('/createhmesa12', async (req, res) => {
                 else resolve(data);
             });
         });
-      
+
         // Si hay registros en la tabla, obtén el saldo anterior, de lo contrario, establece el saldo anterior en 0
         const finalAnterior = finalAnteriorData.length > 0 ? finalAnteriorData[0].final : 0;
-       
+
         // Calcula el nuevo saldo sumando el saldo anterior a las entradas y restando las salidas
         const horas = parseFloat(req.body.final) - finalAnterior;
-       
-       
+
+
         // Separar las centenas
         const centenas = Math.floor(horas / 100) * 100; // Obtener las centenas
 
@@ -4472,7 +4480,7 @@ app.post('/createhmesa12', async (req, res) => {
         console.log(totalhrs); // Esto imprimirá el resultado final con la separación
 
 
-     
+
         // Realizar la inserción en la tabla concmesas
         const sql = "INSERT INTO hmesa12 (fecha, turno, inicio, final, hrs,totalhrs) VALUES (?, ?,?, ?, ?, ?)";
         const values = [
@@ -4482,7 +4490,7 @@ app.post('/createhmesa12', async (req, res) => {
             req.body.final,
             horas,
             totalhrs,
-            
+
         ];
 
         db.query(sql, values, (err, result) => {
@@ -4498,8 +4506,8 @@ app.post('/createhmesa12', async (req, res) => {
 app.put('/updatehmesa12/:id', async (req, res) => {
     try {
 
-        const horas = parseFloat(req.body.final) -  parseFloat(req.body.inicio) 
-         
+        const horas = parseFloat(req.body.final) - parseFloat(req.body.inicio)
+
         // Separar las centenas
         const centenas = Math.floor(horas / 100) * 100; // Obtener las centenas
 
@@ -4518,25 +4526,25 @@ app.put('/updatehmesa12/:id', async (req, res) => {
         console.log(totalhrs); // Esto imprimirá el resultado final con la separación
 
 
-    const sql = "UPDATE hmesa12 SET fecha = ?, turno =?, inicio = ?, final = ?, hrs = ?, totalhrs = ? WHERE id = ?";
-    const values = [
-        req.body.fecha,
-        req.body.turno,
-        req.body.inicio,
-        req.body.final,
-        horas,
-        totalhrs,
+        const sql = "UPDATE hmesa12 SET fecha = ?, turno =?, inicio = ?, final = ?, hrs = ?, totalhrs = ? WHERE id = ?";
+        const values = [
+            req.body.fecha,
+            req.body.turno,
+            req.body.inicio,
+            req.body.final,
+            horas,
+            totalhrs,
 
-    ];
-    const id = req.params.id;
-    db.query(sql, [...values, id], (err, data) => {
-        if (err) return res.json(err);
-        return res.json(data);
-    });
-} catch (error) {
-    console.error("Error al crear el registro en concmesas:", error);
-    res.status(500).send("Error al crear el registro en concmesas.");
-}
+        ];
+        const id = req.params.id;
+        db.query(sql, [...values, id], (err, data) => {
+            if (err) return res.json(err);
+            return res.json(data);
+        });
+    } catch (error) {
+        console.error("Error al crear el registro en concmesas:", error);
+        res.status(500).send("Error al crear el registro en concmesas.");
+    }
 });
 app.get('/getrecordhmesa12/:id', (req, res) => {
     const id = req.params.id;
@@ -4577,14 +4585,14 @@ app.post('/createhmesa34', async (req, res) => {
                 else resolve(data);
             });
         });
-      
+
         // Si hay registros en la tabla, obtén el saldo anterior, de lo contrario, establece el saldo anterior en 0
         const finalAnterior = finalAnteriorData.length > 0 ? finalAnteriorData[0].final : 0;
-       
+
         // Calcula el nuevo saldo sumando el saldo anterior a las entradas y restando las salidas
         const horas = parseFloat(req.body.final) - finalAnterior;
-       
-       
+
+
         // Separar las centenas
         const centenas = Math.floor(horas / 100) * 100; // Obtener las centenas
 
@@ -4603,7 +4611,7 @@ app.post('/createhmesa34', async (req, res) => {
         console.log(totalhrs); // Esto imprimirá el resultado final con la separación
 
 
-     
+
         // Realizar la inserción en la tabla concmesas
         const sql = "INSERT INTO hmesa34 (fecha, turno, inicio, final, hrs,totalhrs) VALUES (?, ?,?, ?, ?, ?)";
         const values = [
@@ -4613,7 +4621,7 @@ app.post('/createhmesa34', async (req, res) => {
             req.body.final,
             horas,
             totalhrs,
-            
+
         ];
 
         db.query(sql, values, (err, result) => {
@@ -4629,8 +4637,8 @@ app.post('/createhmesa34', async (req, res) => {
 app.put('/updatehmesa34/:id', async (req, res) => {
     try {
 
-        const horas = parseFloat(req.body.final) -  parseFloat(req.body.inicio) 
-         
+        const horas = parseFloat(req.body.final) - parseFloat(req.body.inicio)
+
         // Separar las centenas
         const centenas = Math.floor(horas / 100) * 100; // Obtener las centenas
 
@@ -4649,25 +4657,25 @@ app.put('/updatehmesa34/:id', async (req, res) => {
         console.log(totalhrs); // Esto imprimirá el resultado final con la separación
 
 
-    const sql = "UPDATE hmesa34 SET fecha = ?, turno =?, inicio = ?, final = ?, hrs = ?, totalhrs = ? WHERE id = ?";
-    const values = [
-        req.body.fecha,
-        req.body.turno,
-        req.body.inicio,
-        req.body.final,
-        horas,
-        totalhrs,
+        const sql = "UPDATE hmesa34 SET fecha = ?, turno =?, inicio = ?, final = ?, hrs = ?, totalhrs = ? WHERE id = ?";
+        const values = [
+            req.body.fecha,
+            req.body.turno,
+            req.body.inicio,
+            req.body.final,
+            horas,
+            totalhrs,
 
-    ];
-    const id = req.params.id;
-    db.query(sql, [...values, id], (err, data) => {
-        if (err) return res.json(err);
-        return res.json(data);
-    });
-} catch (error) {
-    console.error("Error al crear el registro en concmesas:", error);
-    res.status(500).send("Error al crear el registro en concmesas.");
-}
+        ];
+        const id = req.params.id;
+        db.query(sql, [...values, id], (err, data) => {
+            if (err) return res.json(err);
+            return res.json(data);
+        });
+    } catch (error) {
+        console.error("Error al crear el registro en concmesas:", error);
+        res.status(500).send("Error al crear el registro en concmesas.");
+    }
 });
 app.get('/getrecordhmesa34/:id', (req, res) => {
     const id = req.params.id;
@@ -4706,14 +4714,14 @@ app.post('/createhmesa5', async (req, res) => {
                 else resolve(data);
             });
         });
-      
+
         // Si hay registros en la tabla, obtén el saldo anterior, de lo contrario, establece el saldo anterior en 0
         const finalAnterior = finalAnteriorData.length > 0 ? finalAnteriorData[0].final : 0;
-       
+
         // Calcula el nuevo saldo sumando el saldo anterior a las entradas y restando las salidas
         const horas = parseFloat(req.body.final) - finalAnterior;
-       
-       
+
+
         // Separar las centenas
         const centenas = Math.floor(horas / 100) * 100; // Obtener las centenas
 
@@ -4732,7 +4740,7 @@ app.post('/createhmesa5', async (req, res) => {
         console.log(totalhrs); // Esto imprimirá el resultado final con la separación
 
 
-     
+
         // Realizar la inserción en la tabla concmesas
         const sql = "INSERT INTO hmesa5 (fecha, turno, inicio, final, hrs,totalhrs) VALUES (?, ?,?, ?, ?, ?)";
         const values = [
@@ -4742,7 +4750,7 @@ app.post('/createhmesa5', async (req, res) => {
             req.body.final,
             horas,
             totalhrs,
-            
+
         ];
 
         db.query(sql, values, (err, result) => {
@@ -4758,8 +4766,8 @@ app.post('/createhmesa5', async (req, res) => {
 app.put('/updatehmesa5/:id', async (req, res) => {
     try {
 
-        const horas = parseFloat(req.body.final) -  parseFloat(req.body.inicio) 
-         
+        const horas = parseFloat(req.body.final) - parseFloat(req.body.inicio)
+
         // Separar las centenas
         const centenas = Math.floor(horas / 100) * 100; // Obtener las centenas
 
@@ -4778,25 +4786,25 @@ app.put('/updatehmesa5/:id', async (req, res) => {
         console.log(totalhrs); // Esto imprimirá el resultado final con la separación
 
 
-    const sql = "UPDATE hmesa5 SET fecha = ?, turno =?, inicio = ?, final = ?, hrs = ?, totalhrs = ? WHERE id = ?";
-    const values = [
-        req.body.fecha,
-        req.body.turno,
-        req.body.inicio,
-        req.body.final,
-        horas,
-        totalhrs,
+        const sql = "UPDATE hmesa5 SET fecha = ?, turno =?, inicio = ?, final = ?, hrs = ?, totalhrs = ? WHERE id = ?";
+        const values = [
+            req.body.fecha,
+            req.body.turno,
+            req.body.inicio,
+            req.body.final,
+            horas,
+            totalhrs,
 
-    ];
-    const id = req.params.id;
-    db.query(sql, [...values, id], (err, data) => {
-        if (err) return res.json(err);
-        return res.json(data);
-    });
-} catch (error) {
-    console.error("Error al crear el registro en concmesas:", error);
-    res.status(500).send("Error al crear el registro en concmesas.");
-}
+        ];
+        const id = req.params.id;
+        db.query(sql, [...values, id], (err, data) => {
+            if (err) return res.json(err);
+            return res.json(data);
+        });
+    } catch (error) {
+        console.error("Error al crear el registro en concmesas:", error);
+        res.status(500).send("Error al crear el registro en concmesas.");
+    }
 });
 app.get('/getrecordhmesa5/:id', (req, res) => {
     const id = req.params.id;
@@ -4836,14 +4844,14 @@ app.post('/createhmesa6', async (req, res) => {
                 else resolve(data);
             });
         });
-      
+
         // Si hay registros en la tabla, obtén el saldo anterior, de lo contrario, establece el saldo anterior en 0
         const finalAnterior = finalAnteriorData.length > 0 ? finalAnteriorData[0].final : 0;
-       
+
         // Calcula el nuevo saldo sumando el saldo anterior a las entradas y restando las salidas
         const horas = parseFloat(req.body.final) - finalAnterior;
-       
-       
+
+
         // Separar las centenas
         const centenas = Math.floor(horas / 100) * 100; // Obtener las centenas
 
@@ -4862,7 +4870,7 @@ app.post('/createhmesa6', async (req, res) => {
         console.log(totalhrs); // Esto imprimirá el resultado final con la separación
 
 
-     
+
         // Realizar la inserción en la tabla concmesas
         const sql = "INSERT INTO hmesa6 (fecha, turno, inicio, final, hrs,totalhrs) VALUES (?, ?,?, ?, ?, ?)";
         const values = [
@@ -4872,7 +4880,7 @@ app.post('/createhmesa6', async (req, res) => {
             req.body.final,
             horas,
             totalhrs,
-            
+
         ];
 
         db.query(sql, values, (err, result) => {
@@ -4888,8 +4896,8 @@ app.post('/createhmesa6', async (req, res) => {
 app.put('/updatehmesa6/:id', async (req, res) => {
     try {
 
-        const horas = parseFloat(req.body.final) -  parseFloat(req.body.inicio) 
-         
+        const horas = parseFloat(req.body.final) - parseFloat(req.body.inicio)
+
         // Separar las centenas
         const centenas = Math.floor(horas / 100) * 100; // Obtener las centenas
 
@@ -4908,25 +4916,25 @@ app.put('/updatehmesa6/:id', async (req, res) => {
         console.log(totalhrs); // Esto imprimirá el resultado final con la separación
 
 
-    const sql = "UPDATE hmesa6 SET fecha = ?, turno =?, inicio = ?, final = ?, hrs = ?, totalhrs = ? WHERE id = ?";
-    const values = [
-        req.body.fecha,
-        req.body.turno,
-        req.body.inicio,
-        req.body.final,
-        horas,
-        totalhrs,
+        const sql = "UPDATE hmesa6 SET fecha = ?, turno =?, inicio = ?, final = ?, hrs = ?, totalhrs = ? WHERE id = ?";
+        const values = [
+            req.body.fecha,
+            req.body.turno,
+            req.body.inicio,
+            req.body.final,
+            horas,
+            totalhrs,
 
-    ];
-    const id = req.params.id;
-    db.query(sql, [...values, id], (err, data) => {
-        if (err) return res.json(err);
-        return res.json(data);
-    });
-} catch (error) {
-    console.error("Error al crear el registro en concmesas:", error);
-    res.status(500).send("Error al crear el registro en concmesas.");
-}
+        ];
+        const id = req.params.id;
+        db.query(sql, [...values, id], (err, data) => {
+            if (err) return res.json(err);
+            return res.json(data);
+        });
+    } catch (error) {
+        console.error("Error al crear el registro en concmesas:", error);
+        res.status(500).send("Error al crear el registro en concmesas.");
+    }
 });
 app.get('/getrecordhmesa6/:id', (req, res) => {
     const id = req.params.id;
@@ -5014,12 +5022,12 @@ app.post('/createhmolinos', async (req, res) => {
         const totalhorasm2 = centenasm2 + resultadom2;
 
         // Formar el total en un string con ':' entre las centenas y las decenas
-        const totalhrsm2  = `${Math.floor(totalhorasm2 / 100)}:${Math.floor(resultadom2) < 10 ? '0' + Math.floor(resultadom2) : Math.floor(resultadom2)}`;
+        const totalhrsm2 = `${Math.floor(totalhorasm2 / 100)}:${Math.floor(resultadom2) < 10 ? '0' + Math.floor(resultadom2) : Math.floor(resultadom2)}`;
 
         console.log(totalhrsm2); // Esto imprimirá el resultado final con la separación
 
 
-       
+
 
 
         // Realizar la inserción en la tabla concmesas
@@ -5050,8 +5058,8 @@ app.post('/createhmolinos', async (req, res) => {
 app.put('/updatehmolinos/:id', async (req, res) => {
     try {
 
-        const horas = parseFloat(req.body.final) -  parseFloat(req.body.inicio) 
-        const horasm2 = parseFloat(req.body.finalm2) - parseFloat(req.body.iniciom2) 
+        const horas = parseFloat(req.body.final) - parseFloat(req.body.inicio)
+        const horasm2 = parseFloat(req.body.finalm2) - parseFloat(req.body.iniciom2)
         // Separar las centenas
         const centenas = Math.floor(horas / 100) * 100; // Obtener las centenas
 
@@ -5082,34 +5090,34 @@ app.put('/updatehmolinos/:id', async (req, res) => {
         const totalhorasm2 = centenasm2 + resultadom2;
 
         // Formar el total en un string con ':' entre las centenas y las decenas
-        const totalhrsm2  = `${Math.floor(totalhorasm2 / 100)}:${Math.floor(resultadom2) < 10 ? '0' + Math.floor(resultadom2) : Math.floor(resultadom2)}`;
+        const totalhrsm2 = `${Math.floor(totalhorasm2 / 100)}:${Math.floor(resultadom2) < 10 ? '0' + Math.floor(resultadom2) : Math.floor(resultadom2)}`;
 
         console.log(totalhrsm2); // Esto imprimirá el resultado final con la separación
 
 
-    const sql = "UPDATE hmolinos SET fecha = ?, turno =?, inicio = ?, final = ?, hrs = ?, totalhrs = ?, iniciom2 =?, finalm2=?, hrsm2=?, totalhrsm2=?  WHERE id = ?";
-    const values = [
-        req.body.fecha,
-        req.body.turno,
-        req.body.inicio,
-        req.body.final,
-        horas,
-        totalhrs,
-        req.body.iniciom2,
-        req.body.finalm2,
-        horasm2,
-        totalhrsm2,
+        const sql = "UPDATE hmolinos SET fecha = ?, turno =?, inicio = ?, final = ?, hrs = ?, totalhrs = ?, iniciom2 =?, finalm2=?, hrsm2=?, totalhrsm2=?  WHERE id = ?";
+        const values = [
+            req.body.fecha,
+            req.body.turno,
+            req.body.inicio,
+            req.body.final,
+            horas,
+            totalhrs,
+            req.body.iniciom2,
+            req.body.finalm2,
+            horasm2,
+            totalhrsm2,
 
-    ];
-    const id = req.params.id;
-    db.query(sql, [...values, id], (err, data) => {
-        if (err) return res.json(err);
-        return res.json(data);
-    });
-} catch (error) {
-    console.error("Error al crear el registro en concmesas:", error);
-    res.status(500).send("Error al crear el registro en concmesas.");
-}
+        ];
+        const id = req.params.id;
+        db.query(sql, [...values, id], (err, data) => {
+            if (err) return res.json(err);
+            return res.json(data);
+        });
+    } catch (error) {
+        console.error("Error al crear el registro en concmesas:", error);
+        res.status(500).send("Error al crear el registro en concmesas.");
+    }
 });
 app.get('/getrecordhmolinos/:id', (req, res) => {
     const id = req.params.id;
@@ -5126,7 +5134,15 @@ app.get('/getrecordhmolinos/:id', (req, res) => {
 /////////////INICIO/77777777777
 app.get('/getsilosinicio/:fecha', (req, res) => {
     const fecha = req.params.fecha;
-    const sql = "SELECT silo1, silo2, silo3, silo4, silo5 FROM silos WHERE fecha = ?"
+    const sql = `
+    SELECT silo1, silo2, silo3, silo4, silo5 
+FROM silos 
+WHERE fecha = ? 
+UNION ALL
+SELECT silo1, silo2, silo3, silo4, silo5 
+FROM (SELECT * FROM silos ORDER BY fecha DESC LIMIT 1) AS latest_data;
+;
+`;
     db.query(sql, [fecha], (err, data) => {
         if (err) {
             console.error("Error en la consulta SQL:", err);
@@ -5298,18 +5314,18 @@ app.delete('/deletecriva/:id', (req, res) => {
     });
 });
 app.post('/createcrivas', (req, res) => {
-  
+
 
     const sql = "INSERT INTO criba (fecha, turno, tolvageneral, cribav, mesaswi, bombafinsa,bombasmca,notas) VALUES (?, ?, ?, ?, ?, ?,?,?)";
     const values = [
         req.body.fecha,
         req.body.turno,
-        req.body.tolvageneral, 
-        req.body.cribav, 
-        req.body.mesaswi, 
-        req.body.bombafinsa, 
-        req.body.bombasmca, 
-        req.body.notas, 
+        req.body.tolvageneral,
+        req.body.cribav,
+        req.body.mesaswi,
+        req.body.bombafinsa,
+        req.body.bombasmca,
+        req.body.notas,
     ];
 
     db.query(sql, values, (err, data) => {
@@ -5325,12 +5341,12 @@ app.put('/updatecrivas/:id', (req, res) => {
     const values = [
         req.body.fecha,
         req.body.turno,
-        req.body.tolvageneral, 
-        req.body.cribav, 
-        req.body.mesaswi, 
-        req.body.bombafinsa, 
-        req.body.bombasmca, 
-        req.body.notas, 
+        req.body.tolvageneral,
+        req.body.cribav,
+        req.body.mesaswi,
+        req.body.bombafinsa,
+        req.body.bombasmca,
+        req.body.notas,
         req.params.id // Agregar el id del registro a actualizar
     ];
 
@@ -5375,23 +5391,23 @@ app.delete('/deletehorno/:id', (req, res) => {
     });
 });
 app.post('/createhorno', (req, res) => {
-  
+
 
     const sql = "INSERT INTO horno (fecha, turno, quebradora, hrotatorio, elvmolinos, colectoresp,ensacadora,ensacadora1,elvsilos,gusanof1,gusanof5,quebradorapr,notas) VALUES (?, ?, ?, ?, ?, ?,?,?,?,?,?,?,?)";
     const values = [
         req.body.fecha,
         req.body.turno,
-        req.body.quebradora, 
-        req.body.hrotatorio, 
-        req.body.elvmolinos, 
-        req.body.colectoresp, 
-        req.body.ensacadora, 
-        req.body.ensacadora1, 
+        req.body.quebradora,
+        req.body.hrotatorio,
+        req.body.elvmolinos,
+        req.body.colectoresp,
+        req.body.ensacadora,
+        req.body.ensacadora1,
         req.body.elvsilos,
-        req.body.gusanof1, 
-        req.body.gusanof5, 
-        req.body.quebradorapr, 
-        req.body.notas, 
+        req.body.gusanof1,
+        req.body.gusanof5,
+        req.body.quebradorapr,
+        req.body.notas,
     ];
 
     db.query(sql, values, (err, data) => {
@@ -5407,17 +5423,17 @@ app.put('/updatehorno/:id', (req, res) => {
     const values = [
         req.body.fecha,
         req.body.turno,
-        req.body.quebradora, 
-        req.body.hrotatorio, 
-        req.body.elvmolinos, 
-        req.body.colectoresp, 
-        req.body.ensacadora, 
-        req.body.ensacadora1, 
+        req.body.quebradora,
+        req.body.hrotatorio,
+        req.body.elvmolinos,
+        req.body.colectoresp,
+        req.body.ensacadora,
+        req.body.ensacadora1,
         req.body.elvsilos,
-        req.body.gusanof1, 
-        req.body.gusanof5, 
-        req.body.quebradorapr, 
-        req.body.notas, 
+        req.body.gusanof1,
+        req.body.gusanof5,
+        req.body.quebradorapr,
+        req.body.notas,
         req.params.id // Agregar el id del registro a actualizar
     ];
 
