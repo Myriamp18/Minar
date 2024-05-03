@@ -60,17 +60,7 @@ function FrmDesensolve() {
             />
           </div>
 
-          <div class="mb-3">
-            <label form='text' class="form-label"> Entradas:</label>
-            <input
-             type="text"  
-             class="form-control"
-             id='salidas'
-             required
-             placeholder='Insertar Cantidad'  
-             name='entradas'
-             onChange={(e) => setValues({...values, entradas: e.target.value})}/>
-          </div>
+         
          
 
 
@@ -86,18 +76,7 @@ function FrmDesensolve() {
              onChange={(e) => setValues({...values, salidas: e.target.value})}/>
           </div>
 
-          <div class="mb-3">
-            <label form='text' class="form-label"> P.ESP:</label>
-            <input
-             type="text"  
-             class="form-control"
-             id='pe'
-             required
-             placeholder='Insertar Peso'  
-             name='pe'
-             onChange={(e) => setValues({...values, pe: e.target.value})}/>
-          </div>
-
+          
         
 
           

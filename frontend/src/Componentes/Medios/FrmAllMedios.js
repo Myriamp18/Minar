@@ -73,17 +73,7 @@ function FrmAllMedios() {
              onChange={(e) => setValues({...values, salidasm46: e.target.value})}/>
           </div>
           
-          <div class="mb-3">
-            <label form='text' class="form-label"> P.E:</label>
-            <input
-             type="text"  
-             class="form-control"
-             id='salidas'
-             required
-             placeholder='Insertar P.E'  
-             name='pe'
-             onChange={(e) => setValues({...values, pe46: e.target.value})}/>
-          </div>
+        
           
           <div className="btn-container">
           <button type="submit" className="BTN"  >GUARDAR</button>
