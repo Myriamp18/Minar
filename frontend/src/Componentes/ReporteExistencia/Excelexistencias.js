@@ -48,7 +48,6 @@ function Excelexistencias() {
     }
 }, [selectedDate]);
 
-
 const fetchData = async (fecha) => {
   try {
       const responseSilos = await fetch(`http://localhost:8081/getsilos/${fecha}`);
