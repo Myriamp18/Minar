@@ -47,7 +47,7 @@ function Menu({ children }) {
         },
         {
             path: "/horometros",
-            name: "Reporte Produccion",
+            name: "Horometros",
             icon: <MdLibraryBooks />
         },
 

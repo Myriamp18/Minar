@@ -5296,20 +5296,47 @@ FROM (SELECT * FROM silos ORDER BY fecha DESC LIMIT 1) AS latest_data;
 })
 app.get('/getmpleinicio/:fecha', (req, res) => {
     const fecha = req.params.fecha;
-    const sql = "SELECT saldo FROM mpmle WHERE fecha = ?"
-    db.query(sql, [fecha], (err, data) => {
+    const sql = `
+    SELECT saldo 
+    FROM (
+        SELECT saldo, fecha
+        FROM mpmle 
+        WHERE fecha = ? 
+        UNION ALL 
+        SELECT saldo, fecha
+        FROM mpmle 
+        WHERE fecha < ?
+    ) AS subquery
+    ORDER BY fecha DESC 
+    LIMIT 1;
+    `;
+    db.query(sql, [fecha, fecha], (err, data) => {
         if (err) {
             console.error("Error en la consulta SQL:", err);
             return res.status(500).json({ error: "Error en la consulta SQL. Por favor, inténtalo de nuevo más tarde." });
         }
-
         return res.json(data);
     });
 })
+
 app.get('/getmpltinicio/:fecha', (req, res) => {
     const fecha = req.params.fecha;
-    const sql = "SELECT saldo FROM mpmlt WHERE fecha = ?"
-    db.query(sql, [fecha], (err, data) => {
+    const sql = `
+    SELECT saldo 
+    FROM (
+        SELECT saldo, fecha
+        FROM mpmlt 
+        WHERE fecha = ? 
+        UNION ALL 
+        SELECT saldo, fecha
+        FROM mpmlt 
+        WHERE fecha < ?
+    ) AS subquery
+    ORDER BY fecha DESC 
+    LIMIT 1;
+    `;
+
+    db.query(sql, [fecha, fecha], (err, data) => {
         if (err) {
             console.error("Error en la consulta SQL:", err);
             return res.status(500).json({ error: "Error en la consulta SQL. Por favor, inténtalo de nuevo más tarde." });
@@ -5318,9 +5345,22 @@ app.get('/getmpltinicio/:fecha', (req, res) => {
         return res.json(data);
     });
 })
+
 app.get('/getsuma/:fecha', (req, res) => {
     const fecha = req.params.fecha;
-    const sql = "SELECT saldo FROM mpmlt WHERE fecha = ?"
+      const sql = ` 
+    FROM (
+        SELECT saldo, fecha
+        FROM mpmlt 
+        WHERE fecha =? 
+        UNION ALL 
+        SELECT saldo, fecha
+        FROM mpmlt 
+        WHERE fecha < ?
+    ) AS subquery
+    ORDER BY fecha DESC 
+    LIMIT 1;
+    `;
     db.query(sql, [fecha], (err, data) => {
         if (err) {
             console.error("Error en la consulta SQL:", err);
