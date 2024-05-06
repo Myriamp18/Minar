@@ -162,7 +162,7 @@ import ExcelHorometros from './Componentes/Horometros/ExcelHorometros';
 import { RutasPrivadas } from './Componentes/RutasPrivadas';
 import Modal from './Componentes/Usuarios/Modal';
 import OlvContra from './Componentes/Usuarios/OlvContra';
-
+import ReporteM from './Componentes/R.Mensual/ReporteM';
 
 
 function App() {
@@ -396,6 +396,10 @@ function App() {
                                     <Route path="/excelmolienda" element={<Excelmolienda />} />
                                     <Route path="/excelexistencias" element={<Excelexistencias />} />
                                     <Route path="/excelhorometro" element={<ExcelHorometros />} />
+
+                                    <Route path="/reportem" element={<ReporteM/>} />
+
+
                               </Route>
                         </Routes>
 

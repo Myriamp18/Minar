@@ -15,7 +15,7 @@ import { NavLink } from 'react-router-dom'
 import Logo from '../assest/logo.png'
 import { useNavigate } from 'react-router-dom';
 import { IoSettings } from "react-icons/io5";
-
+import { HiOutlineDocumentReport } from "react-icons/hi";
 
 function Menu({ children }) {
     const navigate = useNavigate();
@@ -50,7 +50,12 @@ function Menu({ children }) {
             name: "Horometros",
             icon: <MdLibraryBooks />
         },
-
+        {
+            path: "/reportem",
+            name: "Informe Mensual",
+            icon:<HiOutlineDocumentReport />
+          
+        },
         {
             path: "/modal",
             name: "Usuarios",
@@ -61,7 +66,8 @@ function Menu({ children }) {
             name: "Configuracion",
             icon: <IoSettings />
           
-        }
+        },
+      
 
 
 

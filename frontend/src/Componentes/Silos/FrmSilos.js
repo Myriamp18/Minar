@@ -71,6 +71,8 @@ function FrmSilos(){
             id='silo1'
             placeholder='Insertar Cantidad'
             name='silo1'
+            max="200"
+            
             onChange={(e) => setValues({ ...values, silo1: e.target.value })} />
         </div>
         <div class="mb-3">
@@ -82,6 +84,7 @@ function FrmSilos(){
             id='pesilo1'
             placeholder='Insertar P.ESP'
             name='pes1'
+           
             onChange={(e) => setValues({ ...values, pes1: e.target.value })} />
         </div>
         </div>
@@ -95,6 +98,8 @@ function FrmSilos(){
             id='silo2'
             placeholder='Insertar Cantidad'
             name='silo2'
+            max="200"
+            
             onChange={(e) => setValues({ ...values, silo2: e.target.value })} />
         </div>
         <div class="mb-3">
@@ -106,6 +111,7 @@ function FrmSilos(){
             required
             placeholder='Insertar P.ESP'
             name='pes2'
+            
             onChange={(e) => setValues({ ...values, pes2: e.target.value })} />
         </div>
         </div>
@@ -118,6 +124,8 @@ function FrmSilos(){
             id='silo3'
             placeholder='Insertar Cantidad'
             name='silo3'
+            max="200"
+            
             required
             onChange={(e) => setValues({ ...values, silo3: e.target.value })} />
         </div>
@@ -130,6 +138,7 @@ function FrmSilos(){
             required
             placeholder='Insertar P.ESP'
             name='pes3'
+          
             onChange={(e) => setValues({ ...values, pes3: e.target.value })} />
         </div>
         </div>
@@ -143,6 +152,8 @@ function FrmSilos(){
             required
             placeholder='Insertar Cantidad'
             name='silo4'
+            max="200"
+            
             onChange={(e) => setValues({ ...values, silo4: e.target.value })} />
         </div>
         <div class="mb-3">
@@ -154,6 +165,7 @@ function FrmSilos(){
             required
             placeholder='Insertar P.ESP'
             name='pes4'
+           
             onChange={(e) => setValues({ ...values, pes4: e.target.value })} />
         </div>
         </div>
@@ -167,6 +179,8 @@ function FrmSilos(){
             required
             placeholder='Insertar Cantidad'
             name='silo5'
+            max="200"
+           
             onChange={(e) => setValues({ ...values, silo5: e.target.value })} />
         </div>
         <div class="mb-3">
@@ -178,6 +192,7 @@ function FrmSilos(){
             required
             placeholder='Insertar P.ESP'
             name='pes5'
+          
             onChange={(e) => setValues({ ...values, pes5: e.target.value })} />
         </div>
         </div>
