@@ -350,7 +350,7 @@ const formatDate = (date) => {
         worksheet.addRow([product.totjigssec, 'TONS DE MEDIOS PASARON A LAVAR A JIGG´S SECUNDARIO' ]);
         worksheet.addRow([product.totdesensolve, 'TONS DE DESENSOLVE PASARON A LAVAR A MESAS' ]);
         worksheet.addRow([product.totcolas, 'TONS DE COLAS PASARON A LAVAR A MESAS' ]);
-        worksheet.addRow([product.comentarios, '' ]);
+        worksheet.addRow([product.comentario, '' ]);
       });
       // Generar el archivo de Excel
       const buffer = await workbook.xlsx.writeBuffer();

@@ -5737,3 +5737,30 @@ app.get('/gethrsmolinos/:fecha', (req, res) => {
         return res.json(data);
     });
 })
+
+/////////////REPORTE MES///////77777777
+app.post('/JIGSMES', (req, res) => {
+    const { fechaInicio, fechaFin } = req.body;
+
+    const sql = `
+        SELECT 
+            SUM(alimj1) AS totalAlmj1,
+            SUM(granoj1) AS totalGranoj1,
+            SUM(desenj1) AS totalDesej1,
+            SUM(alimj2) AS totalAlimj2,
+            SUM(granoj2) AS totalGranoj2,
+            SUM(desenj2) AS totalDesej2
+        FROM produccionjigs
+        WHERE fecha BETWEEN ? AND ?;
+    `;
+
+    db.query(sql, [fechaInicio, fechaFin], (error, results) => {
+        if (error) {
+            console.error('Error al ejecutar la consulta:', error);
+            res.status(500).json({ error: 'Error al ejecutar la consulta' });
+        } else {
+            // Devolver los resultados de la consulta como un objeto JSON
+            res.json(results[0]);
+        }
+    });
+});

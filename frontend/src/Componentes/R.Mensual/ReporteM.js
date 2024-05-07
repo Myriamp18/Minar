@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import './R.M.css'
+import ExcelJS from 'exceljs';
+import { format } from 'date-fns';
+import logoImageBase64 from '../../assest/logo.png';
 
 
 function ReporteM() {
@@ -9,52 +11,166 @@ function ReporteM() {
     const [endDate, setEndDate] = useState(null);
 
     const handleStartDateChange = (date) => {
-        setStartDate(date);
+        const formattedDate = format(date, 'yyyy/MM/dd');
+        setStartDate(formattedDate);
     };
 
     const handleEndDateChange = (date) => {
-        setEndDate(date);
+        const formattedDate = format(date, 'yyyy/MM/dd');
+        setEndDate(formattedDate);
+    };
+    const convertObjectToArray = (data) => {
+        return [data];
+
+
     };
 
-    const handleSubmit = (e) => {
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        // Aquí puedes manejar la lógica para generar el informe con las fechas seleccionadas
-        console.log('Fecha de inicio:', startDate);
-        console.log('Fecha de fin:', endDate);
+        try {
+            // Realiza una solicitud POST al endpoint '/JIGSMES' con las fechas de inicio y fin
+            const response = await fetch('http://localhost:8081/JIGSMES', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ fechaInicio: startDate, fechaFin: endDate })
+            });
+
+            if (!response.ok) {
+                throw new Error('Error al obtener los datos del servidor');
+            }
+
+            // Convierte la respuesta a formato JSON
+            const datos = await response.json();
+
+            // Llama a la función para exportar a Excel
+            exportToExcel(datos);
+        } catch (error) {
+            console.error('Error al enviar las fechas al servidor:', error);
+            // Maneja el error adecuadamente (por ejemplo, muestra un mensaje de error al usuario)
+        }
+    };
+    const applyTitleStyle = (cell) => {
+        // Aplicar estilos al texto del título
+        cell.font = { bold: true, size: 14, color: { argb: '000000' } }; // Negrita, tamaño 14, color negro
     };
 
-  return (
-    <div className="form-container">
-      
-      <form onSubmit={handleSubmit}>
-      <h3>Reporte Mensual</h3>
-            <div>
-                <label htmlFor="startDate">Fecha de inicio:</label>
-                <DatePicker
-                    selected={startDate}
-                    onChange={handleStartDateChange}
-                    dateFormat="yyyy/MM/dd"
-                    id="startDate"
-                    name="startDate"
-                    className="form-control"
-                />
-            </div>
-            <div>
-                <label htmlFor="endDate">Fecha de fin:</label>
-                <DatePicker
-                    selected={endDate}
-                    onChange={handleEndDateChange}
-                    dateFormat="yyyy/MM/dd"
-                    id="endDate"
-                    name="endDate"
-                    className="form-control"
-                />
-            </div>
-            <button type="submit">Generar Informe</button>
-        </form>
-    </div>
-  )
+    const exportToExcel = async (data) => {
+        try {
+            // Verifica si los datos son un objeto y los convierte a un array si es necesario
+            const dataArray = Array.isArray(data) ? data : convertObjectToArray(data);
+
+            // Imprime los datos en la consola para verificar la estructura
+            console.log(data);
+
+            // Resto del código para exportar a Excel
+
+            // Crea un nuevo libro de trabajo
+            const workbook = new ExcelJS.Workbook();
+            const worksheet = workbook.addWorksheet('Datos');
+            const logoImage = workbook.addImage({
+                base64: logoImageBase64, // Aquí debes colocar los datos de la imagen en formato base64
+                extension: 'png', // Extensión de la imagen
+            });
+
+            // Agregar la imagen a una celda específica
+            worksheet.addImage(logoImage, {
+                tl: { col: 0.2, row: 0.2 }, // Esquina superior izquierda de la celda donde se insertará la imagen
+                ext: { width: 60, height: 60 }, // Tamaño de la imagen
+            });
+            const formattedStartDate = startDate ? format(startDate, 'yyyy/MM/dd') : '';
+            const formattedEndDate = endDate ? format(endDate, 'yyyy/MM/dd') : '';
+            // Agregar la fila del título
+            const titleRow = worksheet.addRow(['', `REPORTE DE PRODUCCION DE EXISTENCIAS- Desde ${formattedStartDate} hasta ${formattedEndDate}`]);
+
+            // Obtener la segunda celda de la fila (índice 2 porque la numeración de las celdas comienza desde 1)
+            const secondCell = titleRow.getCell(2);
+
+            // Aplicar estilos al título en la segunda celda
+            applyTitleStyle(secondCell);
+
+            worksheet.addRow([]);
+
+
+
+
+            // Agrega los encabezados de las columnas
+            worksheet.addRow(['', 'Alimentacion', 'Grano', 'Desensolve']);
+
+            dataArray.forEach(row => {
+                console.log('Fila completa:', row); // Imprime el objeto completo para verificar su estructura y contenido
+
+                if (row !== null) {
+                    worksheet.addRow([
+                        'JIG´S 1',
+                        row.totalAlmj1,
+                        row.totalGranoj1,
+                        row.totalDesej1,
+
+                    ]);
+                } else {
+                    console.error('Se encontró un objeto null en el array de datos.');
+                }
+            });
+
+            console.log(dataArray); // Imprimir el array completo en la consola para depuración
+
+            // Genera el archivo de Excel
+            const buffer = await workbook.xlsx.writeBuffer();
+            const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+
+            // Crea un enlace para descargar el archivo Excel
+            const url = window.URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'datos.xlsx';
+            document.body.appendChild(link);
+
+            // Simula un clic en el enlace para iniciar la descarga
+            link.click();
+
+            // Libera el objeto URL creado
+            window.URL.revokeObjectURL(url);
+        } catch (error) {
+            console.error('Error al exportar a Excel:', error);
+            // Maneja el error adecuadamente
+        }
+    };
+
+
+    return (
+        <div className="form-container">
+            <form onSubmit={handleSubmit}>
+                <h3>Reporte Mensual</h3>
+                <div>
+                    <label htmlFor="startDate">Fecha de inicio:</label>
+                    <DatePicker
+                        selected={startDate}
+                        onChange={handleStartDateChange}
+                        dateFormat="yyyy/MM/dd"
+                        id="startDate"
+                        name="startDate"
+                        className="form-control"
+                    />
+                </div>
+                <div>
+                    <label htmlFor="endDate">Fecha de fin:</label>
+                    <DatePicker
+                        selected={endDate}
+                        onChange={handleEndDateChange}
+                        dateFormat="yyyy/MM/dd"
+                        id="endDate"
+                        name="endDate"
+                        className="form-control"
+                    />
+                </div>
+                <button type="button" onClick={handleSubmit}>Generar Informe</button>
+            </form>
+        </div>
+    );
 }
 
-export default ReporteM
+export default ReporteM;
 
