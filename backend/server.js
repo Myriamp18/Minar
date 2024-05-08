@@ -5743,16 +5743,40 @@ app.post('/JIGSMES', (req, res) => {
     const { fechaInicio, fechaFin } = req.body;
 
     const sql = `
-        SELECT 
-            SUM(alimj1) AS totalAlmj1,
-            SUM(granoj1) AS totalGranoj1,
-            SUM(desenj1) AS totalDesej1,
-            SUM(alimj2) AS totalAlimj2,
-            SUM(granoj2) AS totalGranoj2,
-            SUM(desenj2) AS totalDesej2
-        FROM produccionjigs
-        WHERE fecha BETWEEN ? AND ?;
-    `;
+    SELECT 
+        SUM(alimj1) AS totalAlmj1,
+        SUM(peaj1) AS totalPeaj1,
+        SUM(CASE WHEN peaj1 > 0 THEN 1 ELSE 0 END) AS countPeaj1GreaterThanZero,
+        CASE WHEN SUM(peaj1) > 0 THEN SUM(peaj1) / SUM(CASE WHEN peaj1 > 0 THEN 1 ELSE 0 END) ELSE 0 END AS promedioPeaj1,
+
+        SUM(granoj1) AS totalGranoj1,
+        SUM(pegj1) AS totalPeag1,
+        SUM(CASE WHEN pegj1 > 0 THEN 1 ELSE 0 END) AS countPeaj1GreaterThanZero,
+        CASE WHEN SUM(pegj1) > 0 THEN SUM(pegj1) / SUM(CASE WHEN pegj1 > 0 THEN 1 ELSE 0 END) ELSE 0 END AS promediogranoj1,
+
+        SUM(desenj1) AS totalDesej1,
+        SUM(pedj1) AS totalPeade1,
+        SUM(CASE WHEN pedj1 > 0 THEN 1 ELSE 0 END) AS countPeaj1GreaterThanZero,
+        CASE WHEN SUM(pedj1) > 0 THEN SUM(pedj1) / SUM(CASE WHEN pedj1 > 0 THEN 1 ELSE 0 END) ELSE 0 END AS promediodesensolvej1,
+
+        SUM(alimj2) AS totalAlimj2,
+        SUM(peaj2) AS totalPealim2,
+        SUM(CASE WHEN peaj2 > 0 THEN 1 ELSE 0 END) AS countPeaj1GreaterThanZero,
+        CASE WHEN SUM(peaj2) > 0 THEN SUM(peaj2) / SUM(CASE WHEN peaj2 > 0 THEN 1 ELSE 0 END) ELSE 0 END AS promedioalimentacionj2,
+
+        SUM(granoj2) AS totalGranoj2,
+        SUM(pegj2) AS totalPegrano2,
+        SUM(CASE WHEN pegj2 > 0 THEN 1 ELSE 0 END) AS countPeaj1GreaterThanZero,
+        CASE WHEN SUM(pegj2) > 0 THEN SUM(pegj2) / SUM(CASE WHEN pegj2 > 0 THEN 1 ELSE 0 END) ELSE 0 END AS promediogranoj2,
+
+        SUM(desenj2) AS totalDesej2,
+        SUM(pedj2) AS totalPedeseno2,
+        SUM(CASE WHEN pedj2 > 0 THEN 1 ELSE 0 END) AS countPeaj1GreaterThanZero,
+        CASE WHEN SUM(pedj2) > 0 THEN SUM(pedj2) / SUM(CASE WHEN pedj2 > 0 THEN 1 ELSE 0 END) ELSE 0 END AS promediodesensolvej2
+
+    FROM produccionjigs
+    WHERE fecha BETWEEN ? AND ?;
+`;
 
     db.query(sql, [fechaInicio, fechaFin], (error, results) => {
         if (error) {

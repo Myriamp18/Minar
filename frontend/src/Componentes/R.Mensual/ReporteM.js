@@ -4,6 +4,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import ExcelJS from 'exceljs';
 import { format } from 'date-fns';
 import logoImageBase64 from '../../assest/logo.png';
+import './R.M.css'
 
 
 function ReporteM() {
@@ -78,26 +79,34 @@ function ReporteM() {
             // Agregar la imagen a una celda específica
             worksheet.addImage(logoImage, {
                 tl: { col: 0.2, row: 0.2 }, // Esquina superior izquierda de la celda donde se insertará la imagen
-                ext: { width: 60, height: 60 }, // Tamaño de la imagen
+                ext: { width: 70, height: 70 }, // Tamaño de la imagen
             });
             const formattedStartDate = startDate ? format(startDate, 'yyyy/MM/dd') : '';
             const formattedEndDate = endDate ? format(endDate, 'yyyy/MM/dd') : '';
             // Agregar la fila del título
-            const titleRow = worksheet.addRow(['', `REPORTE DE PRODUCCION DE EXISTENCIAS- Desde ${formattedStartDate} hasta ${formattedEndDate}`]);
-
+            const titleRow = worksheet.addRow(['','', 'REPORTE SEMANAL DE PRODUCCION']);
+            const dateRow = worksheet.addRow(['','',`Desde: ${formattedStartDate}`,'' ,`Hasta: ${formattedEndDate}`]);
+            const desdeCell = dateRow.getCell(2);
+            const hastaCell = dateRow.getCell(3);
+            
+            // Establecer el ancho de las celdas
+            desdeCell.width = 50; // Ancho para la celda "Desde"
+            hastaCell.width = 20; // Ancho para la celda "Hasta"
+           
             // Obtener la segunda celda de la fila (índice 2 porque la numeración de las celdas comienza desde 1)
-            const secondCell = titleRow.getCell(2);
+            const secondCell = titleRow.getCell(3);
 
             // Aplicar estilos al título en la segunda celda
             applyTitleStyle(secondCell);
 
-            worksheet.addRow([]);
+            worksheet.addRow(['','','','SELECCIÓN']);
 
 
 
 
             // Agrega los encabezados de las columnas
-            worksheet.addRow(['', 'Alimentacion', 'Grano', 'Desensolve']);
+            const headerRow1= worksheet.addRow(['', 'Alimentacion','P.E','Grano','P.E', 'Desensolve','P.E']);
+            applyHeaderStyle(headerRow1);
 
             dataArray.forEach(row => {
                 console.log('Fila completa:', row); // Imprime el objeto completo para verificar su estructura y contenido
@@ -106,17 +115,56 @@ function ReporteM() {
                     worksheet.addRow([
                         'JIG´S 1',
                         row.totalAlmj1,
+                        row.promedioPeaj1,
                         row.totalGranoj1,
+                        row.promediogranoj1,
                         row.totalDesej1,
+                        row.promediodesensolvej1
 
                     ]);
                 } else {
                     console.error('Se encontró un objeto null en el array de datos.');
                 }
             });
+            worksheet.columns.forEach(column => {
+                column.width = 20; // Puedes ajustar el valor según tus necesidades
+            });
 
             console.log(dataArray); // Imprimir el array completo en la consola para depuración
 
+
+            worksheet.addRow(['','','','PERFORACIÓN']);
+
+
+
+
+            // Agrega los encabezados de las columnas
+            const headerRow2=  worksheet.addRow(['', 'Alimentacion','P.E','Grano','P.E', 'Desensolve','P.E']);
+            applyHeaderStyle(headerRow2);
+
+            dataArray.forEach(row => {
+                console.log('Fila completa:', row); // Imprime el objeto completo para verificar su estructura y contenido
+
+                if (row !== null) {
+                    worksheet.addRow([
+                        'JIG´S 2',
+                        row.totalAlimj2,
+                        row.promedioalimentacionj2,
+                        row.totalGranoj2,
+                        row.promediogranoj2,
+                        row.totalDesej2,
+                        row.promediodesensolvej2
+
+                    ]);
+                } else {
+                    console.error('Se encontró un objeto null en el array de datos.');
+                }
+            });
+            worksheet.columns.forEach(column => {
+                column.width = 20; // Puedes ajustar el valor según tus necesidades
+            });
+            
+            console.log(dataArray);
             // Genera el archivo de Excel
             const buffer = await workbook.xlsx.writeBuffer();
             const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
@@ -139,6 +187,13 @@ function ReporteM() {
         }
     };
 
+    const applyHeaderStyle = (row) => {
+        row.eachCell((cell) => {
+          cell.font = { bold: true };
+          cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFA500' } };
+          cell.alignment = { horizontal: 'center', vertical: 'middle' };
+        });
+      };
 
     return (
         <div className="form-container">
