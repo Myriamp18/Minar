@@ -5754,10 +5754,15 @@ app.post('/JIGSMES', (req, res) => {
         SUM(CASE WHEN pegj1 > 0 THEN 1 ELSE 0 END) AS countPeaj1GreaterThanZero,
         CASE WHEN SUM(pegj1) > 0 THEN SUM(pegj1) / SUM(CASE WHEN pegj1 > 0 THEN 1 ELSE 0 END) ELSE 0 END AS promediogranoj1,
 
-        SUM(desenj1) AS totalDesej1,
-        SUM(pedj1) AS totalPeade1,
-        SUM(CASE WHEN pedj1 > 0 THEN 1 ELSE 0 END) AS countPeaj1GreaterThanZero,
-        CASE WHEN SUM(pedj1) > 0 THEN SUM(pedj1) / SUM(CASE WHEN pedj1 > 0 THEN 1 ELSE 0 END) ELSE 0 END AS promediodesensolvej1,
+        SUM(CASE WHEN pedj1 >= 4.00 AND pedj1 <= 4.20 THEN desenj1 ELSE 0 END) AS totalDesej1,
+        SUM(CASE WHEN pedj1 >= 4.00 AND pedj1 <= 4.20 THEN pedj1 ELSE 0 END) AS totalPedeseno1,
+        SUM(CASE WHEN pedj1 >= 4.00 AND pedj1 <= 4.20 THEN 1 ELSE 0 END) AS countPeaj1GreaterThanZero,
+        CASE 
+            WHEN SUM(CASE WHEN pedj1 >= 4.00 AND pedj1 <= 4.20 THEN pedj1 ELSE 0 END) > 0 
+            THEN SUM(CASE WHEN pedj1 >= 4.00 AND pedj1 <= 4.20 THEN pedj1 ELSE 0 END) / 
+                 SUM(CASE WHEN pedj1 >= 4.00 AND pedj1 <= 4.20 THEN 1 ELSE 0 END)
+            ELSE 0 
+        END AS promediodesensolvej1
 
         SUM(alimj2) AS totalAlimj2,
         SUM(peaj2) AS totalPealim2,
@@ -5769,15 +5774,19 @@ app.post('/JIGSMES', (req, res) => {
         SUM(CASE WHEN pegj2 > 0 THEN 1 ELSE 0 END) AS countPeaj1GreaterThanZero,
         CASE WHEN SUM(pegj2) > 0 THEN SUM(pegj2) / SUM(CASE WHEN pegj2 > 0 THEN 1 ELSE 0 END) ELSE 0 END AS promediogranoj2,
 
-        SUM(desenj2) AS totalDesej2,
-        SUM(pedj2) AS totalPedeseno2,
-        SUM(CASE WHEN pedj2 > 0 THEN 1 ELSE 0 END) AS countPeaj1GreaterThanZero,
-        CASE WHEN SUM(pedj2) > 0 THEN SUM(pedj2) / SUM(CASE WHEN pedj2 > 0 THEN 1 ELSE 0 END) ELSE 0 END AS promediodesensolvej2
-
+        SUM(CASE WHEN pedj2 >= 4.00 AND pedj2 <= 4.20 THEN desenj2 ELSE 0 END) AS totalDesej2,
+        SUM(CASE WHEN pedj2 >= 4.00 AND pedj2 <= 4.20 THEN pedj2 ELSE 0 END) AS totalPedeseno2,
+        SUM(CASE WHEN pedj2 >= 4.00 AND pedj2 <= 4.20 THEN 1 ELSE 0 END) AS countPeaj1GreaterThanZero,
+        CASE 
+            WHEN SUM(CASE WHEN pedj2 >= 4.00 AND pedj2 <= 4.20 THEN pedj2 ELSE 0 END) > 0 
+            THEN SUM(CASE WHEN pedj2 >= 4.00 AND pedj2 <= 4.20 THEN pedj2 ELSE 0 END) / 
+                 SUM(CASE WHEN pedj2 >= 4.00 AND pedj2 <= 4.20 THEN 1 ELSE 0 END)
+            ELSE 0 
+        END AS promediodesensolvej2
     FROM produccionjigs
     WHERE fecha BETWEEN ? AND ?;
 `;
-s
+
     db.query(sql, [fechaInicio, fechaFin], (error, results) => {
         if (error) {
             console.error('Error al ejecutar la consulta:', error);
@@ -5789,49 +5798,39 @@ s
     });
 });
 
-app.post('/MESASMES', (req, res) => {
+app.post('/MESASMES12', (req, res) => {
     const { fechaInicio, fechaFin } = req.body;
 
+    // Verificar si se proporcionaron las fechas de inicio y fin
+    if (!fechaInicio || !fechaFin) {
+        return res.status(400).json({ error: 'Las fechas de inicio y fin son requeridas.' });
+    }
+
+    // Ejecutar la consulta SQL
     const sql = `
-    SELECT 
-        SUM(alimj1) AS totalAlmj1,
-        SUM(peaj1) AS totalPeaj1,
-        SUM(CASE WHEN peaj1 > 0 THEN 1 ELSE 0 END) AS countPeaj1GreaterThanZero,
-        CASE WHEN SUM(peaj1) > 0 THEN SUM(peaj1) / SUM(CASE WHEN peaj1 > 0 THEN 1 ELSE 0 END) ELSE 0 END AS promedioPeaj1,
+        SELECT 
+            SUM(alimm12) AS totalAlim12,
+            SUM(peam12) AS totalPeam12,
+            SUM(CASE WHEN peam12 > 0 THEN 1 ELSE 0 END) AS countPeaj1GreaterThanZero,
+            CASE WHEN SUM(peam12) > 0 THEN SUM(peam12) / SUM(CASE WHEN peam12 > 0 THEN 1 ELSE 0 END) ELSE 0 END AS promedioPeam12,
 
-        SUM(granoj1) AS totalGranoj1,
-        SUM(pegj1) AS totalPeag1,
-        SUM(CASE WHEN pegj1 > 0 THEN 1 ELSE 0 END) AS countPeaj1GreaterThanZero,
-        CASE WHEN SUM(pegj1) > 0 THEN SUM(pegj1) / SUM(CASE WHEN pegj1 > 0 THEN 1 ELSE 0 END) ELSE 0 END AS promediogranoj1,
+            SUM(conm12) AS totalconc12,
+            SUM(pecnm12) AS totalPEconc12,
+            SUM(CASE WHEN pecnm12 > 0 THEN 1 ELSE 0 END) AS countPeaj1GreaterThanZero,
+            CASE WHEN SUM(pecnm12) > 0 THEN SUM(pecnm12) / SUM(CASE WHEN pecnm12 > 0 THEN 1 ELSE 0 END) ELSE 0 END AS promedioPeconc12,
 
-        SUM(desenj1) AS totalDesej1,
-        SUM(pedj1) AS totalPeade1,
-        SUM(CASE WHEN pedj1 > 0 THEN 1 ELSE 0 END) AS countPeaj1GreaterThanZero,
-        CASE WHEN SUM(pedj1) > 0 THEN SUM(pedj1) / SUM(CASE WHEN pedj1 > 0 THEN 1 ELSE 0 END) ELSE 0 END AS promediodesensolvej1,
+            SUM(mediom12) AS totalmedios12,
+            SUM(pecnm12) AS totalpemdeios12,
+            SUM(CASE WHEN pecnm12 > 0 THEN 1 ELSE 0 END) AS countPeaj1GreaterThanZero,
+            CASE WHEN SUM(pecnm12) > 0 THEN SUM(pecnm12) / SUM(CASE WHEN pecnm12 > 0 THEN 1 ELSE 0 END) ELSE 0 END AS promedioPemedios12
+        FROM mesas
+        WHERE fecha BETWEEN ? AND ?;
+    `;
 
-        SUM(alimj2) AS totalAlimj2,
-        SUM(peaj2) AS totalPealim2,
-        SUM(CASE WHEN peaj2 > 0 THEN 1 ELSE 0 END) AS countPeaj1GreaterThanZero,
-        CASE WHEN SUM(peaj2) > 0 THEN SUM(peaj2) / SUM(CASE WHEN peaj2 > 0 THEN 1 ELSE 0 END) ELSE 0 END AS promedioalimentacionj2,
-
-        SUM(granoj2) AS totalGranoj2,
-        SUM(pegj2) AS totalPegrano2,
-        SUM(CASE WHEN pegj2 > 0 THEN 1 ELSE 0 END) AS countPeaj1GreaterThanZero,
-        CASE WHEN SUM(pegj2) > 0 THEN SUM(pegj2) / SUM(CASE WHEN pegj2 > 0 THEN 1 ELSE 0 END) ELSE 0 END AS promediogranoj2,
-
-        SUM(desenj2) AS totalDesej2,
-        SUM(pedj2) AS totalPedeseno2,
-        SUM(CASE WHEN pedj2 > 0 THEN 1 ELSE 0 END) AS countPeaj1GreaterThanZero,
-        CASE WHEN SUM(pedj2) > 0 THEN SUM(pedj2) / SUM(CASE WHEN pedj2 > 0 THEN 1 ELSE 0 END) ELSE 0 END AS promediodesensolvej2
-
-    FROM produccionjigs
-    WHERE fecha BETWEEN ? AND ?;
-`;
-s
     db.query(sql, [fechaInicio, fechaFin], (error, results) => {
         if (error) {
             console.error('Error al ejecutar la consulta:', error);
-            res.status(500).json({ error: 'Error al ejecutar la consulta' });
+            return res.status(500).json({ error: 'Error al ejecutar la consulta' });
         } else {
             // Devolver los resultados de la consulta como un objeto JSON
             res.json(results[0]);

@@ -31,28 +31,47 @@ function ReporteM() {
         e.preventDefault();
         try {
             // Realiza una solicitud POST al endpoint '/JIGSMES' con las fechas de inicio y fin
-            const response = await fetch('http://localhost:8081/JIGSMES', {
+            const response1 = await fetch('http://localhost:8081/JIGSMES', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({ fechaInicio: startDate, fechaFin: endDate })
             });
-
-            if (!response.ok) {
+    
+            if (!response1.ok) {
                 throw new Error('Error al obtener los datos del servidor');
             }
-
+    
             // Convierte la respuesta a formato JSON
-            const datos = await response.json();
-
-            // Llama a la función para exportar a Excel
-            exportToExcel(datos);
+            const datos1 = await response1.json();
+    
+            // Llama a la función para exportar a Excel con los datos obtenidos
+            exportToExcel(datos1);
+            const response2 = await fetch('http://localhost:8081/MESASMES12', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ fechaInicio: startDate, fechaFin: endDate })
+            });
+    
+            if (!response2.ok) {
+                throw new Error('Error al obtener los datos del servidor');
+            }
+    
+            // Convierte la respuesta a formato JSON
+            const datos2 = await response2.json();
+    
+            // Llama a la función para exportar a Excel con los datos obtenidos
+            exportToExcel(datos2);
+            
         } catch (error) {
             console.error('Error al enviar las fechas al servidor:', error);
             // Maneja el error adecuadamente (por ejemplo, muestra un mensaje de error al usuario)
         }
     };
+    
     const applyTitleStyle = (cell) => {
         // Aplicar estilos al texto del título
         cell.font = { bold: true, size: 14, color: { argb: '000000' } }; // Negrita, tamaño 14, color negro
@@ -99,7 +118,7 @@ function ReporteM() {
             // Aplicar estilos al título en la segunda celda
             applyTitleStyle(secondCell);
 
-            worksheet.addRow(['','','','SELECCIÓN']);
+            worksheet.addRow(['','','','JIG´SS']);
 
 
 
@@ -122,6 +141,17 @@ function ReporteM() {
                         row.promediodesensolvej1
 
                     ]);
+                    worksheet.addRow([
+                        'JIG´S 2',
+                        row.totalAlimj2,
+                        row.promedioalimentacionj2,
+                        row.totalGranoj2,
+                        row.promediogranoj2,
+                        row.totalDesej2,
+                        row.promediodesensolvej2
+
+                    ]);
+                    
                 } else {
                     console.error('Se encontró un objeto null en el array de datos.');
                 }
@@ -133,13 +163,8 @@ function ReporteM() {
             console.log(dataArray); // Imprimir el array completo en la consola para depuración
 
 
-            worksheet.addRow(['','','','PERFORACIÓN']);
-
-
-
-
             // Agrega los encabezados de las columnas
-            const headerRow2=  worksheet.addRow(['', 'Alimentacion','P.E','Grano','P.E', 'Desensolve','P.E']);
+            const headerRow2= worksheet.addRow(['', 'Alimentacion','P.E','Concentrado','P.E', 'Medios','P.E']);
             applyHeaderStyle(headerRow2);
 
             dataArray.forEach(row => {
@@ -147,15 +172,16 @@ function ReporteM() {
 
                 if (row !== null) {
                     worksheet.addRow([
-                        'JIG´S 2',
-                        row.totalAlimj2,
-                        row.promedioalimentacionj2,
-                        row.totalGranoj2,
-                        row.promediogranoj2,
-                        row.totalDesej2,
-                        row.promediodesensolvej2
+                        'MESAS 1Y2',
+                        row.totalAlim12,
+                        row.promedioPeam12,
+                        row.totalconc12,
+                        row.promedioPeconc12,
+                        row.totalmedios12,
+                        row.promedioPemedios12
 
                     ]);
+                    
                 } else {
                     console.error('Se encontró un objeto null en el array de datos.');
                 }
@@ -163,6 +189,15 @@ function ReporteM() {
             worksheet.columns.forEach(column => {
                 column.width = 20; // Puedes ajustar el valor según tus necesidades
             });
+
+            console.log(dataArray); // Imprimir el array completo en la consola para depuración
+
+
+         
+
+
+
+
             
             console.log(dataArray);
             // Genera el archivo de Excel
