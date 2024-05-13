@@ -1239,9 +1239,9 @@ app.post('/createconcmesas', async (req, res) => {
                 }
             });
         });
-        
 
- 
+
+
 
 
 
@@ -1745,7 +1745,7 @@ app.post('/createmedios46', async (req, res) => {
                 FROM mesas
                 WHERE fecha = ?;
             `;
-        
+
             db.query(query, [req.body.fecha], (err, data) => {
                 if (err) {
                     reject(err);
@@ -1763,8 +1763,8 @@ app.post('/createmedios46', async (req, res) => {
                 }
             });
         });
-        
-        
+
+
         // Obtener el saldo anterior
         const saldoAnteriorData = await new Promise((resolve, reject) => {
             db.query("SELECT saldo46 FROM medios46 ORDER BY id DESC LIMIT 1", (err, data) => {
@@ -1906,7 +1906,7 @@ app.post('/createmedios4', async (req, res) => {
                 FROM mesas
                 WHERE fecha = ?;
             `;
-        
+
             db.query(query, [req.body.fecha], (err, data) => {
                 if (err) {
                     reject(err);
@@ -2060,7 +2060,7 @@ app.post('/createmedios3', async (req, res) => {
                 FROM mesas
                 WHERE fecha = ?;
             `;
-        
+
             db.query(query, [req.body.fecha], (err, data) => {
                 if (err) {
                     reject(err);
@@ -2713,7 +2713,7 @@ app.post('/createdesensolve', async (req, res) => {
                 FROM produccionjigs
                 WHERE fecha = ?;
             `;
-        
+
             db.query(query, [req.body.fecha], (err, data) => {
                 if (err) {
                     reject(err);
@@ -2739,7 +2739,7 @@ app.post('/createdesensolve', async (req, res) => {
                 FROM produccionjigs
                 WHERE fecha = ?;
             `;
-            
+
             db.query(query, [req.body.fecha], (err, data) => {
                 if (err) {
                     reject(err);
@@ -2757,8 +2757,8 @@ app.post('/createdesensolve', async (req, res) => {
                 }
             });
         });
-        
-        
+
+
 
         // Si hay registros en la tabla, obtén el saldo anterior, de lo contrario, establece el saldo anterior en 0
         const saldoAnterior = saldoAnteriorData.length > 0 ? saldoAnteriorData[0].saldo : 0;
@@ -5348,7 +5348,7 @@ app.get('/getmpltinicio/:fecha', (req, res) => {
 
 app.get('/getsuma/:fecha', (req, res) => {
     const fecha = req.params.fecha;
-      const sql = ` 
+    const sql = ` 
     FROM (
         SELECT saldo, fecha
         FROM mpmlt 
@@ -5762,7 +5762,7 @@ app.post('/JIGSMES', (req, res) => {
             THEN SUM(CASE WHEN pedj1 >= 4.00 AND pedj1 <= 4.20 THEN pedj1 ELSE 0 END) / 
                  SUM(CASE WHEN pedj1 >= 4.00 AND pedj1 <= 4.20 THEN 1 ELSE 0 END)
             ELSE 0 
-        END AS promediodesensolvej1
+        END AS promediodesensolvej1,
 
         SUM(alimj2) AS totalAlimj2,
         SUM(peaj2) AS totalPealim2,
@@ -5814,15 +5814,99 @@ app.post('/MESASMES12', (req, res) => {
             SUM(CASE WHEN peam12 > 0 THEN 1 ELSE 0 END) AS countPeaj1GreaterThanZero,
             CASE WHEN SUM(peam12) > 0 THEN SUM(peam12) / SUM(CASE WHEN peam12 > 0 THEN 1 ELSE 0 END) ELSE 0 END AS promedioPeam12,
 
-            SUM(conm12) AS totalconc12,
-            SUM(pecnm12) AS totalPEconc12,
-            SUM(CASE WHEN pecnm12 > 0 THEN 1 ELSE 0 END) AS countPeaj1GreaterThanZero,
-            CASE WHEN SUM(pecnm12) > 0 THEN SUM(pecnm12) / SUM(CASE WHEN pecnm12 > 0 THEN 1 ELSE 0 END) ELSE 0 END AS promedioPeconc12,
+           
+            SUM(CASE WHEN pecnm12 >= 4.30 AND pecnm12 <= 4.40 THEN conm12 ELSE 0 END) AS totalconc12SELEC,
+            SUM(CASE WHEN pecnm12 >= 4.30 AND pecnm12 <= 4.40 THEN pecnm12 ELSE 0 END) AS totalPEconc12SELEC,
+            SUM(CASE WHEN pecnm12 >= 4.30 AND pecnm12 <= 4.40 THEN 1 ELSE 0 END) AS countPeaj1GreaterThanZero,
+            SUM(CASE WHEN pecnm12 >= 4.30 AND pecnm12 <= 4.40 THEN pecnm12 ELSE 0 END) / 
+                SUM(CASE WHEN pecnm12 >= 4.30 AND pecnm12 <= 4.40 THEN 1 ELSE 0 END) AS promedioPeconc12SELEC,
+        
+        
+
+            SUM(CASE WHEN pecnm12 >= 4.00 AND pecnm12 <= 4.29 THEN conm12 ELSE 0 END) AS totalconc12PERF,
+            SUM(CASE WHEN pecnm12 >= 4.00 AND pecnm12 <= 4.29 THEN pecnm12 ELSE 0 END) AS totalPEconc12PERF,
+            SUM(CASE WHEN pecnm12 >= 4.00 AND pecnm12 <= 4.29 THEN 1 ELSE 0 END) AS countPeaj1GreaterThanZero,
+            SUM(CASE WHEN pecnm12 >= 4.00 AND pecnm12 <= 4.29 THEN pecnm12 ELSE 0 END) / 
+                SUM(CASE WHEN pecnm12 >= 4.00 AND pecnm12 <= 4.29 THEN 1 ELSE 0 END) AS promedioPeconc12PERF,
+              
+        
 
             SUM(mediom12) AS totalmedios12,
-            SUM(pecnm12) AS totalpemdeios12,
-            SUM(CASE WHEN pecnm12 > 0 THEN 1 ELSE 0 END) AS countPeaj1GreaterThanZero,
-            CASE WHEN SUM(pecnm12) > 0 THEN SUM(pecnm12) / SUM(CASE WHEN pecnm12 > 0 THEN 1 ELSE 0 END) ELSE 0 END AS promedioPemedios12
+            SUM(pemm12) AS totalpemdeios12,
+            SUM(CASE WHEN pemm12 > 0 THEN 1 ELSE 0 END) AS countPeaj1GreaterThanZero,
+            CASE WHEN SUM(pemm12) > 0 THEN SUM(pemm12) / SUM(CASE WHEN pemm12 > 0 THEN 1 ELSE 0 END) ELSE 0 END AS promedioPemedios12,
+
+
+
+            SUM(alimm34) AS totalAlim34,
+            SUM(peam34) AS totalPeam34,
+            SUM(CASE WHEN peam34 > 0 THEN 1 ELSE 0 END) AS countPeaj1GreaterThanZero,
+            CASE WHEN SUM(peam34) > 0 THEN SUM(peam34) / SUM(CASE WHEN peam34 > 0 THEN 1 ELSE 0 END) ELSE 0 END AS promedioPeam34,
+
+            SUM(CASE WHEN pecnm34 >= 4.30 AND pecnm34 <= 4.40 THEN conm34 ELSE 0 END) AS totalconc34SELEC,
+            SUM(CASE WHEN pecnm34 >= 4.30 AND pecnm34 <= 4.40 THEN pecnm34 ELSE 0 END) AS totalPEconc34SELEC,
+            SUM(CASE WHEN pecnm34 >= 4.30 AND pecnm34 <= 4.40 THEN 1 ELSE 0 END) AS countPeaj1GreaterThanZero,
+            SUM(CASE WHEN pecnm34 >= 4.30 AND pecnm34 <= 4.40 THEN pecnm34 ELSE 0 END) / 
+            SUM(CASE WHEN pecnm34 >= 4.30 AND pecnm34 <= 4.40 THEN 1 ELSE 0 END) AS promedioPeconc34SELEC,
+
+            SUM(CASE WHEN pecnm34 >= 4.00 AND pecnm34 <= 4.29 THEN conm34 ELSE 0 END) AS totalconc34PERF,
+            SUM(CASE WHEN pecnm34 >= 4.00 AND pecnm34 <= 4.29 THEN pecnm34 ELSE 0 END) AS totalPEconc34PERF,
+            SUM(CASE WHEN pecnm34 >= 4.00 AND pecnm34 <= 4.29 THEN 1 ELSE 0 END) AS countPeaj1GreaterThanZero,
+            SUM(CASE WHEN pecnm34 >= 4.00 AND pecnm34 <= 4.29 THEN pecnm34 ELSE 0 END) / 
+            SUM(CASE WHEN pecnm34 >= 4.00 AND pecnm34 <= 4.29 THEN 1 ELSE 0 END) AS promedioPeconc34PERF,
+    
+            SUM(mediosm34) AS totalmedios34,
+            SUM(pemm34) AS totalpemdeios34,
+            SUM(CASE WHEN pemm34 > 0 THEN 1 ELSE 0 END) AS countPeaj1GreaterThanZero,
+            CASE WHEN SUM(pemm34) > 0 THEN SUM(pemm34) / SUM(CASE WHEN pemm34 > 0 THEN 1 ELSE 0 END) ELSE 0 END AS promedioPemedios34,
+
+
+            
+            SUM(alimm5) AS totalAlim5,
+            SUM(peam5) AS totalPeam5,
+            SUM(CASE WHEN peam5 > 0 THEN 1 ELSE 0 END) AS countPeaj1GreaterThanZero,
+            CASE WHEN SUM(peam5) > 0 THEN SUM(peam5) / SUM(CASE WHEN peam5 > 0 THEN 1 ELSE 0 END) ELSE 0 END AS promedioPeam5,
+
+            SUM(CASE WHEN pecnm5 >= 4.30 AND pecnm5 <= 4.40 THEN conm5 ELSE 0 END) AS totalconc5SELEC,
+            SUM(CASE WHEN pecnm5 >= 4.30 AND pecnm5 <= 4.40 THEN pecnm5 ELSE 0 END) AS totalPEconc5SELEC,
+            SUM(CASE WHEN pecnm5 >= 4.30 AND pecnm5 <= 4.40 THEN 1 ELSE 0 END) AS countPeaj1GreaterThanZero,
+            SUM(CASE WHEN pecnm5 >= 4.30 AND pecnm5 <= 4.40 THEN pecnm5 ELSE 0 END) / 
+            SUM(CASE WHEN pecnm5 >= 4.30 AND pecnm5 <= 4.40 THEN 1 ELSE 0 END) AS promedioPeconc5SELEC,
+
+            SUM(CASE WHEN pecnm5 >= 4.00 AND pecnm5 <= 4.29 THEN conm5 ELSE 0 END) AS totalconc5PERF,
+            SUM(CASE WHEN pecnm5 >= 4.00 AND pecnm5 <= 4.29 THEN pecnm5 ELSE 0 END) AS totalPEconc5PERF,
+            SUM(CASE WHEN pecnm5 >= 4.00 AND pecnm5 <= 4.29 THEN 1 ELSE 0 END) AS countPeaj1GreaterThanZero,
+            SUM(CASE WHEN pecnm5 >= 4.00 AND pecnm5 <= 4.29 THEN pecnm5 ELSE 0 END) / 
+            SUM(CASE WHEN pecnm5 >= 4.00 AND pecnm5 <= 4.29 THEN 1 ELSE 0 END) AS promedioPeconc5PERF,
+
+            SUM(mediosm5) AS totalmedios5,
+            SUM(pecnm5) AS totalpemdeios5,
+            SUM(CASE WHEN pecnm5 > 0 THEN 1 ELSE 0 END) AS countPeaj1GreaterThanZero,
+            CASE WHEN SUM(pecnm5) > 0 THEN SUM(pecnm5) / SUM(CASE WHEN pecnm5 > 0 THEN 1 ELSE 0 END) ELSE 0 END AS promedioPemedios5,
+
+
+            SUM(alimm6) AS totalAlim6,
+            SUM(peam6) AS totalPeam6,
+            SUM(CASE WHEN peam6 > 0 THEN 1 ELSE 0 END) AS countPeaj1GreaterThanZero,
+            CASE WHEN SUM(peam6) > 0 THEN SUM(peam6) / SUM(CASE WHEN peam6 > 0 THEN 1 ELSE 0 END) ELSE 0 END AS promedioPeam6,
+
+            SUM(CASE WHEN pecnm6 >= 4.30 AND pecnm6 <= 4.40 THEN conm6 ELSE 0 END) AS totalconc6SELEC,
+            SUM(CASE WHEN pecnm6 >= 4.30 AND pecnm6 <= 4.40 THEN pecnm6 ELSE 0 END) AS totalPEconc6SELEC,
+            SUM(CASE WHEN pecnm6 >= 4.30 AND pecnm6 <= 4.40 THEN 1 ELSE 0 END) AS countPeaj1GreaterThanZero,
+            SUM(CASE WHEN pecnm6 >= 4.30 AND pecnm6 <= 4.40 THEN pecnm6 ELSE 0 END) / 
+            SUM(CASE WHEN pecnm6 >= 4.30 AND pecnm6 <= 4.40 THEN 1 ELSE 0 END) AS promedioPeconc6SELEC,
+
+            SUM(CASE WHEN pecnm6 >= 4.00 AND pecnm6 <= 4.29 THEN conm6 ELSE 0 END) AS totalconc6PERF,
+            SUM(CASE WHEN pecnm6 >= 4.00 AND pecnm6 <= 4.29 THEN pecnm6 ELSE 0 END) AS totalPEconc6PERF,
+            SUM(CASE WHEN pecnm6 >= 4.00 AND pecnm6 <= 4.29 THEN 1 ELSE 0 END) AS countPeaj1GreaterThanZero,
+            SUM(CASE WHEN pecnm6 >= 4.00 AND pecnm6 <= 4.29 THEN pecnm6 ELSE 0 END) / 
+            SUM(CASE WHEN pecnm6 >= 4.00 AND pecnm6 <= 4.29 THEN 1 ELSE 0 END) AS promedioPeconc6PERF,
+
+            SUM(mediom6) AS totalmedios6,
+            SUM(peam6) AS totalpemdeios6,
+            SUM(CASE WHEN peam6 > 0 THEN 1 ELSE 0 END) AS countPeaj1GreaterThanZero,
+            CASE WHEN SUM(peam6) > 0 THEN SUM(peam6) / SUM(CASE WHEN peam6 > 0 THEN 1 ELSE 0 END) ELSE 0 END AS promedioPemedios6
+
         FROM mesas
         WHERE fecha BETWEEN ? AND ?;
     `;
