@@ -87,7 +87,7 @@ function Modificarmesas() {
                     alimm34: res.data[0].alimm34,
                     peam34: res.data[0].peam34,
                     conm34: res.data[0].conm34,
-                    pecnm34: res.data[0].pecm34,
+                    pecnm34: res.data[0].pecnm34,
                     mediosm34: res.data[0].mediosm34,
                     pemm34: res.data[0].pemm34,
                     colasm34: res.data[0].colasm34,

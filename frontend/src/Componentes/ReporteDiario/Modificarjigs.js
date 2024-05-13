@@ -63,7 +63,7 @@ function Modificarjigs() {
                     alimj2: res.data[0].alimj2,
                     peaj2: res.data[0].peaj2,
                     granoj2: res.data[0].granoj2,
-                    pegj2: res.data[0].peaj2,
+                    pegj2: res.data[0].pegj2,
                     colasj2: res.data[0].colasj2,
                     pecj2: res.data[0].pecj2,
                     desenj2: res.data[0].desenj2,
