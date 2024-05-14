@@ -5921,3 +5921,40 @@ app.post('/MESASMES12', (req, res) => {
         }
     });
 });
+
+app.post('/jigsec', (req, res) => {
+    const { fechaInicio, fechaFin } = req.body;
+
+    // Verificar si se proporcionaron las fechas de inicio y fin
+    if (!fechaInicio || !fechaFin) {
+        return res.status(400).json({ error: 'Las fechas de inicio y fin son requeridas.' });
+    }
+
+    // Ejecutar la consulta SQL
+    const sql = `
+        SELECT
+            SUM(alimjsec) AS TOTALALISEC,
+            SUM(peajsec) AS totalPeajSEC,
+            SUM(CASE WHEN peajsec > 0 THEN 1 ELSE 0 END) AS countPeaj1GreaterThanZero,
+            CASE WHEN SUM(peajsec) > 0 THEN SUM(peajsec) / SUM(CASE WHEN peajsec > 0 THEN 1 ELSE 0 END) ELSE 0 END AS promedioPeajSEC,
+
+            SUM(concjsec) AS totalconcjsec,
+            SUM(pecojsec) AS totalPeajSEC,
+            SUM(CASE WHEN pecojsec > 0 THEN 1 ELSE 0 END) AS countPeaj1GreaterThanZero,
+            CASE WHEN SUM(pecojsec) > 0 THEN SUM(pecojsec) / SUM(CASE WHEN pecojsec > 0 THEN 1 ELSE 0 END) ELSE 0 END AS promedioPeCONSEC
+            
+        FROM jigschinos
+        WHERE fecha BETWEEN ? AND ?;
+    `;
+
+    db.query(sql, [fechaInicio, fechaFin], (error, results) => {
+        if (error) {
+            console.error('Error al ejecutar la consulta:', error);
+            return res.status(500).json({ error: 'Error al ejecutar la consulta' });
+        } else {
+            // Devolver los resultados de la consulta como un objeto JSON
+            res.json(results[0]);
+        }
+    });
+});
+
