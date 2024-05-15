@@ -2025,6 +2025,27 @@ app.get('/medios3', (req, res) => {
 });
 app.post('/createmedios3', async (req, res) => {
     try {
+
+
+        const totalsalidasmedios = await new Promise((resolve, reject) => {
+            const query = `
+                SELECT 
+                (SELECT SUM(medio3y4) FROM prodseleccion WHERE fecha = ?) +
+                (SELECT SUM(alimjsec) FROM jigschinos WHERE fecha = ?) AS TOTALSUMA;
+            `;
+            
+            db.query(query, [req.body.fecha, req.body.fecha], (err, data) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    const total = data[0].TOTALSUMA;
+                    resolve(total);
+                }
+            });
+        });
+        
+
+
         const totalentradas = await new Promise((resolve, reject) => {
             const query = `
                 SELECT 
@@ -2091,14 +2112,14 @@ app.post('/createmedios3', async (req, res) => {
         const saldoAnterior = saldoAnteriorData.length > 0 ? saldoAnteriorData[0].saldo : 0;
 
         // Calcula el nuevo saldo sumando el saldo anterior a las entradas y restando las salidas
-        const nuevoSaldo = saldoAnterior + parseFloat(totalentradas) - parseFloat(req.body.salidas);
+        const nuevoSaldo = saldoAnterior + parseFloat(totalentradas) - parseFloat(totalsalidasmedios);
 
         // Realizar la inserción en la tabla concmesas
         const sql = "INSERT INTO medios3 (fecha, entradas, salidas, saldo, pe) VALUES (?, ?, ?, ?, ?)";
         const values = [
             req.body.fecha,
             totalentradas,
-            req.body.salidas,
+            totalsalidasmedios,
             nuevoSaldo,
             totalentradaspe,
         ];
@@ -5956,5 +5977,50 @@ app.post('/jigsec', (req, res) => {
             res.json(results[0]);
         }
     });
+
+
+});
+
+app.post('/moliendasum', (req, res) => {
+    const { fechaInicio, fechaFin } = req.body;
+
+    // Verificar si se proporcionaron las fechas de inicio y fin
+    if (!fechaInicio || !fechaFin) {
+        return res.status(400).json({ error: 'Las fechas de inicio y fin son requeridas.' });
+    }
+
+    // Ejecutar la consulta SQL
+    const sql = `
+        SELECT
+        SUM(CASE WHEN PEMT = 3.90 THEN concmesas ELSE 0 END) AS TOTACONCMESAS,
+        SUM(CASE WHEN PEMT = 3.90 THEN medios ELSE 0 END) AS TOTALMEDIOS,
+        SUM(CASE WHEN PEMT = 3.90 THEN desenslovez ELSE 0 END) AS TOTALDESENSOLVE,
+        SUM(CASE WHEN PEMT = 3.90 THEN concjigs ELSE 0 END) AS TOTALCONJIGS,
+        SUM(CASE WHEN PEMT = 3.90 THEN pmlt ELSE 0 END) AS TOTALPMLT,
+        SUM(CASE WHEN PEMT = 3.90 THEN pmle ELSE 0 END) AS TOTALPMLE,
+        
+
+        SUM(CASE WHEN PEMT = 4.10 THEN concmesas ELSE 0 END) AS TOTACONCMESAS4,
+        SUM(CASE WHEN PEMT = 4.10 THEN medios ELSE 0 END) AS TOTALMEDIOS4,
+        SUM(CASE WHEN PEMT = 4.10 THEN desenslovez ELSE 0 END) AS TOTALDESENSOLVE4,
+        SUM(CASE WHEN PEMT = 4.10 THEN concjigs ELSE 0 END) AS TOTALCONJIGS4,
+        SUM(CASE WHEN PEMT = 4.10 THEN pmlt ELSE 0 END) AS TOTALPMLT4,
+        SUM(CASE WHEN PEMT = 4.10 THEN pmle ELSE 0 END) AS TOTALPMLE4
+            
+        FROM molienda
+        WHERE fecha BETWEEN ? AND ?;
+    `;
+
+    db.query(sql, [fechaInicio, fechaFin], (error, results) => {
+        if (error) {
+            console.error('Error al ejecutar la consulta:', error);
+            return res.status(500).json({ error: 'Error al ejecutar la consulta' });
+        } else {
+            // Devolver los resultados de la consulta como un objeto JSON
+            res.json(results[0]);
+        }
+    });
+
+
 });
 

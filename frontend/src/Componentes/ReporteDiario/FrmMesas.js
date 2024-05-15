@@ -68,7 +68,7 @@ function FrmMesas() {
     };
   return (
     <div className="d-flex align-items-center flex-column mt-3" >
-    <center><h1>Modificar Mesas</h1></center>
+    <center><h1>Insertar Mesas</h1></center>
     <div className="close-button" onClick={() => navigate('/dmesas')}>
     <FontAwesomeIcon icon={faTimes} />
     </div>

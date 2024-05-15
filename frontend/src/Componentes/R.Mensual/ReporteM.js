@@ -74,11 +74,27 @@ function ReporteM() {
             const chinoData = await response3.json();
             console.log("Datos recibidos de /jigsec:", chinoData);
 
+            const response4 = await fetch('http://localhost:8081/moliendasum', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ fechaInicio: startDate, fechaFin: endDate })
+            });
+
+            if (!response4.ok) {
+                throw new Error('Error al obtener los datos de las mesas del servidor');
+            }
+
+            const moliendaData = await response4.json();
+            console.log("Datos recibidos de /moliendasum:", moliendaData);
+
             const jigsArray = [jigsData]; // Convertir el objeto de JIGs en un array
             const mesasArray = [mesasData]; // Convertir el objeto de mesas en un array
             const chinoArray = [chinoData];
+            const moliendaArray = [moliendaData];
             // Llamar a la función para exportar a Excel con los datos ajustados
-            exportToExcel(jigsArray, mesasArray, chinoArray);
+            exportToExcel(jigsArray, mesasArray, chinoArray, moliendaArray);
         } catch (error) {
             console.error('Error en el bloque try:', error);
         }
@@ -90,7 +106,7 @@ function ReporteM() {
         cell.font = { bold: true, size: 14, color: { argb: '000000' } }; // Negrita, tamaño 14, color negro
     };
 
-    const exportToExcel = async (jigs, mesas, chino) => {
+    const exportToExcel = async (jigs, mesas, chino, molienda) => {
         try {
             // Crea un nuevo libro de trabajo
             const workbook = new ExcelJS.Workbook();
@@ -113,6 +129,13 @@ function ReporteM() {
             const dateRow = worksheet.addRow(['', '', `Desde: ${formattedStartDate}`, '', `Hasta: ${formattedEndDate}`]);
             const secondCell = titleRow.getCell(3);
             applyTitleStyle(secondCell);
+
+
+            const textRow8 = worksheet.addRow([]);
+
+            // Asignar texto a las celdas de la fila
+            textRow8.getCell(4).value = '';
+        
 
             const headerRow1 = worksheet.addRow(['', 'Alimentacion', 'P.E', 'Grano', 'P.E', 'Desensolve', 'P.E']);
             applyHeaderStyle(headerRow1);
@@ -201,6 +224,11 @@ function ReporteM() {
             function applyCellStyle(cell, style) {
                 cell.style = style;
             }
+
+            const textRow6 = worksheet.addRow([]);
+
+            // Asignar texto a las celdas de la fila
+            textRow6.getCell(4).value = '';
             const textRow1 = worksheet.addRow([]);
 
             // Asignar texto a las celdas de la fila
@@ -321,6 +349,11 @@ function ReporteM() {
                 column.width = 20;
             });
 
+            const textRow7 = worksheet.addRow([]);
+
+            // Asignar texto a las celdas de la fila
+            textRow7.getCell(4).value = '';
+
             const textRow2 = worksheet.addRow([]);
 
             // Asignar texto a las celdas de la fila
@@ -344,9 +377,69 @@ function ReporteM() {
                     ]);
 
             })
+
+            
         }
 
+        const textRow5 = worksheet.addRow([]);
 
+        // Asignar texto a las celdas de la fila
+        textRow5.getCell(4).value = '';
+
+        const textRow3 = worksheet.addRow([]);
+
+        // Asignar texto a las celdas de la fila
+        textRow3.getCell(4).value = 'TOTAL MOLIENDA';
+
+    
+
+        const headerRow4 = worksheet.addRow(['CONC.MESAS','GRANO','DESENSOLVE', 'CONJIGS', 'PMLT', 'PMLE', 'SUMA TOTAL','PESP']);
+        applyHeaderStyle(headerRow4);
+
+        if (molienda && Array.isArray(molienda)) {
+            let sumaTotal = 0;
+            let sumaTotal4 = 0;
+          
+            // Definir los estilos para las celdas
+           
+            molienda.forEach(row => {
+                const sumatotal= row.TOTACONCMESAS + row.TOTALMEDIOS + row.TOTALDESENSOLVE + row.TOTALCONJIGS + row.TOTALPMLT + row.TOTALPMLE;
+                sumaTotal += sumatotal;
+
+                const sumatotal4= row.TOTACONCMESAS4 + row.TOTALMEDIOS4 + row.TOTALDESENSOLVE4 + row.TOTALCONJIGS4 + row.TOTALPMLT4 + row.TOTALPMLE4;
+                sumaTotal4 += sumatotal4;
+
+
+
+                worksheet.addRow([
+                    row.TOTACONCMESAS,
+                    row.TOTALMEDIOS,
+                    row.TOTALDESENSOLVE,
+                    row.TOTALCONJIGS,
+                    row.TOTALPMLT,
+                    row.TOTALPMLE,
+                    sumaTotal,
+                    '3.90'
+                    
+                    
+                ]);
+                worksheet.addRow([
+                    row.TOTACONCMESAS4,
+                    row.TOTALMEDIOS4,
+                    row.TOTALDESENSOLVE4,
+                    row.TOTALCONJIGS4,
+                    row.TOTALPMLT4,
+                    row.TOTALPMLE4,
+                    sumaTotal4,
+                    '4.10'
+                    
+                    
+                ]);
+
+        })
+
+        
+    }
 
 
             // Genera el archivo de Excel y lo descarga
