@@ -3980,7 +3980,7 @@ app.delete('/deletetolvag/:id', (req, res) => {
 //////////PDF EXISTENCIAS///////////
 app.get('/getsilos/:fecha', (req, res) => {
     const fecha = req.params.fecha;
-    const sql = "SELECT * FROM silos WHERE fecha = ?"
+    const sql = "SELECT * FROM silos WHERE fecha <= ? ORDER BY fecha DESC LIMIT 1"
     db.query(sql, [fecha], (err, data) => {
         if (err) {
             console.error("Error en la consulta SQL:", err);
@@ -5299,14 +5299,24 @@ app.get('/getsilosinicio/:fecha', (req, res) => {
     const fecha = req.params.fecha;
     const sql = `
     SELECT silo1, silo2, silo3, silo4, silo5 
-FROM silos 
-WHERE fecha = ? 
-UNION ALL
-SELECT silo1, silo2, silo3, silo4, silo5 
-FROM (SELECT * FROM silos ORDER BY fecha DESC LIMIT 1) AS latest_data;
-;
-`;
-    db.query(sql, [fecha], (err, data) => {
+    FROM silos 
+    WHERE fecha = ? 
+    UNION ALL
+    SELECT silo1, silo2, silo3, silo4, silo5 
+    FROM (
+        SELECT silo1, silo2, silo3, silo4, silo5 
+        FROM silos 
+        ORDER BY fecha DESC 
+        LIMIT 1
+    ) AS latest_data
+    WHERE NOT EXISTS (
+        SELECT 1 
+        FROM silos 
+        WHERE fecha = ?
+    );
+    `;
+    
+    db.query(sql, [fecha, fecha], (err, data) => {
         if (err) {
             console.error("Error en la consulta SQL:", err);
             return res.status(500).json({ error: "Error en la consulta SQL. Por favor, inténtalo de nuevo más tarde." });
@@ -5314,7 +5324,8 @@ FROM (SELECT * FROM silos ORDER BY fecha DESC LIMIT 1) AS latest_data;
 
         return res.json(data);
     });
-})
+});
+
 app.get('/getmpleinicio/:fecha', (req, res) => {
     const fecha = req.params.fecha;
     const sql = `
