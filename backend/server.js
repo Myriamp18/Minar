@@ -5420,15 +5420,23 @@ app.delete('/deletehrsmolinos/:id', (req, res) => {
     });
 });
 app.post('/createhrsmolinos', (req, res) => {
-    // Función para convertir el formato de "2:30" a "2.30"
-    const convertirFormatoDecimal = (hora) => {
-        // Reemplazar el ":" con "."
-        return hora.replace(':', '.');
+    // Función para convertir el formato de "HH:MM" al formato decimal específico
+    const convertirFormatoDecimal = (hora, multiplicador) => {
+        // Dividir la hora en horas y minutos
+        const [horas, minutos] = hora.split(':').map(Number);
+        if (isNaN(horas) || isNaN(minutos)) {
+            return NaN;
+        }
+        // Convertir minutos a su equivalente decimal
+        const minutosDecimal = minutos * 0.0166;
+        // Sumar horas y minutos convertidos, luego multiplicar por el multiplicador dado
+        const horaDecimal = (horas + minutosDecimal) * multiplicador;
+        return horaDecimal;
     };
 
     // Convertir hrsm1 y hrsm2 al formato decimal
-    const hrsm1Decimal = convertirFormatoDecimal(req.body.hrsm1);
-    const hrsm2Decimal = convertirFormatoDecimal(req.body.hrsm2);
+    const hrsm1Decimal = convertirFormatoDecimal(req.body.hrsm1, 8.5);
+    const hrsm2Decimal = convertirFormatoDecimal(req.body.hrsm2, 5.300);
 
     // Verificar si la conversión fue exitosa
     if (isNaN(hrsm1Decimal) || isNaN(hrsm2Decimal)) {
@@ -5437,8 +5445,8 @@ app.post('/createhrsmolinos', (req, res) => {
     }
 
     // Calcular prodm1 y prodm2
-    const prodm1 = hrsm1Decimal * 8.5;
-    const prodm2 = hrsm2Decimal * 5.0;
+    const prodm1 = hrsm1Decimal;
+    const prodm2 = hrsm2Decimal; // No multiplicar por 5.0
 
     const sql = "INSERT INTO hrsmolinos (fecha, turno, hrsm1, prodm1, hrsm2, prodm2) VALUES (?, ?, ?, ?, ?, ?)";
     const values = [
@@ -5458,16 +5466,26 @@ app.post('/createhrsmolinos', (req, res) => {
         return res.json(data);
     });
 });
+
+
 app.put('/updatehrsmolinos/:id', (req, res) => {
     // Función para convertir el formato de "2:30" a "2.30"
-    const convertirFormatoDecimal = (hora) => {
-        // Reemplazar el ":" con "."
-        return hora.replace(':', '.');
+    const convertirFormatoDecimal = (hora, multiplicador) => {
+        // Dividir la hora en horas y minutos
+        const [horas, minutos] = hora.split(':').map(Number);
+        if (isNaN(horas) || isNaN(minutos)) {
+            return NaN;
+        }
+        // Convertir minutos a su equivalente decimal
+        const minutosDecimal = minutos * 0.0166;
+        // Sumar horas y minutos convertidos, luego multiplicar por el multiplicador dado
+        const horaDecimal = (horas + minutosDecimal) * multiplicador;
+        return horaDecimal;
     };
 
     // Convertir hrsm1 y hrsm2 al formato decimal
-    const hrsm1Decimal = convertirFormatoDecimal(req.body.hrsm1);
-    const hrsm2Decimal = convertirFormatoDecimal(req.body.hrsm2);
+    const hrsm1Decimal = convertirFormatoDecimal(req.body.hrsm1, 8.5);
+    const hrsm2Decimal = convertirFormatoDecimal(req.body.hrsm2, 5.300);
 
     // Verificar si la conversión fue exitosa
     if (isNaN(hrsm1Decimal) || isNaN(hrsm2Decimal)) {
@@ -5476,9 +5494,9 @@ app.put('/updatehrsmolinos/:id', (req, res) => {
     }
 
     // Calcular prodm1 y prodm2
-    const prodm1 = hrsm1Decimal * 8.5;
-    const prodm2 = hrsm2Decimal * 5.0;
-
+    const prodm1 = hrsm1Decimal;
+    const prodm2 = hrsm2Decimal; // No multiplicar por 5.0
+    
     const sql = "UPDATE hrsmolinos SET fecha=?, turno=?, hrsm1=?, prodm1=?, hrsm2=?, prodm2=? WHERE id=?";
     const values = [
         req.body.fecha,
