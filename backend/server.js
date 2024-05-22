@@ -2033,7 +2033,7 @@ app.post('/createmedios3', async (req, res) => {
                 (SELECT SUM(medio3y4) FROM prodseleccion WHERE fecha = ?) +
                 (SELECT SUM(alimjsec) FROM jigschinos WHERE fecha = ?) AS TOTALSUMA;
             `;
-            
+
             db.query(query, [req.body.fecha, req.body.fecha], (err, data) => {
                 if (err) {
                     reject(err);
@@ -2043,7 +2043,7 @@ app.post('/createmedios3', async (req, res) => {
                 }
             });
         });
-        
+
 
 
         const totalentradas = await new Promise((resolve, reject) => {
@@ -5315,7 +5315,7 @@ app.get('/getsilosinicio/:fecha', (req, res) => {
         WHERE fecha = ?
     );
     `;
-    
+
     db.query(sql, [fecha, fecha], (err, data) => {
         if (err) {
             console.error("Error en la consulta SQL:", err);
@@ -5496,7 +5496,7 @@ app.put('/updatehrsmolinos/:id', (req, res) => {
     // Calcular prodm1 y prodm2
     const prodm1 = hrsm1Decimal;
     const prodm2 = hrsm2Decimal; // No multiplicar por 5.0
-    
+
     const sql = "UPDATE hrsmolinos SET fecha=?, turno=?, hrsm1=?, prodm1=?, hrsm2=?, prodm2=? WHERE id=?";
     const values = [
         req.body.fecha,
@@ -6053,3 +6053,213 @@ app.post('/moliendasum', (req, res) => {
 
 });
 
+app.post('/MESASMES12H', (req, res) => {
+    const { fechaInicio, fechaFin } = req.body;
+
+    // Verificar si se proporcionaron las fechas de inicio y fin
+    if (!fechaInicio || !fechaFin) {
+        return res.status(400).json({ error: 'Las fechas de inicio y fin son requeridas.' });
+    }
+
+    // Ejecutar la consulta SQL
+    const sql = `
+    SELECT 
+    SEC_TO_TIME(SUM(CASE WHEN turno = 1 THEN (CAST(SUBSTRING_INDEX(totalhrs, ':', 1) AS DECIMAL(10, 2)) * 3600 + CAST(SUBSTRING_INDEX(totalhrs, ':', -1) AS DECIMAL(10, 2)) * 60) ELSE 0 END)) AS TOTAHRS_TURNO_1,
+    SEC_TO_TIME(SUM(CASE WHEN turno = 2 THEN (CAST(SUBSTRING_INDEX(totalhrs, ':', 1) AS DECIMAL(10, 2)) * 3600 + CAST(SUBSTRING_INDEX(totalhrs, ':', -1) AS DECIMAL(10, 2)) * 60) ELSE 0 END)) AS TOTAHRS_TURNO_2,
+    SEC_TO_TIME(SUM(CAST(SUBSTRING_INDEX(totalhrs, ':', 1) AS DECIMAL(10, 2)) * 3600 + CAST(SUBSTRING_INDEX(totalhrs, ':', -1) AS DECIMAL(10, 2)) * 60)) AS TOTAHRS
+FROM 
+    hmesa12
+WHERE 
+    fecha BETWEEN ? AND ?;
+
+    `;
+
+    db.query(sql, [fechaInicio, fechaFin], (error, results) => {
+        if (error) {
+            console.error('Error al ejecutar la consulta:', error);
+            return res.status(500).json({ error: 'Error al ejecutar la consulta' });
+        } else {
+            // Devolver los resultados de la consulta como un objeto JSON
+            res.json(results[0]);
+        }
+    });
+});
+
+app.post('/MESASMES34H', (req, res) => {
+    const { fechaInicio, fechaFin } = req.body;
+
+    // Verificar si se proporcionaron las fechas de inicio y fin
+    if (!fechaInicio || !fechaFin) {
+        return res.status(400).json({ error: 'Las fechas de inicio y fin son requeridas.' });
+    }
+
+    // Ejecutar la consulta SQL
+    const sql = `
+    SELECT 
+    SEC_TO_TIME(SUM(CASE WHEN turno = 1 THEN (CAST(SUBSTRING_INDEX(totalhrs, ':', 1) AS DECIMAL(10, 2)) * 3600 + CAST(SUBSTRING_INDEX(totalhrs, ':', -1) AS DECIMAL(10, 2)) * 60) ELSE 0 END)) AS TOTAHRS_TURNO_1,
+    SEC_TO_TIME(SUM(CASE WHEN turno = 2 THEN (CAST(SUBSTRING_INDEX(totalhrs, ':', 1) AS DECIMAL(10, 2)) * 3600 + CAST(SUBSTRING_INDEX(totalhrs, ':', -1) AS DECIMAL(10, 2)) * 60) ELSE 0 END)) AS TOTAHRS_TURNO_2,
+    SEC_TO_TIME(SUM(CAST(SUBSTRING_INDEX(totalhrs, ':', 1) AS DECIMAL(10, 2)) * 3600 + CAST(SUBSTRING_INDEX(totalhrs, ':', -1) AS DECIMAL(10, 2)) * 60)) AS TOTAHRS
+FROM 
+    hmesa34
+WHERE 
+    fecha BETWEEN ? AND ?;
+
+    `;
+
+    db.query(sql, [fechaInicio, fechaFin], (error, results) => {
+        if (error) {
+            console.error('Error al ejecutar la consulta:', error);
+            return res.status(500).json({ error: 'Error al ejecutar la consulta' });
+        } else {
+            // Devolver los resultados de la consulta como un objeto JSON
+            res.json(results[0]);
+        }
+    });
+});
+app.post('/MESASMES5H', (req, res) => {
+    const { fechaInicio, fechaFin } = req.body;
+
+    // Verificar si se proporcionaron las fechas de inicio y fin
+    if (!fechaInicio || !fechaFin) {
+        return res.status(400).json({ error: 'Las fechas de inicio y fin son requeridas.' });
+    }
+
+    // Ejecutar la consulta SQL
+    const sql = `
+    SELECT 
+    SEC_TO_TIME(SUM(CASE WHEN turno = 1 THEN (CAST(SUBSTRING_INDEX(totalhrs, ':', 1) AS DECIMAL(10, 2)) * 3600 + CAST(SUBSTRING_INDEX(totalhrs, ':', -1) AS DECIMAL(10, 2)) * 60) ELSE 0 END)) AS TOTAHRS_TURNO_1,
+    SEC_TO_TIME(SUM(CASE WHEN turno = 2 THEN (CAST(SUBSTRING_INDEX(totalhrs, ':', 1) AS DECIMAL(10, 2)) * 3600 + CAST(SUBSTRING_INDEX(totalhrs, ':', -1) AS DECIMAL(10, 2)) * 60) ELSE 0 END)) AS TOTAHRS_TURNO_2,
+    SEC_TO_TIME(SUM(CAST(SUBSTRING_INDEX(totalhrs, ':', 1) AS DECIMAL(10, 2)) * 3600 + CAST(SUBSTRING_INDEX(totalhrs, ':', -1) AS DECIMAL(10, 2)) * 60)) AS TOTAHRS
+FROM 
+    hmesa5
+WHERE 
+    fecha BETWEEN ? AND ?;
+
+    `;
+
+    db.query(sql, [fechaInicio, fechaFin], (error, results) => {
+        if (error) {
+            console.error('Error al ejecutar la consulta:', error);
+            return res.status(500).json({ error: 'Error al ejecutar la consulta' });
+        } else {
+            // Devolver los resultados de la consulta como un objeto JSON
+            res.json(results[0]);
+        }
+    });
+});
+app.post('/MESASMES6H', (req, res) => {
+    const { fechaInicio, fechaFin } = req.body;
+
+    // Verificar si se proporcionaron las fechas de inicio y fin
+    if (!fechaInicio || !fechaFin) {
+        return res.status(400).json({ error: 'Las fechas de inicio y fin son requeridas.' });
+    }
+
+    // Ejecutar la consulta SQL
+    const sql = `
+    SELECT 
+    SEC_TO_TIME(SUM(CASE WHEN turno = 1 THEN (CAST(SUBSTRING_INDEX(totalhrs, ':', 1) AS DECIMAL(10, 2)) * 3600 + CAST(SUBSTRING_INDEX(totalhrs, ':', -1) AS DECIMAL(10, 2)) * 60) ELSE 0 END)) AS TOTAHRS_TURNO_1,
+    SEC_TO_TIME(SUM(CASE WHEN turno = 2 THEN (CAST(SUBSTRING_INDEX(totalhrs, ':', 1) AS DECIMAL(10, 2)) * 3600 + CAST(SUBSTRING_INDEX(totalhrs, ':', -1) AS DECIMAL(10, 2)) * 60) ELSE 0 END)) AS TOTAHRS_TURNO_2,
+    SEC_TO_TIME(SUM(CAST(SUBSTRING_INDEX(totalhrs, ':', 1) AS DECIMAL(10, 2)) * 3600 + CAST(SUBSTRING_INDEX(totalhrs, ':', -1) AS DECIMAL(10, 2)) * 60)) AS TOTAHRS
+FROM 
+    hmesa6
+WHERE 
+    fecha BETWEEN ? AND ?;
+
+    `;
+
+    db.query(sql, [fechaInicio, fechaFin], (error, results) => {
+        if (error) {
+            console.error('Error al ejecutar la consulta:', error);
+            return res.status(500).json({ error: 'Error al ejecutar la consulta' });
+        } else {
+            // Devolver los resultados de la consulta como un objeto JSON
+            res.json(results[0]);
+        }
+    });
+});
+
+app.post('/MOLINOSMH', (req, res) => {
+    const { fechaInicio, fechaFin } = req.body;
+
+    // Verificar si se proporcionaron las fechas de inicio y fin
+    if (!fechaInicio || !fechaFin) {
+        return res.status(400).json({ error: 'Las fechas de inicio y fin son requeridas.' });
+    }
+
+    // Ejecutar la consulta SQL
+    const sql = `
+    SELECT 
+    SEC_TO_TIME(SUM(CASE WHEN turno = 1 THEN (CAST(SUBSTRING_INDEX(hrsm1, ':', 1) AS DECIMAL(10, 2)) * 3600 + CAST(SUBSTRING_INDEX(hrsm1, ':', -1) AS DECIMAL(10, 2)) * 60) ELSE 0 END)) AS HRSM1_TURNO_1,
+    SEC_TO_TIME(SUM(CASE WHEN turno = 1 THEN (CAST(SUBSTRING_INDEX(hrsm2, ':', 1) AS DECIMAL(10, 2)) * 3600 + CAST(SUBSTRING_INDEX(hrsm2, ':', -1) AS DECIMAL(10, 2)) * 60) ELSE 0 END)) AS HRSM2_TURNO_1,
+    SEC_TO_TIME(SUM(CASE WHEN turno = 2 THEN (CAST(SUBSTRING_INDEX(hrsm1, ':', 1) AS DECIMAL(10, 2)) * 3600 + CAST(SUBSTRING_INDEX(hrsm1, ':', -1) AS DECIMAL(10, 2)) * 60) ELSE 0 END)) AS HRSM1_TURNO_2,
+    SEC_TO_TIME(SUM(CASE WHEN turno = 2 THEN (CAST(SUBSTRING_INDEX(hrsm2, ':', 1) AS DECIMAL(10, 2)) * 3600 + CAST(SUBSTRING_INDEX(hrsm2, ':', -1) AS DECIMAL(10, 2)) * 60) ELSE 0 END)) AS HRSM2_TURNO_2,
+    SEC_TO_TIME(SUM(CAST(SUBSTRING_INDEX(hrsm1, ':', 1) AS DECIMAL(10, 2)) * 3600 + CAST(SUBSTRING_INDEX(hrsm1, ':', -1) AS DECIMAL(10, 2)) * 60)) AS HRSM1_TOTAL,
+    SEC_TO_TIME(SUM(CAST(SUBSTRING_INDEX(hrsm2, ':', 1) AS DECIMAL(10, 2)) * 3600 + CAST(SUBSTRING_INDEX(hrsm2, ':', -1) AS DECIMAL(10, 2)) * 60)) AS HRSM2_TOTAL,
+    SUM(CASE WHEN turno = 1 THEN prodM1 ELSE 0 END) AS PRODM1_TURNO_1,
+    SUM(CASE WHEN turno = 2 THEN prodM1 ELSE 0 END) AS PRODM1_TURNO_2,
+    SUM(CASE WHEN turno = 1 THEN prodM2 ELSE 0 END) AS PRODM2_TURNO_1,
+    SUM(CASE WHEN turno = 2 THEN prodM2 ELSE 0 END) AS PRODM2_TURNO_2,
+    SUM(prodM1) AS PRODM1_TOTAL,
+    SUM(prodM2) AS PRODM2_TOTAL,
+    SUM(prodM1 + prodM2) AS PRODUCCION_TOTAL
+FROM 
+    hrsmolinos
+WHERE 
+    fecha BETWEEN ? AND ?;
+
+    `;
+
+    db.query(sql, [fechaInicio, fechaFin], (error, results) => {
+        if (error) {
+            console.error('Error al ejecutar la consulta:', error);
+            return res.status(500).json({ error: 'Error al ejecutar la consulta' });
+        } else {
+            // Devolver los resultados de la consulta como un objeto JSON
+            res.json(results[0]);
+        }
+    });
+});
+
+app.post('/jigssech', (req, res) => {
+    const { fechaInicio, fechaFin } = req.body;
+
+    // Verificar si se proporcionaron las fechas de inicio y fin
+    if (!fechaInicio || !fechaFin) {
+        return res.status(400).json({ error: 'Las fechas de inicio y fin son requeridas.' });
+    }
+
+    // Ejecutar la consulta SQL
+    const sql = `
+    SELECT 
+    SEC_TO_TIME(SUM(CASE WHEN turno = 1 THEN 
+        (CAST(SUBSTRING_INDEX(horasec, ':', 1) AS DECIMAL(10, 2)) * 3600 + 
+         CAST(SUBSTRING_INDEX(horasec, ':', -1) AS DECIMAL(10, 2)) * 60) 
+    ELSE 0 END)) AS HORASSEC_TURNO_1,
+    
+    SEC_TO_TIME(SUM(CASE WHEN turno = 2 THEN 
+        (CAST(SUBSTRING_INDEX(horasec, ':', 1) AS DECIMAL(10, 2)) * 3600 + 
+         CAST(SUBSTRING_INDEX(horasec, ':', -1) AS DECIMAL(10, 2)) * 60) 
+    ELSE 0 END)) AS HORASSEC_TURNO_2,
+    
+    SEC_TO_TIME(SUM(
+        CAST(SUBSTRING_INDEX(horasec, ':', 1) AS DECIMAL(10, 2)) * 3600 + 
+        CAST(SUBSTRING_INDEX(horasec, ':', -1) AS DECIMAL(10, 2)) * 60
+    )) AS HORASSEC_TOTAL
+FROM 
+    jigschinos
+WHERE 
+    fecha BETWEEN ? AND ?;
+
+    `;
+
+    db.query(sql, [fechaInicio, fechaFin], (error, results) => {
+        if (error) {
+            console.error('Error al ejecutar la consulta:', error);
+            return res.status(500).json({ error: 'Error al ejecutar la consulta' });
+        } else {
+            // Devolver los resultados de la consulta como un objeto JSON
+            res.json(results[0]);
+        }
+    });
+});
