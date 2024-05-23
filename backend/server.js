@@ -2029,9 +2029,10 @@ app.post('/createmedios3', async (req, res) => {
 
         const totalsalidasmedios = await new Promise((resolve, reject) => {
             const query = `
-                SELECT 
-                (SELECT SUM(medio3y4) FROM prodseleccion WHERE fecha = ?) +
-                (SELECT SUM(alimjsec) FROM jigschinos WHERE fecha = ?) AS TOTALSUMA;
+            SELECT 
+            COALESCE((SELECT SUM(medio3y4) FROM prodseleccion WHERE fecha = ?), 0) +
+            COALESCE((SELECT SUM(alimjsec) FROM jigschinos WHERE fecha = ?), 0) AS TOTALSUMA;
+        
             `;
 
             db.query(query, [req.body.fecha, req.body.fecha], (err, data) => {
@@ -5420,48 +5421,63 @@ app.delete('/deletehrsmolinos/:id', (req, res) => {
     });
 });
 app.post('/createhrsmolinos', (req, res) => {
-    // Función para convertir el formato de "HH:MM" al formato decimal específico
+    // Function to convert "HH:MM" format to a specific decimal format
     const convertirFormatoDecimal = (hora, multiplicador) => {
-        // Dividir la hora en horas y minutos
-        const [horas, minutos] = hora.split(':').map(Number);
-        if (isNaN(horas) || isNaN(minutos)) {
+        if (!hora) {
+            console.error('Hora no proporcionada');
             return NaN;
         }
-        // Convertir minutos a su equivalente decimal
+
+        // Split the time into hours and minutes
+        const [horas, minutos] = hora.split(':').map(Number);
+        if (isNaN(horas) || isNaN(minutos)) {
+            console.error(`Error parsing time: ${hora}`);
+            return NaN;
+        }
+
+        // Convert minutes to their decimal equivalent
         const minutosDecimal = minutos * 0.0166;
-        // Sumar horas y minutos convertidos, luego multiplicar por el multiplicador dado
+
+        // Sum hours and converted minutes, then multiply by the given multiplier
         const horaDecimal = (horas + minutosDecimal) * multiplicador;
+
+        // Debug logging
+        console.log(`Converted ${hora} to decimal: ${horaDecimal} using multiplier: ${multiplicador}`);
+
         return horaDecimal;
     };
 
-    // Convertir hrsm1 y hrsm2 al formato decimal
-    const hrsm1Decimal = convertirFormatoDecimal(req.body.hrsm1, 8.5);
-    const hrsm2Decimal = convertirFormatoDecimal(req.body.hrsm2, 5.300);
+    // Input validation
+    const { fecha, turno, hrsm1, hrsm2 } = req.body;
 
-    // Verificar si la conversión fue exitosa
+    if (!fecha || !turno || !hrsm1 || !hrsm2) {
+        console.error('Missing required fields');
+        return res.status(400).json({ error: 'Missing required fields' });
+    }
+
+    // Convert hrsm1 and hrsm2 to decimal format
+    const hrsm1Decimal = convertirFormatoDecimal(hrsm1, 8.5);
+    const hrsm2Decimal = convertirFormatoDecimal(hrsm2, 5.3);
+
+    // Verify if the conversion was successful
     if (isNaN(hrsm1Decimal) || isNaN(hrsm2Decimal)) {
         console.error('Error al convertir la hora a formato decimal');
         return res.status(400).json({ error: 'Error en el formato de hora' });
     }
 
-    // Calcular prodm1 y prodm2
+    // Calculate prodm1 and prodm2
     const prodm1 = hrsm1Decimal;
-    const prodm2 = hrsm2Decimal; // No multiplicar por 5.0
+    const prodm2 = hrsm2Decimal; // No further multiplication needed
 
+    // SQL query to insert the data
     const sql = "INSERT INTO hrsmolinos (fecha, turno, hrsm1, prodm1, hrsm2, prodm2) VALUES (?, ?, ?, ?, ?, ?)";
-    const values = [
-        req.body.fecha,
-        req.body.turno,
-        req.body.hrsm1, // Mantener el formato original en la base de datos
-        prodm1,
-        req.body.hrsm2, // Mantener el formato original en la base de datos
-        prodm2,
-    ];
+    const values = [fecha, turno, hrsm1, prodm1, hrsm2, prodm2];
 
+    // Execute the SQL query
     db.query(sql, values, (err, data) => {
         if (err) {
-            console.error('Error al insertar datos en la base de datos:', err);
-            return res.status(500).json({ error: 'Error interno del servidor' });
+            console.error('Error inserting data into the database:', err);
+            return res.status(500).json({ error: 'Internal server error' });
         }
         return res.json(data);
     });
