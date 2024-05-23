@@ -5,6 +5,7 @@ import ExcelJS from 'exceljs';
 import { format } from 'date-fns';
 import logoImageBase64 from '../../assest/logo.png';
 import './R.M.css'
+import Graficos from './Graficos';
 
 
 function ReporteM() {
@@ -165,7 +166,21 @@ function ReporteM() {
             const HmolinosData = await response9.json();
             console.log("Datos recibidos de /MOLINOSMH:", HmolinosData);
 
+            //////////////////////////////////////////
+            const response10 = await fetch('http://localhost:8081/jigssech', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ fechaInicio: startDate, fechaFin: endDate })
+            });
 
+            if (!response10.ok) {
+                throw new Error('Error al obtener los datos de las mesas del servidor');
+            }
+
+            const jissecData = await response10.json();
+            console.log("Datos recibidos de /jigssech:", jissecData);
 
 
             const jigsArray = [jigsData]; // Convertir el objeto de JIGs en un array
@@ -177,9 +192,10 @@ function ReporteM() {
             const hmes5Array = [Hmes5Data];
             const hmes6Array = [Hmes6Data];
             const hmolinosArray = [HmolinosData];
+            const jissecArray = [jissecData];
 
             // Llamar a la función para exportar a Excel con los datos ajustados
-            exportToExcel(jigsArray, mesasArray, chinoArray, moliendaArray, hmes12Array, hmes34Array, hmes5Array, hmes6Array,hmolinosArray);
+            exportToExcel(jigsArray, mesasArray, chinoArray, moliendaArray, hmes12Array, hmes34Array, hmes5Array, hmes6Array, hmolinosArray,jissecArray);
         } catch (error) {
             console.error('Error en el bloque try:', error);
         }
@@ -191,7 +207,7 @@ function ReporteM() {
         cell.font = { bold: true, size: 14, color: { argb: '000000' } }; // Negrita, tamaño 14, color negro
     };
 
-    const exportToExcel = async (jigs, mesas, chino, molienda, hmes12, hmes34, hmes5, hmes6, hmolinos) => {
+    const exportToExcel = async (jigs, mesas, chino, molienda, hmes12, hmes34, hmes5, hmes6, hmolinos,jigssech) => {
         try {
             // Crea un nuevo libro de trabajo
             const workbook = new ExcelJS.Workbook();
@@ -548,7 +564,7 @@ function ReporteM() {
 
                 const textRow12 = worksheet2.addRow([]);
                 const textRow9 = worksheet2.addRow([]);
-               
+
                 textRow9.getCell(2).value = 'HORAS TRABAJADAS MESAS';
                 // Agrega encabezados a la nueva hoja
                 const headerRow5 = worksheet2.addRow(['', 'HRS.TURNO1', 'HRS.TURNO2', 'TOTAL HRS']);
@@ -610,63 +626,92 @@ function ReporteM() {
                     });
 
 
-                      
 
-               
 
-                  
+
+
+
+
+                }
+
+                const textRow11 = worksheet2.addRow([]);
+                const textRow10 = worksheet2.addRow([]);
+
+                textRow10.getCell(2).value = 'HORAS TRABAJADAS MOLINOS';
+                // Agrega encabezados a la nueva hoja
+                const headerRow6 = worksheet2.addRow(['', 'HRS.TURNO1', 'HRS.TURNO2', 'TOTAL HRS', 'PROD.TURNO1', 'PROD.TURNO2', 'PROD.TOTAL']);
+                applyHeaderStyle(headerRow6);
+
+                // Agrega datos a la nueva hoja
+                if (hmolinos && Array.isArray(hmolinos)) {
+                    // Definir los estilos para las celdas
+
+
+                    hmolinos.forEach(row => {
+                        const newRow = worksheet2.addRow([
+                            'MOLINO CHINO',
+                            row.HRSM1_TURNO_1,
+                            row.HRSM1_TURNO_2,
+                            row.HRSM1_TOTAL,
+                            row.PRODM1_TURNO_1,
+                            row.PRODM1_TURNO_2,
+                            row.PRODM1_TOTAL,
+
+                        ]);
+
+
+
+                    });
+                    hmolinos.forEach(row => {
+                        const newRow = worksheet2.addRow([
+                            'MOLINO RAYMOND',
+                            row.HRSM2_TURNO_1,
+                            row.HRSM2_TURNO_2,
+                            row.HRSM2_TOTAL,
+                            row.PRODM2_TURNO_1,
+                            row.PRODM2_TURNO_2,
+                            row.PRODM2_TOTAL,
+
+                        ]);
+
+
+
+                    });
+
+                }
                 
-            }
+                const textRow13 = worksheet2.addRow([]);
+                const textRow14 = worksheet2.addRow([]);
 
-            const textRow11 = worksheet2.addRow([]);
-            const textRow10 = worksheet2.addRow([]);
-           
-            textRow10.getCell(2).value = 'HORAS TRABAJADAS MOLINOS';
-            // Agrega encabezados a la nueva hoja
-            const headerRow6 = worksheet2.addRow(['', 'HRS.TURNO1', 'HRS.TURNO2', 'TOTAL HRS','PROD.TURNO1','PROD.TURNO2', 'PROD.TOTAL']);
-            applyHeaderStyle(headerRow6);
+                textRow14.getCell(2).value = 'HORAS TRABAJADAS JIG´S SECU';
+                // Agrega encabezados a la nueva hoja
+                const headerRow7 = worksheet2.addRow(['', 'HRS.TURNO1', 'HRS.TURNO2', 'TOTAL HRS']);
+                applyHeaderStyle(headerRow7);
 
-            // Agrega datos a la nueva hoja
-            if (hmolinos && Array.isArray(hmolinos)) {
-                // Definir los estilos para las celdas
+                // Agrega datos a la nueva hoja
+                if (jigssech && Array.isArray(jigssech)) {
+                    // Definir los estilos para las celdas
 
 
-                hmolinos.forEach(row => {
-                    const newRow = worksheet2.addRow([
-                        'MOLINO CHINO',
-                        row.HRSM1_TURNO_1,
-                        row. HRSM1_TURNO_2,
-                        row.HRSM1_TOTAL,
-                        row.PRODM1_TURNO_1,
-                        row.PRODM1_TURNO_2,
-                        row.PRODM1_TOTAL,
-                       
-                    ]);
+                    jigssech.forEach(row => {
+                        const newRow = worksheet2.addRow([
+                            'JIG´SS SECUNDARIO',
+                            row.HORASSEC_TURNO_1,
+                            row.HORASSEC_TURNO_2,
+                            row.HORASSEC_TOTAL,
+                          
+                        ]);
 
 
 
+                    });
+                  
+
+                }
+                // Ajusta el ancho de las columnas de la nueva hoja
+                worksheet2.columns.forEach(column => {
+                    column.width = 20;
                 });
-                hmolinos.forEach(row => {
-                    const newRow = worksheet2.addRow([
-                        'MOLINO RAYMOND',
-                        row.HRSM2_TURNO_1,
-                        row. HRSM2_TURNO_2,
-                        row.HRSM2_TOTAL,
-                        row.PRODM2_TURNO_1,
-                        row.PRODM2_TURNO_2,
-                        row.PRODM2_TOTAL,
-                       
-                    ]);
-
-
-
-                });
-
-            }
-              // Ajusta el ancho de las columnas de la nueva hoja
-              worksheet2.columns.forEach(column => {
-                column.width = 20;
-            });
             }
 
             // Genera el archivo de Excel y lo descarga
@@ -719,6 +764,7 @@ function ReporteM() {
                     />
                 </div>
                 <button type="button" onClick={handleSubmit}>Generar Informe</button>
+               
             </form>
         </div>
     );

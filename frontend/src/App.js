@@ -163,13 +163,14 @@ import { RutasPrivadas } from './Componentes/RutasPrivadas';
 import Modal from './Componentes/Usuarios/Modal';
 import OlvContra from './Componentes/Usuarios/OlvContra';
 import ReporteM from './Componentes/R.Mensual/ReporteM';
+import Graficos from './Componentes/R.Mensual/Graficos';
 
 
 function App() {
 
       const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
 
-     
+
 
 
       return (
@@ -177,13 +178,13 @@ function App() {
                   <Menu >
                         <Routes>
                               {/* Ruta pública para el inicio de sesión */}
-                              
+
                               <Route path="/" element={<Login />} />
-                              <Route path="/olvcontra" element={<OlvContra />}/>
-                    
+                              <Route path="/olvcontra" element={<OlvContra />} />
+
 
                               <Route element={<RutasPrivadas isLoggedIn={isLoggedIn} />}>
-                              
+
                                     <Route path="/Inicio" element={<Inicio />} />
                                     <Route path="/close" element={<CerrarSesion />} />
                                     <Route path="/diario" element={<Diario />} />
@@ -206,7 +207,7 @@ function App() {
                                     <Route path="/createusuario" element={<InsertarUsuario />} />
                                     <Route path="/updateusuarios/:id" element={<ModificarUsuario />} />
                                     <Route path="/usuarios" element={<Usuarios />} />
-                                    <Route path="/modal" element={<Modal />}/>
+                                    <Route path="/modal" element={<Modal />} />
 
 
 
@@ -397,7 +398,12 @@ function App() {
                                     <Route path="/excelexistencias" element={<Excelexistencias />} />
                                     <Route path="/excelhorometro" element={<ExcelHorometros />} />
 
-                                    <Route path="/reportem" element={<ReporteM/>} />
+                                    <Route path="/reportem" element={<ReporteM />} />
+                                   
+                                          <Route path="/graficos" element={<Graficos />} />
+
+                                 
+
 
 
                               </Route>

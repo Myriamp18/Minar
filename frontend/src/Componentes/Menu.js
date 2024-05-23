@@ -16,7 +16,7 @@ import Logo from '../assest/logo.png'
 import { useNavigate } from 'react-router-dom';
 import { IoSettings } from "react-icons/io5";
 import { HiOutlineDocumentReport } from "react-icons/hi";
-
+import { AiFillSignal } from "react-icons/ai";
 function Menu({ children }) {
     const navigate = useNavigate();
     const [isOpen, setIsOpen] = useState(false);
@@ -54,6 +54,12 @@ function Menu({ children }) {
             path: "/reportem",
             name: "Informe Mensual",
             icon:<HiOutlineDocumentReport />
+          
+        },
+        {
+            path: "/graficos",
+            name: "Graficos",
+            icon:<AiFillSignal />
           
         },
         {
