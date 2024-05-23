@@ -1,35 +1,44 @@
-import React from 'react';
-import { Bar } from 'react-chartjs-2';
+import React, { useState } from 'react';
+import './Graficas.css';
 
-const data = {
-  labels: ['A', 'B', 'C', 'D', 'E'],
-  datasets: [
-    {
-      label: 'Valores',
-      data: [10, 20, 30, 40, 50],
-      backgroundColor: 'rgba(75,192,192,0.2)',
-      borderColor: 'rgba(75,192,192,1)',
-      borderWidth: 1,
-    },
-  ],
-};
+function Graficos() {
+  const [data, setData] = useState([
+    { tipo: 'alimento', valor: 30 },
+    { tipo: 'grano', valor: 40 },
+    { tipo: 'desensolve', valor: 25 },
+  ]);
 
-const options = {
-  scales: {
-    y: {
-      beginAtZero: true,
-    },
-  },
-};
+  // Define los colores para cada tipo de dato
+  const colors = {
+    alimento: '#007bff',
+    grano: '#28a745',
+    desensolve: '#dc3545',
+  };
 
-
-const Graficos = () => {
   return (
-    <div>
-    <h2>Gráfico de Barras</h2>
-    <Bar data={data} options={options} />
-  </div>
+    <div className="chart">
+      {data.map((item, index) => (
+        <div
+          key={index}
+          className="bar"
+          style={{
+            height: `${item.valor * 3}px`,
+            backgroundColor: colors[item.tipo],
+          }}
+        >
+          {item.valor}
+          <span className="label">{item.tipo}</span>
+        </div>
+      ))}
+    </div>
   );
 };
 
 export default Graficos;
+
+
+
+
+
+
+

@@ -1,0 +1,31 @@
+.chart {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-end;
+    width: 80%;
+    margin: 20px auto;
+    padding: 10px;
+    border: 1px solid #ddd;
+  }
+  
+  .bar {
+    width: 20px;
+    background-color: #007bff;
+    margin-bottom: 2px; /* Reducir la separación entre las barras */
+    text-align: center;
+    color: white;
+    font-family: Arial, sans-serif;
+    transition: height 0.3s ease;
+  }
+  
+  .bar:hover {
+    background-color: #0056b3;
+  }
+  
+  .label {
+    font-size: 12px;
+    margin-top: 5px;
+    text-align: center;
+    color: #666;
+  }
+  
