@@ -2730,8 +2730,8 @@ app.post('/createdesensolve', async (req, res) => {
         const totalentradasdesensolve = await new Promise((resolve, reject) => {
             const query = `
                 SELECT 
-                    COALESCE(SUM(CASE WHEN pedj1 BETWEEN 4.00 AND 4.10 THEN desenj1 ELSE 0 END) +
-                             SUM(CASE WHEN pedj2 BETWEEN 4.00 AND 4.10 THEN desenj2 ELSE 0 END), 0) AS total_entradas
+                    COALESCE(SUM(CASE WHEN pedj1 BETWEEN 4.00 AND 4.30 THEN desenj1 ELSE 0 END) +
+                             SUM(CASE WHEN pedj2 BETWEEN 4.00 AND 4.30 THEN desenj2 ELSE 0 END), 0) AS total_entradas
                 FROM produccionjigs
                 WHERE fecha = ?;
             `;
@@ -2755,8 +2755,8 @@ app.post('/createdesensolve', async (req, res) => {
         const totalentradaspe = await new Promise((resolve, reject) => {
             const query = `
                 SELECT 
-                    COALESCE(SUM(CASE WHEN pedj1 BETWEEN 4.00 AND 4.10 THEN pedj1 ELSE 0 END) +
-                             SUM(CASE WHEN pedj2 BETWEEN 4.00 AND 4.10 THEN pedj2 ELSE 0 END), 0) AS total_entradas,
+                    COALESCE(SUM(CASE WHEN pedj1 BETWEEN 4.00 AND 4.30 THEN pedj1 ELSE 0 END) +
+                             SUM(CASE WHEN pedj2 BETWEEN 4.00 AND 4.30 THEN pedj2 ELSE 0 END), 0) AS total_entradas,
                     COUNT(CASE WHEN (pedj1 != 0 OR pedj2 != 0) THEN 1 END) AS total_registros
                 FROM produccionjigs
                 WHERE fecha = ?;
