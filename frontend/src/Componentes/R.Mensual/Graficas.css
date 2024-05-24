@@ -1,31 +1,35 @@
 .chart {
-    display: flex;
-    justify-content: space-around;
-    align-items: flex-end;
-    width: 80%;
-    margin: 20px auto;
-    padding: 10px;
-    border: 1px solid #ddd;
-  }
-  
-  .bar {
-    width: 20px;
-    background-color: #007bff;
-    margin-bottom: 2px; /* Reducir la separación entre las barras */
-    text-align: center;
-    color: white;
-    font-family: Arial, sans-serif;
-    transition: height 0.3s ease;
-  }
-  
-  .bar:hover {
-    background-color: #0056b3;
-  }
-  
-  .label {
-    font-size: 12px;
-    margin-top: 5px;
-    text-align: center;
-    color: #666;
-  }
-  
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-end;
+  width: 80%;
+  margin: 20px auto;
+  padding: 10px;
+  border: 1px solid #ddd;
+  background-color: #f9f9f9; /* Fondo claro para destacar las barras */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra sutil para dar profundidad */
+  border-radius: 10px; /* Bordes redondeados */
+}
+
+.bar {
+  width: 20px;
+  background-color: #007bff;
+  margin-bottom: 2px; /* Reducir la separación entre las barras */
+  text-align: center;
+  color: white;
+  font-family: Arial, sans-serif;
+  transition: height 0.3s ease, background-color 0.3s ease; /* Transición suave también para el color de fondo */
+  border-radius: 4px 4px 0 0; /* Bordes superiores redondeados */
+}
+
+.bar:hover {
+  background-color: #0056b3;
+}
+
+.label {
+  font-size: 12px;
+  margin-top: 5px;
+  text-align: center;
+  color: #666;
+  font-family: Arial, sans-serif; /* Asegurarse de que la fuente sea consistente */
+}
