@@ -52,7 +52,7 @@ const Graficos = () => {
       setError('Por favor, seleccione ambas fechas.');
       return;
     }
-  
+
     setLoading(true);
     try {
       const response1 = await axios.post('http://localhost:8081/MESASMES12H', {
@@ -66,8 +66,20 @@ const Graficos = () => {
         fechaFin,
       });
       const fetchedData2 = response2.data;
-      
-      setData({ data1: fetchedData1, data2: fetchedData2 });
+
+      const response3 = await axios.post('http://localhost:8081/MESASMES5H', {
+        fechaInicio,
+        fechaFin,
+      });
+      const fetchedData3 = response3.data;
+
+      const response4 = await axios.post('http://localhost:8081/MESASMES6H', {
+        fechaInicio,
+        fechaFin,
+      });
+      const fetchedData4 = response4.data;
+
+      setData({ data1: fetchedData1, data2: fetchedData2, data3: fetchedData3, data4: fetchedData4 });
       setError(null);
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -95,12 +107,23 @@ const Graficos = () => {
       calcularHoras(data.data2.TOTAHRS_TURNO_2),
       calcularHoras(data.data2.TOTAHRS)
     ];
+    const horasTrabajadas5 = [
+      calcularHoras(data.data2.TOTAHRS_TURNO_1),
+      calcularHoras(data.data2.TOTAHRS_TURNO_2),
+      calcularHoras(data.data2.TOTAHRS)
+    ];
+
+    const horasTrabajadas6 = [
+      calcularHoras(data.data2.TOTAHRS_TURNO_1),
+      calcularHoras(data.data2.TOTAHRS_TURNO_2),
+      calcularHoras(data.data2.TOTAHRS)
+    ];
 
     chartData.datasets.push({
       label: 'Horas Trabajadas (MESA1Y2)',
       data: horasTrabajadas12,
-      backgroundColor: 'rgba(153, 102, 255, 0.8)', 
-      borderColor: 'rgba(153, 102, 255, 1)', 
+      backgroundColor: 'rgba(153, 102, 255, 0.8)',
+      borderColor: 'rgba(153, 102, 255, 1)',
       borderWidth: 1,
     });
 
@@ -113,8 +136,8 @@ const Graficos = () => {
       chartData.datasets.push({
         label: 'Horas Faltantes (MESA1Y2)',
         data: horasFaltantes12,
-        backgroundColor: 'rgba(135, 206, 250, 0.8)', 
-        borderColor: 'rgba(135, 206, 250, 1)', 
+        backgroundColor: 'rgba(135, 206, 250, 0.8)',
+        borderColor: 'rgba(135, 206, 250, 1)',
         borderWidth: 1,
       });
     }
@@ -122,8 +145,8 @@ const Graficos = () => {
     chartData.datasets.push({
       label: 'Horas Trabajadas (MESA3Y4)',
       data: horasTrabajadas34,
-      backgroundColor: 'rgba(255, 165, 0, 0.8)', 
-      borderColor: 'rgba(255, 165, 0, 1)', 
+      backgroundColor: 'rgba(255, 165, 0, 0.8)',
+      borderColor: 'rgba(255, 165, 0, 1)',
       borderWidth: 1,
     });
 
@@ -136,8 +159,58 @@ const Graficos = () => {
       chartData.datasets.push({
         label: 'Horas Faltantes (MESA3Y4)',
         data: horasFaltantes34,
-        backgroundColor: 'rgba(255, 192, 203, 0.8)', 
-        borderColor: 'rgba(255, 192, 203, 1)', 
+        backgroundColor: 'rgba(255, 215, 0, 0.8)',
+        borderColor: 'rgba(255, 215, 0, 1)',
+        borderWidth: 1,
+      });
+    }
+
+
+    chartData.datasets.push({
+      label: 'Horas Trabajadas (MESA5)',
+      data: horasTrabajadas34,
+      backgroundColor: 'rgba(255, 165, 0, 0.8)',
+      borderColor: 'rgba(255, 165, 0, 1)',
+      borderWidth: 1,
+    });
+
+    const horasFaltantes5 = [
+      calcularDiferencia(horasTrabajadas5[0], horasObjetivoDiarias),
+      calcularDiferencia(horasTrabajadas5[1], horasObjetivoDiarias),
+      calcularDiferencia(horasTrabajadas5[2], horasObjetivoTotal)
+    ];
+    if (horasFaltantes5.some(horas => horas > 0)) {
+      chartData.datasets.push({
+        label: 'Horas Faltantes (MESA5)',
+        data: horasFaltantes34,
+        backgroundColor: 'rgba(255, 0, 0, 0.8)',
+        borderColor: 'rgba(255, 0, 0, 1)',
+        borderWidth: 1,
+      });
+    }
+
+
+
+    chartData.datasets.push({
+      label: 'Horas Trabajadas (MESA6)',
+      data: horasTrabajadas34,
+      backgroundColor: 'rgba(0, 128, 0, 0.8)', // Verde oscuro
+      borderColor: 'rgba(0, 128, 0, 1)', // Verde oscuro
+
+      borderWidth: 1,
+    });
+
+    const horasFaltantes6 = [
+      calcularDiferencia(horasTrabajadas6[0], horasObjetivoDiarias),
+      calcularDiferencia(horasTrabajadas6[1], horasObjetivoDiarias),
+      calcularDiferencia(horasTrabajadas6[2], horasObjetivoTotal)
+    ];
+    if (horasFaltantes6.some(horas => horas > 0)) {
+      chartData.datasets.push({
+        label: 'Horas Faltantes (MESA6)',
+        data: horasFaltantes34,
+        backgroundColor: 'rgba(255, 69, 0, 0.8)', // Naranja rojizo
+        borderColor: 'rgba(255, 69, 0, 1)', // Naranja rojizo
         borderWidth: 1,
       });
     }

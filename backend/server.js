@@ -1091,10 +1091,45 @@ app.post('/createconcentradobaribaright', async (req, res) => {
     try {
 
         const totalConcentradoBari = await new Promise((resolve, reject) => {
-            const query = "SELECT SUM(COALESCE(conm12, 0)) + SUM(COALESCE(conm34, 0)) + SUM(COALESCE(conm5, 0)) + SUM(COALESCE(conm6, 0)) AS total_concentrado FROM mesas WHERE fecha = ? AND seleccion = '1';";
+            const query = `
+                SELECT 
+                    SUM(
+                        CASE 
+                            WHEN pecnm12 >= 4.30 AND pecnm12 < 4.40 THEN COALESCE(conm12, 0) 
+                            ELSE 0 
+                        END
+                    ) + 
+                    SUM(
+                        CASE 
+                            WHEN pecnm34 >= 4.30 AND pecnm34 < 4.40 THEN COALESCE(conm34, 0) 
+                            ELSE 0 
+                        END
+                    ) + 
+                    SUM(
+                        CASE 
+                            WHEN pecnm5 >= 4.30 AND pecnm5 < 4.40 THEN COALESCE(conm5, 0) 
+                            ELSE 0 
+                        END
+                    ) + 
+                    SUM(
+                        CASE 
+                            WHEN pecnm6 >= 4.30 AND pecnm6 < 4.40 THEN COALESCE(conm6, 0) 
+                            ELSE 0 
+                        END
+                    ) AS total_concentrado 
+                FROM 
+                    mesas 
+                WHERE 
+                    fecha = ?
+            `;
+            
             db.query(query, [req.body.fecha], (err, data) => {
-                if (err) reject(err);
-                else resolve(data[0].total_concentrado || 0); // Si no se encuentra ningún valor, devuelve 0
+                if (err) {
+                    reject(err);
+                } else {
+                    // Resolve with the total_concentrado or 0 if no value is found
+                    resolve(data[0].total_concentrado || 0);
+                }
             });
         });
 
@@ -1216,12 +1251,48 @@ app.get('/concmesas', (req, res) => {
 app.post('/createconcmesas', async (req, res) => {
     try {
         const totalConcentradoMesas = await new Promise((resolve, reject) => {
-            const query = "SELECT SUM(COALESCE(conm12, 0)) + SUM(COALESCE(conm34, 0)) + SUM(COALESCE(conm5, 0)) + SUM(COALESCE(conm6, 0)) AS total_concentrado FROM mesas WHERE fecha = ? AND seleccion = '2';";
+            const query = `
+                SELECT 
+                    SUM(
+                        CASE 
+                            WHEN pecnm12 >= 4.00 AND pecnm12 < 4.29 THEN COALESCE(conm12, 0) 
+                            ELSE 0 
+                        END
+                    ) + 
+                    SUM(
+                        CASE 
+                            WHEN pecnm34 >= 4.00 AND pecnm34 < 4.29 THEN COALESCE(conm34, 0) 
+                            ELSE 0 
+                        END
+                    ) + 
+                    SUM(
+                        CASE 
+                            WHEN pecnm5 >= 4.00 AND pecnm5 < 4.29 THEN COALESCE(conm5, 0) 
+                            ELSE 0 
+                        END
+                    ) + 
+                    SUM(
+                        CASE 
+                            WHEN pecnm6 >= 4.00 AND pecnm6 < 4.29 THEN COALESCE(conm6, 0) 
+                            ELSE 0 
+                        END
+                    ) AS total_concentrado 
+                FROM 
+                    mesas 
+                WHERE 
+                    fecha = ?
+            `;
+            
             db.query(query, [req.body.fecha], (err, data) => {
-                if (err) reject(err);
-                else resolve(data[0].total_concentrado || 0); // Si no se encuentra ningún valor, devuelve 0
+                if (err) {
+                    reject(err);
+                } else {
+                    // Resolve with the total_concentrado or 0 if no value is found
+                    resolve(data[0].total_concentrado || 0);
+                }
             });
         });
+        
         const totalSalidasMesas = await new Promise((resolve, reject) => {
             const query = "SELECT (SUM(concmesas)) AS total_salidas FROM molienda WHERE fecha = ?;";
             db.query(query, [req.body.fecha], (err, data) => {
@@ -1713,10 +1784,10 @@ app.post('/createmedios46', async (req, res) => {
         const totalentradas = await new Promise((resolve, reject) => {
             const query = `
                 SELECT 
-                    COALESCE(SUM(CASE WHEN pemm12 BETWEEN 4.06 AND 4.10 THEN mediom12 ELSE 0 END) +
-                             SUM(CASE WHEN pemm34 BETWEEN 4.06 AND 4.10 THEN mediosm34 ELSE 0 END) +
-                             SUM(CASE WHEN pemm5 BETWEEN 4.06 AND 4.10 THEN mediosm5 ELSE 0 END) +
-                             SUM(CASE WHEN pemm6 BETWEEN 4.06 AND 4.10 THEN mediom6 ELSE 0 END), 0) AS total_entradas
+                    COALESCE(SUM(CASE WHEN pemm12 BETWEEN 4.06 AND 4.20 THEN mediom12 ELSE 0 END) +
+                             SUM(CASE WHEN pemm34 BETWEEN 4.06 AND 4.20 THEN mediosm34 ELSE 0 END) +
+                             SUM(CASE WHEN pemm5 BETWEEN 4.06 AND 4.20 THEN mediosm5 ELSE 0 END) +
+                             SUM(CASE WHEN pemm6 BETWEEN 4.06 AND 4.20 THEN mediom6 ELSE 0 END), 0) AS total_entradas
                 FROM mesas
                 WHERE fecha = ?;
             `;
@@ -1734,14 +1805,14 @@ app.post('/createmedios46', async (req, res) => {
         const totalentradaspe = await new Promise((resolve, reject) => {
             const query = `
                 SELECT 
-                    COALESCE(SUM(CASE WHEN pemm12 BETWEEN 4.06 AND 4.10 THEN pemm12 ELSE 0 END) +
-                             SUM(CASE WHEN pemm34 BETWEEN 4.06 AND 4.10 THEN pemm34 ELSE 0 END) +
-                             SUM(CASE WHEN pemm5 BETWEEN 4.06 AND 4.10 THEN pemm5 ELSE 0 END) +
-                             SUM(CASE WHEN pemm6 BETWEEN 4.06 AND 4.10 THEN pemm6 ELSE 0 END), 0) AS suma_total,
-                    COALESCE(COUNT(CASE WHEN (pemm12 BETWEEN 4.06 AND 4.10) THEN 1 END) +
-                             COUNT(CASE WHEN (pemm34 BETWEEN 4.06 AND 4.10) THEN 1 END) +
-                             COUNT(CASE WHEN (pemm5 BETWEEN 4.06 AND 4.10) THEN 1 END) +
-                             COUNT(CASE WHEN (pemm6 BETWEEN 4.06 AND 4.10) THEN 1 END), 1) AS total_datos
+                    COALESCE(SUM(CASE WHEN pemm12 BETWEEN 4.06 AND 4.20 THEN pemm12 ELSE 0 END) +
+                             SUM(CASE WHEN pemm34 BETWEEN 4.06 AND 4.20 THEN pemm34 ELSE 0 END) +
+                             SUM(CASE WHEN pemm5 BETWEEN 4.06 AND 4.20 THEN pemm5 ELSE 0 END) +
+                             SUM(CASE WHEN pemm6 BETWEEN 4.06 AND 4.20 THEN pemm6 ELSE 0 END), 0) AS suma_total,
+                    COALESCE(COUNT(CASE WHEN (pemm12 BETWEEN 4.06 AND4.20) THEN 1 END) +
+                             COUNT(CASE WHEN (pemm34 BETWEEN 4.06 AND 4.20) THEN 1 END) +
+                             COUNT(CASE WHEN (pemm5 BETWEEN 4.06 AND 4.20) THEN 1 END) +
+                             COUNT(CASE WHEN (pemm6 BETWEEN 4.06 AND 4.20) THEN 1 END), 1) AS total_datos
                 FROM mesas
                 WHERE fecha = ?;
             `;
@@ -2203,23 +2274,33 @@ app.get('/granomoler', (req, res) => {
 app.post('/creategranomoler', async (req, res) => {
     try {
         const totalgrano = await new Promise((resolve, reject) => {
-            const query = "SELECT (SUM(granoj1) + SUM(granoj2)) AS total_grano FROM produccionjigs WHERE fecha = ?;";
-            db.query(query, [req.body.fecha], (err, data) => {
+            const query = `
+                SELECT (COALESCE(prod.total_granoj, 0) + COALESCE(chinos.total_granojch, 0)) AS total_grano
+                FROM 
+                    (SELECT SUM(granoj1) + SUM(granoj2) AS total_granoj 
+                     FROM produccionjigs 
+                     WHERE fecha = ?) AS prod,
+                    (SELECT SUM(granojch) AS total_granojch 
+                     FROM jigschinos 
+                     WHERE fecha = ?) AS chinos;
+            `;
+            
+            db.query(query, [req.body.fecha, req.body.fecha], (err, data) => {
                 if (err) {
                     reject(err);
                 } else {
-                    // Verificamos si hay resultados
+                    // Check if there are results
                     if (data && data.length > 0 && data[0].total_grano !== null) {
-                        // Si hay resultados y el total de grano no es nulo, devolvemos el total
+                        // If there are results and the total grano is not null, return the total
                         resolve(data[0].total_grano);
                     } else {
-                        // Si no hay resultados o el total de grano es nulo, devolvemos 0
+                        // If there are no results or the total grano is null, return 0
                         resolve(0);
                     }
                 }
             });
         });
-
+        
         const totalsalidasgrano = await new Promise((resolve, reject) => {
             const query = "SELECT (SUM(medios)) AS total_salidasgrano FROM molienda WHERE fecha = ?;";
             db.query(query, [req.body.fecha], (err, data) => {
