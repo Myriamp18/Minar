@@ -74,17 +74,7 @@ function FrmDesensolvech() {
              onChange={(e) => setValues({...values, salidas: e.target.value})}/>
           </div>
 
-          <div class="mb-3">
-            <label form='text' class="form-label"> P.ESP:</label>
-            <input
-             type="text"  
-             class="form-control"
-             id='pe'
-             required
-             placeholder='Insertar Peso'  
-             name='pe'
-             onChange={(e) => setValues({...values, pe: e.target.value})}/>
-          </div>
+          
 
         
 

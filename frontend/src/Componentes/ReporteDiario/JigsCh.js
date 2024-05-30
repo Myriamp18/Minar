@@ -123,10 +123,10 @@ function JigsCh() {
                                                         <td>{typeof d.peajch === 'number' ? d.peajch.toFixed(2) : 'N/A'}</td>
                                                         <td>{typeof d.granojch === 'number' ? d.granojch.toFixed(3) : 'N/A'}</td>
                                                         <td>{typeof d.pegjch === 'number' ? d.pegjch.toFixed(2) : 'N/A'}</td>
-                                                        <td>{typeof d.colasjch === 'number' ? d.colasjch.toFixed(3) : 'N/A'}</td>
-                                                        <td>{typeof d.pecjch === 'number' ? d.pecjch.toFixed(2) : 'N/A'}</td>
                                                         <td>{typeof d.desenjch === 'number' ? d.desenjch.toFixed(3) : 'N/A'}</td>
                                                         <td>{typeof d.pedjch === 'number' ? d.pedjch.toFixed(2) : 'N/A'}</td>
+                                                        <td>{typeof d.colasjch === 'number' ? d.colasjch.toFixed(3) : 'N/A'}</td>
+                                                        <td>{typeof d.pecjch === 'number' ? d.pecjch.toFixed(2) : 'N/A'}</td>
                                                         <td>{d.horasec}</td>
                                                         <td>{typeof d.alimjsec === 'number' ? d.alimjsec.toFixed(3) : 'N/A'}</td>
                                                         <td>{typeof d.peajsec === 'number' ? d.peajsec.toFixed(2) : 'N/A'}</td>

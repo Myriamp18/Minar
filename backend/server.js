@@ -2676,7 +2676,11 @@ app.get('/desensolvech', (req, res) => {
 app.post('/createdesensolvech', async (req, res) => {
     try {
         const totaldesensolve = await new Promise((resolve, reject) => {
-            const query = "SELECT (SUM(desenjch)) AS total_desensolvejigs FROM jigschinos WHERE fecha = ?;";
+            const query = `
+                SELECT SUM(desenjch) AS total_desensolvejigs
+                FROM jigschinos
+                WHERE fecha = ? AND pedjch > 4;
+            `;
             db.query(query, [req.body.fecha], (err, data) => {
                 if (err) {
                     reject(err);
@@ -2692,6 +2696,47 @@ app.post('/createdesensolvech', async (req, res) => {
                 }
             });
         });
+
+        const totalAndAveragePedch = await new Promise((resolve, reject) => {
+            const query = `
+                SELECT SUM(pedjch) AS total_pedjch,
+                       COUNT(CASE WHEN pedjch > 0 THEN 1 ELSE NULL END) AS count_pedjch
+                FROM jigschinos
+                WHERE fecha = ? AND pedjch > 4;
+            `;
+            db.query(query, [req.body.fecha], (err, data) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    // Verificamos si hay resultados
+                    if (data && data.length > 0 && data[0].total_pedjch !== null) {
+                        const total_pedjch = data[0].total_pedjch || 0;
+                        const count_pedjch = data[0].count_pedjch || 1; // Para evitar división por cero
+        
+                        // Calculamos el promedio
+                        const average_pedch = count_pedjch > 0 ? total_pedjch / count_pedjch : 0;
+        
+                        resolve({
+                            total_pedjch,
+                            average_pedch
+                        });
+                    } else {
+                        resolve({
+                            total_pedjch: 0,
+                            average_pedch: 0
+                        });
+                    }
+                }
+            });
+        });
+        
+        const { total_pedjch, average_pedch } = totalAndAveragePedch;
+        
+        console.log("Total Pedjch:", total_pedjch);
+        console.log("Average Pedch:", average_pedch);
+        
+        
+       
 
         // Obtener el saldo anterior
         const saldoAnteriorData = await new Promise((resolve, reject) => {
@@ -2714,7 +2759,7 @@ app.post('/createdesensolvech', async (req, res) => {
             totaldesensolve,
             req.body.salidas,
             nuevoSaldo,
-            req.body.pe
+            average_pedch
         ];
 
         db.query(sql, values, (err, result) => {

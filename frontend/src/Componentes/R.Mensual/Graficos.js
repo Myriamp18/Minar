@@ -233,6 +233,7 @@ const Graficos = () => {
             <input type="date" value={fechaFin} onChange={(e) => setFechaFin(e.target.value)} />
           </label>
         </div>
+        <button onClick={fetchData} disabled={loading} style={{ padding: '5px 10px', fontSize: '14px' }}>Buscar</button>
         <div>
           
         </div>
