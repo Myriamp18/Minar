@@ -1809,7 +1809,7 @@ app.post('/createmedios46', async (req, res) => {
                              SUM(CASE WHEN pemm34 BETWEEN 4.06 AND 4.20 THEN pemm34 ELSE 0 END) +
                              SUM(CASE WHEN pemm5 BETWEEN 4.06 AND 4.20 THEN pemm5 ELSE 0 END) +
                              SUM(CASE WHEN pemm6 BETWEEN 4.06 AND 4.20 THEN pemm6 ELSE 0 END), 0) AS suma_total,
-                    COALESCE(COUNT(CASE WHEN (pemm12 BETWEEN 4.06 AND4.20) THEN 1 END) +
+                    COALESCE(COUNT(CASE WHEN (pemm12 BETWEEN 4.06 AND 4.20) THEN 1 END) +
                              COUNT(CASE WHEN (pemm34 BETWEEN 4.06 AND 4.20) THEN 1 END) +
                              COUNT(CASE WHEN (pemm5 BETWEEN 4.06 AND 4.20) THEN 1 END) +
                              COUNT(CASE WHEN (pemm6 BETWEEN 4.06 AND 4.20) THEN 1 END), 1) AS total_datos

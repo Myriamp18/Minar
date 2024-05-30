@@ -234,7 +234,7 @@ const Graficos = () => {
           </label>
         </div>
         <div>
-          <button onClick={fetchData} disabled={loading} style={{ padding: '5px 10px', fontSize: '14px' }}>Buscar</button>
+          
         </div>
       </div>
 
