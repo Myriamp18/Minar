@@ -19,6 +19,8 @@ ChartJS.register(
   Tooltip,
   Legend
 );
+import ChartDataLabels from 'chartjs-plugin-datalabels';
+
 
 const Graficos = () => {
   const [data, setData] = useState(null);
@@ -36,16 +38,17 @@ const Graficos = () => {
     return horasComoDecimal;
   };
 
+  
   const calcularDiferencia = (horasTrabajadas, objetivo) => {
     return objetivo - horasTrabajadas;
   };
 
-  const calcularObjetivoHoras = () => {
-    const fechaInicioDate = new Date(fechaInicio);
-    const fechaFinDate = new Date(fechaFin);
-    const diferenciaDias = (fechaFinDate - fechaInicioDate) / (1000 * 60 * 60 * 24) + 1;
-    return horasObjetivoDiarias * diferenciaDias;
-  };
+ const calcularObjetivoHoras = (fechaInicio, fechaFin, horasObjetivoDiarias) => {
+  const fechaInicioDate = new Date(fechaInicio);
+  const fechaFinDate = new Date(fechaFin);
+  const diferenciaDias = (fechaFinDate - fechaInicioDate) / (1000 * 60 * 60 * 24) + 1;
+  return horasObjetivoDiarias * diferenciaDias;
+};
 
   const fetchData = async () => {
     if (!fechaInicio || !fechaFin) {
@@ -125,97 +128,117 @@ const Graficos = () => {
       backgroundColor: 'rgba(153, 102, 255, 0.8)',
       borderColor: 'rgba(153, 102, 255, 1)',
       borderWidth: 1,
+      // Configuración del plugin datalabels específica para esta barra
+      datalabels: {
+        color: '#fff', // Color del texto
+        anchor: 'end', // Posición del texto dentro de la barra (end para mostrarlo al final)
+        align: 'end', // Alineación del texto dentro de la barra (end para alinearlo al final)
+        formatter: (value, context) => {
+          return value + '%'; // Formato del valor (añadir % al final)
+        }
+      }
     });
 
-    const horasFaltantes12 = [
-      calcularDiferencia(horasTrabajadas12[0], horasObjetivoDiarias),
-      calcularDiferencia(horasTrabajadas12[1], horasObjetivoDiarias),
-      calcularDiferencia(horasTrabajadas12[2], horasObjetivoTotal)
-    ];
-    if (horasFaltantes12.some(horas => horas > 0)) {
-      chartData.datasets.push({
-        label: 'Horas Faltantes (MESA1Y2)',
-        data: horasFaltantes12,
-        backgroundColor: 'rgba(135, 206, 250, 0.8)',
-        borderColor: 'rgba(135, 206, 250, 1)',
-        borderWidth: 1,
-      });
-    }
 
-    chartData.datasets.push({
-      label: 'Horas Trabajadas (MESA3Y4)',
-      data: horasTrabajadas34,
-      backgroundColor: 'rgba(255, 165, 0, 0.8)',
-      borderColor: 'rgba(255, 165, 0, 1)',
-      borderWidth: 1,
-    });
+const horasFaltantes12 = [
+  calcularDiferencia(horasTrabajadas12[0], horasObjetivoDiarias),
+  calcularDiferencia(horasTrabajadas12[1], horasObjetivoDiarias),
+  calcularDiferencia(horasTrabajadas12[2], horasObjetivoTotal)
+];
+if (horasFaltantes12.some(horas => horas > 0)) {
+  chartData.datasets.push({
+    label: 'Horas Faltantes (MESA1Y2)',
+    data: horasFaltantes12,
+    backgroundColor: 'rgba(135, 206, 250, 0.8)', // Azul claro
+    borderColor: 'rgba(135, 206, 250, 1)',
+    borderWidth: 1,
+  });
+}
 
-    const horasFaltantes34 = [
-      calcularDiferencia(horasTrabajadas34[0], horasObjetivoDiarias),
-      calcularDiferencia(horasTrabajadas34[1], horasObjetivoDiarias),
-      calcularDiferencia(horasTrabajadas34[2], horasObjetivoTotal)
-    ];
-    if (horasFaltantes34.some(horas => horas > 0)) {
-      chartData.datasets.push({
-        label: 'Horas Faltantes (MESA3Y4)',
-        data: horasFaltantes34,
-        backgroundColor: 'rgba(255, 215, 0, 0.8)',
-        borderColor: 'rgba(255, 215, 0, 1)',
-        borderWidth: 1,
-      });
-    }
+chartData.datasets.push({
+  label: 'Horas Trabajadas (MESA3Y4)',
+  data: horasTrabajadas34,
+  backgroundColor: 'rgba(255, 165, 0, 0.8)', // Naranja
+  borderColor: 'rgba(255, 165, 0, 1)',
+  borderWidth: 1,
+});
 
+const horasFaltantes34 = [
+  calcularDiferencia(horasTrabajadas34[0], horasObjetivoDiarias),
+  calcularDiferencia(horasTrabajadas34[1], horasObjetivoDiarias),
+  calcularDiferencia(horasTrabajadas34[2], horasObjetivoTotal)
+];
+if (horasFaltantes34.some(horas => horas > 0)) {
+  chartData.datasets.push({
+    label: 'Horas Faltantes (MESA3Y4)',
+    data: horasFaltantes34,
+    backgroundColor: 'rgba(255, 215, 0, 0.8)', // Amarillo
+    borderColor: 'rgba(255, 215, 0, 1)',
+    borderWidth: 1,
+  });
+}
 
-    chartData.datasets.push({
-      label: 'Horas Trabajadas (MESA5)',
-      data: horasTrabajadas34,
-      backgroundColor: 'rgba(255, 165, 0, 0.8)',
-      borderColor: 'rgba(255, 165, 0, 1)',
-      borderWidth: 1,
-    });
+chartData.datasets.push({
+  label: 'Horas Trabajadas (MESA5)',
+  data: horasTrabajadas5,
+  backgroundColor: 'rgba(75, 192, 192, 0.8)', // Verde azulado
+  borderColor: 'rgba(75, 192, 192, 1)',
+  borderWidth: 1,
+});
 
-    const horasFaltantes5 = [
-      calcularDiferencia(horasTrabajadas5[0], horasObjetivoDiarias),
-      calcularDiferencia(horasTrabajadas5[1], horasObjetivoDiarias),
-      calcularDiferencia(horasTrabajadas5[2], horasObjetivoTotal)
-    ];
-    if (horasFaltantes5.some(horas => horas > 0)) {
-      chartData.datasets.push({
-        label: 'Horas Faltantes (MESA5)',
-        data: horasFaltantes34,
-        backgroundColor: 'rgba(255, 0, 0, 0.8)',
-        borderColor: 'rgba(255, 0, 0, 1)',
-        borderWidth: 1,
-      });
-    }
+const horasFaltantes5 = [
+  calcularDiferencia(horasTrabajadas5[0], horasObjetivoDiarias),
+  calcularDiferencia(horasTrabajadas5[1], horasObjetivoDiarias),
+  calcularDiferencia(horasTrabajadas5[2], horasObjetivoTotal)
+];
+if (horasFaltantes5.some(horas => horas > 0)) {
+  chartData.datasets.push({
+    label: 'Horas Faltantes (MESA5)',
+    data: horasFaltantes5,
+    backgroundColor: 'rgba(255, 0, 0, 0.8)', // Rojo
+    borderColor: 'rgba(255, 0, 0, 1)',
+    borderWidth: 1,
+  });
+}
 
+chartData.datasets.push({
+  label: 'Horas Trabajadas (MESA6)',
+  data: horasTrabajadas6,
+  backgroundColor: 'rgba(0, 128, 0, 0.8)', // Verde oscuro
+  borderColor: 'rgba(0, 128, 0, 1)', // Verde oscuro
+  borderWidth: 1,
+});
 
-
-    chartData.datasets.push({
-      label: 'Horas Trabajadas (MESA6)',
-      data: horasTrabajadas34,
-      backgroundColor: 'rgba(0, 128, 0, 0.8)', // Verde oscuro
-      borderColor: 'rgba(0, 128, 0, 1)', // Verde oscuro
-
-      borderWidth: 1,
-    });
-
-    const horasFaltantes6 = [
-      calcularDiferencia(horasTrabajadas6[0], horasObjetivoDiarias),
-      calcularDiferencia(horasTrabajadas6[1], horasObjetivoDiarias),
-      calcularDiferencia(horasTrabajadas6[2], horasObjetivoTotal)
-    ];
-    if (horasFaltantes6.some(horas => horas > 0)) {
-      chartData.datasets.push({
-        label: 'Horas Faltantes (MESA6)',
-        data: horasFaltantes34,
-        backgroundColor: 'rgba(255, 69, 0, 0.8)', // Naranja rojizo
-        borderColor: 'rgba(255, 69, 0, 1)', // Naranja rojizo
-        borderWidth: 1,
-      });
-    }
+const horasFaltantes6 = [
+  calcularDiferencia(horasTrabajadas6[0], horasObjetivoDiarias),
+  calcularDiferencia(horasTrabajadas6[1], horasObjetivoDiarias),
+  calcularDiferencia(horasTrabajadas6[2], horasObjetivoTotal)
+];
+if (horasFaltantes6.some(horas => horas > 0)) {
+  chartData.datasets.push({
+    label: 'Horas Faltantes (MESA6)',
+    data: horasFaltantes6,
+    backgroundColor: 'rgba(0, 0, 255, 0.8)', // Azul
+    borderColor: 'rgba(0, 0, 255, 1)',
+    borderWidth: 1,
+  });
+}
 
     return chartData;
+  };
+
+  const options = {
+    plugins: {
+      datalabels: {
+        color: '#fff', // Color del texto
+        anchor: 'end', // Posición del texto dentro de la barra (end para mostrarlo al final)
+        align: 'end', // Alineación del texto dentro de la barra (end para alinearlo al final)
+        formatter: (value, context) => {
+          return value + '%'; // Formato del valor (añadir % al final)
+        }
+      }
+    },
+    // Otras opciones del gráfico...
   };
 
   return (
@@ -242,17 +265,7 @@ const Graficos = () => {
       {error && <p style={{ color: 'red' }}>{error}</p>}
       {loading && <p>Cargando...</p>}
       {data && (
-        <Bar
-          data={prepareChartData(data)}
-          options={{
-            scales: {
-              y: {
-                beginAtZero: true,
-                max: calcularObjetivoHoras(),
-              },
-            },
-          }}
-        />
+       <Bar data={prepareChartData(data)} options={options} />
       )}
     </div>
   );
