@@ -111,15 +111,15 @@ const Graficos = () => {
       calcularHoras(data.data2.TOTAHRS)
     ];
     const horasTrabajadas5 = [
-      calcularHoras(data.data2.TOTAHRS_TURNO_1),
-      calcularHoras(data.data2.TOTAHRS_TURNO_2),
-      calcularHoras(data.data2.TOTAHRS)
+      calcularHoras(data.data3.TOTAHRS_TURNO_1),
+      calcularHoras(data.data3.TOTAHRS_TURNO_2),
+      calcularHoras(data.data3.TOTAHRS)
     ];
 
     const horasTrabajadas6 = [
-      calcularHoras(data.data2.TOTAHRS_TURNO_1),
-      calcularHoras(data.data2.TOTAHRS_TURNO_2),
-      calcularHoras(data.data2.TOTAHRS)
+      calcularHoras(data.data4.TOTAHRS_TURNO_1),
+      calcularHoras(data.data4.TOTAHRS_TURNO_2),
+      calcularHoras(data.data4.TOTAHRS)
     ];
 
     chartData.datasets.push({
