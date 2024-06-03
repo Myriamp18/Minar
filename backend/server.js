@@ -1141,6 +1141,38 @@ app.post('/createconcentradobaribaright', async (req, res) => {
             });
         });
 
+        const totalentradaspe = await new Promise((resolve, reject) => {
+            const query = `
+                SELECT 
+                    COALESCE(SUM(CASE WHEN pecnm12 BETWEEN 4.30 AND 4.40 THEN pecnm12 ELSE 0 END) +
+                             SUM(CASE WHEN pecnm34 BETWEEN 4.30 AND 4.40 THEN pecnm34 ELSE 0 END) +
+                             SUM(CASE WHEN pecnm5 BETWEEN 4.30 AND 4.40 THEN pecnm5 ELSE 0 END) +
+                             SUM(CASE WHEN pecnm6 BETWEEN 4.30 AND 4.40 THEN pecnm6 ELSE 0 END), 0) AS suma_total,
+                    COALESCE(COUNT(CASE WHEN (pecnm12 BETWEEN 4.30 AND 4.40 ) THEN 1 END) +
+                             COUNT(CASE WHEN (pecnm34 BETWEEN 4.30 AND 4.40 ) THEN 1 END) +
+                             COUNT(CASE WHEN (pecnm5 BETWEEN 4.30 AND 4.40 ) THEN 1 END) +
+                             COUNT(CASE WHEN (pecnm6 BETWEEN 4.30 AND 4.40 ) THEN 1 END), 1) AS total_datos
+                FROM mesas
+                WHERE fecha = ?;
+            `;
+
+            db.query(query, [req.body.fecha], (err, data) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    // Verifica si hay resultados y si suma_total no es nulo
+                    if (data && data.length > 0 && data[0].suma_total !== null) {
+                        const sumaTotal = data[0].suma_total;
+                        const totalDatos = data[0].total_datos;
+                        const promedio = totalDatos > 0 ? sumaTotal / totalDatos : 0;
+                        resolve(promedio);
+                    } else {
+                        // Si no hay resultados o suma_total es nulo, resuelve con 0
+                        resolve(0);
+                    }
+                }
+            });
+        });
         // Si hay registros en la tabla, obtén el saldo anterior, de lo contrario, establece el saldo anterior en 0
         const saldoAnterior = saldoAnteriorData.length > 0 ? saldoAnteriorData[0].saldo : 0;
 
@@ -1153,7 +1185,7 @@ app.post('/createconcentradobaribaright', async (req, res) => {
             req.body.fecha,
             totalConcentradoBari,
             req.body.salidas,
-            req.body.pe,
+            totalentradaspe,
             nuevoSaldo
         ];
 
@@ -1312,7 +1344,38 @@ app.post('/createconcmesas', async (req, res) => {
         });
 
 
+        const totalentradaspe = await new Promise((resolve, reject) => {
+            const query = `
+                SELECT 
+                    COALESCE(SUM(CASE WHEN pecnm12 BETWEEN 4.00 AND 4.29 THEN pecnm12 ELSE 0 END) +
+                             SUM(CASE WHEN pecnm34 BETWEEN 4.00 AND 4.29  THEN pecnm34 ELSE 0 END) +
+                             SUM(CASE WHEN pecnm5 BETWEEN 4.00 AND 4.29 THEN pecnm5 ELSE 0 END) +
+                             SUM(CASE WHEN pecnm6 BETWEEN 4.00 AND 4.29  THEN pecnm6 ELSE 0 END), 0) AS suma_total,
+                    COALESCE(COUNT(CASE WHEN (pecnm12 BETWEEN 4.00 AND 4.29  ) THEN 1 END) +
+                             COUNT(CASE WHEN (pecnm34 BETWEEN 4.00 AND 4.29  ) THEN 1 END) +
+                             COUNT(CASE WHEN (pecnm5 BETWEEN 4.00 AND 4.29  ) THEN 1 END) +
+                             COUNT(CASE WHEN (pecnm6 BETWEEN 4.00 AND 4.29  ) THEN 1 END), 1) AS total_datos
+                FROM mesas
+                WHERE fecha = ?;
+            `;
 
+            db.query(query, [req.body.fecha], (err, data) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    // Verifica si hay resultados y si suma_total no es nulo
+                    if (data && data.length > 0 && data[0].suma_total !== null) {
+                        const sumaTotal = data[0].suma_total;
+                        const totalDatos = data[0].total_datos;
+                        const promedio = totalDatos > 0 ? sumaTotal / totalDatos : 0;
+                        resolve(promedio);
+                    } else {
+                        // Si no hay resultados o suma_total es nulo, resuelve con 0
+                        resolve(0);
+                    }
+                }
+            });
+        });
 
 
 
@@ -1347,7 +1410,7 @@ app.post('/createconcmesas', async (req, res) => {
             totalConcentradoMesas,
             totalSalidasMesas,
             nuevoSaldo,
-            req.body.pe,
+            totalentradaspe
         ];
 
         db.query(sql, values, (err, result) => {
@@ -2881,9 +2944,10 @@ app.post('/createdesensolve', async (req, res) => {
         const totalentradaspe = await new Promise((resolve, reject) => {
             const query = `
                 SELECT 
-                    COALESCE(SUM(CASE WHEN pedj1 BETWEEN 4.00 AND 4.30 THEN pedj1 ELSE 0 END) +
-                             SUM(CASE WHEN pedj2 BETWEEN 4.00 AND 4.30 THEN pedj2 ELSE 0 END), 0) AS total_entradas,
-                    COUNT(CASE WHEN (pedj1 != 0 OR pedj2 != 0) THEN 1 END) AS total_registros
+                    COALESCE(SUM(CASE WHEN pedj1 BETWEEN 4.00 AND 4.40 THEN pedj1 ELSE 0 END) +
+                             SUM(CASE WHEN pedj2 BETWEEN 4.00 AND 4.40  THEN pedj2 ELSE 0 END), 0) AS suma_total,
+                    COALESCE(COUNT(CASE WHEN (pedj1 BETWEEN 4.00 AND 4.40 ) THEN 1 END) +
+                             COUNT(CASE WHEN (pedj2 BETWEEN 4.00 AND 4.40) THEN 1 END) , 1) AS total_datos
                 FROM produccionjigs
                 WHERE fecha = ?;
             `;
@@ -2892,14 +2956,14 @@ app.post('/createdesensolve', async (req, res) => {
                 if (err) {
                     reject(err);
                 } else {
-                    // Verifica si hay resultados y si total_entradas no es nulo
-                    if (data && data.length > 0 && data[0].total_entradas !== null) {
-                        const total = data[0].total_entradas;
-                        const totalRegistros = data[0].total_registros;
-                        const promedio = totalRegistros > 0 ? total / totalRegistros : 0;
+                    // Verifica si hay resultados y si suma_total no es nulo
+                    if (data && data.length > 0 && data[0].suma_total !== null) {
+                        const sumaTotal = data[0].suma_total;
+                        const totalDatos = data[0].total_datos;
+                        const promedio = totalDatos > 0 ? sumaTotal / totalDatos : 0;
                         resolve(promedio);
                     } else {
-                        // Si no hay resultados o total_entradas es nulo, resuelve con 0
+                        // Si no hay resultados o suma_total es nulo, resuelve con 0
                         resolve(0);
                     }
                 }

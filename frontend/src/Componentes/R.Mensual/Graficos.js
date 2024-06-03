@@ -19,7 +19,7 @@ ChartJS.register(
   Tooltip,
   Legend
 );
-import ChartDataLabels from 'chartjs-plugin-datalabels';
+
 
 
 const Graficos = () => {

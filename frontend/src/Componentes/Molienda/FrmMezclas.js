@@ -86,7 +86,7 @@ function FrmMezclas() {
 </div>
         <div className='silos'>
           <div class="mb-2 ">
-            <label form='text' class="form-label"> Con.Mesas:</label>
+            <label form='text' class="form-label"> Con.Mesas1234:</label>
             <input
               type="text"
               class="form-control"
@@ -134,7 +134,7 @@ function FrmMezclas() {
         </div>
         <div className='silos'>
           <div class="mb-2">
-            <label form='text' class="form-label"> Conc.Jigs:</label>
+            <label form='text' class="form-label"> Conc.Jigs.SEC:</label>
             <input
               type="text"
               class="form-control"
