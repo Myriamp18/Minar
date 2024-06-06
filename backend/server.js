@@ -2164,11 +2164,10 @@ app.post('/createmedios3', async (req, res) => {
         const totalsalidasmedios = await new Promise((resolve, reject) => {
             const query = `
             SELECT 
-            COALESCE((SELECT SUM(medio3y4) FROM prodseleccion WHERE fecha = ?), 0) +
-            COALESCE((SELECT SUM(alimjsec) FROM jigschinos WHERE fecha = ?), 0) AS TOTALSUMA;
-        
+            COALESCE((SELECT SUM(medio3y4) FROM prodseleccion WHERE fecha = ? AND psm34 BETWEEN 3.00 AND 3.99), 0) +
+            COALESCE((SELECT SUM(alimjsec) FROM jigschinos WHERE fecha = ? AND peajsec BETWEEN 3.00 AND 3.99), 0) AS TOTALSUMA;
             `;
-
+        
             db.query(query, [req.body.fecha, req.body.fecha], (err, data) => {
                 if (err) {
                     reject(err);
@@ -2340,7 +2339,9 @@ app.post('/creategranomoler', async (req, res) => {
             const query = `
                 SELECT (COALESCE(prod.total_granoj, 0) + COALESCE(chinos.total_granojch, 0)) AS total_grano
                 FROM 
-                    (SELECT SUM(granoj1) + SUM(granoj2) AS total_granoj 
+                    (SELECT SUM(granoj1) AS total_granoj1, SUM(granoj2) AS total_granoj2,
+                            SUM(CASE WHEN pegj1 BETWEEN 1.00 AND 4.18 THEN granoj1 ELSE 0 END) +
+                            SUM(CASE WHEN pegj2 BETWEEN 1.00 AND 4.18 THEN granoj2 ELSE 0 END) AS total_granoj
                      FROM produccionjigs 
                      WHERE fecha = ?) AS prod,
                     (SELECT SUM(granojch) AS total_granojch 
@@ -2363,6 +2364,7 @@ app.post('/creategranomoler', async (req, res) => {
                 }
             });
         });
+        
         
         const totalsalidasgrano = await new Promise((resolve, reject) => {
             const query = "SELECT (SUM(medios)) AS total_salidasgrano FROM molienda WHERE fecha = ?;";
