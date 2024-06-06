@@ -1844,6 +1844,26 @@ app.get('/medios46', (req, res) => {
 });
 app.post('/createmedios46', async (req, res) => {
     try {
+
+        const totalsalidasmedios = await new Promise((resolve, reject) => {
+            const query = `
+            SELECT 
+            COALESCE((SELECT SUM(medio3y4) FROM prodseleccion WHERE fecha = ? AND psm34 BETWEEN 4.06 AND 4.20), 0) +
+            COALESCE((SELECT SUM(alimjsec) FROM jigschinos WHERE fecha = ? AND peajsec BETWEEN 4.06 AND 4.20), 0) AS TOTALSUMA;
+            `;
+        
+            db.query(query, [req.body.fecha, req.body.fecha], (err, data) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    const total = data[0].TOTALSUMA;
+                    resolve(total);
+                }
+            });
+        });
+        
+
+
         const totalentradas = await new Promise((resolve, reject) => {
             const query = `
                 SELECT 
@@ -1911,7 +1931,7 @@ app.post('/createmedios46', async (req, res) => {
         const saldoAnterior = saldoAnteriorData.length > 0 ? saldoAnteriorData[0].saldo46 : 0;
 
         // Calcula el nuevo saldo sumando el saldo anterior a las entradas y restando las salidas
-        const nuevoSaldo = saldoAnterior + parseFloat(totalentradas) - parseFloat(req.body.salidasm46);
+        const nuevoSaldo = saldoAnterior + parseFloat(totalentradas) - parseFloat(totalsalidasmedios);
 
 
         // Realizar la inserción en la tabla concmesas
@@ -1919,7 +1939,7 @@ app.post('/createmedios46', async (req, res) => {
         const values = [
             req.body.fecha,
             totalentradas,
-            req.body.salidasm46,
+            totalsalidasmedios,
             nuevoSaldo,
             totalentradaspe,
         ];
@@ -2002,6 +2022,25 @@ app.get('/medios4', (req, res) => {
 app.post('/createmedios4', async (req, res) => {
     try {
 
+        const totalsalidasmedios = await new Promise((resolve, reject) => {
+            const query = `
+            SELECT 
+            COALESCE((SELECT SUM(medio3y4) FROM prodseleccion WHERE fecha = ? AND psm34 BETWEEN 4.00 AND 4.05), 0) +
+            COALESCE((SELECT SUM(alimjsec) FROM jigschinos WHERE fecha = ? AND peajsec BETWEEN 4.00 AND 4.05), 0) AS TOTALSUMA;
+            `;
+        
+            db.query(query, [req.body.fecha, req.body.fecha], (err, data) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    const total = data[0].TOTALSUMA;
+                    resolve(total);
+                }
+            });
+        });
+        
+
+
         const totalentradas = await new Promise((resolve, reject) => {
             const query = `
                 SELECT 
@@ -2071,14 +2110,14 @@ app.post('/createmedios4', async (req, res) => {
         const saldoAnterior = saldoAnteriorData.length > 0 ? saldoAnteriorData[0].saldo : 0;
 
         // Calcula el nuevo saldo sumando el saldo anterior a las entradas y restando las salidas
-        const nuevoSaldo = saldoAnterior + parseFloat(totalentradas) - parseFloat(req.body.salidas);
+        const nuevoSaldo = saldoAnterior + parseFloat(totalentradas) - parseFloat(totalsalidasmedios);
 
         // Realizar la inserción en la tabla concmesas
         const sql = "INSERT INTO medios4 (fecha, entradas, salidas, saldo, pe) VALUES (?, ?, ?, ?, ?)";
         const values = [
             req.body.fecha,
             totalentradas,
-            req.body.salidas,
+            totalsalidasmedios,
             nuevoSaldo,
             totalentradaspe,
         ];

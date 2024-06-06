@@ -61,17 +61,7 @@ function FrmMedios4() {
     
 
         
-          <div class="mb-3">
-            <label form='text' class="form-label"> Salidas:</label>
-            <input
-             type="text"  
-             class="form-control"
-             id='salidas'
-             required
-             placeholder='Insertar Cantidad'  
-             name='salidas'
-             onChange={(e) => setValues({...values, salidas: e.target.value})}/>
-          </div>
+          
           
           
           <div className="btn-container">
