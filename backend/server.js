@@ -1504,9 +1504,11 @@ app.post('/createmezclasmolienda', (req, res) => {
     const medios = parseFloat(req.body.medios);
     const desenslovez = parseFloat(req.body.desenslovez);
     const conjigs = parseFloat(req.body.concjigs);
+    const pmlt = parseFloat(req.body.pmlt);
+    const pmle = parseFloat(req.body.pmle);
 
     // Calcula la mezcla total como la suma de concmesas, medios, desenslovez y conjigs
-    const mezclaTotal = concmesas + medios + desenslovez + conjigs;
+    const mezclaTotal = concmesas + medios + desenslovez + conjigs + pmlt + pmle;
 
     const sql = "INSERT INTO molienda (fecha, turno, concmesas, pecm, medios, pem, desenslovez, pedese, concjigs, pejig, mezclatotal, pemt,pmlt,pmle,otrassalidas) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?,?)";
     const values = [

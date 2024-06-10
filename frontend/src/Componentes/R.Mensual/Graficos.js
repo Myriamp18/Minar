@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Bar } from 'react-chartjs-2';
+import { Link } from 'react-router-dom';
+
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -33,6 +35,11 @@ const Graficos = () => {
 
   // Función para convertir las horas en minutos
   const calcularHoras = (horaString) => {
+    if (!horaString) {
+      console.error('Invalid horaString:', horaString);
+      return 0; // or handle the error as needed
+    }
+    
     const [horas, minutos] = horaString.split(':');
     const horasComoDecimal = parseInt(horas) + parseInt(minutos) / 100;
     return horasComoDecimal;
@@ -90,38 +97,23 @@ const Graficos = () => {
     }
     setLoading(false);
   };
-
   const prepareChartData = (data) => {
+    if (!data || !data.data1 || !data.data2 || !data.data3 || !data.data4) {
+      console.error('Invalid data:', data);
+      return {};
+    }
+  
     const chartData = {
       labels: ['Turno 1', 'Turno 2', 'Total'],
       datasets: [],
     };
-
-    const horasObjetivoTotal = calcularObjetivoHoras();
-
+  
     const horasTrabajadas12 = [
       calcularHoras(data.data1.TOTAHRS_TURNO_1),
       calcularHoras(data.data1.TOTAHRS_TURNO_2),
       calcularHoras(data.data1.TOTAHRS)
     ];
-
-    const horasTrabajadas34 = [
-      calcularHoras(data.data2.TOTAHRS_TURNO_1),
-      calcularHoras(data.data2.TOTAHRS_TURNO_2),
-      calcularHoras(data.data2.TOTAHRS)
-    ];
-    const horasTrabajadas5 = [
-      calcularHoras(data.data3.TOTAHRS_TURNO_1),
-      calcularHoras(data.data3.TOTAHRS_TURNO_2),
-      calcularHoras(data.data3.TOTAHRS)
-    ];
-
-    const horasTrabajadas6 = [
-      calcularHoras(data.data4.TOTAHRS_TURNO_1),
-      calcularHoras(data.data4.TOTAHRS_TURNO_2),
-      calcularHoras(data.data4.TOTAHRS)
-    ];
-
+  
     chartData.datasets.push({
       label: 'Horas Trabajadas (MESA1Y2)',
       data: horasTrabajadas12,
@@ -134,98 +126,80 @@ const Graficos = () => {
         anchor: 'end', // Posición del texto dentro de la barra (end para mostrarlo al final)
         align: 'end', // Alineación del texto dentro de la barra (end para alinearlo al final)
         formatter: (value, context) => {
-          return value + '%'; // Formato del valor (añadir % al final)
+          return value.toFixed(3); // Formato del valor (tres decimales)
         }
       }
     });
-
-
-const horasFaltantes12 = [
-  calcularDiferencia(horasTrabajadas12[0], horasObjetivoDiarias),
-  calcularDiferencia(horasTrabajadas12[1], horasObjetivoDiarias),
-  calcularDiferencia(horasTrabajadas12[2], horasObjetivoTotal)
-];
-if (horasFaltantes12.some(horas => horas > 0)) {
-  chartData.datasets.push({
-    label: 'Horas Faltantes (MESA1Y2)',
-    data: horasFaltantes12,
-    backgroundColor: 'rgba(135, 206, 250, 0.8)', // Azul claro
-    borderColor: 'rgba(135, 206, 250, 1)',
-    borderWidth: 1,
-  });
-}
-
-chartData.datasets.push({
-  label: 'Horas Trabajadas (MESA3Y4)',
-  data: horasTrabajadas34,
-  backgroundColor: 'rgba(255, 165, 0, 0.8)', // Naranja
-  borderColor: 'rgba(255, 165, 0, 1)',
-  borderWidth: 1,
-});
-
-const horasFaltantes34 = [
-  calcularDiferencia(horasTrabajadas34[0], horasObjetivoDiarias),
-  calcularDiferencia(horasTrabajadas34[1], horasObjetivoDiarias),
-  calcularDiferencia(horasTrabajadas34[2], horasObjetivoTotal)
-];
-if (horasFaltantes34.some(horas => horas > 0)) {
-  chartData.datasets.push({
-    label: 'Horas Faltantes (MESA3Y4)',
-    data: horasFaltantes34,
-    backgroundColor: 'rgba(255, 215, 0, 0.8)', // Amarillo
-    borderColor: 'rgba(255, 215, 0, 1)',
-    borderWidth: 1,
-  });
-}
-
-chartData.datasets.push({
-  label: 'Horas Trabajadas (MESA5)',
-  data: horasTrabajadas5,
-  backgroundColor: 'rgba(75, 192, 192, 0.8)', // Verde azulado
-  borderColor: 'rgba(75, 192, 192, 1)',
-  borderWidth: 1,
-});
-
-const horasFaltantes5 = [
-  calcularDiferencia(horasTrabajadas5[0], horasObjetivoDiarias),
-  calcularDiferencia(horasTrabajadas5[1], horasObjetivoDiarias),
-  calcularDiferencia(horasTrabajadas5[2], horasObjetivoTotal)
-];
-if (horasFaltantes5.some(horas => horas > 0)) {
-  chartData.datasets.push({
-    label: 'Horas Faltantes (MESA5)',
-    data: horasFaltantes5,
-    backgroundColor: 'rgba(255, 0, 0, 0.8)', // Rojo
-    borderColor: 'rgba(255, 0, 0, 1)',
-    borderWidth: 1,
-  });
-}
-
-chartData.datasets.push({
-  label: 'Horas Trabajadas (MESA6)',
-  data: horasTrabajadas6,
-  backgroundColor: 'rgba(0, 128, 0, 0.8)', // Verde oscuro
-  borderColor: 'rgba(0, 128, 0, 1)', // Verde oscuro
-  borderWidth: 1,
-});
-
-const horasFaltantes6 = [
-  calcularDiferencia(horasTrabajadas6[0], horasObjetivoDiarias),
-  calcularDiferencia(horasTrabajadas6[1], horasObjetivoDiarias),
-  calcularDiferencia(horasTrabajadas6[2], horasObjetivoTotal)
-];
-if (horasFaltantes6.some(horas => horas > 0)) {
-  chartData.datasets.push({
-    label: 'Horas Faltantes (MESA6)',
-    data: horasFaltantes6,
-    backgroundColor: 'rgba(0, 0, 255, 0.8)', // Azul
-    borderColor: 'rgba(0, 0, 255, 1)',
-    borderWidth: 1,
-  });
-}
-
+  
+    const horasTrabajadas34 = [
+      calcularHoras(data.data2.TOTAHRS_TURNO_1),
+      calcularHoras(data.data2.TOTAHRS_TURNO_2),
+      calcularHoras(data.data2.TOTAHRS)
+    ];
+  
+    chartData.datasets.push({
+      label: 'Horas Trabajadas (MESA3Y4)',
+      data: horasTrabajadas34,
+      backgroundColor: 'rgba(255, 165, 0, 0.8)', // Naranja
+      borderColor: 'rgba(255, 165, 0, 1)',
+      borderWidth: 1,
+      datalabels: {
+        color: '#fff',
+        anchor: 'end',
+        align: 'end',
+        formatter: (value, context) => {
+          return value.toFixed(3);
+        }
+      }
+    });
+  
+    const horasTrabajadas5 = [
+      calcularHoras(data.data3.TOTAHRS_TURNO_1),
+      calcularHoras(data.data3.TOTAHRS_TURNO_2),
+      calcularHoras(data.data3.TOTAHRS)
+    ];
+  
+    chartData.datasets.push({
+      label: 'Horas Trabajadas (MESA5)',
+      data: horasTrabajadas5,
+      backgroundColor: 'rgba(75, 192, 192, 0.8)', // Verde azulado
+      borderColor: 'rgba(75, 192, 192, 1)',
+      borderWidth: 1,
+      datalabels: {
+        color: '#fff',
+        anchor: 'end',
+        align: 'end',
+        formatter: (value, context) => {
+          return value.toFixed(3);
+        }
+      }
+    });
+  
+    const horasTrabajadas6 = [
+      calcularHoras(data.data4.TOTAHRS_TURNO_1),
+      calcularHoras(data.data4.TOTAHRS_TURNO_2),
+      calcularHoras(data.data4.TOTAHRS)
+    ];
+  
+    chartData.datasets.push({
+      label: 'Horas Trabajadas (MESA6)',
+      data: horasTrabajadas6,
+      backgroundColor: 'rgba(0, 128, 0, 0.8)', // Verde oscuro
+      borderColor: 'rgba(0, 128, 0, 1)', // Verde oscuro
+      borderWidth: 1,
+      datalabels: {
+        color: '#fff',
+        anchor: 'end',
+        align: 'end',
+        formatter: (value, context) => {
+          return value.toFixed(3);
+        }
+      }
+    });
+  
     return chartData;
   };
+  
 
   const options = {
     plugins: {
@@ -267,6 +241,10 @@ if (horasFaltantes6.some(horas => horas > 0)) {
       {data && (
        <Bar data={prepareChartData(data)} options={options} />
       )}
+
+<Link to="/gmolinos">
+        <button>Ver Horas de Molinos</button>
+      </Link>
     </div>
   );
 };

@@ -110,9 +110,9 @@ function Excelmolienda() {
                 worksheet.addRow(['Grano', product.fecha, product.turno, product.medios, product.pem]);
                 worksheet.addRow(['Conc.Jigs', product.fecha, product.turno, product.concjigs, product.pejig]);
                 worksheet.addRow(['Desensolve', product.fecha, product.turno, product.desenslovez, product.pedese]);
-                worksheet.addRow(['Mezcla Total', product.fecha, product.turno, product.mezclatotal, product.pemt]);
                 worksheet.addRow(['PMLT', product.fecha, product.turno, product.pmlt]);
                 worksheet.addRow(['PMLE', product.fecha, product.turno, product.pmle]);
+                worksheet.addRow(['Mezcla Total', product.fecha, product.turno, product.mezclatotal, product.pemt]);
                 worksheet.addRow(['Otras Salidas', product.fecha, product.turno, product.otrassalidas]);
                 worksheet.addRow([]);
             });

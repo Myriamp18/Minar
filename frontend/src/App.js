@@ -164,7 +164,7 @@ import Modal from './Componentes/Usuarios/Modal';
 import OlvContra from './Componentes/Usuarios/OlvContra';
 import ReporteM from './Componentes/R.Mensual/ReporteM';
 import Graficos from './Componentes/R.Mensual/Graficos';
-
+import GraficosMolinos from './Componentes/R.Mensual/GraficosMolinos';
 
 function App() {
 
@@ -399,8 +399,8 @@ function App() {
                                     <Route path="/excelhorometro" element={<ExcelHorometros />} />
 
                                     <Route path="/reportem" element={<ReporteM />} />
-                                   
-                                          <Route path="/graficos" element={<Graficos />} />
+                                    <Route path="/graficos" element={<Graficos />} />
+                                    <Route path='/gmolinos' element={<GraficosMolinos/>}/>
 
                                  
 
