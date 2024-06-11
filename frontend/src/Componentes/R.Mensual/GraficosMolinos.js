@@ -90,7 +90,7 @@ function GraficosMolinos() {
     labels: ['Turno 1', 'Turno 2', 'Total'],
     datasets: [
       {
-        label: 'Horas Trabajadas M1',
+        label: 'MOLINO CHINO',
         backgroundColor: 'rgba(75,192,192,0.4)',
         borderColor: 'rgba(75,192,192,1)',
         borderWidth: 1,
@@ -105,7 +105,7 @@ function GraficosMolinos() {
           : [0, 0, 0],
       },
       {
-        label: 'Horas Trabajadas M2',
+        label: 'MOLINO RAYMOND',
         backgroundColor: 'rgba(153,102,255,0.4)',
         borderColor: 'rgba(153,102,255,1)',
         borderWidth: 1,

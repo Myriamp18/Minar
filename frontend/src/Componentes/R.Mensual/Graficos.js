@@ -2,25 +2,14 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { Bar } from 'react-chartjs-2';
 import { Link } from 'react-router-dom';
+import ChartDataLabels from 'chartjs-plugin-datalabels';
+import { Chart as ChartJS, registerables } from 'chart.js';
 
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend,
-} from 'chart.js';
 
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend
-);
+ChartJS.register(...registerables, ChartDataLabels);
+
+
+
 
 
 
@@ -33,29 +22,28 @@ const Graficos = () => {
 
   const horasObjetivoDiarias = 7.00;
 
-  // Función para convertir las horas en minutos
   const calcularHoras = (horaString) => {
     if (!horaString) {
       console.error('Invalid horaString:', horaString);
-      return 0; // or handle the error as needed
+      return 0;
     }
     
     const [horas, minutos] = horaString.split(':');
-    const horasComoDecimal = parseInt(horas) + parseInt(minutos) / 100;
+    const horasComoDecimal = parseInt(horas) + parseInt(minutos) / 60;
     return horasComoDecimal;
   };
 
-  
-  const calcularDiferencia = (horasTrabajadas, objetivo) => {
-    return objetivo - horasTrabajadas;
+  const calcularPorcentaje = (horasTrabajadas, objetivo) => {
+    const porcentaje = (horasTrabajadas / objetivo) * 100;
+    return porcentaje.toFixed(2);
   };
 
- const calcularObjetivoHoras = (fechaInicio, fechaFin, horasObjetivoDiarias) => {
-  const fechaInicioDate = new Date(fechaInicio);
-  const fechaFinDate = new Date(fechaFin);
-  const diferenciaDias = (fechaFinDate - fechaInicioDate) / (1000 * 60 * 60 * 24) + 1;
-  return horasObjetivoDiarias * diferenciaDias;
-};
+  const calcularObjetivoHoras = (fechaInicio, fechaFin, horasObjetivoDiarias) => {
+    const fechaInicioDate = new Date(fechaInicio);
+    const fechaFinDate = new Date(fechaFin);
+    const diferenciaDias = (fechaFinDate - fechaInicioDate) / (1000 * 60 * 60 * 24) + 1;
+    return horasObjetivoDiarias * diferenciaDias;
+  };
 
   const fetchData = async () => {
     if (!fechaInicio || !fechaFin) {
@@ -97,123 +85,132 @@ const Graficos = () => {
     }
     setLoading(false);
   };
+
   const prepareChartData = (data) => {
     if (!data || !data.data1 || !data.data2 || !data.data3 || !data.data4) {
       console.error('Invalid data:', data);
       return {};
     }
-  
+
     const chartData = {
       labels: ['Turno 1', 'Turno 2', 'Total'],
       datasets: [],
     };
-  
+
     const horasTrabajadas12 = [
       calcularHoras(data.data1.TOTAHRS_TURNO_1),
       calcularHoras(data.data1.TOTAHRS_TURNO_2),
       calcularHoras(data.data1.TOTAHRS)
     ];
-  
+
     chartData.datasets.push({
       label: 'Horas Trabajadas (MESA1Y2)',
       data: horasTrabajadas12,
       backgroundColor: 'rgba(153, 102, 255, 0.8)',
       borderColor: 'rgba(153, 102, 255, 1)',
       borderWidth: 1,
-      // Configuración del plugin datalabels específica para esta barra
       datalabels: {
-        color: '#fff', // Color del texto
-        anchor: 'end', // Posición del texto dentro de la barra (end para mostrarlo al final)
-        align: 'end', // Alineación del texto dentro de la barra (end para alinearlo al final)
+        color: 'black',
+        anchor: 'end',
+        align: 'end',
         formatter: (value, context) => {
-          return value.toFixed(3); // Formato del valor (tres decimales)
+          const objetivo = context.dataIndex === 2 ? calcularObjetivoHoras(fechaInicio, fechaFin, horasObjetivoDiarias) : 7;
+          const porcentaje = calcularPorcentaje(value, objetivo);
+          return `${value.toFixed(3)} hrs\n(${porcentaje}%)`;
         }
       }
     });
-  
+
     const horasTrabajadas34 = [
       calcularHoras(data.data2.TOTAHRS_TURNO_1),
       calcularHoras(data.data2.TOTAHRS_TURNO_2),
       calcularHoras(data.data2.TOTAHRS)
     ];
-  
+
     chartData.datasets.push({
       label: 'Horas Trabajadas (MESA3Y4)',
       data: horasTrabajadas34,
-      backgroundColor: 'rgba(255, 165, 0, 0.8)', // Naranja
+      backgroundColor: 'rgba(255, 165, 0, 0.8)',
       borderColor: 'rgba(255, 165, 0, 1)',
       borderWidth: 1,
       datalabels: {
-        color: '#fff',
+        color: 'black',
         anchor: 'end',
         align: 'end',
         formatter: (value, context) => {
-          return value.toFixed(3);
+          const objetivo = context.dataIndex === 2 ? calcularObjetivoHoras(fechaInicio, fechaFin, horasObjetivoDiarias) : 8;
+          const porcentaje = calcularPorcentaje(value, objetivo);
+          return `${value.toFixed(3)} hrs\n(${porcentaje}%)`;
         }
       }
     });
-  
+
     const horasTrabajadas5 = [
       calcularHoras(data.data3.TOTAHRS_TURNO_1),
       calcularHoras(data.data3.TOTAHRS_TURNO_2),
       calcularHoras(data.data3.TOTAHRS)
     ];
-  
+
     chartData.datasets.push({
       label: 'Horas Trabajadas (MESA5)',
       data: horasTrabajadas5,
-      backgroundColor: 'rgba(75, 192, 192, 0.8)', // Verde azulado
+      backgroundColor: 'rgba(75, 192, 192, 0.8)',
       borderColor: 'rgba(75, 192, 192, 1)',
       borderWidth: 1,
       datalabels: {
-        color: '#fff',
+        color: 'black',
         anchor: 'end',
         align: 'end',
         formatter: (value, context) => {
-          return value.toFixed(3);
+          const objetivo = context.dataIndex === 2 ? calcularObjetivoHoras(fechaInicio, fechaFin, horasObjetivoDiarias) : 8;
+          const porcentaje = calcularPorcentaje(value, objetivo);
+          return `${value.toFixed(3)} hrs\n(${porcentaje}%)`;
         }
       }
     });
-  
+
     const horasTrabajadas6 = [
       calcularHoras(data.data4.TOTAHRS_TURNO_1),
       calcularHoras(data.data4.TOTAHRS_TURNO_2),
       calcularHoras(data.data4.TOTAHRS)
     ];
-  
+
     chartData.datasets.push({
       label: 'Horas Trabajadas (MESA6)',
       data: horasTrabajadas6,
-      backgroundColor: 'rgba(0, 128, 0, 0.8)', // Verde oscuro
-      borderColor: 'rgba(0, 128, 0, 1)', // Verde oscuro
+      backgroundColor: 'rgba(0, 128, 0, 0.8)',
+      borderColor: 'rgba(0, 128, 0, 1)',
       borderWidth: 1,
       datalabels: {
-        color: '#fff',
+        color: 'BLACK',
         anchor: 'end',
         align: 'end',
         formatter: (value, context) => {
-          return value.toFixed(3);
+          const objetivo = context.dataIndex === 2 ? calcularObjetivoHoras(fechaInicio, fechaFin, horasObjetivoDiarias) : 8;
+          const porcentaje = calcularPorcentaje(value, objetivo);
+          return `${value.toFixed(3)} hrs\n(${porcentaje}%)`;
         }
       }
     });
-  
+
     return chartData;
   };
-  
 
   const options = {
     plugins: {
       datalabels: {
-        color: '#fff', // Color del texto
-        anchor: 'end', // Posición del texto dentro de la barra (end para mostrarlo al final)
-        align: 'end', // Alineación del texto dentro de la barra (end para alinearlo al final)
+        color: 'BLACK',
+        anchor: 'end',
+        align: 'end',
         formatter: (value, context) => {
-          return value + '%'; // Formato del valor (añadir % al final)
+          const objetivo = context.dataIndex === 2 ? calcularObjetivoHoras(fechaInicio, fechaFin, horasObjetivoDiarias) : 8;
+          const porcentaje = calcularPorcentaje(value, objetivo);
+          return `${value.toFixed(3)} hrs\n(${porcentaje}%)`;
         }
       }
-    },
-    // Otras opciones del gráfico...
-  };
+    }
+  }
+
 
   return (
     <div style={{ width: '80%', margin: '0 auto', padding: '20px', border: '1px solid #ddd', borderRadius: '10px', backgroundColor: '#f9f9f9', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
@@ -242,7 +239,7 @@ const Graficos = () => {
        <Bar data={prepareChartData(data)} options={options} />
       )}
 
-<Link to="/gmolinos">
+      <Link to="/gmolinos">
         <button>Ver Horas de Molinos</button>
       </Link>
     </div>
