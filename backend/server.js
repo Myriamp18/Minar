@@ -1,7 +1,8 @@
 const express = require('express');
 const mysql = require('mysql');
 const cors = require('cors');
-const jwt = require("jsonwebtoken")
+const jwt = require("jsonwebtoken");
+const { BiData } = require('react-icons/bi');
 
 const app = express();
 app.use(cors());
@@ -979,19 +980,41 @@ app.post('/creategranobaribright', async (req, res) => {
             });
         });
 
+        const entradasgranobaright = await new Promise((resolve, reject) => {
+            const query = 'SELECT SUM(concgrano) AS totalConcgrano FROM prodseleccion WHERE fecha = ?';
+
+            db.query(query, [req.body.fecha], (error, results) => {
+                if (error) {
+                    return reject(error);
+                }
+                resolve(results[0].totalConcgrano);
+            });
+        });
+
+        const obtenerPecngPorFecha = (fecha) => {
+            return new Promise((resolve, reject) => {
+                const query = 'SELECT pecng FROM prodseleccion WHERE fecha = ?';
+        
+                db.query(query, [fecha], (error, results) => {
+                    if (error) return reject(error);
+                    resolve(results.length > 0 ? results[0].pecng : null);
+                });
+            });
+        };
+
         // Si hay registros en la tabla, obtén el saldo anterior, de lo contrario, establece el saldo anterior en 0
         const saldoAnterior = saldoAnteriorData.length > 0 ? saldoAnteriorData[0].saldo : 0;
 
         // Calcula el nuevo saldo sumando el saldo anterior a las entradas y restando las salidas
-        const nuevoSaldo = saldoAnterior + parseFloat(req.body.entradas) - parseFloat(req.body.salidas);
+        const nuevoSaldo = saldoAnterior + parseFloat(entradasgranobaright) - parseFloat(req.body.salidas);
 
         // Realiza la inserción con el nuevo saldo
         const sql = "INSERT INTO granobaribright (fecha, entradas, salidas, pe, saldo) VALUES (?, ?, ?, ?, ?)";
         const values = [
             req.body.fecha,
-            req.body.entradas,
+            entradasgranobaright,
             req.body.salidas,
-            req.body.pe,
+            obtenerPecngPorFecha,
             nuevoSaldo
         ];
 
@@ -1122,7 +1145,7 @@ app.post('/createconcentradobaribaright', async (req, res) => {
                 WHERE 
                     fecha = ?
             `;
-            
+
             db.query(query, [req.body.fecha], (err, data) => {
                 if (err) {
                     reject(err);
@@ -1314,7 +1337,7 @@ app.post('/createconcmesas', async (req, res) => {
                 WHERE 
                     fecha = ?
             `;
-            
+
             db.query(query, [req.body.fecha], (err, data) => {
                 if (err) {
                     reject(err);
@@ -1324,7 +1347,7 @@ app.post('/createconcmesas', async (req, res) => {
                 }
             });
         });
-        
+
         const totalSalidasMesas = await new Promise((resolve, reject) => {
             const query = "SELECT (SUM(concmesas)) AS total_salidas FROM molienda WHERE fecha = ?;";
             db.query(query, [req.body.fecha], (err, data) => {
@@ -1853,7 +1876,7 @@ app.post('/createmedios46', async (req, res) => {
             COALESCE((SELECT SUM(medio3y4) FROM prodseleccion WHERE fecha = ? AND psm34 BETWEEN 4.06 AND 4.20), 0) +
             COALESCE((SELECT SUM(alimjsec) FROM jigschinos WHERE fecha = ? AND peajsec BETWEEN 4.06 AND 4.20), 0) AS TOTALSUMA;
             `;
-        
+
             db.query(query, [req.body.fecha, req.body.fecha], (err, data) => {
                 if (err) {
                     reject(err);
@@ -1863,7 +1886,7 @@ app.post('/createmedios46', async (req, res) => {
                 }
             });
         });
-        
+
 
 
         const totalentradas = await new Promise((resolve, reject) => {
@@ -2030,7 +2053,7 @@ app.post('/createmedios4', async (req, res) => {
             COALESCE((SELECT SUM(medio3y4) FROM prodseleccion WHERE fecha = ? AND psm34 BETWEEN 4.00 AND 4.05), 0) +
             COALESCE((SELECT SUM(alimjsec) FROM jigschinos WHERE fecha = ? AND peajsec BETWEEN 4.00 AND 4.05), 0) AS TOTALSUMA;
             `;
-        
+
             db.query(query, [req.body.fecha, req.body.fecha], (err, data) => {
                 if (err) {
                     reject(err);
@@ -2040,7 +2063,7 @@ app.post('/createmedios4', async (req, res) => {
                 }
             });
         });
-        
+
 
 
         const totalentradas = await new Promise((resolve, reject) => {
@@ -2208,7 +2231,7 @@ app.post('/createmedios3', async (req, res) => {
             COALESCE((SELECT SUM(medio3y4) FROM prodseleccion WHERE fecha = ? AND psm34 BETWEEN 3.00 AND 3.99), 0) +
             COALESCE((SELECT SUM(alimjsec) FROM jigschinos WHERE fecha = ? AND peajsec BETWEEN 3.00 AND 3.99), 0) AS TOTALSUMA;
             `;
-        
+
             db.query(query, [req.body.fecha, req.body.fecha], (err, data) => {
                 if (err) {
                     reject(err);
@@ -2389,7 +2412,7 @@ app.post('/creategranomoler', async (req, res) => {
                      FROM jigschinos 
                      WHERE fecha = ?) AS chinos;
             `;
-            
+
             db.query(query, [req.body.fecha, req.body.fecha], (err, data) => {
                 if (err) {
                     reject(err);
@@ -2405,8 +2428,8 @@ app.post('/creategranomoler', async (req, res) => {
                 }
             });
         });
-        
-        
+
+
         const totalsalidasgrano = await new Promise((resolve, reject) => {
             const query = "SELECT (SUM(medios)) AS total_salidasgrano FROM molienda WHERE fecha = ?;";
             db.query(query, [req.body.fecha], (err, data) => {
@@ -2818,10 +2841,10 @@ app.post('/createdesensolvech', async (req, res) => {
                     if (data && data.length > 0 && data[0].total_pedjch !== null) {
                         const total_pedjch = data[0].total_pedjch || 0;
                         const count_pedjch = data[0].count_pedjch || 1; // Para evitar división por cero
-        
+
                         // Calculamos el promedio
                         const average_pedch = count_pedjch > 0 ? total_pedjch / count_pedjch : 0;
-        
+
                         resolve({
                             total_pedjch,
                             average_pedch
@@ -2835,14 +2858,14 @@ app.post('/createdesensolvech', async (req, res) => {
                 }
             });
         });
-        
+
         const { total_pedjch, average_pedch } = totalAndAveragePedch;
-        
+
         console.log("Total Pedjch:", total_pedjch);
         console.log("Average Pedch:", average_pedch);
-        
-        
-       
+
+
+
 
         // Obtener el saldo anterior
         const saldoAnteriorData = await new Promise((resolve, reject) => {
