@@ -991,7 +991,28 @@ app.post('/creategranobaribright', async (req, res) => {
             });
         });
 
-      
+
+        const pecngData = await new Promise((resolve, reject) => {
+            const query = "SELECT pecng FROM prodseleccion WHERE fecha = ?";
+            db.query(query, [req.body.fecha], (error, results) => {
+                if (error) {
+                    return reject(error);
+                }
+                // Extraer el valor pecng de los resultados
+                if (results.length > 0) {
+                    resolve(results[0].pecng);
+                } else {
+                    resolve(null); // O algún valor por defecto si no se encuentra
+                }
+            });
+        });
+
+        // Si no se encontró pecng, maneja el caso apropiadamente
+        if (pecngData === null) {
+            return res.status(404).json({ error: "No se encontró pecng para la fecha especificada" });
+        }
+
+
 
         // Si hay registros en la tabla, obtén el saldo anterior, de lo contrario, establece el saldo anterior en 0
         const saldoAnterior = saldoAnteriorData.length > 0 ? saldoAnteriorData[0].saldo : 0;
@@ -1005,7 +1026,7 @@ app.post('/creategranobaribright', async (req, res) => {
             req.body.fecha,
             entradasgranobaright,
             req.body.salidas,
-            req.body.pe,
+            pecngData,
             nuevoSaldo
         ];
 
@@ -6508,7 +6529,26 @@ app.post('/jigssech', (req, res) => {
     SEC_TO_TIME(SUM(
         CAST(SUBSTRING_INDEX(horasec, ':', 1) AS DECIMAL(10, 2)) * 3600 + 
         CAST(SUBSTRING_INDEX(horasec, ':', -1) AS DECIMAL(10, 2)) * 60
-    )) AS HORASSEC_TOTAL
+    )) AS HORASSEC_TOTAL,
+
+
+
+    SEC_TO_TIME(SUM(CASE WHEN turno = 1 THEN 
+        (CAST(SUBSTRING_INDEX(horajch, ':', 1) AS DECIMAL(10, 2)) * 3600 + 
+         CAST(SUBSTRING_INDEX(horajch, ':', -1) AS DECIMAL(10, 2)) * 60) 
+    ELSE 0 END)) AS HORASPRIM_TURNO_1,
+    
+    SEC_TO_TIME(SUM(CASE WHEN turno = 2 THEN 
+        (CAST(SUBSTRING_INDEX(horajch, ':', 1) AS DECIMAL(10, 2)) * 3600 + 
+         CAST(SUBSTRING_INDEX(horajch, ':', -1) AS DECIMAL(10, 2)) * 60) 
+    ELSE 0 END)) AS HORASPRIM_TURNO_2,
+    
+    SEC_TO_TIME(SUM(
+        CAST(SUBSTRING_INDEX(horajch, ':', 1) AS DECIMAL(10, 2)) * 3600 + 
+        CAST(SUBSTRING_INDEX(horajch, ':', -1) AS DECIMAL(10, 2)) * 60
+    )) AS HORASPRIM_TOTAL
+
+
 FROM 
     jigschinos
 WHERE 
@@ -6525,4 +6565,52 @@ WHERE
             res.json(results[0]);
         }
     });
+});
+
+app.post('/jigprimario', (req, res) => {
+    const { fechaInicio, fechaFin } = req.body;
+
+    // Verificar si se proporcionaron las fechas de inicio y fin
+    if (!fechaInicio || !fechaFin) {
+        return res.status(400).json({ error: 'Las fechas de inicio y fin son requeridas.' });
+    }
+
+    // Ejecutar la consulta SQL
+    const sql = `
+        SELECT
+            SUM(alimjch) AS TOTALALIPRIM,
+            SUM(peajch) AS totalPeajPRIM,
+            SUM(CASE WHEN peajch > 0 THEN 1 ELSE 0 END) AS countPeaj1GreaterThanZero,
+            CASE WHEN SUM(peajch) > 0 THEN SUM(peajch) / SUM(CASE WHEN peajch > 0 THEN 1 ELSE 0 END) ELSE 0 END AS promedioPeajPRIM,
+
+            SUM(granojch) AS totalgranojprim,
+            SUM(pegjch) AS totalPeajPRIM,
+            SUM(CASE WHEN pegjch > 0 THEN 1 ELSE 0 END) AS countPeaj1GreaterThanZero,
+            CASE WHEN SUM(pegjch) > 0 THEN SUM(pegjch) / SUM(CASE WHEN pegjch > 0 THEN 1 ELSE 0 END) ELSE 0 END AS promedioPeGRAPRIM,
+
+        SUM(CASE WHEN pedjch >= 4.00 AND pedjch <= 4.20 THEN desenjch ELSE 0 END) AS totalDesejprim,
+        SUM(CASE WHEN pedjch >= 4.00 AND pedjch <= 4.20 THEN pedjch ELSE 0 END) AS totalPedesenjprim,
+        SUM(CASE WHEN pedjch >= 4.00 AND pedjch <= 4.20 THEN 1 ELSE 0 END) AS countPeajchGreaterThanZero,
+        CASE 
+            WHEN SUM(CASE WHEN pedjch >= 4.00 AND pedjch <= 4.20 THEN pedjch ELSE 0 END) > 0 
+            THEN SUM(CASE WHEN pedjch >= 4.00 AND pedjch <= 4.20 THEN pedjch ELSE 0 END) / 
+                 SUM(CASE WHEN pedjch >= 4.00 AND pedjch <= 4.20 THEN 1 ELSE 0 END)
+            ELSE 0 
+        END AS promediodesensolvejprim
+            
+        FROM jigschinos
+        WHERE fecha BETWEEN ? AND ?;
+    `;
+
+    db.query(sql, [fechaInicio, fechaFin], (error, results) => {
+        if (error) {
+            console.error('Error al ejecutar la consulta:', error);
+            return res.status(500).json({ error: 'Error al ejecutar la consulta' });
+        } else {
+            // Devolver los resultados de la consulta como un objeto JSON
+            res.json(results[0]);
+        }
+    });
+
+
 });

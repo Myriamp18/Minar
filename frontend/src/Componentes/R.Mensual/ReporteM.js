@@ -183,6 +183,23 @@ function ReporteM() {
             console.log("Datos recibidos de /jigssech:", jissecData);
 
 
+            /////////////////////////////
+            const response11 = await fetch('http://localhost:8081/jigprimario', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ fechaInicio: startDate, fechaFin: endDate })
+            });
+
+            if (!response11.ok) {
+                throw new Error('Error al obtener los datos de las mesas del servidor');
+            }
+
+            const jisprimData = await response11.json();
+            console.log("Datos recibidos de /jigprimario:", jisprimData);
+
+
             const jigsArray = [jigsData]; // Convertir el objeto de JIGs en un array
             const mesasArray = [mesasData]; // Convertir el objeto de mesas en un array
             const chinoArray = [chinoData];
@@ -193,9 +210,11 @@ function ReporteM() {
             const hmes6Array = [Hmes6Data];
             const hmolinosArray = [HmolinosData];
             const jissecArray = [jissecData];
+            const jisprimArray = [jisprimData];
+
 
             // Llamar a la función para exportar a Excel con los datos ajustados
-            exportToExcel(jigsArray, mesasArray, chinoArray, moliendaArray, hmes12Array, hmes34Array, hmes5Array, hmes6Array, hmolinosArray,jissecArray);
+            exportToExcel(jigsArray, mesasArray, chinoArray, moliendaArray, hmes12Array, hmes34Array, hmes5Array, hmes6Array, hmolinosArray,jissecArray,jisprimArray );
         } catch (error) {
             console.error('Error en el bloque try:', error);
         }
@@ -207,7 +226,7 @@ function ReporteM() {
         cell.font = { bold: true, size: 14, color: { argb: '000000' } }; // Negrita, tamaño 14, color negro
     };
 
-    const exportToExcel = async (jigs, mesas, chino, molienda, hmes12, hmes34, hmes5, hmes6, hmolinos,jigssech) => {
+    const exportToExcel = async (jigs, mesas, chino, molienda, hmes12, hmes34, hmes5, hmes6, hmolinos,jigssech, jigprimario) => {
         try {
             // Crea un nuevo libro de trabajo
             const workbook = new ExcelJS.Workbook();
@@ -483,6 +502,40 @@ function ReporteM() {
 
             }
 
+            const textRow11 = worksheet.addRow([]);
+
+            // Asignar texto a las celdas de la fila
+            textRow11.getCell(4).value = '';
+
+            const textRow4 = worksheet.addRow([]);
+
+            // Asignar texto a las celdas de la fila
+            textRow4.getCell(4).value = 'TOTAL JIG´S PRIMARIO';
+
+
+
+            const headerRow6 = worksheet.addRow(['', 'Alimentacion', 'P.E', 'Grano', 'P.E', 'Desensolve', 'P.E']);
+            applyHeaderStyle(headerRow6);
+
+            if (jigprimario && Array.isArray(jigprimario)) {
+                jigprimario.forEach(row => {
+
+                    worksheet.addRow([
+                        'JIG´S PRIMARIO',
+                        row.TOTALALIPRIM,
+                        row.promedioPeajPRIM,
+                        row.totalgranojprim,
+                        row.promedioPeGRAPRIM,
+                        row.totalDesejprim,
+                        row.promediodesensolvejprim,
+
+                    ]);
+
+                })
+
+
+            }
+
             const textRow5 = worksheet.addRow([]);
 
             // Asignar texto a las celdas de la fila
@@ -683,7 +736,7 @@ function ReporteM() {
                 const textRow13 = worksheet2.addRow([]);
                 const textRow14 = worksheet2.addRow([]);
 
-                textRow14.getCell(2).value = 'HORAS TRABAJADAS JIG´S SECU';
+                textRow14.getCell(2).value = 'HORAS TRABAJADAS JIG´S CHINOS';
                 // Agrega encabezados a la nueva hoja
                 const headerRow7 = worksheet2.addRow(['', 'HRS.TURNO1', 'HRS.TURNO2', 'TOTAL HRS']);
                 applyHeaderStyle(headerRow7);
@@ -702,6 +755,21 @@ function ReporteM() {
                           
                         ]);
 
+                        
+
+
+                    });
+
+                    jigssech.forEach(row => {
+                        const newRow = worksheet2.addRow([
+                            'JIG´SS PRIMARIO',
+                            row.HORASPRIM_TURNO_1,
+                            row.HORASPRIM_TURNO_2,
+                            row.HORASPRIM_TOTAL,
+                          
+                        ]);
+
+                        
 
 
                     });
