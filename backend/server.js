@@ -991,16 +991,7 @@ app.post('/creategranobaribright', async (req, res) => {
             });
         });
 
-        const obtenerPecngPorFecha = (fecha) => {
-            return new Promise((resolve, reject) => {
-                const query = 'SELECT pecng FROM prodseleccion WHERE fecha = ?';
-        
-                db.query(query, [fecha], (error, results) => {
-                    if (error) return reject(error);
-                    resolve(results.length > 0 ? results[0].pecng : null);
-                });
-            });
-        };
+      
 
         // Si hay registros en la tabla, obtén el saldo anterior, de lo contrario, establece el saldo anterior en 0
         const saldoAnterior = saldoAnteriorData.length > 0 ? saldoAnteriorData[0].saldo : 0;
@@ -1014,7 +1005,7 @@ app.post('/creategranobaribright', async (req, res) => {
             req.body.fecha,
             entradasgranobaright,
             req.body.salidas,
-            obtenerPecngPorFecha,
+            req.body.pe,
             nuevoSaldo
         ];
 
