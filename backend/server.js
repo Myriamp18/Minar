@@ -6448,7 +6448,7 @@ app.post('/MESASMES6H', (req, res) => {
 FROM 
     hmesa6
 WHERE 
-    fecha BETWEEN ? AND ?;
+    fecha BETWEEN ? AND ?
 
     `;
 
@@ -6534,18 +6534,18 @@ app.post('/jigssech', (req, res) => {
 
 
     SEC_TO_TIME(SUM(CASE WHEN turno = 1 THEN 
-        (CAST(SUBSTRING_INDEX(horajch, ':', 1) AS DECIMAL(10, 2)) * 3600 + 
-         CAST(SUBSTRING_INDEX(horajch, ':', -1) AS DECIMAL(10, 2)) * 60) 
+        (CAST(SUBSTRING_INDEX(horasjch, ':', 1) AS DECIMAL(10, 2)) * 3600 + 
+         CAST(SUBSTRING_INDEX(horasjch, ':', -1) AS DECIMAL(10, 2)) * 60) 
     ELSE 0 END)) AS HORASPRIM_TURNO_1,
     
     SEC_TO_TIME(SUM(CASE WHEN turno = 2 THEN 
-        (CAST(SUBSTRING_INDEX(horajch, ':', 1) AS DECIMAL(10, 2)) * 3600 + 
-         CAST(SUBSTRING_INDEX(horajch, ':', -1) AS DECIMAL(10, 2)) * 60) 
+        (CAST(SUBSTRING_INDEX(horasjch, ':', 1) AS DECIMAL(10, 2)) * 3600 + 
+         CAST(SUBSTRING_INDEX(horasjch, ':', -1) AS DECIMAL(10, 2)) * 60) 
     ELSE 0 END)) AS HORASPRIM_TURNO_2,
     
     SEC_TO_TIME(SUM(
-        CAST(SUBSTRING_INDEX(horajch, ':', 1) AS DECIMAL(10, 2)) * 3600 + 
-        CAST(SUBSTRING_INDEX(horajch, ':', -1) AS DECIMAL(10, 2)) * 60
+        CAST(SUBSTRING_INDEX(horasjch, ':', 1) AS DECIMAL(10, 2)) * 3600 + 
+        CAST(SUBSTRING_INDEX(horasjch, ':', -1) AS DECIMAL(10, 2)) * 60
     )) AS HORASPRIM_TOTAL
 
 
@@ -6600,6 +6600,120 @@ app.post('/jigprimario', (req, res) => {
             
         FROM jigschinos
         WHERE fecha BETWEEN ? AND ?;
+    `;
+
+    db.query(sql, [fechaInicio, fechaFin], (error, results) => {
+        if (error) {
+            console.error('Error al ejecutar la consulta:', error);
+            return res.status(500).json({ error: 'Error al ejecutar la consulta' });
+        } else {
+            // Devolver los resultados de la consulta como un objeto JSON
+            res.json(results[0]);
+        }
+    });
+
+
+});
+
+app.post('/seleccion', (req, res) => {
+    const { fechaInicio, fechaFin } = req.body;
+
+    // Verificar si se proporcionaron las fechas de inicio y fin
+    if (!fechaInicio || !fechaFin) {
+        return res.status(400).json({ error: 'Las fechas de inicio y fin son requeridas.' });
+    }
+
+    // Ejecutar la consulta SQL
+    const sql = `
+        SELECT
+            SUM(alimgrano) AS TOTALALIgrano,
+            SUM(peag) AS totalPeagrano,
+            SUM(CASE WHEN peag > 0 THEN 1 ELSE 0 END) AS countPeaj1GreaterThanZero,
+            CASE WHEN SUM(peag) > 0 THEN SUM(peag) / SUM(CASE WHEN peag > 0 THEN 1 ELSE 0 END) ELSE 0 END AS promedioPegrano,
+
+            SUM(concgrano) AS totalconcgrano,
+            SUM(pecng) AS totalPegrano,
+            SUM(CASE WHEN pecng > 0 THEN 1 ELSE 0 END) AS countPeaj1GreaterThanZero,
+            CASE WHEN SUM(pecng) > 0 THEN SUM(pecng) / SUM(CASE WHEN pecng > 0 THEN 1 ELSE 0 END) ELSE 0 END AS promedioPeGRno,
+
+            SUM(tonpiedra) AS totalton,
+            SUM(petp) AS totalPeton,
+            SUM(CASE WHEN petp > 0 THEN 1 ELSE 0 END) AS countPeaj1GreaterThanZero,
+            CASE WHEN SUM(petp) > 0 THEN SUM(petp) / SUM(CASE WHEN petp > 0 THEN 1 ELSE 0 END) ELSE 0 END AS promedioPeton
+            
+        FROM prodseleccion
+        WHERE fecha BETWEEN ? AND ?
+    `;
+
+    db.query(sql, [fechaInicio, fechaFin], (error, results) => {
+        if (error) {
+            console.error('Error al ejecutar la consulta:', error);
+            return res.status(500).json({ error: 'Error al ejecutar la consulta' });
+        } else {
+            // Devolver los resultados de la consulta como un objeto JSON
+            res.json(results[0]);
+        }
+    });
+
+
+});
+
+app.post('/SUMMLT', (req, res) => {
+    const { fechaInicio, fechaFin } = req.body;
+
+    // Verificar si se proporcionaron las fechas de inicio y fin
+    if (!fechaInicio || !fechaFin) {
+        return res.status(400).json({ error: 'Las fechas de inicio y fin son requeridas.' });
+    }   
+
+    // Ejecutar la consulta SQL
+    const sql = `
+        SELECT
+            SUM(entradas) AS TOTALentradas,
+            SUM(pe) AS totalPentradas,
+            SUM(CASE WHEN pe > 0 THEN 1 ELSE 0 END) AS countPeaj1GreaterThanZero,
+            CASE WHEN SUM(pe) > 0 THEN SUM(pe) / SUM(CASE WHEN pe > 0 THEN 1 ELSE 0 END) ELSE 0 END AS promedioPeentradas
+
+            
+            
+        FROM mpmlt
+        WHERE fecha BETWEEN ? AND ?
+    `;
+
+    db.query(sql, [fechaInicio, fechaFin], (error, results) => {
+        if (error) {
+            console.error('Error al ejecutar la consulta:', error);
+            return res.status(500).json({ error: 'Error al ejecutar la consulta' });
+        } else {
+            // Devolver los resultados de la consulta como un objeto JSON
+            res.json(results[0]);
+        }
+    });
+
+
+});
+
+
+app.post('/SUMMLE', (req, res) => {
+    const { fechaInicio, fechaFin } = req.body;
+
+    // Verificar si se proporcionaron las fechas de inicio y fin
+    if (!fechaInicio || !fechaFin) {
+        return res.status(400).json({ error: 'Las fechas de inicio y fin son requeridas.' });
+    }   
+
+    // Ejecutar la consulta SQL
+    const sql = `
+        SELECT
+            SUM(entradas) AS TOTALentradasE,
+            SUM(pe) AS totalPentradasE,
+            SUM(CASE WHEN pe > 0 THEN 1 ELSE 0 END) AS countPeaj1GreaterThanZero,
+            CASE WHEN SUM(pe) > 0 THEN SUM(pe) / SUM(CASE WHEN pe > 0 THEN 1 ELSE 0 END) ELSE 0 END AS promedioPeentradasE
+
+            
+            
+        FROM mpmle
+        WHERE fecha BETWEEN ? AND ?
     `;
 
     db.query(sql, [fechaInicio, fechaFin], (error, results) => {

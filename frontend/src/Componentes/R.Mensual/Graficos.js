@@ -214,7 +214,7 @@ const Graficos = () => {
 
   return (
     <div style={{ width: '80%', margin: '0 auto', padding: '20px', border: '1px solid #ddd', borderRadius: '10px', backgroundColor: '#f9f9f9', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
-      <h1>Grafico Horas/Produccion</h1>
+      <h1>Grafico Horas/Produccion Mesas</h1>
 
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
         <div style={{ display: 'flex', marginBottom: '10px' }}>

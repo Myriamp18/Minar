@@ -198,7 +198,54 @@ function ReporteM() {
 
             const jisprimData = await response11.json();
             console.log("Datos recibidos de /jigprimario:", jisprimData);
+            //////////////////////////////////////////////////////77
+            const response12 = await fetch('http://localhost:8081/seleccion', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ fechaInicio: startDate, fechaFin: endDate })
+            });
 
+            if (!response12.ok) {
+                throw new Error('Error al obtener los datos de las mesas del servidor');
+            }
+
+            const seleccionData = await response12.json();
+            console.log("Datos recibidos de /seleccion:", seleccionData);
+           ////////////////////////////////////////77
+
+           const response13 = await fetch('http://localhost:8081/SUMMLT', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ fechaInicio: startDate, fechaFin: endDate })
+        });
+
+        if (!response13.ok) {
+            throw new Error('Error al obtener los datos de las mltt del servidor');
+        }
+
+        const mltData = await response13.json();
+        console.log("Datos recibidos de /SUMMLT:", mltData);
+
+         //////////////////////////////////77
+
+         const response14 = await fetch('http://localhost:8081/SUMMLE', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ fechaInicio: startDate, fechaFin: endDate })
+        });
+
+        if (!response14.ok) {
+            throw new Error('Error al obtener los datos de las mltt del servidor');
+        }
+
+        const mleData = await response14.json();
+        console.log("Datos recibidos de /SUMMLE:", mleData);
 
             const jigsArray = [jigsData]; // Convertir el objeto de JIGs en un array
             const mesasArray = [mesasData]; // Convertir el objeto de mesas en un array
@@ -211,10 +258,14 @@ function ReporteM() {
             const hmolinosArray = [HmolinosData];
             const jissecArray = [jissecData];
             const jisprimArray = [jisprimData];
+            const seleccionArray = [seleccionData];
+            const MLTArray = [mltData];
+            const MLEArray = [mleData];
+
 
 
             // Llamar a la función para exportar a Excel con los datos ajustados
-            exportToExcel(jigsArray, mesasArray, chinoArray, moliendaArray, hmes12Array, hmes34Array, hmes5Array, hmes6Array, hmolinosArray,jissecArray,jisprimArray );
+            exportToExcel(jigsArray, mesasArray, chinoArray, moliendaArray, hmes12Array, hmes34Array, hmes5Array, hmes6Array, hmolinosArray, jissecArray, jisprimArray, seleccionArray,MLTArray,MLEArray);
         } catch (error) {
             console.error('Error en el bloque try:', error);
         }
@@ -226,7 +277,7 @@ function ReporteM() {
         cell.font = { bold: true, size: 14, color: { argb: '000000' } }; // Negrita, tamaño 14, color negro
     };
 
-    const exportToExcel = async (jigs, mesas, chino, molienda, hmes12, hmes34, hmes5, hmes6, hmolinos,jigssech, jigprimario) => {
+    const exportToExcel = async (jigs, mesas, chino, molienda, hmes12, hmes34, hmes5, hmes6, hmolinos, jigssech, jigprimario, seleccion, mlt, mle) => {
         try {
             // Crea un nuevo libro de trabajo
             const workbook = new ExcelJS.Workbook();
@@ -489,7 +540,7 @@ function ReporteM() {
                 chino.forEach(row => {
 
                     worksheet.addRow([
-                        'JIG´S SECUNARIO',
+                        'JIG´S SECUNDARIO',
                         row.TOTALALISEC,
                         row.promedioPeajSEC,
                         row.totalconcjsec,
@@ -528,6 +579,38 @@ function ReporteM() {
                         row.promedioPeGRAPRIM,
                         row.totalDesejprim,
                         row.promediodesensolvejprim,
+
+                    ]);
+
+                })
+
+
+            }
+            // Asignar texto a las celdas de la fila
+            textRow11.getCell(4).value = '';
+
+            const textRow9 = worksheet.addRow([]);
+
+            // Asignar texto a las celdas de la fila
+            textRow9.getCell(4).value = 'TOTAL SELECCION';
+
+
+
+            const headerRow7 = worksheet.addRow(['', 'Alimentacion', 'P.E', 'Concentrado', 'P.E', '', 'TON','P.E']);
+            applyHeaderStyle(headerRow7);
+
+            if (seleccion && Array.isArray(seleccion)) {
+                seleccion.forEach(row => {
+
+                    worksheet.addRow([
+                        'GRANO',
+                        row.TOTALALIgrano,
+                        row.promedioPegrano,
+                        row.totalconcgrano,
+                        row.promedioPeGRno,
+                        'PIEDRA',
+                        row.totalton,
+                        row.promedioPeton,
 
                     ]);
 
@@ -593,6 +676,63 @@ function ReporteM() {
 
                 })
 
+                const textRow17 = worksheet.addRow([]);
+
+                // Asignar texto a las celdas de la fila
+                textRow17.getCell(4).value = '';
+
+            const textRow15 = worksheet.addRow([]);
+
+            // Asignar texto a las celdas de la fila
+            textRow15.getCell(1).value = 'TOTAL MINERAL MINA LA TATIANA';
+
+
+
+            const headerRow8 = worksheet.addRow(['TONS','P.E']);
+            applyHeaderStyle(headerRow8);
+
+            if (mlt && Array.isArray(mlt)) {
+                mlt.forEach(row => {
+
+                    worksheet.addRow([
+                        
+                        row.TOTALentradas,
+                        row.promedioPeentradas,
+                        
+
+                    ]);
+
+                })
+
+
+            }
+           
+
+            const textRow16 = worksheet.addRow([]);
+
+            // Asignar texto a las celdas de la fila
+            textRow16.getCell(1).value = 'TOTAL MINERAL MINA LA ESCONDIDA';
+
+
+
+            const headerRow9 = worksheet.addRow(['TONS','P.E']);
+            applyHeaderStyle(headerRow9);
+
+            if (mle && Array.isArray(mle)) {
+                mle.forEach(row => {
+
+                    worksheet.addRow([
+                        
+                        row.TOTALentradasE,
+                        row.promedioPeentradasE,
+                        
+
+                    ]);
+
+                })
+
+
+            }
 
                 const worksheet2 = workbook.addWorksheet('Horas Turnos');
                 // Agrega la imagen del logo si es necesario
@@ -732,7 +872,7 @@ function ReporteM() {
                     });
 
                 }
-                
+
                 const textRow13 = worksheet2.addRow([]);
                 const textRow14 = worksheet2.addRow([]);
 
@@ -752,10 +892,10 @@ function ReporteM() {
                             row.HORASSEC_TURNO_1,
                             row.HORASSEC_TURNO_2,
                             row.HORASSEC_TOTAL,
-                          
+
                         ]);
 
-                        
+
 
 
                     });
@@ -766,14 +906,14 @@ function ReporteM() {
                             row.HORASPRIM_TURNO_1,
                             row.HORASPRIM_TURNO_2,
                             row.HORASPRIM_TOTAL,
-                          
+
                         ]);
 
-                        
+
 
 
                     });
-                  
+
 
                 }
                 // Ajusta el ancho de las columnas de la nueva hoja
@@ -832,7 +972,7 @@ function ReporteM() {
                     />
                 </div>
                 <button type="button" onClick={handleSubmit}>Generar Informe</button>
-               
+
             </form>
         </div>
     );
