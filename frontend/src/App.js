@@ -165,6 +165,7 @@ import OlvContra from './Componentes/Usuarios/OlvContra';
 import ReporteM from './Componentes/R.Mensual/ReporteM';
 import Graficos from './Componentes/R.Mensual/Graficos';
 import GraficosMolinos from './Componentes/R.Mensual/GraficosMolinos';
+import GraficosJigs from './Componentes/R.Mensual/GraficosJigs';
 
 function App() {
 
@@ -401,6 +402,7 @@ function App() {
                                     <Route path="/reportem" element={<ReporteM />} />
                                     <Route path="/graficos" element={<Graficos />} />
                                     <Route path='/gmolinos' element={<GraficosMolinos/>}/>
+                                    <Route path='/gjigschino' element={<GraficosJigs/>}/>
 
                                  
 

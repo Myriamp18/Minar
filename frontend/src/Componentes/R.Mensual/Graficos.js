@@ -4,7 +4,7 @@ import { Bar } from 'react-chartjs-2';
 import { Link } from 'react-router-dom';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { Chart as ChartJS, registerables } from 'chart.js';
-
+import './Graficas.css'
 
 ChartJS.register(...registerables, ChartDataLabels);
 
@@ -27,7 +27,7 @@ const Graficos = () => {
       console.error('Invalid horaString:', horaString);
       return 0;
     }
-    
+
     const [horas, minutos] = horaString.split(':');
     const horasComoDecimal = parseInt(horas) + parseInt(minutos) / 60;
     return horasComoDecimal;
@@ -229,18 +229,22 @@ const Graficos = () => {
         </div>
         <button onClick={fetchData} disabled={loading} style={{ padding: '5px 10px', fontSize: '14px' }}>Buscar</button>
         <div>
-          
+
         </div>
       </div>
 
       {error && <p style={{ color: 'red' }}>{error}</p>}
       {loading && <p>Cargando...</p>}
       {data && (
-       <Bar data={prepareChartData(data)} options={options} />
+        <Bar data={prepareChartData(data)} options={options} />
       )}
 
       <Link to="/gmolinos">
-        <button>Ver Horas de Molinos</button>
+        <button class="custom-button">Ver Horas de Molinos</button>
+      </Link>
+
+      <Link to="/gjigschino">
+        <button class="custom-button">Ver Horas Jigs Chino</button>
       </Link>
     </div>
   );

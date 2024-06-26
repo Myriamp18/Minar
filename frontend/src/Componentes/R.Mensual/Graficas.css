@@ -33,3 +33,25 @@
   color: #666;
   font-family: Arial, sans-serif; /* Asegurarse de que la fuente sea consistente */
 }
+
+
+
+/* Button Styles */
+.custom-button {
+  background-color: #d4341b; /* Green background */
+  color: rgb(240, 230, 230); /* White text */
+  border: none; /* Remove border */
+  padding: 15px 32px; /* Add padding */
+  text-align: center; /* Center text */
+  text-decoration: none; /* Remove underline */
+  display: inline-block; /* Get buttons inline */
+  font-size: 15px; /* Increase font size */
+  margin: 10px 2px; /* Add some margin */
+  cursor: pointer; /* Add pointer cursor on hover */
+  border-radius: 8px; /* Rounded corners */
+  transition: background-color 0.3s ease; /* Smooth background color transition */
+}
+
+.custom-button:hover {
+  background-color: #0e0f0f; /* Darker green on hover */
+}
