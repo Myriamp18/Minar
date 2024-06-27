@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Bar } from 'react-chartjs-2';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { Chart as ChartJS, registerables } from 'chart.js';
-
+import { Link } from 'react-router-dom';
 
 ChartJS.register(...registerables, ChartDataLabels);
 
@@ -146,6 +146,15 @@ function GraficosJigs() {
     {error && <p style={{ color: 'red' }}>{error}</p>}
     {loading && <p>Cargando...</p>}
     {data && <Bar data={chartData} options={options} />}
+
+
+    <Link to="/graficos">
+        <button class="custom-button">Ver Horas de Mesas</button>
+      </Link>
+
+      <Link to="/gmolinos">
+        <button class="custom-button">Ver Horas Molinos</button>
+      </Link>
   </div>
   )
 }

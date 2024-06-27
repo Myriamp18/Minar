@@ -6350,6 +6350,7 @@ app.post('/MESASMES12H', (req, res) => {
     SELECT 
     SEC_TO_TIME(SUM(CASE WHEN turno = 1 THEN (CAST(SUBSTRING_INDEX(totalhrs, ':', 1) AS DECIMAL(10, 2)) * 3600 + CAST(SUBSTRING_INDEX(totalhrs, ':', -1) AS DECIMAL(10, 2)) * 60) ELSE 0 END)) AS TOTAHRS_TURNO_1,
     SEC_TO_TIME(SUM(CASE WHEN turno = 2 THEN (CAST(SUBSTRING_INDEX(totalhrs, ':', 1) AS DECIMAL(10, 2)) * 3600 + CAST(SUBSTRING_INDEX(totalhrs, ':', -1) AS DECIMAL(10, 2)) * 60) ELSE 0 END)) AS TOTAHRS_TURNO_2,
+    SEC_TO_TIME(SUM(CASE WHEN turno = 3 THEN (CAST(SUBSTRING_INDEX(totalhrs, ':', 1) AS DECIMAL(10, 2)) * 3600 + CAST(SUBSTRING_INDEX(totalhrs, ':', -1) AS DECIMAL(10, 2)) * 60) ELSE 0 END)) AS TOTAHRS_TURNO_3,
     SEC_TO_TIME(SUM(CAST(SUBSTRING_INDEX(totalhrs, ':', 1) AS DECIMAL(10, 2)) * 3600 + CAST(SUBSTRING_INDEX(totalhrs, ':', -1) AS DECIMAL(10, 2)) * 60)) AS TOTAHRS
 FROM 
     hmesa12
@@ -6382,6 +6383,7 @@ app.post('/MESASMES34H', (req, res) => {
     SELECT 
     SEC_TO_TIME(SUM(CASE WHEN turno = 1 THEN (CAST(SUBSTRING_INDEX(totalhrs, ':', 1) AS DECIMAL(10, 2)) * 3600 + CAST(SUBSTRING_INDEX(totalhrs, ':', -1) AS DECIMAL(10, 2)) * 60) ELSE 0 END)) AS TOTAHRS_TURNO_1,
     SEC_TO_TIME(SUM(CASE WHEN turno = 2 THEN (CAST(SUBSTRING_INDEX(totalhrs, ':', 1) AS DECIMAL(10, 2)) * 3600 + CAST(SUBSTRING_INDEX(totalhrs, ':', -1) AS DECIMAL(10, 2)) * 60) ELSE 0 END)) AS TOTAHRS_TURNO_2,
+    SEC_TO_TIME(SUM(CASE WHEN turno = 3 THEN (CAST(SUBSTRING_INDEX(totalhrs, ':', 1) AS DECIMAL(10, 2)) * 3600 + CAST(SUBSTRING_INDEX(totalhrs, ':', -1) AS DECIMAL(10, 2)) * 60) ELSE 0 END)) AS TOTAHRS_TURNO_3,
     SEC_TO_TIME(SUM(CAST(SUBSTRING_INDEX(totalhrs, ':', 1) AS DECIMAL(10, 2)) * 3600 + CAST(SUBSTRING_INDEX(totalhrs, ':', -1) AS DECIMAL(10, 2)) * 60)) AS TOTAHRS
 FROM 
     hmesa34
@@ -6413,6 +6415,7 @@ app.post('/MESASMES5H', (req, res) => {
     SELECT 
     SEC_TO_TIME(SUM(CASE WHEN turno = 1 THEN (CAST(SUBSTRING_INDEX(totalhrs, ':', 1) AS DECIMAL(10, 2)) * 3600 + CAST(SUBSTRING_INDEX(totalhrs, ':', -1) AS DECIMAL(10, 2)) * 60) ELSE 0 END)) AS TOTAHRS_TURNO_1,
     SEC_TO_TIME(SUM(CASE WHEN turno = 2 THEN (CAST(SUBSTRING_INDEX(totalhrs, ':', 1) AS DECIMAL(10, 2)) * 3600 + CAST(SUBSTRING_INDEX(totalhrs, ':', -1) AS DECIMAL(10, 2)) * 60) ELSE 0 END)) AS TOTAHRS_TURNO_2,
+     SEC_TO_TIME(SUM(CASE WHEN turno = 3 THEN (CAST(SUBSTRING_INDEX(totalhrs, ':', 1) AS DECIMAL(10, 2)) * 3600 + CAST(SUBSTRING_INDEX(totalhrs, ':', -1) AS DECIMAL(10, 2)) * 60) ELSE 0 END)) AS TOTAHRS_TURNO_3,
     SEC_TO_TIME(SUM(CAST(SUBSTRING_INDEX(totalhrs, ':', 1) AS DECIMAL(10, 2)) * 3600 + CAST(SUBSTRING_INDEX(totalhrs, ':', -1) AS DECIMAL(10, 2)) * 60)) AS TOTAHRS
 FROM 
     hmesa5
@@ -6444,6 +6447,7 @@ app.post('/MESASMES6H', (req, res) => {
     SELECT 
     SEC_TO_TIME(SUM(CASE WHEN turno = 1 THEN (CAST(SUBSTRING_INDEX(totalhrs, ':', 1) AS DECIMAL(10, 2)) * 3600 + CAST(SUBSTRING_INDEX(totalhrs, ':', -1) AS DECIMAL(10, 2)) * 60) ELSE 0 END)) AS TOTAHRS_TURNO_1,
     SEC_TO_TIME(SUM(CASE WHEN turno = 2 THEN (CAST(SUBSTRING_INDEX(totalhrs, ':', 1) AS DECIMAL(10, 2)) * 3600 + CAST(SUBSTRING_INDEX(totalhrs, ':', -1) AS DECIMAL(10, 2)) * 60) ELSE 0 END)) AS TOTAHRS_TURNO_2,
+     SEC_TO_TIME(SUM(CASE WHEN turno = 3 THEN (CAST(SUBSTRING_INDEX(totalhrs, ':', 1) AS DECIMAL(10, 2)) * 3600 + CAST(SUBSTRING_INDEX(totalhrs, ':', -1) AS DECIMAL(10, 2)) * 60) ELSE 0 END)) AS TOTAHRS_TURNO_3,
     SEC_TO_TIME(SUM(CAST(SUBSTRING_INDEX(totalhrs, ':', 1) AS DECIMAL(10, 2)) * 3600 + CAST(SUBSTRING_INDEX(totalhrs, ':', -1) AS DECIMAL(10, 2)) * 60)) AS TOTAHRS
 FROM 
     hmesa6
@@ -6478,12 +6482,17 @@ app.post('/MOLINOSMH', (req, res) => {
     SEC_TO_TIME(SUM(CASE WHEN turno = 1 THEN (CAST(SUBSTRING_INDEX(hrsm2, ':', 1) AS DECIMAL(10, 2)) * 3600 + CAST(SUBSTRING_INDEX(hrsm2, ':', -1) AS DECIMAL(10, 2)) * 60) ELSE 0 END)) AS HRSM2_TURNO_1,
     SEC_TO_TIME(SUM(CASE WHEN turno = 2 THEN (CAST(SUBSTRING_INDEX(hrsm1, ':', 1) AS DECIMAL(10, 2)) * 3600 + CAST(SUBSTRING_INDEX(hrsm1, ':', -1) AS DECIMAL(10, 2)) * 60) ELSE 0 END)) AS HRSM1_TURNO_2,
     SEC_TO_TIME(SUM(CASE WHEN turno = 2 THEN (CAST(SUBSTRING_INDEX(hrsm2, ':', 1) AS DECIMAL(10, 2)) * 3600 + CAST(SUBSTRING_INDEX(hrsm2, ':', -1) AS DECIMAL(10, 2)) * 60) ELSE 0 END)) AS HRSM2_TURNO_2,
+    SEC_TO_TIME(SUM(CASE WHEN turno = 3 THEN (CAST(SUBSTRING_INDEX(hrsm1, ':', 1) AS DECIMAL(10, 2)) * 3600 + CAST(SUBSTRING_INDEX(hrsm1, ':', -1) AS DECIMAL(10, 2)) * 60) ELSE 0 END)) AS HRSM1_TURNO_3,
+    SEC_TO_TIME(SUM(CASE WHEN turno = 3 THEN (CAST(SUBSTRING_INDEX(hrsm2, ':', 1) AS DECIMAL(10, 2)) * 3600 + CAST(SUBSTRING_INDEX(hrsm2, ':', -1) AS DECIMAL(10, 2)) * 60) ELSE 0 END)) AS HRSM2_TURNO_3,
     SEC_TO_TIME(SUM(CAST(SUBSTRING_INDEX(hrsm1, ':', 1) AS DECIMAL(10, 2)) * 3600 + CAST(SUBSTRING_INDEX(hrsm1, ':', -1) AS DECIMAL(10, 2)) * 60)) AS HRSM1_TOTAL,
     SEC_TO_TIME(SUM(CAST(SUBSTRING_INDEX(hrsm2, ':', 1) AS DECIMAL(10, 2)) * 3600 + CAST(SUBSTRING_INDEX(hrsm2, ':', -1) AS DECIMAL(10, 2)) * 60)) AS HRSM2_TOTAL,
     SUM(CASE WHEN turno = 1 THEN prodM1 ELSE 0 END) AS PRODM1_TURNO_1,
     SUM(CASE WHEN turno = 2 THEN prodM1 ELSE 0 END) AS PRODM1_TURNO_2,
+    SUM(CASE WHEN turno = 3 THEN prodM1 ELSE 0 END) AS PRODM1_TURNO_3,
     SUM(CASE WHEN turno = 1 THEN prodM2 ELSE 0 END) AS PRODM2_TURNO_1,
     SUM(CASE WHEN turno = 2 THEN prodM2 ELSE 0 END) AS PRODM2_TURNO_2,
+    SUM(CASE WHEN turno = 3 THEN prodM2 ELSE 0 END) AS PRODM2_TURNO_3,
+    
     SUM(prodM1) AS PRODM1_TOTAL,
     SUM(prodM2) AS PRODM2_TOTAL,
     SUM(prodM1 + prodM2) AS PRODUCCION_TOTAL
@@ -6664,7 +6673,7 @@ app.post('/SUMMLT', (req, res) => {
     // Verificar si se proporcionaron las fechas de inicio y fin
     if (!fechaInicio || !fechaFin) {
         return res.status(400).json({ error: 'Las fechas de inicio y fin son requeridas.' });
-    }   
+    }
 
     // Ejecutar la consulta SQL
     const sql = `
@@ -6700,7 +6709,7 @@ app.post('/SUMMLE', (req, res) => {
     // Verificar si se proporcionaron las fechas de inicio y fin
     if (!fechaInicio || !fechaFin) {
         return res.status(400).json({ error: 'Las fechas de inicio y fin son requeridas.' });
-    }   
+    }
 
     // Ejecutar la consulta SQL
     const sql = `

@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Bar } from 'react-chartjs-2';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { Chart as ChartJS, registerables } from 'chart.js';
+import { Link } from 'react-router-dom';
 
 ChartJS.register(...registerables, ChartDataLabels);
 
@@ -87,7 +88,7 @@ function GraficosMolinos() {
   };
 
   const chartData = {
-    labels: ['Turno 1', 'Turno 2', 'Total'],
+    labels: ['Turno 1', 'Turno 2','Turno 3', 'Total'],
     datasets: [
       {
         label: 'MOLINO CHINO',
@@ -100,6 +101,7 @@ function GraficosMolinos() {
           ? [
               calcularHoras(data.HRSM1_TURNO_1),
               calcularHoras(data.HRSM1_TURNO_2),
+              calcularHoras(data.HRSM1_TURNO_3),
               calcularHoras(data.HRSM1_TOTAL),
             ]
           : [0, 0, 0],
@@ -115,6 +117,7 @@ function GraficosMolinos() {
           ? [
               calcularHoras(data.HRSM2_TURNO_1),
               calcularHoras(data.HRSM2_TURNO_2),
+              calcularHoras(data.HRSM2_TURNO_3),
               calcularHoras(data.HRSM2_TOTAL),
             ]
           : [0, 0, 0],
@@ -144,6 +147,16 @@ function GraficosMolinos() {
       {error && <p style={{ color: 'red' }}>{error}</p>}
       {loading && <p>Cargando...</p>}
       {data && <Bar data={chartData} options={options} />}
+
+
+
+      <Link to="/graficos">
+        <button class="custom-button">Ver Horas de Mesas</button>
+      </Link>
+
+      <Link to="/gjigschino">
+        <button class="custom-button">Ver Horas Jigs Chino</button>
+      </Link>
     </div>
   );
 }
