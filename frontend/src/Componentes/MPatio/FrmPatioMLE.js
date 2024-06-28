@@ -72,7 +72,18 @@ const handleSubmit = (e) => {
              onChange={(e) => setValues({...values, entradas: e.target.value})}/>
           </div>
          
-
+          <div class="mb-3">
+            <label form='text' class="form-label"> Salidas:</label>
+            <input
+             type="text"  
+             class="form-control"
+             id='salidas'
+             placeholder='Insertar Cantidad'  
+             name='salidas'
+             required
+             onChange={(e) => setValues({...values, salidas: e.target.value})}/>
+          </div>
+         
 
           
 

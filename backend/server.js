@@ -3709,24 +3709,7 @@ app.get('/mpmle', (req, res) => {
 
 app.post('/creatempmle', async (req, res) => {
     try {
-        const totalsalidas = await new Promise((resolve, reject) => {
-            const query = `
-            SELECT 
-            COALESCE(SUM(ps.patiols), 0)  + COALESCE(SUM(m.pmle), 0) AS total_salidas
-        FROM 
-            prodseleccion ps
         
-        LEFT JOIN 
-            molienda m ON ps.fecha = m.fecha
-        WHERE 
-            ps.fecha = ?;
-        ;
-            `; // Ajusta la condición de fecha según tus necesidades
-            db.query(query, [req.body.fecha], (err, data) => {
-                if (err) reject(err);
-                else resolve(data[0].total_salidas); // Obtenemos el total de salidas combinadas
-            });
-        });
         // Obtener el saldo anterior
         const saldoAnteriorData = await new Promise((resolve, reject) => {
             db.query("SELECT saldo FROM mpmle ORDER BY id DESC LIMIT 1", (err, data) => {
@@ -3739,14 +3722,14 @@ app.post('/creatempmle', async (req, res) => {
         const saldoAnterior = saldoAnteriorData.length > 0 ? saldoAnteriorData[0].saldo : 0;
 
         // Calcula el nuevo saldo sumando el saldo anterior a las entradas y restando las salidas
-        const nuevoSaldo = saldoAnterior + parseFloat(req.body.entradas) - parseFloat(totalsalidas);
+        const nuevoSaldo = saldoAnterior + parseFloat(req.body.entradas) - parseFloat(req.body.salidas);
 
         // Realizar la inserción en la tabla concmesas
         const sql = "INSERT INTO mpmle (fecha, entradas, salidas, saldo, pe) VALUES (?, ?, ?, ?, ?)";
         const values = [
             req.body.fecha,
             req.body.entradas,
-            totalsalidas,
+            req.body.salidas,
             nuevoSaldo,
             req.body.pe
         ];
@@ -3826,36 +3809,7 @@ app.get('/mpmlet', (req, res) => {
 
 app.post('/creatempmlt', async (req, res) => {
     try {
-        const totalsalidas = await new Promise((resolve, reject) => {
-            const query = `
-                SELECT 
-                    COALESCE(ps_sum.tolvageneral, 0) + 
-                    COALESCE(pj_sum.alimj2, 0) + 
-                    COALESCE(m_sum.pmlt, 0) AS total_salidas
-                FROM 
-                    (
-                        SELECT COALESCE(SUM(tolvageneral), 0) AS tolvageneral
-                        FROM prodseleccion
-                        WHERE fecha = ?
-                    ) ps_sum,
-                    (
-                        SELECT COALESCE(SUM(alimj2), 0) AS alimj2
-                        FROM produccionjigs
-                        WHERE fecha = ?
-                    ) pj_sum,
-                    (
-                        SELECT COALESCE(SUM(pmlt), 0) AS pmlt
-                        FROM molienda
-                        WHERE fecha = ?
-                    ) m_sum;
-            `; // Ajusta la condición de fecha según tus necesidades
-            db.query(query, [req.body.fecha, req.body.fecha, req.body.fecha], (err, data) => {
-                if (err) reject(err);
-                else resolve(data[0].total_salidas); // Obtenemos el total de salidas combinadas
-            });
-        });
-
-
+      
 
 
 
@@ -3871,14 +3825,14 @@ app.post('/creatempmlt', async (req, res) => {
         const saldoAnterior = saldoAnteriorData.length > 0 ? saldoAnteriorData[0].saldo : 0;
 
         // Calcula el nuevo saldo sumando el saldo anterior a las entradas y restando las salidas
-        const nuevoSaldo = saldoAnterior + parseFloat(req.body.entradas) - parseFloat(totalsalidas);
+        const nuevoSaldo = saldoAnterior + parseFloat(req.body.entradas) - parseFloat(req.body.salidas);
 
         // Realizar la inserción en la tabla concmesas
         const sql = "INSERT INTO mpmlt (fecha, entradas, salidas, saldo, pe) VALUES (?, ?, ?, ?, ?)";
         const values = [
             req.body.fecha,
             req.body.entradas,
-            totalsalidas,
+            req.body.salidas,
             nuevoSaldo,
             req.body.pe
         ];
