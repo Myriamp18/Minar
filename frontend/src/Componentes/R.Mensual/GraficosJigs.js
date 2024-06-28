@@ -7,15 +7,15 @@ import { Link } from 'react-router-dom';
 
 ChartJS.register(...registerables, ChartDataLabels);
 
-
 function GraficosJigs() {
+  const [data, setData] = useState(null);
+  const [fechaInicio, setFechaInicio] = useState('');
+  const [fechaFin, setFechaFin] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
-    const [data, setData] = useState(null);
-    const [fechaInicio, setFechaInicio] = useState('');
-    const [fechaFin, setFechaFin] = useState('');
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(null);
-    const horasObjetivoDiarias = 8; // Modificado según tu ejemplo
+  const horasObjetivoDiarias = 7; // Modificado según tu ejemplo
+  const horasObjetivoTotales = 14; // 16 horas para los totales
 
   const calcularHoras = (horaString) => {
     if (horaString === null) {
@@ -27,8 +27,8 @@ function GraficosJigs() {
     return horasComoDecimal;
   };
 
-  const calcularPorcentajeHorasTrabajadas = (horasTrabajadas, objetivoDiario, diferenciaDias) => {
-    const objetivoTotal = objetivoDiario * diferenciaDias;
+  const calcularPorcentajeHorasTrabajadas = (horasTrabajadas, objetivoDiario, diferenciaDias, esTotal = false) => {
+    const objetivoTotal = (esTotal ? horasObjetivoTotales : objetivoDiario) * diferenciaDias;
     const porcentaje = (horasTrabajadas / objetivoTotal) * 100;
     return porcentaje.toFixed(2); // Redondear a dos decimales
   };
@@ -77,10 +77,12 @@ function GraficosJigs() {
         anchor: 'end',
         align: 'start',
         formatter: (value, context) => {
+          const esTotal = context.dataIndex === 2; // Verificar si es el índice del total
           const porcentaje = calcularPorcentajeHorasTrabajadas(
             value,
             horasObjetivoDiarias,
-            dias
+            dias,
+            esTotal
           );
           return `${value.toFixed(3)} hrs\n(${porcentaje}%)`;
         },
@@ -128,35 +130,34 @@ function GraficosJigs() {
 
   return (
     <div style={{ width: '80%', margin: '0 auto', padding: '20px', border: '1px solid #ddd', borderRadius: '10px', backgroundColor: '#f9f9f9', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
-    <h1>Gráfico de Producción de Jigs Chinos</h1>
+      <h1>Gráfico de Producción de Jigs Chinos</h1>
 
-    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-      <div style={{ display: 'flex', marginBottom: '10px' }}>
-        <label style={{ marginRight: '10px' }}>
-          Fecha de Inicio:
-          <input type="date" value={fechaInicio} onChange={(e) => setFechaInicio(e.target.value)} />
-        </label>
-        <label style={{ marginRight: '10px' }}>
-          Fecha de Fin:
-          <input type="date" value={fechaFin} onChange={(e) => setFechaFin(e.target.value)} />
-        </label>
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        <div style={{ display: 'flex', marginBottom: '10px' }}>
+          <label style={{ marginRight: '10px' }}>
+            Fecha de Inicio:
+            <input type="date" value={fechaInicio} onChange={(e) => setFechaInicio(e.target.value)} />
+          </label>
+          <label style={{ marginRight: '10px' }}>
+            Fecha de Fin:
+            <input type="date" value={fechaFin} onChange={(e) => setFechaFin(e.target.value)} />
+          </label>
+        </div>
       </div>
-    </div>
 
-    {error && <p style={{ color: 'red' }}>{error}</p>}
-    {loading && <p>Cargando...</p>}
-    {data && <Bar data={chartData} options={options} />}
+      {error && <p style={{ color: 'red' }}>{error}</p>}
+      {loading && <p>Cargando...</p>}
+      {data && <Bar data={chartData} options={options} />}
 
-
-    <Link to="/graficos">
-        <button class="custom-button">Ver Horas de Mesas</button>
+      <Link to="/graficos">
+        <button className="custom-buttonmesas">Gráficos Mesas</button>
       </Link>
 
       <Link to="/gmolinos">
-        <button class="custom-button">Ver Horas Molinos</button>
+        <button className="custom-buttonmolinos">Gráficos Molinos</button>
       </Link>
-  </div>
-  )
+    </div>
+  );
 }
 
-export default GraficosJigs
+export default GraficosJigs;

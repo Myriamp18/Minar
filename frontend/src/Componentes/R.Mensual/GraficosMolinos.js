@@ -15,6 +15,7 @@ function GraficosMolinos() {
   const [error, setError] = useState(null);
 
   const horasObjetivoDiarias = 8; // Modificado según tu ejemplo
+  const horasObjetivoTotales = 16; // 16 horas para los totales
 
   const calcularHoras = (horaString) => {
     if (horaString === null) {
@@ -26,8 +27,8 @@ function GraficosMolinos() {
     return horasComoDecimal;
   };
 
-  const calcularPorcentajeHorasTrabajadas = (horasTrabajadas, objetivoDiario, diferenciaDias) => {
-    const objetivoTotal = objetivoDiario * diferenciaDias;
+  const calcularPorcentajeHorasTrabajadas = (horasTrabajadas, objetivoDiario, diferenciaDias, esTotal = false) => {
+    const objetivoTotal = (esTotal ? horasObjetivoTotales : objetivoDiario) * diferenciaDias;
     const porcentaje = (horasTrabajadas / objetivoTotal) * 100;
     return porcentaje.toFixed(2); // Redondear a dos decimales
   };
@@ -36,7 +37,7 @@ function GraficosMolinos() {
     const fetchData = async () => {
       if (!fechaInicio || !fechaFin) {
         setError('Por favor, seleccione ambas fechas.');
-        return;
+        return;                                 
       }
 
       setLoading(true);
@@ -76,10 +77,12 @@ function GraficosMolinos() {
         anchor: 'end',
         align: 'start',
         formatter: (value, context) => {
+          const esTotal = context.dataIndex === 3; // Verificar si es el índice del total
           const porcentaje = calcularPorcentajeHorasTrabajadas(
             value,
             horasObjetivoDiarias,
-            dias
+            dias,
+            esTotal
           );
           return `${value.toFixed(3)} hrs\n(${porcentaje}%)`;
         },
@@ -88,7 +91,7 @@ function GraficosMolinos() {
   };
 
   const chartData = {
-    labels: ['Turno 1', 'Turno 2','Turno 3', 'Total'],
+    labels: ['Turno 1', 'Turno 2', 'Turno 3', 'Total'],
     datasets: [
       {
         label: 'MOLINO CHINO',
@@ -104,7 +107,7 @@ function GraficosMolinos() {
               calcularHoras(data.HRSM1_TURNO_3),
               calcularHoras(data.HRSM1_TOTAL),
             ]
-          : [0, 0, 0],
+          : [0, 0, 0, 0],
       },
       {
         label: 'MOLINO RAYMOND',
@@ -120,7 +123,7 @@ function GraficosMolinos() {
               calcularHoras(data.HRSM2_TURNO_3),
               calcularHoras(data.HRSM2_TOTAL),
             ]
-          : [0, 0, 0],
+          : [0, 0, 0, 0],
       },
     ],
   };
@@ -148,14 +151,12 @@ function GraficosMolinos() {
       {loading && <p>Cargando...</p>}
       {data && <Bar data={chartData} options={options} />}
 
-
-
       <Link to="/graficos">
-        <button class="custom-button">Ver Horas de Mesas</button>
+        <button className="custom-buttonmesas">Gráficos Mesas</button>
       </Link>
 
       <Link to="/gjigschino">
-        <button class="custom-button">Ver Horas Jigs Chino</button>
+        <button className="custom-buttonchinos">Gráficos Jigs Chino</button>
       </Link>
     </div>
   );

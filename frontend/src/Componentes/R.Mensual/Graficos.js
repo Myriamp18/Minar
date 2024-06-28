@@ -157,11 +157,11 @@ const Graficos = () => {
       )}
 
       <Link to="/gmolinos">
-        <button class="custom-button">Ver Horas de Molinos</button>
+        <button class="custom-buttonmolinos">Gráficos Molinos</button>
       </Link>
 
       <Link to="/gjigschino">
-        <button class="custom-button">Ver Horas Jigs Chino</button>
+        <button class="custom-buttonchinos">Gráficos Jigs Chino</button>
       </Link>
     </div>
   );
