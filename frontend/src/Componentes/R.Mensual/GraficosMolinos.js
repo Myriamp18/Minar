@@ -15,7 +15,7 @@ function GraficosMolinos() {
   const [error, setError] = useState(null);
 
   const horasObjetivoDiarias = 8; // Modificado según tu ejemplo
-  const horasObjetivoTotales = 16; // 16 horas para los totales
+  const horasObjetivoTotales = 24; // 16 horas para los totales
 
   const calcularHoras = (horaString) => {
     if (horaString === null) {
