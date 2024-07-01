@@ -270,7 +270,7 @@ app.post('/createseleccion', async (req, res) => { // Añade 'async' aquí
         const saldoAnterior = saldoAnteriorData.length > 0 ? saldoAnteriorData[0].saldo : 0;
 
         // Calcula el nuevo saldo sumando el saldo anterior a las entradas y restando las salidas
-        const nuevoSaldo = saldoAnterior + parseFloat(totalEntradasSelecc || 0) - parseFloat(req.body.salida || 0);
+        const nuevoSaldo = Math.max(0, saldoAnterior + parseFloat(totalEntradasSelecc || 0) - parseFloat(req.body.salida || 0));
 
 
         // Realiza la inserción con el nuevo saldo
@@ -322,6 +322,8 @@ app.put('/updateseleccion/:id', async (req, res) => {
 
         // Calcular el nuevo saldo
         let nuevoSaldo = saldoAnteriorData + parseFloat(req.body.entrada) - parseFloat(req.body.salida);
+        nuevoSaldo = Math.max(0, nuevoSaldo); // Asegura que el nuevo saldo no sea negativo
+
 
         // Realizar la actualización con el nuevo saldo
         const sql = "UPDATE seleccion SET fecha = ?, entrada = ?, salida = ?, pesp = ?, saldo = ? WHERE id = ?";
@@ -1018,7 +1020,8 @@ app.post('/creategranobaribright', async (req, res) => {
         const saldoAnterior = saldoAnteriorData.length > 0 ? saldoAnteriorData[0].saldo : 0;
 
         // Calcula el nuevo saldo sumando el saldo anterior a las entradas y restando las salidas
-        const nuevoSaldo = saldoAnterior + parseFloat(entradasgranobaright) - parseFloat(req.body.salidas);
+        // Calcula el nuevo saldo sumando el saldo anterior a las entradas y restando las salidas
+        const nuevoSaldo = Math.max(0, saldoAnterior + parseFloat(entradasgranobaright) - parseFloat(req.body.salidas));
 
         // Realiza la inserción con el nuevo saldo
         const sql = "INSERT INTO granobaribright (fecha, entradas, salidas, pe, saldo) VALUES (?, ?, ?, ?, ?)";
@@ -1061,12 +1064,14 @@ app.put('/updategranobaribright/:id', async (req, res) => {
                 else resolve(data);
             });
         });
+
         // Verificar si se encontró el saldo anterior
         if (saldoAnteriorData.length > 0) {
             const saldoAnterior = saldoAnteriorData[0].saldo;
 
             // Calcula el nuevo saldo utilizando el saldo anterior
             const nuevoSaldo = saldoAnterior + parseFloat(req.body.entradas) - parseFloat(req.body.salidas);
+            const saldoFinal = Math.max(0, nuevoSaldo); // Asegura que el nuevo saldo no sea negativo
 
             // Realiza la actualización en la base de datos utilizando el nuevo saldo
             const sql = "UPDATE granobaribright SET fecha = ?, entradas = ?, salidas = ?, pe = ?, saldo = ? WHERE id = ?";
@@ -1075,7 +1080,7 @@ app.put('/updategranobaribright/:id', async (req, res) => {
                 req.body.entradas,
                 req.body.salidas,
                 req.body.pe,
-                nuevoSaldo,
+                saldoFinal, // Aquí se usa saldoFinal en lugar de nuevoSaldo
                 req.params.id
             ];
 
@@ -1090,14 +1095,12 @@ app.put('/updategranobaribright/:id', async (req, res) => {
             });
         } else {
             console.error('No se encontró el saldo anterior.');
-            return res
+            return res.status(404).json({ error: "Saldo anterior no encontrado" });
         }
     } catch (error) {
         console.error('Error al obtener el saldo anterior:', error);
         return res.status(500).json({ error: "Error al obtener el saldo anterior" });
     }
-
-
 });
 
 app.get('/getrecorgranobaribright/:id', (req, res) => {
@@ -1212,7 +1215,7 @@ app.post('/createconcentradobaribaright', async (req, res) => {
         const saldoAnterior = saldoAnteriorData.length > 0 ? saldoAnteriorData[0].saldo : 0;
 
         // Calcula el nuevo saldo sumando el saldo anterior a las entradas y restando las salidas
-        const nuevoSaldo = saldoAnterior + parseFloat(totalConcentradoBari) - parseFloat(req.body.salidas);
+        const nuevoSaldo = Math.max(0, saldoAnterior + parseFloat(totalConcentradoBari) - parseFloat(req.body.salidas));
 
         // Realiza la inserción con el nuevo saldo
         const sql = "INSERT INTO concentradobaribaright (fecha, entradas, salidas, pe, saldo) VALUES (?, ?, ?, ?, ?)";
@@ -1262,6 +1265,7 @@ app.put('/updateconcentradobaribaright/:id', async (req, res) => {
 
             // Calcula el nuevo saldo utilizando el saldo anterior
             const nuevoSaldo = saldoAnterior + parseFloat(req.body.entradas) - parseFloat(req.body.salidas);
+            const saldoFinal = Math.max(0, nuevoSaldo);
 
             // Realiza la actualización en la base de datos utilizando el nuevo saldo
             const sql = "UPDATE concentradobaribaright SET fecha = ?, entradas = ?, salidas = ?, pe = ?, saldo = ? WHERE id = ?";
@@ -1270,7 +1274,7 @@ app.put('/updateconcentradobaribaright/:id', async (req, res) => {
                 req.body.entradas,
                 req.body.salidas,
                 req.body.pe,
-                nuevoSaldo,
+                saldoFinal,
                 req.params.id
             ];
 
@@ -1436,7 +1440,7 @@ app.post('/createconcmesas', async (req, res) => {
 
 
         // Calcula el nuevo saldo sumando el saldo anterior a las entradas y restando las salidas
-        const nuevoSaldo = saldoAnteriorData + parseFloat(totalConcentradoMesas) - parseFloat(totalSalidasMesas);
+        const nuevoSaldo = Math.max(0, saldoAnteriorData + parseFloat(totalConcentradoMesas) - parseFloat(totalSalidasMesas));
 
         // Realizar la inserción en la tabla concmesas
         const sql = "INSERT INTO concmesas (fecha, entradas, salidas, saldo, pe) VALUES (?, ?, ?, ?, ?)";
@@ -1478,12 +1482,13 @@ app.put('/updateconcmesas/:id', async (req, res) => {
 
         // Calcula el nuevo saldo sumando el saldo anterior a las entradas y restando las salidas
         const nuevoSaldo = saldoAnterior + parseFloat(req.body.entradas) - parseFloat(req.body.salidas);
+        const saldoFinal = Math.max(0, nuevoSaldo);
         const sql = "UPDATE concmesas SET fecha=?, entradas=?, salidas=?, saldo=?, pe=? WHERE id = ?";
         const values = [
             req.body.fecha,
             req.body.entradas,
             req.body.salidas,
-            nuevoSaldo,
+            saldoFinal,
             req.body.pe,
         ];
         const id = req.params.id;
@@ -1791,7 +1796,7 @@ app.post('/createconcjigssec', async (req, res) => {
         const saldoAnterior = saldoAnteriorData.length > 0 ? saldoAnteriorData[0].saldo : 0;
 
         // Calcula el nuevo saldo sumando el saldo anterior a las entradas y restando las salidas
-        const nuevoSaldo = saldoAnterior + parseFloat(totalConcentradojigss) - parseFloat(totalSalidasConcjigs);
+        const nuevoSaldo = Math.max(saldoAnterior + parseFloat(totalConcentradojigss) - parseFloat(totalSalidasConcjigs));
 
         // Realizar la inserción en la tabla concmesas
         const sql = "INSERT INTO concjigssec (fecha, entradas, salidas, saldo, pe) VALUES (?, ?, ?, ?, ?)";
@@ -1831,13 +1836,13 @@ app.put('/updatenconcjigssec/:id', async (req, res) => {
 
         // Calcula el nuevo saldo sumando el saldo anterior a las entradas y restando las salidas
         const nuevoSaldo = saldoAnterior + parseFloat(req.body.entradas) - parseFloat(req.body.salidas,);
-
+        const saldoFinal = Math.max(0, nuevoSaldo)
         const sql = "UPDATE concjigssec SET fecha=?, entradas=?, salidas=?, saldo=?, pe=? WHERE id = ?";
         const values = [
             req.body.fecha,
             req.body.entradas,
             req.body.salidas,
-            nuevoSaldo,
+            saldoFinal,
             req.body.pe,
         ];
         const id = req.params.id;
@@ -1968,7 +1973,7 @@ app.post('/createmedios46', async (req, res) => {
         const saldoAnterior = saldoAnteriorData.length > 0 ? saldoAnteriorData[0].saldo46 : 0;
 
         // Calcula el nuevo saldo sumando el saldo anterior a las entradas y restando las salidas
-        const nuevoSaldo = saldoAnterior + parseFloat(totalentradas) - parseFloat(totalsalidasmedios);
+        const nuevoSaldo = Math.max(0, saldoAnterior + parseFloat(totalentradas) - parseFloat(totalsalidasmedios));
 
 
         // Realizar la inserción en la tabla concmesas
@@ -2016,14 +2021,14 @@ app.put('/updatemedios46/:id', async (req, res) => {
 
         // Calcula el nuevo saldo sumando el saldo anterior a las entradas y restando las salidas
         const nuevoSaldo = saldoAnterior + parseFloat(req.body.entradasm46) - parseFloat(req.body.salidasm46);
-
+        const saldoFinal = Math.max(0, nuevoSaldo)
         // Realizar la actualización en la tabla medios46
         const sql = "UPDATE medios46 SET fecha=?, entradasm46=?, salidasm46=?, saldo46=?, pe46=? WHERE id=?";
         const values = [
             req.body.fecha,
             req.body.entradasm46,
             req.body.salidasm46,
-            nuevoSaldo,
+            saldoFinal,
             req.body.pe46,
             id // Utilizar el ID del registro que se desea actualizar
         ];
@@ -2147,7 +2152,7 @@ app.post('/createmedios4', async (req, res) => {
         const saldoAnterior = saldoAnteriorData.length > 0 ? saldoAnteriorData[0].saldo : 0;
 
         // Calcula el nuevo saldo sumando el saldo anterior a las entradas y restando las salidas
-        const nuevoSaldo = saldoAnterior + parseFloat(totalentradas) - parseFloat(totalsalidasmedios);
+        const nuevoSaldo = Math.max(0, saldoAnterior + parseFloat(totalentradas) - parseFloat(totalsalidasmedios));
 
         // Realizar la inserción en la tabla concmesas
         const sql = "INSERT INTO medios4 (fecha, entradas, salidas, saldo, pe) VALUES (?, ?, ?, ?, ?)";
@@ -2185,14 +2190,14 @@ app.put('/updatemedios4/:id', async (req, res) => {
 
         // Calcula el nuevo saldo sumando el saldo anterior a las entradas y restando las salidas
         const nuevoSaldo = saldoAnterior + parseFloat(req.body.entradas) - parseFloat(req.body.salidas);
-
+        const saldoFinal = Math.max(0, nuevoSaldo)
         // Realizar la actualización en la tabla medios46
         const sql = "UPDATE medios4 SET fecha=?, entradas=?, salidas=?, saldo=?, pe=? WHERE id=?";
         const values = [
             req.body.fecha,
             req.body.entradas,
             req.body.salidas,
-            nuevoSaldo,
+            saldoFinal,
             req.body.pe,
             id // Utilizar el ID del registro que se desea actualizar
         ];
@@ -2322,7 +2327,7 @@ app.post('/createmedios3', async (req, res) => {
         const saldoAnterior = saldoAnteriorData.length > 0 ? saldoAnteriorData[0].saldo : 0;
 
         // Calcula el nuevo saldo sumando el saldo anterior a las entradas y restando las salidas
-        const nuevoSaldo = saldoAnterior + parseFloat(totalentradas) - parseFloat(totalsalidasmedios);
+        const nuevoSaldo = Marh.max(0, saldoAnterior + parseFloat(totalentradas) - parseFloat(totalsalidasmedios));
 
         // Realizar la inserción en la tabla concmesas
         const sql = "INSERT INTO medios3 (fecha, entradas, salidas, saldo, pe) VALUES (?, ?, ?, ?, ?)";
@@ -2361,14 +2366,14 @@ app.put('/updatemedios3/:id', async (req, res) => {
 
         // Calcula el nuevo saldo sumando el saldo anterior a las entradas y restando las salidas
         const nuevoSaldo = saldoAnterior + parseFloat(req.body.entradas) - parseFloat(req.body.salidas);
-
+        const saldoFinal = Math.max(0, nuevoSaldo)
         // Realizar la actualización en la tabla medios46
         const sql = "UPDATE medios3 SET fecha=?, entradas=?, salidas=?, saldo=?, pe=? WHERE id=?";
         const values = [
             req.body.fecha,
             req.body.entradas,
             req.body.salidas,
-            nuevoSaldo,
+            saldoFinal,
             req.body.pe,
             id // Utilizar el ID del registro que se desea actualizar
         ];
@@ -2492,7 +2497,7 @@ app.post('/creategranomoler', async (req, res) => {
         const saldoAnterior = saldoAnteriorData.length > 0 ? saldoAnteriorData[0].saldo : 0;
 
         // Calcula el nuevo saldo sumando el saldo anterior a las entradas y restando las salidas
-        const nuevoSaldo = saldoAnterior + parseFloat(totalgrano) - parseFloat(totalsalidasgrano);
+        const nuevoSaldo = Math.max (0, saldoAnterior + parseFloat(totalgrano) - parseFloat(totalsalidasgrano));
 
         // Realizar la inserción en la tabla concmesas
         const sql = "INSERT INTO granopmoler (fecha, entradas, salidas, saldo, pe) VALUES (?, ?, ?, ?, ?)";
@@ -2531,14 +2536,14 @@ app.put('/updategranomoler/:id', async (req, res) => {
 
         // Calcula el nuevo saldo sumando el saldo anterior a las entradas y restando las salidas
         const nuevoSaldo = saldoAnterior + parseFloat(req.body.entradas) - parseFloat(req.body.salidas);
-
+        const saldoFinal = Math.max (0, nuevoSaldo)
         // Realizar la actualización en la tabla medios46
         const sql = "UPDATE granopmoler SET fecha=?, entradas=?, salidas=?, saldo=?, pe=? WHERE id=?";
         const values = [
             req.body.fecha,
             req.body.entradas,
             req.body.salidas,
-            nuevoSaldo,
+            saldoFinal,
             req.body.pe,
             id // Utilizar el ID del registro que se desea actualizar
         ];
@@ -2605,7 +2610,7 @@ app.post('/creategranobandas', async (req, res) => {
         const saldoAnterior = saldoAnteriorData.length > 0 ? saldoAnteriorData[0].saldo : 0;
 
         // Calcula el nuevo saldo sumando el saldo anterior a las entradas y restando las salidas
-        const nuevoSaldo = saldoAnterior + parseFloat(req.body.entrada) - parseFloat(req.body.salidas);
+        const nuevoSaldo = Math.max(0, saldoAnterior + parseFloat(req.body.entrada) - parseFloat(req.body.salidas));
 
         // Realizar la inserción en la tabla concmesas
         const sql = "INSERT INTO granobandas (fecha, entrada, salidas, saldo, pesp) VALUES (?, ?, ?, ?, ?)";
@@ -2643,14 +2648,16 @@ app.put('/updategranobandas/:id', async (req, res) => {
     const saldoAnterior = saldoAnteriorData.length > 0 ? saldoAnteriorData[0].saldo : 0;
 
     // Calcula el nuevo saldo sumando el saldo anterior a las entradas y restando las salidas
+   
     const nuevoSaldo = saldoAnterior + parseFloat(req.body.entrada) - parseFloat(req.body.salidas);
+    const saldoFinal = Math.max (0, nuevoSaldo)
     const sql = "UPDATE granobandas SET fecha = ?, entrada = ?, salidas = ?, pesp = ?, saldo = ? WHERE id = ?";
     const values = [
         req.body.fecha,
         req.body.entrada,
         req.body.salidas,
         req.body.pesp,
-        nuevoSaldo
+        saldoFinal
 
     ];
     const id = req.params.id;
@@ -3709,7 +3716,7 @@ app.get('/mpmle', (req, res) => {
 
 app.post('/creatempmle', async (req, res) => {
     try {
-        
+
         // Obtener el saldo anterior
         const saldoAnteriorData = await new Promise((resolve, reject) => {
             db.query("SELECT saldo FROM mpmle ORDER BY id DESC LIMIT 1", (err, data) => {
@@ -3809,7 +3816,7 @@ app.get('/mpmlet', (req, res) => {
 
 app.post('/creatempmlt', async (req, res) => {
     try {
-      
+
 
 
 

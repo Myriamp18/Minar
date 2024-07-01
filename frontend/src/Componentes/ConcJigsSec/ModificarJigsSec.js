@@ -34,7 +34,7 @@ function ModificarJigsSec() {
         axios.put(`http://localhost:8081/updatenconcjigssec/${id}`, { ...values, saldo: nuevoSaldo })
           .then(res => {
             console.log(res);
-            navigate('/concmesas');
+            navigate('/concjigssec');
           })
           .catch(err => console.log(err));
       };
