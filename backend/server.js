@@ -2327,7 +2327,7 @@ app.post('/createmedios3', async (req, res) => {
         const saldoAnterior = saldoAnteriorData.length > 0 ? saldoAnteriorData[0].saldo : 0;
 
         // Calcula el nuevo saldo sumando el saldo anterior a las entradas y restando las salidas
-        const nuevoSaldo = Marh.max(0, saldoAnterior + parseFloat(totalentradas) - parseFloat(totalsalidasmedios));
+        const nuevoSaldo = Math.max(0, saldoAnterior + parseFloat(totalentradas) - parseFloat(totalsalidasmedios));
 
         // Realizar la inserción en la tabla concmesas
         const sql = "INSERT INTO medios3 (fecha, entradas, salidas, saldo, pe) VALUES (?, ?, ?, ?, ?)";

@@ -14,7 +14,7 @@ function Modal() {
       e.preventDefault();
       // Aquí puedes agregar la lógica para verificar la contraseña
       // Por ejemplo, comparar con una contraseña predefinida
-      if (password === '200523') {
+      if (password === 'minar2024') {
         alert('Contraseña correcta. Acceso permitido.');
         navigate ('/usuarios')
         // Aquí puedes agregar lógica para lo que sucede después de que se verifique la contraseña
