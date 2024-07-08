@@ -3738,7 +3738,7 @@ app.post('/creatempmle', async (req, res) => {
         const saldoAnterior = saldoAnteriorData.length > 0 ? saldoAnteriorData[0].saldo : 0;
 
         // Calcula el nuevo saldo sumando el saldo anterior a las entradas y restando las salidas
-        const nuevoSaldo = Mat.max (0, saldoAnterior + parseFloat(req.body.entradas) - parseFloat(req.body.salidas));
+        const nuevoSaldo = Math.max (0, saldoAnterior + parseFloat(req.body.entradas) - parseFloat(req.body.salidas));
 
         // Realizar la inserción en la tabla concmesas
         const sql = "INSERT INTO mpmle (fecha, entradas, salidas, saldo, pe) VALUES (?, ?, ?, ?, ?)";
