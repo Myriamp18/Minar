@@ -64,7 +64,7 @@ function Inicio() {
     }, []);
     return (
         <div className="App">
-            <h1 className='h1'>MINERALES Y ARCILLAS S.A DE C.V</h1>
+            <h1 className='h1'>MINERALES Y ARCILLAS, S.A DE C.V</h1>
             <p className="fecha-hora"> {fechaHoraActual}</p>
 
             <div className="contenedor-silos">
