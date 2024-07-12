@@ -2421,8 +2421,8 @@ app.post('/creategranomoler', async (req, res) => {
                 SELECT (COALESCE(prod.total_granoj, 0) + COALESCE(chinos.total_granojch, 0)) AS total_grano
                 FROM 
                     (SELECT SUM(granoj1) AS total_granoj1, SUM(granoj2) AS total_granoj2,
-                            SUM(CASE WHEN pegj1 BETWEEN 1.00 AND 4.18 THEN granoj1 ELSE 0 END) +
-                            SUM(CASE WHEN pegj2 BETWEEN 1.00 AND 4.18 THEN granoj2 ELSE 0 END) AS total_granoj
+                            SUM(CASE WHEN pegj1 BETWEEN 1.00 AND 4.20 THEN granoj1 ELSE 0 END) +
+                            SUM(CASE WHEN pegj2 BETWEEN 1.00 AND 4.20 THEN granoj2 ELSE 0 END) AS total_granoj
                      FROM produccionjigs 
                      WHERE fecha = ?) AS prod,
                     (SELECT SUM(granojch) AS total_granojch 
