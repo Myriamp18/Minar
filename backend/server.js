@@ -2700,7 +2700,7 @@ app.get('/granojigs', (req, res) => {
 app.post('/creategranojigs', async (req, res) => {
     try {
         const totalgranojigs = await new Promise((resolve, reject) => {
-            const query = "SELECT (SUM(granojch)) AS total_granojigs FROM jigschinos WHERE fecha = ?;";
+            const query = "SELECT (SUM(granojch)) AS total_granojigs FROM jigschinos WHERE fecha = ?";
             db.query(query, [req.body.fecha], (err, data) => {
                 if (err) {
                     reject(err);
