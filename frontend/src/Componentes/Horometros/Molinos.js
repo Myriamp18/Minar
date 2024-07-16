@@ -31,7 +31,7 @@ function Molinos() {
          
       </span>
       <span className="buttonh-textss">
-       Pendiente
+       
          
       </span>
   
@@ -42,7 +42,7 @@ function Molinos() {
       Horas Molinos
       </span>
       <span className="buttonh-textss">
-       Pendiente
+       
          
       </span>
       </button>

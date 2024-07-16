@@ -35,7 +35,7 @@ function Medios() {
          
       </span>
       <span className="button-textss">
-       Pendiente
+     
          
       </span>
 
@@ -46,7 +46,7 @@ function Medios() {
         Medios Conc. 4.00-4.04
       </span>
       <span className="button-textss">
-       Pendiente
+       
          
       </span>
       </button>
@@ -56,7 +56,7 @@ function Medios() {
         Medios Conc. 3.98
       </span>
       <span className="button-textss">
-       Pendiente
+       
          
       </span>
       </button>
